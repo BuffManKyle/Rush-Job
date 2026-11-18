@@ -1,6 +1,7 @@
 {
-  "_note": "USD caps per provider, set by Kyle. null = not set, and the tools refuse to buy.",
-  "meshy": null,
+  "_note": "Caps set by Kyle. null = not set, and the tools refuse to buy. Meshy is in credits.",
+  "meshy_credits": 150,
+  "meshy_reserve": 100,
   "fal": null,
   "elevenlabs": null
 }

@@ -72,7 +72,7 @@ The entry form asks for evidence of what each sponsor tool produced, so every ge
 
 | Tool | Used for | Status | Caps (set by Kyle) |
 | --- | --- | --- | --- |
-| Meshy | Player, guards, police ×3, civilians, staff, the Accountant, Dot | **Blocked: no account or key yet.** Stand-ins ship until then. | not set |
+| Meshy | Player, guards, police ×3, civilians, staff, the Accountant, Dot | Pilots underway through the API (text-to-3d `meshy-6-lite`). Untextured previews of the player and guard are done; next: Kyle's look check, then texture, rig, clips. Stand-ins ship until then. | 150 credits for the pilots, keep a 100-credit reserve (balance 1,090 of 1,100) |
 | fal | Concept art, model sheets, item icons, posters, title and cover art | Waiting on Kyle's go-ahead | not set |
 | ElevenLabs | Voices, SFX, music (audio session) | not started here | not set |
 
@@ -87,6 +87,8 @@ Generated-file evidence (one row per file: tool, model version, job id, date, co
 
 | File | Tool | Job id | Date | Cost | Used as |
 | --- | --- | --- | --- | --- | --- |
+| `assets/gen/meshy/pilot-player-preview_glb.glb` | Meshy text-to-3d preview, meshy-6-lite | `01a1ef58-8969-7056-8352-1bfbfdbea4cf` | 2026-11-18 | 5 credits | Player pilot, untextured shape check (7,261 tris, A-pose) |
+| `assets/gen/meshy/pilot-guard-preview_glb.glb` | Meshy text-to-3d preview, meshy-6-lite | `01a1ef5a-7457-740d-bff1-635148f4e37b` | 2026-11-18 | 5 credits | Guard pilot, untextured shape check (7,247 tris, A-pose) |
 
 ## Asset table
 

@@ -20,7 +20,13 @@ Rules (see the opengame-assets skill):
 Endpoints and credit costs are from Meshy's public API docs as of late 2026. CHECK THEM against
 the dashboard on the first real call; costs below are estimates until reconciled.
 """
-import base64, hashlib, json, os, sys, time, urllib.request, urllib.error
+import base64, hashlib, json, os, ssl, sys, time, urllib.request, urllib.error
+
+try:   # Python's Windows store view has an expired root on this machine; certifi's bundle verifies fine
+    import certifi
+    CTX = ssl.create_default_context(cafile=certifi.where())
+except ImportError:
+    CTX = ssl.create_default_context()
 from datetime import datetime, timezone
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -30,7 +36,6 @@ SPEND = os.path.join(HERE, "spend.jsonl")
 JOBS = os.path.join(HERE, "jobs.jsonl")
 CAPS = os.path.join(HERE, "caps.json")
 OUT = os.path.join(ROOT, "assets", "gen", "meshy")
-USD_PER_CREDIT = 0.02          # estimate (30 credits ~ $0.60); reconcile with the dashboard
 
 # endpoint -> (path, allowed request fields, estimated credits)
 KINDS = {
@@ -39,7 +44,7 @@ KINDS = {
                                          "symmetry_mode", "pose_mode"}, 30),
     "text-to-3d":  ("/v2/text-to-3d", {"mode", "prompt", "art_style", "ai_model", "topology",
                                         "target_polycount", "should_remesh", "symmetry_mode", "pose_mode",
-                                        "preview_task_id", "enable_pbr", "texture_prompt"}, 20),
+                                        "preview_task_id", "enable_pbr", "texture_prompt"}, 10),
     "rigging":     ("/v1/rigging", {"input_task_id", "model_url", "height_meters"}, 5),
     "animations":  ("/v1/animations", {"rig_task_id", "action_id", "post_process"}, 3),
 }
@@ -61,14 +66,19 @@ def call(method, path, body=None):
     req = urllib.request.Request(API + path, method=method,
                                  data=json.dumps(body).encode() if body is not None else None,
                                  headers={"Authorization": f"Bearer {key()}", "Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        return json.loads(r.read())
+    try:
+        with urllib.request.urlopen(req, timeout=60, context=CTX) as r:
+            return json.loads(r.read())
+    except urllib.error.HTTPError as e:
+        raise RuntimeError(f"Meshy {e.code} on {method} {path}: {e.read().decode(errors='replace')[:500]}")
 
 
-def spent(provider="meshy"):
+def spent_credits():
+    """Credits used so far: real (balance deltas) where reconciled, else the estimate."""
     if not os.path.exists(SPEND):
-        return 0.0
-    return sum(json.loads(l)["usd"] for l in open(SPEND) if l.strip() and json.loads(l)["provider"] == provider)
+        return 0
+    rows = [json.loads(l) for l in open(SPEND) if l.strip()]
+    return sum(r.get("credits_actual", r["credits_est"]) for r in rows if r["provider"] == "meshy")
 
 
 def append(path, row):
@@ -93,25 +103,41 @@ def run(spec_path, buy):
     if str(req.get("image_url", "")).startswith("file:"):
         img = os.path.join(ROOT, req["image_url"][5:])
         req["image_url"] = "data:image/png;base64," + base64.b64encode(open(img, "rb").read()).decode()
-    usd = credits * USD_PER_CREDIT
     caps = json.load(open(CAPS))
-    cap = caps.get("meshy")
-    total = spent()
-    print(f"{'BUY' if buy else 'DRY RUN'}  {kind}  {job}  ~{credits} credits (~${usd:.2f})  "
-          f"meshy ${total:.2f} -> ${total + usd:.2f} of cap {cap}")
+    cap = caps.get("meshy_credits")
+    total = spent_credits()
+    print(f"{'BUY' if buy else 'DRY RUN'}  {kind}  {job}  ~{credits} credits (estimate)  "
+          f"meshy {total} -> {total + credits} credits of cap {cap}")
     if not buy:
         print("  nothing bought; add --buy to spend"); return
     if cap is None:
         raise SystemExit("refusing: no Meshy cap set in tools/gen/caps.json (Kyle sets it)")
-    if total + usd > cap:
-        raise SystemExit("refusing: this call would cross the Meshy cap")
+    if total + credits > cap:
+        raise SystemExit("refusing: this call would cross the Meshy credit cap")
+    bal = call("GET", "/v1/balance").get("balance")
+    if bal is not None and bal - credits < caps.get("meshy_reserve", 0):
+        raise SystemExit(f"refusing: balance {bal} would drop below the reserve")
     append(SPEND, {"t": now(), "provider": "meshy", "stream": spec.get("stream", "chars"), "job": job,
-                   "kind": kind, "usd": usd, "credits_est": credits, "provider_total": round(total + usd, 2), "cap": cap})
-    res = call("POST", path, req)
+                   "kind": kind, "credits_est": credits, "balance_before": bal,
+                   "provider_total": total + credits, "cap": cap})
+    try:
+        res = call("POST", path, req)
+    except RuntimeError as e:
+        after = call("GET", "/v1/balance").get("balance")
+        append(SPEND, {"t": now(), "provider": "meshy", "job": job, "kind": "failed", "credits_est": 0,
+                       "credits_actual": (bal - after) - credits if bal is not None else -credits,
+                       "balance_after": after, "error": str(e)[:300]})
+        charged = bal - after if bal is not None else "?"
+        raise SystemExit(f"  {e}  (charged {charged} credits)")
     tid = res.get("result")
     append(JOBS, {"t": now(), "job": job, "kind": kind, "task_id": tid, "spec": os.path.relpath(spec_path, ROOT)})
     print(f"  task {tid}; polling")
     poll(kind, tid, job)
+    after = call("GET", "/v1/balance").get("balance")
+    if bal is not None and after is not None:
+        append(SPEND, {"t": now(), "provider": "meshy", "job": job, "kind": "reconcile", "credits_est": 0,
+                       "credits_actual": (bal - after) - credits, "balance_after": after, "charged": bal - after})
+        print(f"  charged {bal - after} credits (balance {after})")
 
 
 def poll(kind, tid, job=None):
@@ -128,13 +154,15 @@ def poll(kind, tid, job=None):
     files = {}
     urls = dict(r.get("model_urls") or {})
     urls.update({k: v for k, v in (r.get("result") or {}).items() if isinstance(v, str) and v.startswith("http")})
+    if r.get("thumbnail_url"):
+        urls["thumbnail"] = r["thumbnail_url"]
     for name, url in urls.items():
-        if not url:
-            continue
+        if not url or name not in ("glb", "thumbnail", "rigged_character_glb_url", "animation_glb_url"):
+            continue        # only what we use; the provider keeps the rest for 3 days
         ext = url.split("?")[0].rsplit(".", 1)[-1][:5]
         dst = os.path.join(OUT, f"{job or tid}_{name}.{ext}")
         os.makedirs(OUT, exist_ok=True)
-        data = urllib.request.urlopen(url, timeout=120).read()
+        data = urllib.request.urlopen(url, timeout=120, context=CTX).read()
         open(dst, "wb").write(data)
         files[os.path.relpath(dst, ROOT)] = hashlib.sha256(data).hexdigest()[:16]
         print(f"  saved {os.path.relpath(dst, ROOT)}")

@@ -5,7 +5,7 @@
   "stream": "chars",
   "request": {
     "mode": "preview",
-    "ai_model": "meshy-5",
+    "ai_model": "meshy-6-lite",
     "prompt": "stylized low-poly heist crook, A-pose with arms held well out from the body, chunky readable silhouette, slightly oversized head and hands, plain white full-face mask with two eye slits, black beanie, close-fitting charcoal suit with a teal tie, black gloves, black shoes, flat colors, game character, full body, front facing",
     "art_style": "realistic",
     "topology": "triangle",

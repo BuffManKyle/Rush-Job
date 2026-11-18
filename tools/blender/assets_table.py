@@ -17,7 +17,8 @@ def rows():
     mans = {}
     for f in glob.glob(os.path.join(ROOT, "reference-images", "previews", "*", "manifest.json")):
         m = json.load(open(f))
-        mans[m["lib"]] = m
+        if m["lib"] != "inspect":          # inspection sheets are not assets
+            mans[m["lib"]] = m
     for lib in sorted(mans, key=lambda k: (ORDER.index(k) if k in ORDER else 99, k)):
         m = mans[lib]
         if lib == "chars":

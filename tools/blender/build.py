@@ -70,7 +70,7 @@ def meshopt(lib):
     if not gp:
         print("  (gltfpack not on PATH: GLB left uncompressed, meshopt pending)"); return
     man = json.load(open(os.path.join(PREVIEWS, lib, "manifest.json")))
-    for rel in man.get("glbs") or [man["glb"]]:
+    for rel in man.get("glbs", [man.get("glb")] if man.get("glb") else []):
         pack(gp, os.path.join(ROOT, rel))
 
 

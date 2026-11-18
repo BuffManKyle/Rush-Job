@@ -1,0 +1,8 @@
+{"t": "2026-11-18T15:48:05Z", "provider": "meshy", "stream": "chars", "job": "pilot-player-preview", "kind": "text-to-3d", "credits_est": 20, "balance_before": 1100, "provider_total": 20, "cap": 150}
+{"t": "2026-11-18T15:48:06Z", "provider": "meshy", "job": "pilot-player-preview", "kind": "failed", "credits_est": 0, "credits_actual": -20, "balance_after": 1100, "error": "HTTP 400, body not captured (client fixed after)"}
+{"t": "2026-11-18T15:48:29Z", "provider": "meshy", "stream": "chars", "job": "pilot-player-preview", "kind": "text-to-3d", "credits_est": 20, "balance_before": 1100, "provider_total": 20, "cap": 150}
+{"t": "2026-11-18T15:48:29Z", "provider": "meshy", "job": "pilot-player-preview", "kind": "failed", "credits_est": 0, "credits_actual": -20, "balance_after": 1100, "error": "Meshy 400 on POST /v2/text-to-3d: {\"message\":\"ai_model meshy-5 has been retired; use meshy-6-lite\"}"}
+{"t": "2026-11-18T15:48:38Z", "provider": "meshy", "stream": "chars", "job": "pilot-player-preview", "kind": "text-to-3d", "credits_est": 20, "balance_before": 1100, "provider_total": 20, "cap": 150}
+{"t": "2026-11-18T15:50:34Z", "provider": "meshy", "job": "pilot-player-preview", "kind": "reconcile", "credits_est": 0, "credits_actual": -15, "balance_after": 1095, "charged": 5}
+{"t": "2026-11-18T15:50:43Z", "provider": "meshy", "stream": "chars", "job": "pilot-guard-preview", "kind": "text-to-3d", "credits_est": 10, "balance_before": 1095, "provider_total": 15, "cap": 150}
+{"t": "2026-11-18T15:51:58Z", "provider": "meshy", "job": "pilot-guard-preview", "kind": "reconcile", "credits_est": 0, "credits_actual": -5, "balance_after": 1090, "charged": 5}

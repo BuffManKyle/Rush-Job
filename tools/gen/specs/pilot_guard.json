@@ -5,7 +5,7 @@
   "stream": "chars",
   "request": {
     "mode": "preview",
-    "ai_model": "meshy-5",
+    "ai_model": "meshy-6-lite",
     "prompt": "stylized low-poly security guard, heavy-set and bored, A-pose with arms held well out from the body, chunky readable silhouette, slightly oversized head and hands, navy blue uniform shirt and trousers, navy peaked cap, gold badge, black duty belt with radio, black shoes, close-fitting clothes, flat colors, game character, full body, front facing",
     "art_style": "realistic",
     "topology": "triangle",

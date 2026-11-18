@@ -1,0 +1,103 @@
+{
+ "lib": "inspect",
+ "glbs": [],
+ "pieces": [
+  {
+   "name": "pilot-guard-preview_glb_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7247,
+   "children": [],
+   "bounds": {},
+   "note": "7247 tris, h 1.90 m, low z -0.95, w 1.23 d 0.48"
+  },
+  {
+   "name": "pilot-guard-preview_glb_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7247,
+   "children": [],
+   "bounds": {},
+   "note": "7247 tris, h 1.90 m, low z -0.95, w 1.23 d 0.48"
+  },
+  {
+   "name": "pilot-guard-preview_glb_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7247,
+   "children": [],
+   "bounds": {},
+   "note": "7247 tris, h 1.90 m, low z -0.95, w 1.23 d 0.48"
+  },
+  {
+   "name": "pilot-guard-preview_glb_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7247,
+   "children": [],
+   "bounds": {},
+   "note": "7247 tris, h 1.90 m, low z -0.95, w 1.23 d 0.48"
+  },
+  {
+   "name": "pilot-player-preview_glb_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7261,
+   "children": [],
+   "bounds": {},
+   "note": "7261 tris, h 1.90 m, low z -0.95, w 1.28 d 0.47"
+  },
+  {
+   "name": "pilot-player-preview_glb_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7261,
+   "children": [],
+   "bounds": {},
+   "note": "7261 tris, h 1.90 m, low z -0.95, w 1.28 d 0.47"
+  },
+  {
+   "name": "pilot-player-preview_glb_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7261,
+   "children": [],
+   "bounds": {},
+   "note": "7261 tris, h 1.90 m, low z -0.95, w 1.28 d 0.47"
+  },
+  {
+   "name": "pilot-player-preview_glb_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7261,
+   "children": [],
+   "bounds": {},
+   "note": "7261 tris, h 1.90 m, low z -0.95, w 1.28 d 0.47"
+  }
+ ],
+ "bytes": 0
+}
