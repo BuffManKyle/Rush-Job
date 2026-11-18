@@ -64,6 +64,13 @@ Status: [x] done · [~] partial · [ ] todo.
 - An untied downed guard wakes after 40 s and calls it in (not in the spec; it's what makes zip ties matter).
 - Jewelry stacks into one light bag up to $12k (so the store isn't 8 trips). Tune or drop.
 
+## Jam platform (OpenGame) requirements
+- Static `dist/` with `index.html` from `npm run build`; three.js bundled (no CDN); no login, ads or tracking. `opengame.json` and `.opengame/` belong to the design-review session, so leave them alone.
+- [x] Fills 1024×640 and 3440×1440 (checked Nov 18); canvas resizes with the window
+- [ ] HUD text is fixed px: tiny at 2560×1440 and 3440×1440. Scale the HUD with viewport height.
+- [ ] Debug panel overlaps the status box at 1024×640 (debug only)
+- [ ] Measure: fps at 1080p on integrated GPU (target median 45+), load time (<10 s), memory (<1.2 GB)
+
 ## Bugs / tech debt
 - External tilesets (.tsx) aren't supported; embed tilesets in the map.
 - HUD meters are DOM positioned via `worldToScreen` (not true 3D sprites): fine for top-down, revisit if first person.
