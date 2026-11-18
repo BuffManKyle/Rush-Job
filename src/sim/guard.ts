@@ -177,7 +177,7 @@ export function updateGuard(sim: Sim, g: Guard, dt: number): void {
     case 'alert': {
       const p = sim.player.pos;
       const d = Math.hypot(p.x - g.pos.x, p.y - g.pos.y);
-      if (d > 1.4) walkTo(sim, g, p, T.guard.alertSpeed, dt);
+      if (d > 0.8) walkTo(sim, g, p, T.guard.alertSpeed, dt);
       else turnToward(g, Math.atan2(p.y - g.pos.y, p.x - g.pos.x), dt);
       break;
     }

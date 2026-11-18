@@ -2307,6 +2307,63 @@
      "height": 0,
      "point": true,
      "properties": []
+    },
+    {
+     "id": 42,
+     "name": "police_front_1",
+     "type": "police_spawn",
+     "x": 400,
+     "y": 752,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "entrance",
+       "type": "string",
+       "value": "front"
+      }
+     ]
+    },
+    {
+     "id": 43,
+     "name": "police_front_2",
+     "type": "police_spawn",
+     "x": 496,
+     "y": 752,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "entrance",
+       "type": "string",
+       "value": "front"
+      }
+     ]
+    },
+    {
+     "id": 44,
+     "name": "police_alley",
+     "type": "police_spawn",
+     "x": 912,
+     "y": 624,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "entrance",
+       "type": "string",
+       "value": "alley"
+      }
+     ]
     }
    ]
   },
@@ -2796,5 +2853,5 @@
   }
  ],
  "nextlayerid": 11,
- "nextobjectid": 42
+ "nextobjectid": 45
 }

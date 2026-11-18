@@ -77,6 +77,7 @@ export class WorldView {
   private doors = new Map<string, THREE.Group>();
   private cases = new Map<string, { glass: THREE.Mesh; loot: THREE.Mesh }>();
   private bagMeshes = new Map<string, THREE.Mesh>();
+  private copMeshes = new Map<string, THREE.Group>();
   private safeMeshes = new Map<string, THREE.Mesh>();
   private noiseRings: THREE.Mesh[] = [];
   private noiseMat = new THREE.MeshBasicMaterial({ color: PALETTE.noise, transparent: true, opacity: 0.5, side: THREE.DoubleSide, depthWrite: false });
@@ -406,6 +407,7 @@ export class WorldView {
     }
 
     this.updateBags(alpha);
+    this.updateCops(alpha);
     for (const sf of sim.safes) {
       const m = this.safeMeshes.get(sf.id);
       if (m) (m.material as THREE.MeshStandardMaterial).emissive.setHex(sf.open ? (sf.looted ? 0x000000 : 0x3a2a00) : 0x000000);
@@ -472,6 +474,36 @@ export class WorldView {
         const arc = b.state === 'flying' ? Math.sin(Math.PI * Math.max(0, Math.min(1, 1 - b.flight / T.bags.flightTime))) * 1.2 : 0;
         m.position.set(x, 0.18 + arc, z);
       }
+    }
+  }
+
+  private updateCops(alpha: number): void {
+    for (const c of this.sim.cops) {
+      let g = this.copMeshes.get(c.id);
+      if (!g) {
+        g = new THREE.Group();
+        const color = c.kind === 'tactical' ? 0x2a2d33 : 0x12203f;
+        const body = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.32, 1.3, 14), new THREE.MeshStandardMaterial({ color }));
+        body.position.y = 0.65;
+        const head = new THREE.Mesh(new THREE.SphereGeometry(0.22, 12, 10), new THREE.MeshStandardMaterial({ color: c.kind === 'tactical' ? 0x1a1a1a : 0xd9b48f }));
+        head.position.y = 1.5;
+        // police light bar on the shoulders: red/blue is allowed for cops
+        const red = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.08, 0.12), new THREE.MeshBasicMaterial({ color: 0xff2020 }));
+        red.position.set(0, 1.32, -0.22);
+        const blue = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.08, 0.12), new THREE.MeshBasicMaterial({ color: 0x2060ff }));
+        blue.position.set(0, 1.32, 0.22);
+        g.add(body, head, red, blue);
+        if (c.kind === 'shield') {
+          const shield = new THREE.Mesh(new THREE.BoxGeometry(0.08, 1.2, 0.8), new THREE.MeshStandardMaterial({ color: 0x9fb4c8, transparent: true, opacity: 0.8 }));
+          shield.position.set(0.42, 0.8, 0);
+          g.add(shield);
+        }
+        g.traverse((o) => ((o as THREE.Mesh).castShadow = true));
+        this.scene.add(g);
+        this.copMeshes.set(c.id, g);
+      }
+      g.position.set(lerp(c.prev.x, c.pos.x, alpha), 0, lerp(c.prev.y, c.pos.y, alpha));
+      g.rotation.y = -lerpAngle(c.prevYaw, c.yaw, alpha);
     }
   }
 

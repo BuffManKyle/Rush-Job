@@ -8,6 +8,7 @@ import type { Sim } from '../sim/sim';
 import type { GameCamera } from './camera/types';
 import { WorldView } from './renderer';
 import { computePayout } from '../sim/payout';
+import { HEAT_NAMES } from '../sim/police';
 
 const SPEAKERS: Record<string, string> = { accountant: 'The Accountant', desk: 'Security desk', dispatcher: 'The Dispatcher', player: 'You', dot: 'Dot' };
 const RING_R = 22;
@@ -189,9 +190,15 @@ export class Hud {
     this.toast.style.opacity = this.toastTtl > 0 ? '1' : '0';
 
     // banner: alarm, or someone about to raise it
-    if (sim.alarm.tripped) {
-      this.banner.className = 'hud-banner alarm';
-      this.banner.innerHTML = `<div class="big">ALARM</div><div>${sim.alarm.cause}.</div><div class="dim">Loud phase comes in week 2. Esc → restart.</div>`;
+    if (sim.alarm.tripped && sim.heat) {
+      const h = sim.heat;
+      const fresh = sim.time - sim.alarm.time < 6;
+      this.banner.className = `hud-banner ${fresh ? 'alarm' : 'heat'}`;
+      const next = h.level < 4 ? `Heat ${h.level + 1} in <b>${Math.max(0, h.nextAt - sim.time).toFixed(0)} s</b>` : `Dot leaves in <b>${Math.max(0, h.vanLeavesAt - sim.time).toFixed(0)} s</b>`;
+      const cuff = h.arrest > 0 ? `<div class="cuff">CUFFING <span style="width:${(h.arrest * 100).toFixed(0)}%"></span></div>` : '';
+      this.banner.innerHTML = fresh
+        ? `<div class="big">ALARM</div><div>${sim.alarm.cause}.</div><div class="dim">Grab what you can and get it to the van.</div>`
+        : `<div><b class="heat-level">HEAT ${h.level} · ${HEAT_NAMES[h.level]}</b> · ${next} · secured $${sim.secured.toLocaleString()}</div>${cuff}`;
     } else {
       const o = sim.observers.find((q) => this.countdown(q.id) !== null);
       const pager = sim.guards.find((g) => g.pagerRinging > 0);
@@ -230,7 +237,7 @@ export class Hud {
     this.pause.classList.remove('hidden');
     this.pause.innerHTML = `
       <div class="panel receipt">
-        <div class="dim">THE ACCOUNTANT · ITEMIZED</div>
+        <div class="dim">THE ACCOUNTANT · ITEMIZED · ${this.sim.endNote}</div>
         <h1>${this.sim.level.title}</h1>
         ${rows}
         <div class="row total"><span>Total</span><span>${money(pay.total)}</span></div>

@@ -97,6 +97,17 @@ export const T = {
     maxCalls: 3, // the Dispatcher's patience runs out on the 4th call
   },
 
+  heat: {
+    firstDelay: 60, // alarm → Heat 1 (Bank: 90)
+    levelTime: 60, // each further level; Dot leaves this long after Heat 4 starts
+    hostageDelay: 20, // each zip-tied civilian delays the next level
+    maxHostages: 3,
+    maxCops: 10,
+    speed: { patrol: 3.0, shield: 2.0, tactical: 3.5 },
+    cuffReach: 1.0,
+    cuffTime: 2.0, // seconds of one cop on you to get cuffed
+  },
+
   payout: {
     cleanBonus: 0.25,
     dotCut: 0.1,

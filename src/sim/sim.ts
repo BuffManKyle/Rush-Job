@@ -8,6 +8,7 @@ import { Grid, type DoorState } from './grid';
 import { guardSpotted, investigate, setState, updateGuard } from './guard';
 import { civilianSpotted, updateCivilian } from './civilian';
 import { bagLoot, canBag, noteInteractable, pickUp, safeInteractable, throwBag, updateBags, vanInteractable, type Bag, type SafeState } from './loot';
+import { startHeat, updateHeat, type Cop, type HeatState } from './police';
 import { answeredPager, checkBodies, civilianInteractable, guardInteractable, isDown, takeDown, updateDowned, zipTie } from './takedown';
 import { inRect, type Level, type Vec2 } from './level';
 import { Rng } from './rng';
@@ -56,6 +57,9 @@ export class Sim {
   readonly bags: Bag[] = [];
   readonly safes: SafeState[] = [];
   knowsCode = false;
+  readonly cops: Cop[] = [];
+  heat: HeatState | null = null;
+  endNote = '';
   ended: { how: 'escaped' | 'cuffed'; time: number } | null = null;
   readonly stats = { spotted: false, takedowns: 0, kills: 0, civilianCasualties: 0 };
   pagerCalls = 0;
@@ -285,6 +289,14 @@ export class Sim {
     }
   }
 
+  endJob(how: 'escaped' | 'cuffed', note: string): void {
+    if (this.ended) return;
+    this.ended = { how, time: this.time };
+    this.endNote = note;
+    this.interaction = null;
+    this.events.emit({ type: 'jobEnded', how });
+  }
+
   tripAlarm(cause: string): void {
     if (this.alarm.tripped) return;
     this.stats.spotted = true;
@@ -292,6 +304,7 @@ export class Sim {
     this.events.emit({ type: 'alarm', cause });
     this.events.emit({ type: 'bark', who: 'accountant', line: 'accountant.alarm.01' });
     for (const g of this.guards) if (!isDown(g)) setState(g, 'alert');
+    startHeat(this);
   }
 
   escort(g: Guard): void {
@@ -357,6 +370,7 @@ export class Sim {
     for (const c of this.cameras) this.updateCamera(c, dt);
     for (const c of this.civilians) updateCivilian(this, c, dt);
     updateDowned(this, dt);
+    updateHeat(this, dt);
     checkBodies(this);
     this.separate();
 
@@ -592,8 +606,7 @@ export class Sim {
         break;
       }
       case 'leave':
-        this.ended = { how: 'escaped', time: this.time };
-        this.events.emit({ type: 'jobEnded', how: 'escaped' });
+        this.endJob('escaped', 'Out in the van');
         break;
     }
   }

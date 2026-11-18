@@ -228,6 +228,9 @@ export function loadTiled(json: string): Level {
         case 'civilian':
           level.civilians.push({ id, x: r.x, y: r.y, role: p.role === 'staff' ? 'staff' : 'customer', wander: str(p.wander, '') });
           break;
+        case 'police_spawn':
+          level.markers.push({ id, type, group: str(p.entrance, ''), x: r.x, y: r.y });
+          break;
         case 'code_note':
           level.markers.push({ id, type, group: str(p.group, ''), x: r.x, y: r.y });
           break;
