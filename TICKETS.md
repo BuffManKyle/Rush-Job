@@ -5,10 +5,11 @@ Status: [x] done · [~] partial · [ ] todo.
 
 ## How to play-test
 - `npm install`, then `npm run dev` → http://localhost:5173 (the browser pane uses `.claude/launch.json`).
+- A loadout picker opens before the job (Enter starts; your pick is remembered in this browser). `?nopick` skips it with the last loadout. On the pause or payout screen, L reopens it and restarts.
 - `?seed=123` replays a run exactly. The seed shows on the pause screen (Esc) and the payout receipt.
-- Controls: WASD (screen-relative; you face where you walk) · Shift sprint · C crouch · E hold to interact · G hold to mask up · Q mark (cursor) · F throw bag · right mouse aim · left click/Space shoot · R reload · wheel zoom · F1 debug · Esc pause.
+- Controls: WASD (screen-relative; you face where you walk) · Shift sprint · C crouch · E hold to interact · G hold to mask up · Q mark (cursor) · F throw bag · 1/2 use gadget slot · V shout (intimidate) · right mouse aim · left click/Space shoot · R reload · wheel zoom · F1 debug · Esc pause.
 - F1 debug: nav grid, routes (active bright, inactive dim), guard paths, noise radii, and per-observer detection math (why the meter moves). It also shows the shuffle results (spoilers).
-- Console: `rj.sim` (read-only state), `rj.test.manual = true; rj.test.run(30, { moveY: -1 })` steps the sim by hand.
+- Console: `rj.sim` (read-only state), `rj.test.manual = true; rj.test.run(30, { moveY: -1 })` steps the sim by hand. `rj.test.kit({ gadgets: ['noisemaker', 'smoke'], armor: 'heavy_vest' })` restarts the same seed with a loadout.
 
 ## Week 1 — core stealth (Nov 18–24)
 - [x] Vite + TS + three.js scaffold
@@ -44,7 +45,7 @@ Status: [x] done · [~] partial · [ ] todo.
 - [x] Takedowns (masked, from behind, or any side while he's radioing) + zip ties (4)
 - [x] Pagers: ring 3 s after takedown, hold E 4 s, 10 s unanswered or hanging up = alarm, 4th call fails
 - [x] Bodies: guards, cameras and civilians who see a downed/tied guard or tied civilian raise it
-- [~] Display cases: smash (12 m noise) done; glass cutter (4 s, quiet) needs the gadget/loadout
+- [x] Display cases: smash (12 m noise); with the glass cutter in a slot, E cuts quietly (4 s). After the alarm, E smashes for speed.
 - [x] Safe: code from the shuffled sticky note (read it, enter it, bag the gold)
 - [x] Bags: light (jewelry, stacks to $12k) and heavy (gold); speed/sprint rules; F throws 6/4/3 m; secured in the van zone
 - [x] Two bags at once (one per hand). With one bag you can still shoot and aim. With two: no shooting, aiming, takedowns or zip ties, no sprint, and an extra 0.85× speed. Movement follows the heavier bag. F throws the last bag picked up; jewelry tops up a light bag with room first.
@@ -57,10 +58,23 @@ Status: [x] done · [~] partial · [ ] todo.
   - A shot heard by a guard is called in (3 s window); civilians who hear it panic. A guard who's shot but standing calls it in.
   - Shot guards die (no pager, body still raises the alarm); shot civilians count as casualties ($5k cleanup, Bloodbath rating). Shot-out cameras go dark and the desk notices in 15 s.
   - Cops: patrol 100 HP, shield 150 (blocks from the front, 120°), tactical 200. Cops and alerted guards shoot back with line of sight within 14 m (hit chance falls with distance and when you sprint). HP 100, armor regen 4 s after the last hit (suit has 0 armor). At 0 HP you're cuffed. Proximity cuffing still applies.
-- [ ] Combat follow-ups: weapon unlocks (tranq, SMG, shotgun, baton), vests, medkit; muzzle flash/hit sparks/sound; guards keep distance and take cover instead of rushing
-- [ ] Intimidate (shout) civilians into cowering; right now only the alarm makes them cower
-- [ ] Body bags / drag a body into a closet
-- [ ] Panic button (civilians run to it; breaker kills it)
+- [ ] Combat follow-ups: weapon unlocks (tranq, SMG, shotgun, baton: in the picker, greyed out "not built yet"); muzzle flash/hit sparks/sound; guards keep distance and take cover instead of rushing
+- [x] Loadout (`src/data/loadout.ts`): 1 weapon + 2 gadget slots + armor, as data. Pre-job picker (`src/view/loadoutPicker.ts`), everything unlocked for testing (`UNLOCK_ALL`). HUD panel bottom right (`src/view/gearHud.ts`): slots, charges, cooldown, and chips for ECM time, power out, C4 fuse, smoke. Gear models from `gear.glb` in hand_R (`src/view/gear.ts`): the weapon while masked, the gadget for ~1 s after using it, the tool while you hold E with it (glass cutter, lockpick kit, zip ties, body bag).
+- [x] Gadgets (`src/sim/gadgets.ts`, numbers in `T.gadgets`). Number keys 1/2 use throw/place/self gadgets (masked only); tool gadgets change an E interaction instead.
+  - Noisemaker ×3 (1/2: throw at the cursor, 10 m max): 3 pulses of 8 m noise, 1 s apart. Guards investigate it.
+  - Glass cutter (tool): quiet 4 s case cut.
+  - Body bags ×2 (tool): hold E 3 s on a downed, tied or shot guard, or a shot civilian. Bagged bodies are skipped by the bodies check and never wake. Order on a downed guard: answer pager > zip-tie > bag (bag directly when out of ties). A bagged guard's pager still rings.
+  - ECM jammer ×1 (1/2: set down): 20 s of blind cameras (cones hidden, pending desk calls cancelled, a shot-out camera's 15 s report paused) and quiet pagers (pager delay and ring timers freeze).
+  - Medkit ×1 (1/2): full HP and armor; refuses at full health.
+  - Lockpick kit (tool): lockpick 3 s instead of 6.
+  - Smoke ×2 (1/2: throw): 3 m cloud for 12 s. `Grid.canSee` treats it as solid, so detection, bodies, enemy fire and aim assist all respect it.
+  - C4 ×2 (1/2 next to a locked door or the closed safe): 5 s fuse, then the door is open/unlocked or the safe is open (no code needed). Alarm, map-wide noise, 60 damage within 2.5 m.
+  - Keycard cloner: in the picker, greyed out (no keycards at Glint & Sons). Mirror kit: not in the picker.
+- [x] Armor: suit (0, casing bonus), light vest (+50), heavy vest (+100, 0.9× speed, no casing bonus).
+- [x] Intimidate (V, masked): civilians within 8 m and in sight drop and cower; a shout is 5 m of noise. Untied, they get up after 30–38 s and run for a guard or the panic button. After the alarm they stay down.
+- [x] Panic button (`levels/glint.tmj` layer `security`, behind the counter): a civilian who sees you masked runs to the nearest guard OR panic button; 0.8 s at the button = alarm. Dead while the power is out.
+- [x] Breaker (same layer, back hall): hold E 2 s (no mask needed). Cameras blind, panic button dead, lights dimmed. The desk sends the nearest guard after 8 s; 3 s at the box and the power is back (about a 15–20 s window). `T.power`.
+- [ ] Gadget follow-ups: drag bodies (the closet option); throw arc preview for the noisemaker and smoke; keycard cloner when the Bank has keycards; mirror kit (Gallery); shop prices enforced once the cash shop exists; sounds for each gadget.
 - [~] Guards fight in the loud phase: they shoot and chase; no cover AI yet
 - [x] Blender kit swapped in (`src/view/kit.ts`, `src/view/kitLevel.ts`): instanced walls/windows/doorways/floors/trim with cutaway, door leaves, counter segments, display cases (intact → smashed → bagged; tall against walls), safe door + loot, van, desks, security cameras, sticky note, sign, bags. Stand-in characters with clips (idle/walk/run/crouch/carry/interact/hands_up/ziptied); cops reuse the guard rig, darkened. `?graybox` forces the old look; a failed load falls back to it too.
 - [ ] Kit follow-ups: `floor_back` maps to lino everywhere (ASSETS.md wants concrete in the safe room, closet and hall, which needs a Tiled tile or zone); trim corners not placed; ceiling lamps left out (they read as dark blobs from 55°); ~340 draw calls with shadows (6 ms/frame at 1024×768 on the dev GPU): merge static props if integrated GPUs struggle
@@ -72,6 +86,12 @@ Status: [x] done · [~] partial · [ ] todo.
 - Nov 18: The player faces their movement direction (WASD). Hold right mouse (masked) to aim: you face the cursor, move at 2.2 m/s, and shots go toward the cursor with half the spread. Aimed shots snap to the target nearest the cursor direction within ±25° (`weapon.aimAssistArc`), so a trailing cursor still hits a runner; civilians are never auto-targeted. Left click (or Space) fires; without aiming, shots go along the facing and snap to the nearest guard, cop or camera within ±30° (`weapon.assistArc`). Bags throw along the facing. The camera leads ahead of the facing, or toward the cursor while aiming.
 
 ## Open questions for Kyle
+- Gadgets (rj-gadgets, Nov 18): zip ties stay a free extra (×4) rather than taking a gadget slot, otherwise the takedown loop costs a slot. Say if they should be a slot item as the design table lists them.
+- Gadgets: the breaker is a timed window, not an alarm. The desk sends a guard to flip it back, so it's a clever-column tool. The design lists it under Loud. Tune `T.power` or make it trip the alarm instead.
+- Gadgets: C4 has a key-press plant (no hold), works on the safe too, and the ECM blinds every camera on the map (no radius). All three are easy to change.
+- Gadgets: number-key gadgets need the mask (the design says the mask unlocks gadgets), so you can't throw a noisemaker while casing. `T.gadgets.requireMask`.
+- Gadgets: a shout is 5 m of noise and also reaches civilians behind glass counters (low cover doesn't block sight).
+- The held pistol is small and dark against the suit from the 55° camera. It reads best while aiming; it might need a rim light or a 1.5× scale.
 - Lethality (design doc open question): guards and patrol cops die in 2 hits; enemies hit about 50% of the time for 8–14 damage, so you last about 10–12 hits. Tune by feel.
 - Detection is spec-exact. Two calls to make by feel: should standing still count as "walk" (1.0, current) or lower? Should guards notice you bumping into them from behind (a small all-around radius)? It's off now (spec has none).
 - Unmasked + camera: I made the desk send the nearest guard to check (no alarm). Spec only covers the masked case.
