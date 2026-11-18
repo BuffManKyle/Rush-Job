@@ -1,0 +1,17 @@
+{
+  "_note": "Pilot 1 of 2 (player). A text-to-3d PREVIEW: an untextured mesh, so the shape can be checked before paying for refine, rig or clips. ai_model is pinned; confirm the id against Meshy's docs before the first --buy.",
+  "kind": "text-to-3d",
+  "job": "pilot-player-preview",
+  "stream": "chars",
+  "request": {
+    "mode": "preview",
+    "ai_model": "meshy-5",
+    "prompt": "stylized low-poly heist crook, A-pose with arms held well out from the body, chunky readable silhouette, slightly oversized head and hands, plain white full-face mask with two eye slits, black beanie, close-fitting charcoal suit with a teal tie, black gloves, black shoes, flat colors, game character, full body, front facing",
+    "art_style": "realistic",
+    "topology": "triangle",
+    "target_polycount": 7000,
+    "should_remesh": true,
+    "symmetry_mode": "on",
+    "pose_mode": "a-pose"
+  }
+}

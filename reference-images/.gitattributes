@@ -1,0 +1,10 @@
+# Binary assets: never let git convert line endings (opengame-assets).
+*.glb binary
+*.png binary
+*.jpg binary
+*.webp binary
+*.ktx2 binary
+*.bin binary
+*.ogg binary
+*.mp3 binary
+*.wav binary

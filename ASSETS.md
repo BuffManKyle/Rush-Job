@@ -59,7 +59,34 @@ Walls, windows and doors are whole cells, the same as the graybox and the collis
 
 ## Characters (stand-ins until Meshy)
 
-`char_*.glb` share one skeleton: `hips > spine > head`, `spine > upperarm_L/R > forearm_L/R > hand_L/R`, `hips > thigh_L/R > shin_L/R` (underscores, because three.js strips dots from node names). Attach guns and bags to `hand_R`. Clips (looping, 30 fps): `idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact`. Use an `AnimationMixer` and look clips up by name. The Meshy characters will ship with the same clip names, and code should go through a small bone-name map for the hand attach point.
+`char_*.glb` share one stand-in skeleton: `hips > spine > head`, `spine > upperarm_L/R > forearm_L/R > hand_L/R`, `hips > thigh_L/R > shin_L/R` (underscores, because three.js strips dots from node names). Attach guns and bags to `hand_R`. Clips (looping, 30 fps): `idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact`. Use an `AnimationMixer`, look clips up by name, and clone characters with `SkeletonUtils.clone`.
+
+**When the Meshy characters land, each keeps its own Meshy rig. They are not retargeted onto the stand-in skeleton.** Clips retargeted onto a shared rig tear meshes (see the `opengame-characters` skill), so every Meshy figure plays library clips on the rig Meshy made for it. What stays stable for game code:
+- **Clip names.** Each Meshy GLB will expose the same 10 names, renamed from Meshy's library actions at import.
+- **Attach points by role, not by bone name.** Code asks for `attach('hand_R')` through a per-model map. The stand-in maps to `hand_R`; Meshy's rig has 24 joints, no fingers, and torso bones numbered in the opposite direction to Mixamo, so its map is filled in at import.
+- **Same convention.** Metres, Y-up, facing +Z, origin at the feet, no root motion (the sim moves the root; clips only bob and sway).
+
+## Sponsor tools and evidence (OpenGame tracks: Meshy, fal, ElevenLabs)
+
+The entry form asks for evidence of what each sponsor tool produced, so every generated file gets a row here, plus a line in the spend ledger (`tools/gen/spend.jsonl`, written **before** each paid call). Generation runs on Kyle's machine with keys from the environment (`MESHY_API_KEY`, `FAL_KEY`). Keys never go in the repo or the game, and only finished files ship.
+
+| Tool | Used for | Status | Caps (set by Kyle) |
+| --- | --- | --- | --- |
+| Meshy | Player, guards, police ×3, civilians, staff, the Accountant, Dot | **Blocked: no account or key yet.** Stand-ins ship until then. | not set |
+| fal | Concept art, model sheets, item icons, posters, title and cover art | Waiting on Kyle's go-ahead | not set |
+| ElevenLabs | Voices, SFX, music (audio session) | not started here | not set |
+
+**Meshy plan (`opengame-assets` / `opengame-characters`):**
+1. A canon sheet per character first: a front/side A-pose turnaround in our style (chunky, slightly big head and hands, close-fitting clothes, arms well out from the body, no long coats). Look at it before buying any mesh.
+2. **Pilot two bodies end to end** before any batch: the player (masked, suit) and a guard (heavier build, cap). Mesh at a set polycount (target 5–8k triangles), then clean, rig, add clips, then check them in the game from the 55° camera beside the canon sheet.
+3. Pick clips by **id** from Meshy's library after watching the preview, because names mislead. Check that the library covers our 10 clips. Carry, hands-up and zip-tied are the doubtful ones; anything missing gets a scripted clip on that figure's own rig.
+4. Every job is recorded (request, job id, file hash) and downloaded right away, because Meshy deletes results after 3 days. A timeout is recovered by polling the job id, never by buying again.
+5. Only then the batch: police ×3, civilians and staff, the Accountant, Dot.
+
+Generated-file evidence (one row per file: tool, model version, job id, date, cost, used as):
+
+| File | Tool | Job id | Date | Cost | Used as |
+| --- | --- | --- | --- | --- | --- |
 
 ## Asset table
 

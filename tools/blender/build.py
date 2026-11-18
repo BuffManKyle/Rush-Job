@@ -99,6 +99,7 @@ def main():
             sheet(lib)
         meshopt(lib)
     subprocess.run([sys.executable, os.path.join(HERE, "assets_table.py")], check=True)
+    subprocess.run([sys.executable, os.path.join(HERE, "lint_glb.py")], check=True)
 
 
 if __name__ == "__main__":

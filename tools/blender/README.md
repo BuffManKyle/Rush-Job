@@ -22,7 +22,7 @@ Each `<lib>_build.py` script produces:
 | `reference-images/previews/<lib>/manifest.json` | Pieces, triangles, children, glTF bounds (committed) |
 | `reference-images/previews/kit_demo.png` | A small shop corner built from the kit, seen from the game camera |
 
-After a build, `assets_table.py` regenerates the asset table in `ASSETS.md`.
+After a build, `assets_table.py` regenerates the asset table in `ASSETS.md` and `lint_glb.py` checks every GLB (units and origin, metalness, triangle budgets, `RJ_` materials, dot-free node names, duplicate images, character clips). A failure names the file and the build exits 1.
 
 ## Libraries
 
@@ -57,3 +57,7 @@ rj.finish("crates", [p])                              # file must be named crate
 ## Compression (pending)
 
 `build.py` meshopt-compresses each GLB in place with `gltfpack -cc -kn -km -ke` when `gltfpack` is on PATH. It isn't installed yet. Two ways to add it: the `gltfpack` npm package (a dev dependency in `package.json`, which the systems session owns), or the standalone binary from the meshoptimizer releases. Until then the GLBs ship uncompressed. That's fine for now: everything totals under 1 MB.
+
+## Paid generation (Meshy, fal)
+
+`tools/gen/meshy.py` is the only way to buy Meshy jobs. It runs dry by default (`--buy` spends), refuses unknown request fields, and refuses to buy until Kyle sets a cap in `tools/gen/caps.json`. It logs each call to `tools/gen/spend.jsonl` **before** making it, journals task ids and file hashes in `tools/gen/jobs.jsonl`, and downloads results to `assets/gen/meshy/` straight away. The key comes from `MESHY_API_KEY` in the environment, never from a file. Pilot specs: `tools/gen/specs/pilot_player.json`, `pilot_guard.json`.

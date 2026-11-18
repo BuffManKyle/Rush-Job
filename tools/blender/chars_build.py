@@ -3,9 +3,10 @@
     py tools/blender/build.py chars
 
 PLACEHOLDERS until the Meshy characters land: chunky low-poly humanoids (big head, big hands)
-on ONE shared skeleton, rigidly skinned (each body part follows one bone), with the full
-animation set the game needs. When Meshy meshes arrive they are retargeted onto this same
-skeleton and clip names, so game code written against these keeps working.
+on one shared skeleton, rigidly skinned (each body part follows one bone), with the full
+animation set the game needs. The Meshy characters will NOT be retargeted onto this skeleton:
+each keeps its own Meshy rig (retargeting tears meshes), and what stays stable for game code is
+the clip names, attach points by role (hand_R) and the axis/origin convention. See ASSETS.md.
 
 Facing: -Y in Blender = +Z in glTF/three.js. Feet on y = 0. Height ~1.8 m.
 Bones: hips > spine > head; spine > upperarm_L/R > forearm_L/R > hand_L/R;
