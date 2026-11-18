@@ -10,6 +10,7 @@ export class Input {
   private mouse = new THREE.Vector2(0, 0); // NDC
   private crouchToggle = false;
   private mouseDown = false;
+  private rightDown = false;
   wheel = 0;
   aimWorld = new THREE.Vector3();
 
@@ -21,16 +22,21 @@ export class Input {
       if (e.code === 'KeyC' && !e.repeat) this.crouchToggle = !this.crouchToggle;
     });
     window.addEventListener('keyup', (e) => this.down.delete(e.code));
-    window.addEventListener('blur', () => this.down.clear());
+    window.addEventListener('blur', () => {
+      this.down.clear();
+      this.mouseDown = this.rightDown = false;
+    });
     el.addEventListener('mousemove', (e) => {
       const r = el.getBoundingClientRect();
       this.mouse.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
     });
     el.addEventListener('mousedown', (e) => {
       if (e.button === 0) this.mouseDown = true;
+      if (e.button === 2) this.rightDown = true;
     });
     window.addEventListener('mouseup', (e) => {
       if (e.button === 0) this.mouseDown = false;
+      if (e.button === 2) this.rightDown = false;
     });
     el.addEventListener('contextmenu', (e) => e.preventDefault());
     el.addEventListener(
@@ -89,6 +95,7 @@ export class Input {
       throw: this.consume('KeyF'),
       fire: this.mouseDown || this.down.has('Space'),
       reload: this.consume('KeyR'),
+      aim: this.rightDown,
     };
   }
 }

@@ -233,6 +233,7 @@ export class Sim {
       reserve: T.weapon.reserve,
       reloadTimer: 0,
       fireCd: 0,
+      aiming: false,
       frozen: 0,
       noiseTimer: 0,
     };
@@ -359,7 +360,7 @@ export class Sim {
     updateShots(this, dt);
     this.updatePlayer(input, dt);
     this.updateInteraction(input, dt);
-    updatePlayerWeapon(this, input.fire, input.reload, dt);
+    updatePlayerWeapon(this, input.fire, input.reload, dt, this.player.aiming ? { x: input.aimX, y: input.aimY } : null);
     this.updateDoors(dt);
 
     // Detection first, then AI reacts to the new meter values.
@@ -438,6 +439,8 @@ export class Sim {
     let speed: number = p.crouch ? T.player.crouchSpeed : p.sprinting ? T.player.sprintSpeed : T.player.walkSpeed;
     if (bag) speed *= bag.speed;
     if (p.maskProgress > 0) speed = Math.min(speed, T.player.crouchSpeed);
+    p.aiming = input.aim && p.masked;
+    if (p.aiming) speed = Math.min(speed, T.player.aimSpeed);
 
     let mx = input.moveX;
     let my = input.moveY;
@@ -457,8 +460,14 @@ export class Sim {
     p.moving = actual > 0.3;
     if (!p.moving) p.sprinting = false;
 
-    // face where you're walking (WASD only; the mouse doesn't turn the player)
-    if (Math.hypot(mx, my) > 0.1) {
+    // face where you're walking; while aiming (right mouse, masked), face the cursor instead
+    const aimDist = Math.hypot(input.aimX - p.pos.x, input.aimY - p.pos.y);
+    if (p.aiming && aimDist > 0.3) {
+      const want = Math.atan2(input.aimY - p.pos.y, input.aimX - p.pos.x);
+      const d = angleDiff(p.yaw, want);
+      const max = T.player.aimTurnRate * DEG * dt;
+      p.yaw += Math.max(-max, Math.min(max, d));
+    } else if (Math.hypot(mx, my) > 0.1) {
       const want = Math.atan2(my, mx);
       const d = angleDiff(p.yaw, want);
       const max = T.player.turnRate * DEG * dt;

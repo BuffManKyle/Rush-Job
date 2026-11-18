@@ -67,7 +67,7 @@ function assistedAim(sim: Sim): number {
   return best;
 }
 
-export function updatePlayerWeapon(sim: Sim, fire: boolean, reload: boolean, dt: number): void {
+export function updatePlayerWeapon(sim: Sim, fire: boolean, reload: boolean, dt: number, aimAt: Vec2 | null): void {
   const p = sim.player;
   const W = T.weapon;
   p.fireCd = Math.max(0, p.fireCd - dt);
@@ -96,9 +96,10 @@ export function updatePlayerWeapon(sim: Sim, fire: boolean, reload: boolean, dt:
   }
   p.mag--;
   p.fireCd = W.fireInterval;
-  const base = assistedAim(sim);
+  // aiming (right mouse): exactly at the cursor; hip fire: along the facing with assist
+  const base = aimAt ? Math.atan2(aimAt.y - p.pos.y, aimAt.x - p.pos.x) : assistedAim(sim);
   p.yaw = base; // turn to the target you shot at
-  const spread = ((W.spread * Math.PI) / 180) * (p.moving ? 2 : 1) * (sim.rng.next() - 0.5);
+  const spread = ((W.spread * Math.PI) / 180) * (p.moving ? 2 : 1) * (aimAt ? 0.5 : 1) * (sim.rng.next() - 0.5);
   const a = base + spread;
   const dir = { x: Math.cos(a), y: Math.sin(a) };
   const from = { x: p.pos.x + dir.x * 0.35, y: p.pos.y + dir.y * 0.35 };

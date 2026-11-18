@@ -117,7 +117,8 @@ function frame(now: number): void {
 function draw(alpha: number, dt: number): void {
   const { sim, view, hud, debug, cam } = game;
   const pp = WorldView.lerpPos(sim.player, alpha, 1);
-  const ahead = sim.facingPoint(T.view.facingLead);
+  // lead toward the cursor while aiming, otherwise along the facing
+  const ahead = sim.player.aiming ? { x: input.aimWorld.x, y: input.aimWorld.z } : sim.facingPoint(T.view.facingLead);
   cam.follow(pp, new THREE.Vector3(ahead.x, 1, ahead.y), dt);
   view.update(alpha, dt, cam, true);
   hud.update(dt, alpha, cam);

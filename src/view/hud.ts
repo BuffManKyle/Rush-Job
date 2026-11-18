@@ -67,7 +67,7 @@ export class Hud {
     this.hurt = el('div', 'hud-hurt', this.root);
     this.vitals = el('div', 'hud-vitals', this.root);
     this.pause = el('div', 'hud-pause hidden', this.root);
-    el('div', 'hud-help', this.root, 'WASD move · Shift sprint · C crouch · E interact (hold) · G mask up (hold) · Q mark · F throw bag · Click or Space shoot · R reload · Wheel zoom · F1 debug · Esc pause');
+    el('div', 'hud-help', this.root, 'WASD move · Shift sprint · C crouch · E interact (hold) · G mask up (hold) · Q mark · F throw bag · Right mouse aim · Left click/Space shoot · R reload · Wheel zoom · F1 debug · Esc pause');
     this.unsub = sim.events.on((e) => this.onEvent(e));
   }
 
@@ -235,7 +235,7 @@ export class Hud {
       this.vitals.innerHTML = `${armor}<div class="bar hp ${hpPct < 35 ? 'low' : ''}"><span style="width:${hpPct}%"></span></div><div class="ammo">Pocket pistol (silenced) · <b>${ammo}</b>${p.mag === 0 && p.reloadTimer <= 0 ? ' · <kbd>R</kbd>' : ''}</div>`;
     }
     this.hurt.style.opacity = String(Math.min(0.6, this.hitFlash * 2 + (p.masked && p.hp < 35 ? 0.15 : 0)));
-    document.body.classList.toggle('armed', p.masked && !sim.ended);
+    document.body.classList.toggle('aiming', p.aiming && !sim.ended);
   }
 
   /** Seconds until this observer raises the alarm, or null if it isn't trying to. */

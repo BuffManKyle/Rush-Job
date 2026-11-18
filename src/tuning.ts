@@ -13,7 +13,9 @@ export const T = {
     crouchSpeed: 1.5,
     sprintSpeed: 5.2,
     accel: 30, // m/s² toward target velocity
-    turnRate: 720, // deg/s, body yaw toward aim
+    turnRate: 720, // deg/s, body yaw toward the movement direction
+    aimTurnRate: 1080, // deg/s while aiming at the cursor
+    aimSpeed: 2.2, // move speed cap while aiming (right mouse)
     maskTime: 1.5, // hold G
     sprintNoiseRadius: 4,
     sprintNoiseInterval: 0.5, // seconds between footstep noise events while sprinting

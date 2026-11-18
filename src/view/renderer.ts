@@ -420,7 +420,7 @@ export class WorldView {
       for (const m of pc.meshes) if ((m.material as THREE.Material).name === 'RJ_Mask') m.visible = p.masked;
       let clip = 'idle';
       if (sim.interaction) clip = 'interact';
-      else if (p.masked && p.fireCd > 0 && !p.moving) clip = 'aim_shoot';
+      else if (p.aiming || (p.masked && p.fireCd > 0 && !p.moving)) clip = p.aiming && p.moving ? 'walk' : 'aim_shoot';
       else if (p.crouch) clip = p.moving ? 'crouch_walk' : 'crouch_idle';
       else if (p.carrying) clip = p.moving ? 'carry_walk' : 'idle';
       else if (p.moving) clip = p.sprinting ? 'run' : 'walk';

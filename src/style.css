@@ -66,6 +66,7 @@ kbd { display: inline-block; min-width: 1.6em; padding: 0 0.35em; border: 1px so
 .hud-vitals .hp.low span { background: var(--red); }
 .hud-vitals .armor span { background: #6fb8ff; }
 .hud-vitals .ammo { font-size: 13px; }
+body.aiming #app canvas { cursor: crosshair; }
 .hud-fade { position: absolute; inset: 0; background: #000; opacity: 0; }
 
 .hud-pause { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(5, 8, 16, 0.75); pointer-events: auto; }

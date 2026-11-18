@@ -6,7 +6,7 @@ Status: [x] done · [~] partial · [ ] todo.
 ## How to play-test
 - `npm install`, then `npm run dev` → http://localhost:5173 (the browser pane uses `.claude/launch.json`).
 - `?seed=123` replays a run exactly. The seed shows on the pause screen (Esc) and the payout receipt.
-- Controls: WASD (screen-relative; you face where you walk) · Shift sprint · C crouch · E hold to interact · G hold to mask up · Q mark (cursor) · F throw bag · Click or Space shoot · R reload · wheel zoom · F1 debug · Esc pause.
+- Controls: WASD (screen-relative; you face where you walk) · Shift sprint · C crouch · E hold to interact · G hold to mask up · Q mark (cursor) · F throw bag · right mouse aim · left click/Space shoot · R reload · wheel zoom · F1 debug · Esc pause.
 - F1 debug: nav grid, routes (active bright, inactive dim), guard paths, noise radii, and per-observer detection math (why the meter moves). It also shows the shuffle results (spoilers).
 - Console: `rj.sim` (read-only state), `rj.test.manual = true; rj.test.run(30, { moveY: -1 })` steps the sim by hand.
 
@@ -65,7 +65,7 @@ Status: [x] done · [~] partial · [ ] todo.
 
 ## Decisions (Kyle)
 - Nov 18: Shots kill (keep lethality as is).
-- Nov 18: No mouse aiming. The player faces their movement direction (WASD). Shots go along the facing and snap to the nearest guard, cop or camera within ±30° (`weapon.assistArc`); bags throw along the facing; the camera leads 1.5 m ahead of the facing. The mouse is only used for Q marking, clicking to fire and zooming. This departs from DESIGN.md "Camera" ("Mouse aims"); the design doc owner should record it there.
+- Nov 18: The player faces their movement direction (WASD). Hold right mouse (masked) to aim: you face the cursor, move at 2.2 m/s, and shots go exactly at the cursor with half the spread. Left click (or Space) fires; without aiming, shots go along the facing and snap to the nearest guard, cop or camera within ±30° (`weapon.assistArc`). Bags throw along the facing. The camera leads ahead of the facing, or toward the cursor while aiming.
 
 ## Open questions for Kyle
 - Lethality (design doc open question): guards and patrol cops die in 2 hits; enemies hit about 50% of the time for 8–14 damage, so you last about 10–12 hits. Tune by feel.

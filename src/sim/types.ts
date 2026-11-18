@@ -12,11 +12,12 @@ export interface InputFrame {
   mask: boolean; // G held
   mark: boolean; // Q pressed this tick (edge)
   throw: boolean; // F pressed this tick (edge)
-  fire: boolean; // left mouse held
+  fire: boolean; // left mouse (or Space) held
+  aim: boolean; // right mouse held: face the cursor and shoot at it
   reload: boolean; // R pressed this tick (edge)
 }
 
-export const NO_INPUT: InputFrame = { moveX: 0, moveY: 0, aimX: 0, aimY: 0, sprint: false, crouch: false, interact: false, mask: false, mark: false, throw: false, fire: false, reload: false };
+export const NO_INPUT: InputFrame = { moveX: 0, moveY: 0, aimX: 0, aimY: 0, sprint: false, crouch: false, interact: false, mask: false, mark: false, throw: false, fire: false, reload: false, aim: false };
 
 export type BagWeight = 'light' | 'medium' | 'heavy';
 
@@ -44,6 +45,7 @@ export interface Player {
   reserve: number;
   reloadTimer: number;
   fireCd: number;
+  aiming: boolean;
   frozen: number; // seconds of no control (escort fade)
   noiseTimer: number;
 }
