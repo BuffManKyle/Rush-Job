@@ -14,6 +14,8 @@ export interface Bag {
   vel: Vec2;
   flight: number; // seconds of flight left
   state: 'ground' | 'carried' | 'flying' | 'secured';
+  /** Order picked up; the first carried bag goes in the left hand, the second in the right. */
+  carriedAt: number;
 }
 
 export interface SafeState {
@@ -31,11 +33,11 @@ export function inVanZone(sim: Sim, p: Vec2): boolean {
   return sim.level.zones.some((z) => z.type === 'van_drop' && inRect(p, z));
 }
 
-/** Put loot in the player's hands (a new bag), or into the light bag they already carry. */
+/** Put loot into a light bag the player already carries (if it has room), or into a new bag in a free hand. */
 export function bagLoot(sim: Sim, weight: BagWeight, value: number, contents: string): void {
   const p = sim.player;
-  const cur = carried(sim);
-  if (cur && cur.weight === 'light' && weight === 'light') {
+  const cur = weight === 'light' ? carriedBags(sim).find((b) => b.weight === 'light' && b.value < T.bags.lightCapacity) : undefined;
+  if (cur) {
     cur.value += value;
     cur.contents = contents;
   } else {
@@ -49,6 +51,7 @@ export function bagLoot(sim: Sim, weight: BagWeight, value: number, contents: st
       vel: { x: 0, y: 0 },
       flight: 0,
       state: 'carried',
+      carriedAt: sim.tick,
     };
     sim.bags.push(b);
     sim.interactables.push(bagInteractable(sim, b));
@@ -56,23 +59,35 @@ export function bagLoot(sim: Sim, weight: BagWeight, value: number, contents: st
   syncPlayer(sim);
 }
 
+/** Bags in hand, in pickup order (left hand first). */
+export function carriedBags(sim: Sim): Bag[] {
+  return sim.bags.filter((b) => b.state === 'carried').sort((a, b) => a.carriedAt - b.carriedAt);
+}
+
+/** The bag F throws: the last one picked up. */
 export function carried(sim: Sim): Bag | undefined {
-  return sim.bags.find((b) => b.state === 'carried');
+  const bs = carriedBags(sim);
+  return bs[bs.length - 1];
 }
 
-/** Player fields mirror the carried bag so detection and movement can read them cheaply. */
+const ORDER: BagWeight[] = ['light', 'medium', 'heavy'];
+
+/** Player fields mirror the carried bags so detection and movement can read them cheaply. */
 export function syncPlayer(sim: Sim): void {
-  const b = carried(sim);
-  sim.player.carrying = b ? b.weight : null;
-  sim.player.carryValue = b ? b.value : 0;
+  const bs = carriedBags(sim);
+  const p = sim.player;
+  p.bagCount = bs.length;
+  // movement follows the heaviest bag in hand
+  p.carrying = bs.length ? bs.reduce((w, b) => (ORDER.indexOf(b.weight) > ORDER.indexOf(w) ? b.weight : w), bs[0].weight) : null;
+  p.carryValue = bs.reduce((a, b) => a + b.value, 0);
 }
 
-/** Can another loot pickup go into the current bag? Light bags hold up to `T.bags.lightCapacity` cases. */
+/** Can another loot pickup be bagged? A light bag with room takes more jewelry; otherwise you need a free hand. */
 export function canBag(sim: Sim, weight: BagWeight): string | null {
-  const b = carried(sim);
-  if (!b) return null;
-  if (b.weight === 'light' && weight === 'light' && b.value < T.bags.lightCapacity) return null;
-  return '!Hands full: throw (F) or drop the bag at the van';
+  const bs = carriedBags(sim);
+  if (weight === 'light' && bs.some((b) => b.weight === 'light' && b.value < T.bags.lightCapacity)) return null;
+  if (bs.length < T.bags.maxCarried) return null;
+  return '!Both hands full: throw a bag (F) or drop them at the van';
 }
 
 export function throwBag(sim: Sim, aim: Vec2): void {
@@ -134,15 +149,16 @@ function bagInteractable(sim: Sim, b: Bag): Interactable {
     },
     offer: () => {
       if (b.state !== 'ground') return null;
-      return carried(sim) ? '!Hands full' : 'bag_pickup';
+      return carriedBags(sim).length >= T.bags.maxCarried ? '!Both hands full' : 'bag_pickup';
     },
   };
 }
 
 export function pickUp(sim: Sim, id: string): void {
   const b = sim.bags.find((q) => q.id === id);
-  if (!b || b.state !== 'ground' || carried(sim)) return;
+  if (!b || b.state !== 'ground' || carriedBags(sim).length >= T.bags.maxCarried) return;
   b.state = 'carried';
+  b.carriedAt = sim.tick;
   syncPlayer(sim);
 }
 

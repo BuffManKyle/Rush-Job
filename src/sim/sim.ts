@@ -222,6 +222,7 @@ export class Sim {
       maskProgress: 0,
       carrying: null,
       carryValue: 0,
+      bagCount: 0,
       inRestricted: false,
       escorts: 0,
       zipTies: T.takedown.zipTies,
@@ -434,12 +435,13 @@ export class Sim {
 
     p.crouch = input.crouch;
     const bag = p.carrying ? T.bags[p.carrying] : null;
-    const canSprint = !p.crouch && (!bag || bag.sprint);
+    const canSprint = !p.crouch && (!bag || bag.sprint) && p.bagCount < 2;
     p.sprinting = input.sprint && canSprint;
     let speed: number = p.crouch ? T.player.crouchSpeed : p.sprinting ? T.player.sprintSpeed : T.player.walkSpeed;
     if (bag) speed *= bag.speed;
+    if (p.bagCount >= 2) speed *= T.bags.twoBagSpeed;
     if (p.maskProgress > 0) speed = Math.min(speed, T.player.crouchSpeed);
-    p.aiming = input.aim && p.masked;
+    p.aiming = input.aim && p.masked && p.bagCount < 2; // no free hand with two bags
     if (p.aiming) speed = Math.min(speed, T.player.aimSpeed);
 
     let mx = input.moveX;

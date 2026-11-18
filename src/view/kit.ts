@@ -19,11 +19,79 @@ export interface CharInstance {
   actions: Map<string, THREE.AnimationAction>;
   current: string;
   meshes: THREE.Mesh[];
+  /** Attach points by role (hand_L, hand_R, spine, ...) resolved to this clone's bones. */
+  bones: Record<string, THREE.Object3D>;
+}
+
+/** Arm chain (upper arm, forearm, hand) for a hand bone, by node name. */
+function armChain(scene: THREE.Object3D, hand: string): string[] {
+  const h = scene.getObjectByName(hand);
+  if (!h) return [];
+  const out = [h.name];
+  if (h.parent) out.push(h.parent.name);
+  if (h.parent?.parent) out.push(h.parent.parent.name);
+  return out;
+}
+
+function attachMap(scene: THREE.Object3D): Record<string, string> {
+  let map: Record<string, string> = { hand_L: 'hand_L', hand_R: 'hand_R', spine: 'spine' };
+  scene.traverse((o) => {
+    const raw = o.userData.rj_attach;
+    if (!raw) return;
+    try {
+      map = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    } catch {
+      /* keep defaults */
+    }
+  });
+  return map;
+}
+
+/**
+ * A copy of `base` with the given bones held still in `pose`'s first frame (arms down, holding a bag),
+ * so the legs keep the walk/run cadence while the bag arm hangs.
+ */
+function holdArms(base: THREE.AnimationClip, pose: THREE.AnimationClip, bones: string[], tag: string): THREE.AnimationClip {
+  const held = new Set(bones);
+  const tracks = base.tracks.filter((t) => !held.has(t.name.split('.')[0])).map((t) => t.clone());
+  for (const b of bones) {
+    const src = pose.tracks.find((t) => t.name === `${b}.quaternion`);
+    if (src) tracks.push(new THREE.QuaternionKeyframeTrack(src.name, [0], Array.from(src.values.slice(0, 4))));
+  }
+  return new THREE.AnimationClip(`${base.name}@${tag}`, base.duration, tracks);
 }
 
 export class Kit {
   private pieces = new Map<string, THREE.Object3D>();
   private chars = new Map<CharKind, GLTF>();
+  private clipCache = new Map<CharKind, THREE.AnimationClip[]>();
+  private attachCache = new Map<CharKind, Record<string, string>>();
+
+  /** All clips for a character kind, plus "@L" / "@LR" variants with one or both arms holding a bag. */
+  private clipsFor(kind: CharKind, g: GLTF): THREE.AnimationClip[] {
+    let clips = this.clipCache.get(kind);
+    if (clips) return clips;
+    const map = attachMap(g.scene);
+    this.attachCache.set(kind, map);
+    clips = g.animations.map((c) => {
+      const k = c.clone();
+      k.name = c.name.replace(/\.\d+$/, '');
+      return k;
+    });
+    const pose = clips.find((c) => c.name === 'idle');
+    const L = armChain(g.scene, map.hand_L);
+    const R = armChain(g.scene, map.hand_R);
+    if (pose && L.length && R.length) {
+      const extra: THREE.AnimationClip[] = [];
+      for (const c of clips) {
+        if (!['idle', 'walk', 'run', 'crouch_idle', 'crouch_walk', 'interact'].includes(c.name)) continue;
+        extra.push(holdArms(c, pose, L, 'L'), holdArms(c, pose, [...L, ...R], 'LR'));
+      }
+      clips = [...clips, ...extra];
+    }
+    this.clipCache.set(kind, clips);
+    return clips;
+  }
 
   addLibrary(gltf: GLTF): void {
     for (const child of gltf.scene.children) this.pieces.set(child.name, child);
@@ -96,11 +164,13 @@ export class Kit {
     });
     const mixer = new THREE.AnimationMixer(root);
     const actions = new Map<string, THREE.AnimationAction>();
-    for (const clip of g.animations) {
-      const name = clip.name.replace(/\.\d+$/, '');
-      if (!actions.has(name)) actions.set(name, mixer.clipAction(clip));
+    for (const clip of this.clipsFor(kind, g)) if (!actions.has(clip.name)) actions.set(clip.name, mixer.clipAction(clip));
+    const bones: Record<string, THREE.Object3D> = {};
+    for (const [role, name] of Object.entries(this.attachCache.get(kind) ?? {})) {
+      const b = root.getObjectByName(name);
+      if (b) bones[role] = b;
     }
-    return { root, mixer, actions, current: '', meshes };
+    return { root, mixer, actions, current: '', meshes, bones };
   }
 }
 
@@ -142,7 +212,7 @@ export async function loadKit(onProgress?: (done: number, total: number) => void
 /** Crossfade a character to a clip by name (no-op if already playing or missing). */
 export function play(c: CharInstance, name: string, fade = 0.2): void {
   if (c.current === name) return;
-  const next = c.actions.get(name) ?? c.actions.get('idle');
+  const next = c.actions.get(name) ?? c.actions.get(name.split('@')[0]) ?? c.actions.get('idle');
   if (!next) return;
   const prev = c.actions.get(c.current);
   next.reset().setEffectiveWeight(1).fadeIn(fade).play();

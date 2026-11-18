@@ -418,13 +418,22 @@ export class WorldView {
     const pc = this.chars.get('player');
     if (pc) {
       for (const m of pc.meshes) if ((m.material as THREE.Material).name === 'RJ_Mask') m.visible = p.masked;
+      // legs from walk/run at the real pace; bag arms held down ("@L" one bag, "@LR" two)
+      const speed = Math.hypot(p.vel.x, p.vel.y);
+      const run = p.moving && speed > (T.player.walkSpeed + T.player.sprintSpeed) / 2;
       let clip = 'idle';
       if (sim.interaction) clip = 'interact';
-      else if (p.aiming || (p.masked && p.fireCd > 0 && !p.moving)) clip = p.aiming && p.moving ? 'walk' : 'aim_shoot';
+      else if (p.aiming && !p.moving) clip = 'aim_shoot';
+      else if (p.masked && p.fireCd > 0 && !p.moving && p.bagCount < 2) clip = 'aim_shoot';
       else if (p.crouch) clip = p.moving ? 'crouch_walk' : 'crouch_idle';
-      else if (p.carrying) clip = p.moving ? 'carry_walk' : 'idle';
-      else if (p.moving) clip = p.sprinting ? 'run' : 'walk';
-      play(pc, clip);
+      else if (p.moving) clip = run ? 'run' : 'walk';
+      const tag = p.bagCount >= 2 ? '@LR' : p.bagCount === 1 ? '@L' : '';
+      play(pc, clip + tag);
+      const action = pc.actions.get(pc.current);
+      if (action) {
+        const ref = clip === 'run' ? T.view.runAnimSpeed : clip === 'walk' || clip === 'crouch_walk' ? T.view.walkAnimSpeed * (clip === 'crouch_walk' ? 0.6 : 1) : 0;
+        action.timeScale = ref ? THREE.MathUtils.clamp(speed / ref, 0.5, 2.2) : 1;
+      }
       pc.mixer.update(dt);
     }
     for (const g of sim.guards) {
@@ -577,12 +586,28 @@ export class WorldView {
         this.bagMeshes.set(b.id, m);
       }
       m.visible = b.state !== 'secured';
-      if (b.state === 'carried') {
+      const hand = b.state === 'carried' ? this.bagHand(b.id) : null;
+      if (hand) {
+        // hang at the player's side, at the hand's height (so it bobs with the arm); long axis along the facing
+        const k = T.bags.carryScale;
+        if (m.userData.h === undefined) m.userData.h = new THREE.Box3().setFromObject(m).getSize(new THREE.Vector3()).y;
+        const yaw = -this.player.rotation.y;
+        const side = hand === this.chars.get('player')?.bones.hand_L ? -1 : 1;
+        const hy = hand.getWorldPosition(new THREE.Vector3()).y;
+        m.scale.setScalar(k);
+        m.position.set(
+          this.player.position.x - Math.sin(yaw) * side * 0.34 - Math.cos(yaw) * 0.05,
+          Math.max(0.02, hy - m.userData.h * k * 0.9),
+          this.player.position.z + Math.cos(yaw) * side * 0.34 - Math.sin(yaw) * 0.05,
+        );
+        m.rotation.set(0, this.player.rotation.y, 0);
+      } else if (b.state === 'carried') {
         // on the player's back
         const yaw = this.player.rotation.y;
         m.position.set(this.player.position.x - Math.cos(-yaw) * 0.35, m.userData.kit ? 0.75 : 1.0, this.player.position.z - Math.sin(-yaw) * 0.35);
         m.rotation.y = yaw;
       } else {
+        m.scale.setScalar(1);
         const x = lerp(b.prev.x, b.pos.x, alpha);
         const z = lerp(b.prev.y, b.pos.y, alpha);
         const arc = b.state === 'flying' ? Math.sin(Math.PI * Math.max(0, Math.min(1, 1 - b.flight / T.bags.flightTime))) * 1.2 : 0;
@@ -639,6 +664,15 @@ export class WorldView {
   }
 
   private tracers: THREE.Line[] = [];
+  /** Which hand bone a carried bag hangs from: first bag left, second right. */
+  private bagHand(id: string): THREE.Object3D | null {
+    const pc = this.chars.get('player');
+    if (!pc) return null;
+    const carried = this.sim.bags.filter((b) => b.state === 'carried').sort((a, b) => a.carriedAt - b.carriedAt);
+    const slot = carried.findIndex((b) => b.id === id);
+    return (slot === 0 ? pc.bones.hand_L : slot === 1 ? pc.bones.hand_R : null) ?? null;
+  }
+
   private updateTracers(): void {
     const shots = this.sim.shots;
     while (this.tracers.length < shots.length) {

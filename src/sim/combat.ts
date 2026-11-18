@@ -85,6 +85,13 @@ export function updatePlayerWeapon(sim: Sim, fire: boolean, reload: boolean, dt:
   if (sim.time - p.lastHit > T.health.armorRegenDelay) p.armor = Math.min(p.armorMax, p.armor + T.health.armorRegenRate * dt);
 
   if (!p.masked || sim.interaction || p.frozen > 0) return;
+  if (p.bagCount >= 2) {
+    if (fire && p.fireCd <= 0) {
+      sim.events.emit({ type: 'message', text: 'Both hands full. Throw a bag (F) to shoot.', tone: 'warn' });
+      p.fireCd = 1;
+    }
+    return;
+  }
   if (reload && p.reloadTimer <= 0 && p.mag < W.mag && p.reserve > 0) {
     p.reloadTimer = W.reloadTime;
     sim.events.emit({ type: 'message', text: 'Reloading...', tone: 'info' });

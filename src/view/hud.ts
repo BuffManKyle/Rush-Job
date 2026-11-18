@@ -126,7 +126,7 @@ export class Hud {
     const mode = p.masked ? '<b class="masked">MASKED</b>' : '<b>UNMASKED</b> · casing';
     const area = p.inRestricted ? '<span class="restricted">STAFF ONLY</span>' : '<span>public</span>';
     const move = p.crouch ? 'crouched' : p.sprinting && p.moving ? 'sprinting' : p.moving ? 'walking' : 'still';
-    const bag = p.carrying ? ` · bag $${p.carryValue.toLocaleString()}` : '';
+    const bag = p.bagCount ? ` · ${p.bagCount === 2 ? '2 bags (hands full)' : 'bag'} $${p.carryValue.toLocaleString()}` : '';
     const ties = p.masked ? ` · zip ties ${p.zipTies}` : '';
     const take = sim.secured ? ` · secured $${sim.secured.toLocaleString()}` : '';
     this.status.innerHTML = `<div class="title">${sim.level.title}</div>${mode} · ${area} · ${move}${ties}${bag}${take}`;

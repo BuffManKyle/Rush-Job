@@ -45,6 +45,8 @@ Status: [x] done · [~] partial · [ ] todo.
 - [~] Display cases: smash (12 m noise) done; glass cutter (4 s, quiet) needs the gadget/loadout
 - [x] Safe: code from the shuffled sticky note (read it, enter it, bag the gold)
 - [x] Bags: light (jewelry, stacks to $12k) and heavy (gold); speed/sprint rules; F throws 6/4/3 m; secured in the van zone
+- [x] Two bags at once (one per hand). With one bag you can still shoot and aim. With two: no shooting, aiming, takedowns or zip ties, no sprint, and an extra 0.85× speed. Movement follows the heavier bag. F throws the last bag picked up; jewelry tops up a light bag with room first.
+- [x] Carry animation: legs play walk/run scaled to real speed (`view.walkAnimSpeed`/`runAnimSpeed`), with the bag arm(s) held in the idle pose (`walk@L`, `walk@LR`, ...). Bags hang at the player's sides at hand height, 0.7× size. The Meshy `carry_walk` clip (9.3 s, box-carry cadence) is no longer used.
 - [x] Van: hold E in the drop zone to leave → payout
 - [x] Alarm → Heat 1–4 clock (60 s each), hostages (tied civilians) delay each level 20 s (max 3), Dot leaves 60 s into Heat 4
 - [x] Cops push in (front, then alley; shields at 3, tactical at 4); cuffed when they (or alert guards) hold you 2 s

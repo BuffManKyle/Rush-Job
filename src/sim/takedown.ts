@@ -32,9 +32,10 @@ export function guardInteractable(sim: Sim, g: Guard): Interactable {
       if (g.state === 'tied') return g.pagerRinging > 0 ? 'answer_pager' : null;
       if (g.state === 'down') {
         if (g.pagerRinging > 0) return 'answer_pager';
+        if (p.bagCount >= 2) return '!Both hands full';
         return p.zipTies > 0 ? 'zip_tie' : '!Out of zip ties';
       }
-      if (!p.masked || g.state === 'alert') return null;
+      if (!p.masked || g.state === 'alert' || p.bagCount >= 2) return null;
       // a guard on the radio can be stopped from any side; otherwise it has to be from behind
       if (g.state === 'report' || behind(sim, g)) return 'takedown';
       return null;
@@ -53,6 +54,7 @@ export function civilianInteractable(sim: Sim, c: Civilian): Interactable {
     },
     offer: () => {
       if (!sim.player.masked || c.state !== 'cower') return null;
+      if (sim.player.bagCount >= 2) return '!Both hands full';
       return sim.player.zipTies > 0 ? 'zip_tie' : '!Out of zip ties';
     },
   };

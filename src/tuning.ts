@@ -168,6 +168,9 @@ export const T = {
   },
 
   bags: {
+    carryScale: 0.7, // bags in hand draw a bit smaller so two don't swallow the character
+    maxCarried: 2, // one per hand; with two you can't shoot, aim or take anyone down
+    twoBagSpeed: 0.85, // extra multiplier on top of the heaviest bag's speed when carrying two (and no sprint)
     lightCapacity: 12000, // jewelry: keep stuffing one light bag until it holds this much
     flightTime: 0.5,
     landNoise: 2,
@@ -189,6 +192,8 @@ export const T = {
     cutRadius: 6.5, // half-width of the cutaway region
     cutDepth: 9, // how far toward the camera walls get cut
     coneRays: 48,
+    walkAnimSpeed: 1.6, // m/s the walk clip looks right at; playback scales with real speed
+    runAnimSpeed: 4.6,
   },
 } as const;
 

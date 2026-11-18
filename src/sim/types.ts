@@ -34,6 +34,7 @@ export interface Player {
   maskProgress: number; // 0..1 while holding G
   carrying: BagWeight | null;
   carryValue: number;
+  bagCount: number;
   inRestricted: boolean;
   escorts: number;
   zipTies: number;
