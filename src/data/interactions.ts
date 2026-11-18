@@ -27,5 +27,10 @@ export const INTERACTIONS: Record<string, InteractionDef> = {
   takedown: { id: 'takedown', label: 'Take down', time: T.takedown.time, noise: 0, interrupt: ['release'], requiresMask: true },
   zip_tie: { id: 'zip_tie', label: 'Zip-tie', time: T.takedown.zipTieTime, noise: 0, interrupt: ['release', 'move'], requiresMask: true },
   answer_pager: { id: 'answer_pager', label: 'Answer pager', time: T.pager.answerTime, noise: 0, interrupt: ['release', 'move'], requiresMask: true },
+  bag_pickup: { id: 'bag_pickup', label: 'Pick up bag', time: 0.3, noise: 0, interrupt: ['release'] },
+  read_note: { id: 'read_note', label: 'Read sticky note', time: 1, noise: 0, interrupt: ['release'] },
+  safe_code: { id: 'safe_code', label: 'Enter safe code', time: 3, noise: 0, interrupt: ['release', 'move'] },
+  safe_loot: { id: 'safe_loot', label: 'Bag the gold', time: 2, noise: 0, interrupt: ['release', 'move'], requiresMask: true },
+  leave: { id: 'leave', label: 'Get in the van and go', time: 1, noise: 0, interrupt: ['release', 'move'] },
   bag_loot: { id: 'bag_loot', label: 'Bag loot', time: 1.5, noise: 0, interrupt: ['release', 'move'], requiresMask: true },
 };

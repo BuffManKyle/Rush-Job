@@ -66,6 +66,10 @@ kbd { display: inline-block; min-width: 1.6em; padding: 0 0.35em; border: 1px so
 .hud-pause button { font: inherit; padding: 8px 14px; border-radius: 6px; border: 1px solid #3a4870; background: #1c2742; color: var(--ink); cursor: pointer; }
 .hud-pause button:hover { border-color: var(--teal); }
 
+.receipt { font-family: ui-monospace, Consolas, monospace; }
+.receipt .row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px dashed #2a3554; transition: opacity 0.2s; }
+.receipt .total { font-weight: 700; border-bottom: none; border-top: 2px solid var(--ink); margin-top: 6px; }
+.receipt .rating { margin-top: 14px; font: 900 32px/1 system-ui; color: var(--yellow); letter-spacing: 0.08em; transition: opacity 0.4s; }
 .hud-debug { position: absolute; right: 12px; top: 12px; max-width: min(760px, calc(100vw - 24px)); padding: 8px 10px; background: rgba(0, 0, 0, 0.78); font: 11px/1.4 ui-monospace, Consolas, monospace; border-radius: 6px; }
 .hud-debug table { border-collapse: collapse; margin: 4px 0; }
 .hud-debug td, .hud-debug th { padding: 1px 6px; text-align: left; white-space: nowrap; }

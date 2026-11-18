@@ -7,6 +7,7 @@ import type { SimEvent } from '../sim/events';
 import type { Sim } from '../sim/sim';
 import type { GameCamera } from './camera/types';
 import { WorldView } from './renderer';
+import { computePayout } from '../sim/payout';
 
 const SPEAKERS: Record<string, string> = { accountant: 'The Accountant', desk: 'Security desk', dispatcher: 'The Dispatcher', player: 'You', dot: 'Dot' };
 const RING_R = 22;
@@ -217,6 +218,36 @@ export class Hud {
     if (g) return g.state === 'report' ? Math.max(0, g.reportTimer) : null;
     const c = this.sim.cameras.find((q) => q.id === id);
     return c && c.deskTimer > 0 ? c.deskTimer : null;
+  }
+
+  private payoutShown = false;
+  showPayout(onRestart: (newSeed: boolean) => void): void {
+    if (this.payoutShown) return;
+    this.payoutShown = true;
+    const pay = computePayout(this.sim);
+    const money = (n: number) => `${n < 0 ? '−' : ''}$${Math.abs(n).toLocaleString()}`;
+    const rows = pay.lines.map((l) => `<div class="row"><span>${l.label}</span><span>${money(l.amount)}</span></div>`).join('');
+    this.pause.classList.remove('hidden');
+    this.pause.innerHTML = `
+      <div class="panel receipt">
+        <div class="dim">THE ACCOUNTANT · ITEMIZED</div>
+        <h1>${this.sim.level.title}</h1>
+        ${rows}
+        <div class="row total"><span>Total</span><span>${money(pay.total)}</span></div>
+        <div class="rating">${pay.rating}</div>
+        <p class="dim">${pay.ratingNote}</p>
+        <p class="dim">Seed <code>${this.sim.seed}</code> · ${this.sim.time.toFixed(0)} s</p>
+        <div class="buttons">
+          <button data-a="same">Run it again (R)</button>
+          <button data-a="new">New seed (N)</button>
+        </div>
+      </div>`;
+    // typewriter: reveal rows one at a time
+    this.pause.querySelectorAll<HTMLElement>('.row, .rating').forEach((r, i) => {
+      r.style.opacity = '0';
+      setTimeout(() => (r.style.opacity = '1'), 250 + i * 350);
+    });
+    this.pause.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => onRestart(b.dataset.a === 'new')));
   }
 
   showPause(show: boolean, seed: number, onRestart: (newSeed: boolean) => void, onResume: () => void): void {

@@ -7,6 +7,7 @@ export type SimEvent =
   | { type: 'alarm'; cause: string }
   | { type: 'escorted'; who: string }
   | { type: 'maskedUp' }
+  | { type: 'jobEnded'; how: 'escaped' | 'cuffed' }
   | { type: 'interactStart'; id: string; def: string }
   | { type: 'interactDone'; id: string; def: string }
   | { type: 'interactCancel'; id: string; def: string; why: string }

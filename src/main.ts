@@ -76,9 +76,13 @@ function frame(now: number): void {
   requestAnimationFrame(frame);
   const dt = Math.min(0.25, (now - last) / 1000);
   last = now;
-  const { sim, debug, cam } = game;
+  const { sim, debug, cam, hud } = game;
 
-  if (input.consume('Escape')) setPaused(!paused);
+  if (sim.ended) {
+    hud.showPayout((fresh) => start(fresh ? (Math.random() * 1e9) >>> 0 : sim.seed));
+    if (input.consume('KeyR')) return start(sim.seed);
+    if (input.consume('KeyN')) return start((Math.random() * 1e9) >>> 0);
+  } else if (input.consume('Escape')) setPaused(!paused);
   if (input.consume('F1')) {
     debugOn = !debugOn;
     debug.toggle();

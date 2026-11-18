@@ -97,6 +97,13 @@ export const T = {
     maxCalls: 3, // the Dispatcher's patience runs out on the 4th call
   },
 
+  payout: {
+    cleanBonus: 0.25,
+    dotCut: 0.1,
+    cleanupPerCivilian: 5000,
+    bail: 10000,
+  },
+
   casing: {
     escortsBeforeAlarm: 1, // first catch = escorted out, the next one trips the alarm
     escortFadeTime: 1.2,
@@ -110,6 +117,9 @@ export const T = {
   },
 
   bags: {
+    lightCapacity: 12000, // jewelry: keep stuffing one light bag until it holds this much
+    flightTime: 0.5,
+    landNoise: 2,
     light: { speed: 0.9, sprint: true, throw: 6 },
     medium: { speed: 0.75, sprint: false, throw: 4 },
     heavy: { speed: 0.6, sprint: false, throw: 3 },

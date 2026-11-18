@@ -78,6 +78,7 @@ export class Input {
       interact: this.down.has('KeyE'),
       mask: this.down.has('KeyG'),
       mark: this.consume('KeyQ'),
+      throw: this.consume('KeyF'),
     };
   }
 }

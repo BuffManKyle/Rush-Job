@@ -7,6 +7,7 @@ import { EventBus } from './events';
 import { Grid, type DoorState } from './grid';
 import { guardSpotted, investigate, setState, updateGuard } from './guard';
 import { civilianSpotted, updateCivilian } from './civilian';
+import { bagLoot, canBag, noteInteractable, pickUp, safeInteractable, throwBag, updateBags, vanInteractable, type Bag, type SafeState } from './loot';
 import { answeredPager, checkBodies, civilianInteractable, guardInteractable, isDown, takeDown, updateDowned, zipTie } from './takedown';
 import { inRect, type Level, type Vec2 } from './level';
 import { Rng } from './rng';
@@ -52,6 +53,11 @@ export class Sim {
   /** Interactable the player would act on right now, and what it offers (for the HUD prompt). */
   focus: { id: string; offer: string } | null = null;
   secured = 0;
+  readonly bags: Bag[] = [];
+  readonly safes: SafeState[] = [];
+  knowsCode = false;
+  ended: { how: 'escaped' | 'cuffed'; time: number } | null = null;
+  readonly stats = { spotted: false, takedowns: 0, kills: 0, civilianCasualties: 0 };
   pagerCalls = 0;
   /** Observers the player has tagged with Q during casing. */
   readonly marked = new Set<string>();
@@ -215,6 +221,14 @@ export class Sim {
 
     for (const d of this.grid.doors) this.interactables.push(this.doorInteractable(d));
     for (const g of this.guards) this.interactables.push(guardInteractable(this, g));
+    for (const p of level.props.filter((q) => q.type === 'safe')) {
+      const sf: SafeState = { id: p.id, x: p.x + p.w / 2, y: p.y + p.h / 2, value: p.value, open: false, looted: false };
+      this.safes.push(sf);
+      this.interactables.push(safeInteractable(this, sf));
+    }
+    if (note) this.interactables.push(noteInteractable(this, note));
+    const van = vanInteractable(this);
+    if (van) this.interactables.push(van);
     for (const c of this.civilians) this.interactables.push(civilianInteractable(this, c));
     for (const p of level.props.filter((q) => q.type === 'case')) {
       const c: CaseState = { id: p.id, x: p.x + p.w / 2, y: p.y + p.h / 2, value: p.value, smashed: false, looted: false };
@@ -226,8 +240,7 @@ export class Sim {
         offer: () => {
           if (c.looted) return null;
           if (!c.smashed) return this.player.masked ? 'case_smash' : '!Mask up first (hold G)';
-          if (this.player.carrying) return '!Hands full: drop the bag at the van';
-          return 'bag_loot';
+          return canBag(this, 'light') ?? 'bag_loot';
         },
       });
     }
@@ -274,6 +287,7 @@ export class Sim {
 
   tripAlarm(cause: string): void {
     if (this.alarm.tripped) return;
+    this.stats.spotted = true;
     this.alarm = { tripped: true, cause, time: this.time };
     this.events.emit({ type: 'alarm', cause });
     this.events.emit({ type: 'bark', who: 'accountant', line: 'accountant.alarm.01' });
@@ -299,6 +313,7 @@ export class Sim {
 
   step(input: InputFrame): void {
     const dt = this.dt;
+    if (this.ended) return;
     this.tick++;
     this.time += dt;
     const p = this.player;
@@ -312,6 +327,8 @@ export class Sim {
     }
 
     if (input.mark) this.mark(input.aimX, input.aimY);
+    if (input.throw && !this.interaction && this.player.frozen <= 0) throwBag(this, { x: input.aimX, y: input.aimY });
+    updateBags(this, dt);
     this.updatePlayer(input, dt);
     this.updateInteraction(input, dt);
     this.updateDoors(dt);
@@ -330,6 +347,7 @@ export class Sim {
       }
       const crossed = updateSuspicion(this.grid, o, p, dt);
       if (crossed) {
+        this.stats.spotted = true;
         if (o.kind === 'guard') guardSpotted(this, o, describe(o, p));
         else if (o.kind === 'civilian') civilianSpotted(this, o);
         else this.cameraSpotted(o);
@@ -421,13 +439,6 @@ export class Sim {
       p.noiseTimer = T.player.sprintNoiseInterval;
     }
 
-    // bags secured at the van
-    if (p.carrying && this.level.zones.some((z) => z.type === 'van_drop' && inRect(p.pos, z))) {
-      this.secured += p.carryValue;
-      this.events.emit({ type: 'message', text: `Bag secured: $${p.carryValue.toLocaleString()}`, tone: 'info' });
-      p.carrying = null;
-      p.carryValue = 0;
-    }
   }
 
   private pickFocus(): { it: Interactable; offer: string } | null {
@@ -535,7 +546,10 @@ export class Sim {
         break;
       case 'takedown': {
         const g = this.guards.find((q) => q.id === targetId);
-        if (g) takeDown(this, g);
+        if (g) {
+          takeDown(this, g);
+          this.stats.takedowns++;
+        }
         break;
       }
       case 'zip_tie': {
@@ -551,10 +565,35 @@ export class Sim {
       case 'bag_loot':
         if (kase) {
           kase.looted = true;
-          this.player.carrying = 'light';
-          this.player.carryValue += kase.value;
+          bagLoot(this, 'light', kase.value, 'jewelry');
           this.events.emit({ type: 'message', text: `Bagged $${kase.value.toLocaleString()} in jewelry. Get it to the van.`, tone: 'info' });
         }
+        break;
+      case 'bag_pickup':
+        pickUp(this, targetId);
+        break;
+      case 'read_note':
+        this.knowsCode = true;
+        this.events.emit({ type: 'message', text: `Safe code: ${this.shuffle.safeCode}`, tone: 'info' });
+        this.events.emit({ type: 'bark', who: 'accountant', line: 'accountant.note.01' });
+        break;
+      case 'safe_code': {
+        const sf = this.safes.find((q) => q.id === targetId);
+        if (sf) sf.open = true;
+        break;
+      }
+      case 'safe_loot': {
+        const sf = this.safes.find((q) => q.id === targetId);
+        if (sf) {
+          sf.looted = true;
+          bagLoot(this, 'heavy', sf.value, 'gold');
+          this.events.emit({ type: 'message', text: `Gold: $${sf.value.toLocaleString()}. Heavy bag: slow, no sprinting.`, tone: 'info' });
+        }
+        break;
+      }
+      case 'leave':
+        this.ended = { how: 'escaped', time: this.time };
+        this.events.emit({ type: 'jobEnded', how: 'escaped' });
         break;
     }
   }

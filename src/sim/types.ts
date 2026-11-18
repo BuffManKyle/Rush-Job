@@ -11,9 +11,10 @@ export interface InputFrame {
   interact: boolean; // E held
   mask: boolean; // G held
   mark: boolean; // Q pressed this tick (edge)
+  throw: boolean; // F pressed this tick (edge)
 }
 
-export const NO_INPUT: InputFrame = { moveX: 0, moveY: 0, aimX: 0, aimY: 0, sprint: false, crouch: false, interact: false, mask: false, mark: false };
+export const NO_INPUT: InputFrame = { moveX: 0, moveY: 0, aimX: 0, aimY: 0, sprint: false, crouch: false, interact: false, mask: false, mark: false, throw: false };
 
 export type BagWeight = 'light' | 'medium' | 'heavy';
 

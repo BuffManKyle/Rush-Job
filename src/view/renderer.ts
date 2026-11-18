@@ -76,6 +76,8 @@ export class WorldView {
   private observers = new Map<string, ObserverView>();
   private doors = new Map<string, THREE.Group>();
   private cases = new Map<string, { glass: THREE.Mesh; loot: THREE.Mesh }>();
+  private bagMeshes = new Map<string, THREE.Mesh>();
+  private safeMeshes = new Map<string, THREE.Mesh>();
   private noiseRings: THREE.Mesh[] = [];
   private noiseMat = new THREE.MeshBasicMaterial({ color: PALETTE.noise, transparent: true, opacity: 0.5, side: THREE.DoubleSide, depthWrite: false });
   private ringGeo = new THREE.RingGeometry(0.94, 1, 64);
@@ -198,6 +200,7 @@ export class WorldView {
         this.scene.add(glassM, loot);
         this.cases.set(p.id, { glass: glassM, loot });
       }
+      if (p.type === 'safe') this.safeMeshes.set(p.id, m);
       if (p.type === 'van') {
         const stripe = new THREE.Mesh(box, new THREE.MeshStandardMaterial({ color: PALETTE.teal }));
         stripe.scale.set(p.w + 0.02, 0.3, p.h * 0.6);
@@ -402,6 +405,11 @@ export class WorldView {
       v.loot.visible = !c.looted;
     }
 
+    this.updateBags(alpha);
+    for (const sf of sim.safes) {
+      const m = this.safeMeshes.get(sf.id);
+      if (m) (m.material as THREE.MeshStandardMaterial).emissive.setHex(sf.open ? (sf.looted ? 0x000000 : 0x3a2a00) : 0x000000);
+    }
     this.updateNoise();
     if (cam.wantsCutaway) this.updateCutaway(pp, dt);
 
@@ -437,6 +445,34 @@ export class WorldView {
     v.coneMat.opacity = (s >= 100 ? 0.32 : s > 0 ? 0.2 + s * 0.001 : 0.13) * (o.kind === 'civilian' && s <= 0 ? 0.55 : 1);
     // cowering civilians stop looking
     if (o.kind === 'civilian' && o.state === 'cower') v.cone.visible = false;
+  }
+
+  private updateBags(alpha: number): void {
+    const size = { light: 0.32, medium: 0.42, heavy: 0.52 };
+    for (const b of this.sim.bags) {
+      let m = this.bagMeshes.get(b.id);
+      if (!m) {
+        const s = size[b.weight];
+        m = new THREE.Mesh(new THREE.BoxGeometry(s, s * 0.8, s * 1.2), new THREE.MeshStandardMaterial({ color: 0x23262e, roughness: 0.9 }));
+        const strap = new THREE.Mesh(new THREE.BoxGeometry(s * 1.02, s * 0.15, s * 1.22), new THREE.MeshStandardMaterial({ color: b.weight === 'heavy' ? PALETTE.gold : PALETTE.teal }));
+        m.add(strap);
+        m.castShadow = true;
+        this.scene.add(m);
+        this.bagMeshes.set(b.id, m);
+      }
+      m.visible = b.state !== 'secured';
+      if (b.state === 'carried') {
+        // on the player's back
+        const yaw = this.player.rotation.y;
+        m.position.set(this.player.position.x - Math.cos(-yaw) * 0.35, 1.0, this.player.position.z - Math.sin(-yaw) * 0.35);
+        m.rotation.y = yaw;
+      } else {
+        const x = lerp(b.prev.x, b.pos.x, alpha);
+        const z = lerp(b.prev.y, b.pos.y, alpha);
+        const arc = b.state === 'flying' ? Math.sin(Math.PI * Math.max(0, Math.min(1, 1 - b.flight / T.bags.flightTime))) * 1.2 : 0;
+        m.position.set(x, 0.18 + arc, z);
+      }
+    }
   }
 
   private updateNoise(): void {
