@@ -43,6 +43,8 @@ export class Hud {
   private toastTtl = 0;
   private banner: HTMLDivElement;
   private fade: HTMLDivElement;
+  private hurt: HTMLDivElement;
+  private vitals: HTMLDivElement;
   readonly pause: HTMLDivElement;
   private unsub: () => void;
 
@@ -62,8 +64,10 @@ export class Hud {
     this.toast = el('div', 'hud-toast', this.root);
     this.banner = el('div', 'hud-banner', this.root);
     this.fade = el('div', 'hud-fade', this.root);
+    this.hurt = el('div', 'hud-hurt', this.root);
+    this.vitals = el('div', 'hud-vitals', this.root);
     this.pause = el('div', 'hud-pause hidden', this.root);
-    el('div', 'hud-help', this.root, 'WASD move · Shift sprint · C crouch · E interact (hold) · G mask up (hold) · Q mark · Wheel zoom · F1 debug · Esc pause');
+    el('div', 'hud-help', this.root, 'WASD move · Shift sprint · C crouch · E interact (hold) · G mask up (hold) · Q mark · F throw bag · Click shoot · R reload · Wheel zoom · F1 debug · Esc pause');
     this.unsub = sim.events.on((e) => this.onEvent(e));
   }
 
@@ -83,6 +87,9 @@ export class Hud {
         this.toast.textContent = e.text;
         this.toast.dataset.tone = e.tone ?? 'info';
         this.toastTtl = 4;
+        break;
+      case 'playerHit':
+        this.hitFlash = 0.35;
         break;
       case 'interactCancel':
         if (e.why === 'moved') this.flashPrompt('Interrupted: you moved');
@@ -217,6 +224,18 @@ export class Hud {
     const fz = p.frozen;
     const half = T.casing.escortFadeTime / 2;
     this.fade.style.opacity = fz > 0 ? String(1 - Math.abs(fz - half) / half) : '0';
+
+    // health + ammo (guns come out with the mask)
+    this.hitFlash = Math.max(0, this.hitFlash - dt);
+    this.vitals.style.display = p.masked ? 'block' : 'none';
+    if (p.masked) {
+      const hpPct = (p.hp / T.health.hp) * 100;
+      const armor = p.armorMax > 0 ? `<div class="bar armor"><span style="width:${(p.armor / p.armorMax) * 100}%"></span></div>` : '';
+      const ammo = p.reloadTimer > 0 ? 'RELOADING' : `${p.mag} / ${p.reserve}`;
+      this.vitals.innerHTML = `${armor}<div class="bar hp ${hpPct < 35 ? 'low' : ''}"><span style="width:${hpPct}%"></span></div><div class="ammo">Pocket pistol (silenced) · <b>${ammo}</b>${p.mag === 0 && p.reloadTimer <= 0 ? ' · <kbd>R</kbd>' : ''}</div>`;
+    }
+    this.hurt.style.opacity = String(Math.min(0.6, this.hitFlash * 2 + (p.masked && p.hp < 35 ? 0.15 : 0)));
+    document.body.classList.toggle('armed', p.masked && !sim.ended);
   }
 
   /** Seconds until this observer raises the alarm, or null if it isn't trying to. */
@@ -228,6 +247,7 @@ export class Hud {
   }
 
   private payoutShown = false;
+  private hitFlash = 0;
   showPayout(onRestart: (newSeed: boolean) => void): void {
     if (this.payoutShown) return;
     this.payoutShown = true;

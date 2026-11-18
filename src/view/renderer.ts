@@ -420,6 +420,7 @@ export class WorldView {
       for (const m of pc.meshes) if ((m.material as THREE.Material).name === 'RJ_Mask') m.visible = p.masked;
       let clip = 'idle';
       if (sim.interaction) clip = 'interact';
+      else if (p.masked && p.fireCd > 0 && !p.moving) clip = 'aim_shoot';
       else if (p.crouch) clip = p.moving ? 'crouch_walk' : 'crouch_idle';
       else if (p.carrying) clip = p.moving ? 'carry_walk' : 'idle';
       else if (p.moving) clip = p.sprinting ? 'run' : 'walk';
@@ -429,20 +430,28 @@ export class WorldView {
     for (const g of sim.guards) {
       const ch = this.chars.get(g.id);
       if (!ch) continue;
-      const clip = g.state === 'tied' ? 'ziptied' : g.state === 'down' ? 'idle' : g.state === 'report' ? 'interact' : g.moving ? (g.state === 'alert' || g.state === 'investigate' ? 'run' : 'walk') : 'idle';
+      const clip =
+        g.state === 'tied' ? 'ziptied' : g.state === 'down' ? 'idle' : g.state === 'report' ? 'interact' : g.moving ? (g.state === 'alert' || g.state === 'investigate' ? 'run' : 'walk') : g.state === 'alert' ? 'aim_shoot' : 'idle';
       play(ch, clip);
       ch.mixer.update(g.state === 'down' ? 0 : dt);
     }
     for (const c of sim.civilians) {
       const ch = this.chars.get(c.id);
       if (!ch) continue;
+      if (c.state === 'dead') {
+        ch.mixer.update(0);
+        continue;
+      }
       const clip = c.state === 'tied' ? 'ziptied' : c.state === 'cower' ? 'hands_up' : c.moving ? (c.state === 'flee' ? 'run' : 'walk') : 'idle';
       play(ch, clip);
       ch.mixer.update(dt);
     }
-    for (const ch of this.copChars.values()) {
-      play(ch, 'run');
-      ch.mixer.update(dt);
+    for (const c of sim.cops) {
+      const ch = this.copChars.get(c.id);
+      if (!ch) continue;
+      const moving = Math.hypot(c.pos.x - c.prev.x, c.pos.y - c.prev.y) > 0.01;
+      play(ch, c.down ? 'idle' : moving ? 'run' : 'aim_shoot');
+      ch.mixer.update(c.down ? 0 : dt);
     }
   }
 
@@ -469,7 +478,10 @@ export class WorldView {
       v.root.rotation.set(0, -yaw, 0);
       const animated = this.chars.has(o.id);
       // animated characters play 'ziptied' / 'hands_up' upright; the graybox lies down or squats instead
-      const lying = (o.kind === 'guard' && (o.state === 'down' || (!animated && o.state === 'tied'))) || (!animated && o.kind === 'civilian' && o.state === 'tied');
+      const lying =
+        (o.kind === 'guard' && (o.state === 'down' || (!animated && o.state === 'tied'))) ||
+        (o.kind === 'civilian' && (o.state === 'dead' || (!animated && o.state === 'tied')));
+      if (o.kind === 'camera' && o.dead) v.root.rotation.z = -0.5; // drooping, shot out
       const sitting = !animated && o.kind === 'civilian' && o.state === 'cower';
       if (lying) {
         v.root.rotateZ(-Math.PI / 2);
@@ -485,7 +497,7 @@ export class WorldView {
       // marked cones draw on top of walls ("seen through walls")
       v.coneMat.depthTest = !marked;
       v.cone.renderOrder = marked ? 15 : 2;
-      this.updateCone(o, v, pos, yaw, showCones && !lying);
+      this.updateCone(o, v, pos, yaw, showCones && !lying && !(o.kind === 'camera' && o.dead));
     }
 
     if (this.kitLevel) this.kitLevel.update(pp, dt, cam.wantsCutaway);
@@ -502,6 +514,7 @@ export class WorldView {
     }
 
     this.updateBags(alpha);
+    this.updateTracers();
     this.updateCops(alpha);
     for (const sf of sim.safes) {
       const m = this.safeMeshes.get(sf.id);
@@ -617,9 +630,36 @@ export class WorldView {
         this.scene.add(g);
         this.copMeshes.set(c.id, g);
       }
-      g.position.set(lerp(c.prev.x, c.pos.x, alpha), 0, lerp(c.prev.y, c.pos.y, alpha));
-      g.rotation.y = -lerpAngle(c.prevYaw, c.yaw, alpha);
+      g.position.set(lerp(c.prev.x, c.pos.x, alpha), c.down ? 0.3 : 0, lerp(c.prev.y, c.pos.y, alpha));
+      g.rotation.set(0, -lerpAngle(c.prevYaw, c.yaw, alpha), 0);
+      if (c.down) g.rotateZ(-Math.PI / 2);
     }
+  }
+
+  private tracers: THREE.Line[] = [];
+  private updateTracers(): void {
+    const shots = this.sim.shots;
+    while (this.tracers.length < shots.length) {
+      const l = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]),
+        new THREE.LineBasicMaterial({ color: 0xffe9a8, transparent: true }),
+      );
+      l.frustumCulled = false;
+      this.scene.add(l);
+      this.tracers.push(l);
+    }
+    this.tracers.forEach((l, i) => {
+      const s = shots[i];
+      l.visible = !!s;
+      if (!s) return;
+      const pos = l.geometry.attributes.position as THREE.BufferAttribute;
+      pos.setXYZ(0, s.x1, 1.2, s.y1);
+      pos.setXYZ(1, s.x2, 1.1, s.y2);
+      pos.needsUpdate = true;
+      const mat = l.material as THREE.LineBasicMaterial;
+      mat.color.setHex(s.by === 'player' ? 0xffe9a8 : 0xff8a5a);
+      mat.opacity = 1 - s.age / 0.15;
+    });
   }
 
   private updateNoise(): void {

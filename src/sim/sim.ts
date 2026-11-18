@@ -8,6 +8,7 @@ import { Grid, type DoorState } from './grid';
 import { guardSpotted, investigate, setState, updateGuard } from './guard';
 import { civilianSpotted, updateCivilian } from './civilian';
 import { bagLoot, canBag, noteInteractable, pickUp, safeInteractable, throwBag, updateBags, vanInteractable, type Bag, type SafeState } from './loot';
+import { updateEnemyFire, updatePlayerWeapon, updateShots } from './combat';
 import { startHeat, updateHeat, type Cop, type HeatState } from './police';
 import { answeredPager, checkBodies, civilianInteractable, guardInteractable, isDown, takeDown, updateDowned, zipTie } from './takedown';
 import { inRect, type Level, type Vec2 } from './level';
@@ -58,6 +59,7 @@ export class Sim {
   readonly safes: SafeState[] = [];
   knowsCode = false;
   readonly cops: Cop[] = [];
+  shots: { x1: number; y1: number; x2: number; y2: number; age: number; by: string }[] = [];
   heat: HeatState | null = null;
   endNote = '';
   ended: { how: 'escaped' | 'cuffed'; time: number } | null = null;
@@ -134,6 +136,9 @@ export class Sim {
         pagerRinging: 0,
         pagerDone: false,
         downTime: 0,
+        hp: T.guard.hp,
+        dead: false,
+        fireCd: 1,
       });
     }
 
@@ -162,6 +167,7 @@ export class Sim {
         locked: false,
         deskTimer: 0,
         deskReason: '',
+        dead: false,
         dispatched: false,
       });
     }
@@ -219,6 +225,14 @@ export class Sim {
       inRestricted: false,
       escorts: 0,
       zipTies: T.takedown.zipTies,
+      hp: T.health.hp,
+      armor: T.health.armor,
+      armorMax: T.health.armor,
+      lastHit: -99,
+      mag: T.weapon.mag,
+      reserve: T.weapon.reserve,
+      reloadTimer: 0,
+      fireCd: 0,
       frozen: 0,
       noiseTimer: 0,
     };
@@ -342,13 +356,15 @@ export class Sim {
     if (input.mark) this.mark(input.aimX, input.aimY);
     if (input.throw && !this.interaction && this.player.frozen <= 0) throwBag(this, { x: input.aimX, y: input.aimY });
     updateBags(this, dt);
+    updateShots(this, dt);
     this.updatePlayer(input, dt);
     this.updateInteraction(input, dt);
+    updatePlayerWeapon(this, input.fire, input.reload, { x: input.aimX, y: input.aimY }, dt);
     this.updateDoors(dt);
 
     // Detection first, then AI reacts to the new meter values.
     for (const o of this.observers) {
-      if (this.alarm.tripped || p.frozen > 0 || (o.kind === 'guard' && isDown(o)) || (o.kind === 'civilian' && o.state === 'tied')) {
+      if (this.alarm.tripped || p.frozen > 0 || (o.kind === 'guard' && isDown(o)) || (o.kind === 'civilian' && (o.state === 'tied' || o.state === 'dead')) || (o.kind === 'camera' && o.dead)) {
         o.sees = false;
         if (o.kind !== 'camera' && o.suspicion < 100) o.suspicion = 0;
         continue;
@@ -371,6 +387,7 @@ export class Sim {
     for (const c of this.civilians) updateCivilian(this, c, dt);
     updateDowned(this, dt);
     updateHeat(this, dt);
+    updateEnemyFire(this, dt);
     checkBodies(this);
     this.separate();
 
@@ -643,6 +660,13 @@ export class Sim {
   }
 
   private updateCamera(c: SecurityCamera, dt: number): void {
+    if (c.dead) {
+      if (c.deskTimer > 0) {
+        c.deskTimer -= dt;
+        if (c.deskTimer <= 0) this.tripAlarm(c.deskReason);
+      }
+      return;
+    }
     c.phase += ((Math.PI * 2) / c.period) * dt;
     const max = T.camera.trackSpeed * DEG * dt;
     if (c.sees && c.suspicion > 0) {

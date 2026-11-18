@@ -9,6 +9,7 @@ export class Input {
   private pressed = new Set<string>();
   private mouse = new THREE.Vector2(0, 0); // NDC
   private crouchToggle = false;
+  private mouseDown = false;
   wheel = 0;
   aimWorld = new THREE.Vector3();
 
@@ -25,6 +26,13 @@ export class Input {
       const r = el.getBoundingClientRect();
       this.mouse.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
     });
+    el.addEventListener('mousedown', (e) => {
+      if (e.button === 0) this.mouseDown = true;
+    });
+    window.addEventListener('mouseup', (e) => {
+      if (e.button === 0) this.mouseDown = false;
+    });
+    el.addEventListener('contextmenu', (e) => e.preventDefault());
     el.addEventListener(
       'wheel',
       (e) => {
@@ -79,6 +87,8 @@ export class Input {
       mask: this.down.has('KeyG'),
       mark: this.consume('KeyQ'),
       throw: this.consume('KeyF'),
+      fire: this.mouseDown,
+      reload: this.consume('KeyR'),
     };
   }
 }

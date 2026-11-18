@@ -1,0 +1,208 @@
+// Combat (DESIGN.md "The alarm and the loud scramble" + "Weapons"): mouse aim, click to fire, R to reload,
+// limited ammo, HP + regenerating armor, cuffed at 0 HP. Shooting buys space, not victory.
+import { T } from '../tuning';
+import { angleDiff } from './detection';
+import { civilianSpotted } from './civilian';
+import { setState } from './guard';
+import { isDown } from './takedown';
+import type { Vec2 } from './level';
+import type { Cop } from './police';
+import type { Civilian, Guard, SecurityCamera } from './types';
+import type { Sim } from './sim';
+
+type Target = { kind: 'guard'; o: Guard } | { kind: 'civilian'; o: Civilian } | { kind: 'cop'; o: Cop } | { kind: 'camera'; o: SecurityCamera };
+
+/** First thing a ray from `from` toward `dir` hits, up to `range` or the first wall. */
+function trace(sim: Sim, from: Vec2, dir: Vec2, range: number): { t: number; hit: Target | null } {
+  const wall = sim.grid.raycast(from.x, from.y, from.x + dir.x * range, from.y + dir.y * range);
+  let best: Target | null = null;
+  let bt = wall;
+  const test = (pos: Vec2, r: number, tgt: Target) => {
+    // ray-circle
+    const ox = pos.x - from.x;
+    const oy = pos.y - from.y;
+    const along = ox * dir.x + oy * dir.y;
+    if (along <= 0 || along > bt) return;
+    const perp2 = ox * ox + oy * oy - along * along;
+    if (perp2 > r * r) return;
+    const t = along - Math.sqrt(r * r - perp2);
+    if (t < bt) {
+      bt = t;
+      best = tgt;
+    }
+  };
+  for (const g of sim.guards) if (!g.dead) test(g.pos, isDown(g) ? 0.35 : T.guard.radius + 0.1, { kind: 'guard', o: g });
+  for (const c of sim.civilians) if (c.state !== 'dead') test(c.pos, T.civilian.radius + 0.1, { kind: 'civilian', o: c });
+  for (const c of sim.cops) if (!c.down) test(c.pos, 0.4, { kind: 'cop', o: c });
+  for (const c of sim.cameras) if (!c.dead) test(c.pos, 0.35, { kind: 'camera', o: c });
+  return { t: bt, hit: best };
+}
+
+export function updatePlayerWeapon(sim: Sim, fire: boolean, reload: boolean, aim: Vec2, dt: number): void {
+  const p = sim.player;
+  const W = T.weapon;
+  p.fireCd = Math.max(0, p.fireCd - dt);
+  if (p.reloadTimer > 0) {
+    p.reloadTimer -= dt;
+    if (p.reloadTimer <= 0) {
+      const n = Math.min(W.mag - p.mag, p.reserve);
+      p.mag += n;
+      p.reserve -= n;
+    }
+  }
+  // armor regenerates after a few seconds without being hit
+  if (sim.time - p.lastHit > T.health.armorRegenDelay) p.armor = Math.min(p.armorMax, p.armor + T.health.armorRegenRate * dt);
+
+  if (!p.masked || sim.interaction || p.frozen > 0) return;
+  if (reload && p.reloadTimer <= 0 && p.mag < W.mag && p.reserve > 0) {
+    p.reloadTimer = W.reloadTime;
+    sim.events.emit({ type: 'message', text: 'Reloading...', tone: 'info' });
+    return;
+  }
+  if (!fire || p.fireCd > 0 || p.reloadTimer > 0) return;
+  if (p.mag <= 0) {
+    if (p.reserve > 0) p.reloadTimer = W.reloadTime;
+    else sim.events.emit({ type: 'message', text: 'Out of ammo.', tone: 'warn' });
+    return;
+  }
+  p.mag--;
+  p.fireCd = W.fireInterval;
+  const base = Math.atan2(aim.y - p.pos.y, aim.x - p.pos.x);
+  const spread = ((W.spread * Math.PI) / 180) * (p.moving ? 2 : 1) * (sim.rng.next() - 0.5);
+  const a = base + spread;
+  const dir = { x: Math.cos(a), y: Math.sin(a) };
+  const from = { x: p.pos.x + dir.x * 0.35, y: p.pos.y + dir.y * 0.35 };
+  const { t, hit } = trace(sim, from, dir, W.range);
+  sim.events.emit({ type: 'shot', by: 'player', x1: from.x, y1: from.y, x2: from.x + dir.x * t, y2: from.y + dir.y * t, hit: !!hit });
+  sim.shots.push({ x1: from.x, y1: from.y, x2: from.x + dir.x * t, y2: from.y + dir.y * t, age: 0, by: 'player' });
+  heardShot(sim, p.pos, W.noise);
+  if (hit) damage(sim, hit, W.damage, dir);
+}
+
+/** "Shoot: triggers the alarm if anyone hears it." */
+function heardShot(sim: Sim, at: Vec2, r: number): void {
+  sim.emitNoise(at.x, at.y, r, 'shot');
+  if (sim.alarm.tripped) return;
+  for (const g of sim.guards) {
+    if (isDown(g) || g.state === 'report' || g.state === 'alert') continue;
+    if (Math.hypot(g.pos.x - at.x, g.pos.y - at.y) > r) continue;
+    setState(g, 'report');
+    g.suspicion = 100;
+    g.lastKnown = { ...at };
+    g.reportTimer = T.guard.reportTime;
+    g.reportReason = `${g.label} heard a gunshot and called it in`;
+    sim.events.emit({ type: 'bark', who: g.id, line: 'guard.spotted.01' });
+  }
+  for (const c of sim.civilians) {
+    if (c.state !== 'wander' && c.state !== 'look') continue;
+    if (Math.hypot(c.pos.x - at.x, c.pos.y - at.y) > r) continue;
+    c.lastKnown = { ...at };
+    c.suspicion = 100;
+    civilianSpotted(sim, c);
+  }
+}
+
+function damage(sim: Sim, t: Target, dmg: number, dir: Vec2): void {
+  switch (t.kind) {
+    case 'guard': {
+      const g = t.o;
+      g.hp -= dmg;
+      if (g.hp <= 0) {
+        g.dead = true;
+        g.pagerDone = true; // a shot guard doesn't get a pager call; his body still raises the alarm
+        setState(g, 'down');
+        sim.stats.kills++;
+        sim.events.emit({ type: 'message', text: `${g.label} is down.`, tone: 'warn' });
+      } else if (g.state !== 'alert' && g.state !== 'report' && !isDown(g)) {
+        // shot and still standing: he calls it in
+        setState(g, 'report');
+        g.reportTimer = T.guard.reportTime;
+        g.reportReason = `${g.label} was shot and called it in`;
+        g.lastKnown = { ...sim.player.pos };
+      }
+      break;
+    }
+    case 'civilian': {
+      const c = t.o;
+      c.state = 'dead';
+      c.path = [];
+      sim.stats.civilianCasualties++;
+      sim.stats.kills++;
+      sim.events.emit({ type: 'message', text: 'A civilian is down. Cleanup fee: $5,000.', tone: 'danger' });
+      break;
+    }
+    case 'cop': {
+      const c = t.o;
+      // shields stop shots from the front
+      if (c.kind === 'shield' && Math.abs(angleDiff(c.yaw, Math.atan2(-dir.y, -dir.x))) < T.heat.shieldArc / 2) {
+        sim.events.emit({ type: 'blocked', x: c.pos.x, y: c.pos.y });
+        return;
+      }
+      c.hp -= dmg;
+      if (c.hp <= 0) {
+        c.down = true;
+        sim.stats.kills++;
+      }
+      break;
+    }
+    case 'camera': {
+      const c = t.o;
+      c.dead = true;
+      c.suspicion = 0;
+      c.sees = false;
+      if (!sim.alarm.tripped) {
+        c.deskTimer = T.camera.deadReportTime;
+        c.deskReason = `The security desk noticed the ${c.label.toLowerCase()} went dark`;
+      }
+      sim.events.emit({ type: 'message', text: `${c.label} shot out. The desk will notice in ${T.camera.deadReportTime} s.`, tone: 'warn' });
+      break;
+    }
+  }
+}
+
+/** Cops and alerted guards shoot at the player when they can see them. */
+export function updateEnemyFire(sim: Sim, dt: number): void {
+  if (!sim.alarm.tripped || sim.ended) return;
+  const p = sim.player;
+  const shooters: { id: string; pos: Vec2; fireCd: number; set: (v: number) => void; dmg: number }[] = [];
+  for (const g of sim.guards) if (g.state === 'alert' && !isDown(g)) shooters.push({ id: g.id, pos: g.pos, fireCd: g.fireCd, set: (v) => (g.fireCd = v), dmg: T.enemyFire.guardDamage });
+  for (const c of sim.cops) if (!c.down) shooters.push({ id: c.id, pos: c.pos, fireCd: c.fireCd, set: (v) => (c.fireCd = v), dmg: c.kind === 'tactical' ? T.enemyFire.tacticalDamage : T.enemyFire.copDamage });
+  const E = T.enemyFire;
+  for (const s of shooters) {
+    const cd = s.fireCd - dt;
+    s.set(cd);
+    if (cd > 0) continue;
+    const d = Math.hypot(p.pos.x - s.pos.x, p.pos.y - s.pos.y);
+    if (d > E.range || !sim.grid.canSee(s.pos, p.pos, p.crouch ? p.pos : undefined)) {
+      s.set(0.3);
+      continue;
+    }
+    s.set(sim.rng.range(E.intervalMin, E.intervalMax));
+    let chance = E.hitBase - d * E.hitFalloff;
+    if (p.sprinting && p.moving) chance -= E.sprintPenalty;
+    chance = Math.max(E.hitMin, Math.min(E.hitBase, chance));
+    const hit = sim.rng.chance(chance);
+    const miss = hit ? 0 : sim.rng.range(-0.7, 0.7);
+    sim.shots.push({ x1: s.pos.x, y1: s.pos.y, x2: p.pos.x + miss, y2: p.pos.y + miss, age: 0, by: s.id });
+    sim.events.emit({ type: 'shot', by: s.id, x1: s.pos.x, y1: s.pos.y, x2: p.pos.x, y2: p.pos.y, hit });
+    if (hit) hurtPlayer(sim, s.dmg);
+  }
+}
+
+export function hurtPlayer(sim: Sim, dmg: number): void {
+  const p = sim.player;
+  p.lastHit = sim.time;
+  const absorbed = Math.min(p.armor, dmg);
+  p.armor -= absorbed;
+  p.hp -= dmg - absorbed;
+  sim.events.emit({ type: 'playerHit', hp: p.hp });
+  if (p.hp <= 0) {
+    p.hp = 0;
+    sim.endJob('cuffed', 'Shot down and cuffed');
+  }
+}
+
+export function updateShots(sim: Sim, dt: number): void {
+  for (const s of sim.shots) s.age += dt;
+  sim.shots = sim.shots.filter((s) => s.age < 0.15);
+}

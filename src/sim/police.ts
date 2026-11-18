@@ -15,6 +15,9 @@ export interface Cop {
   prevYaw: number;
   path: Vec2[];
   repath: number;
+  hp: number;
+  down: boolean;
+  fireCd: number;
 }
 
 export interface HeatState {
@@ -37,10 +40,10 @@ function hostageDelay(sim: Sim): number {
 
 function spawn(sim: Sim, kind: CopKind, entrance: string): void {
   const spots = sim.level.markers.filter((m) => m.type === 'police_spawn' && (m.group === entrance || !m.group));
-  if (!spots.length || sim.cops.length >= T.heat.maxCops) return;
+  if (!spots.length || sim.cops.filter((c) => !c.down).length >= T.heat.maxCops) return;
   const s = sim.rng.pick(spots);
   const p = { x: s.x + sim.rng.range(-0.4, 0.4), y: s.y + sim.rng.range(-0.4, 0.4) };
-  sim.cops.push({ id: `cop_${sim.cops.length + 1}`, kind, pos: p, prev: { ...p }, yaw: -Math.PI / 2, prevYaw: -Math.PI / 2, path: [], repath: 0 });
+  sim.cops.push({ id: `cop_${sim.cops.length + 1}`, kind, pos: p, prev: { ...p }, yaw: -Math.PI / 2, prevYaw: -Math.PI / 2, path: [], repath: 0, hp: T.heat.hp[kind], down: false, fireCd: sim.rng.range(1, 2) });
 }
 
 const WAVES: Record<number, [CopKind, string][]> = {
@@ -85,6 +88,7 @@ export function updateHeat(sim: Sim, dt: number): void {
     c.prev.x = c.pos.x;
     c.prev.y = c.pos.y;
     c.prevYaw = c.yaw;
+    if (c.down) continue;
     c.repath -= dt;
     if (c.repath <= 0) {
       c.path = sim.grid.findPath(c.pos, sim.player.pos, 0.3) ?? [];
@@ -109,7 +113,7 @@ export function updateHeat(sim: Sim, dt: number): void {
   // cuffing: anyone hostile within reach fills the arrest meter; more of them, faster
   const p = sim.player.pos;
   const near =
-    sim.cops.filter((c) => Math.hypot(c.pos.x - p.x, c.pos.y - p.y) < T.heat.cuffReach).length +
+    sim.cops.filter((c) => !c.down && Math.hypot(c.pos.x - p.x, c.pos.y - p.y) < T.heat.cuffReach).length +
     sim.guards.filter((g) => g.state === 'alert' && Math.hypot(g.pos.x - p.x, g.pos.y - p.y) < T.heat.cuffReach).length;
   if (near > 0) h.arrest += (dt / T.heat.cuffTime) * (1 + 0.5 * (near - 1));
   else h.arrest = Math.max(0, h.arrest - dt / T.heat.cuffTime);

@@ -12,9 +12,11 @@ export interface InputFrame {
   mask: boolean; // G held
   mark: boolean; // Q pressed this tick (edge)
   throw: boolean; // F pressed this tick (edge)
+  fire: boolean; // left mouse held
+  reload: boolean; // R pressed this tick (edge)
 }
 
-export const NO_INPUT: InputFrame = { moveX: 0, moveY: 0, aimX: 0, aimY: 0, sprint: false, crouch: false, interact: false, mask: false, mark: false, throw: false };
+export const NO_INPUT: InputFrame = { moveX: 0, moveY: 0, aimX: 0, aimY: 0, sprint: false, crouch: false, interact: false, mask: false, mark: false, throw: false, fire: false, reload: false };
 
 export type BagWeight = 'light' | 'medium' | 'heavy';
 
@@ -34,6 +36,14 @@ export interface Player {
   inRestricted: boolean;
   escorts: number;
   zipTies: number;
+  hp: number;
+  armor: number;
+  armorMax: number;
+  lastHit: number;
+  mag: number;
+  reserve: number;
+  reloadTimer: number;
+  fireCd: number;
   frozen: number; // seconds of no control (escort fade)
   noiseTimer: number;
 }
@@ -95,6 +105,9 @@ export interface Guard extends ObserverBase {
   pagerRinging: number;
   pagerDone: boolean;
   downTime: number;
+  hp: number;
+  dead: boolean;
+  fireCd: number;
 }
 
 export interface SecurityCamera extends ObserverBase {
@@ -106,10 +119,11 @@ export interface SecurityCamera extends ObserverBase {
   locked: boolean;
   deskTimer: number; // >0 while the desk is about to raise the alarm
   deskReason: string;
+  dead: boolean;
   dispatched: boolean;
 }
 
-export type CivilianState = 'wander' | 'look' | 'flee' | 'cower' | 'tied';
+export type CivilianState = 'wander' | 'look' | 'flee' | 'cower' | 'tied' | 'dead';
 
 export interface Civilian extends ObserverBase {
   kind: 'civilian';

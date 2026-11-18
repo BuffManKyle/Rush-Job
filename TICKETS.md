@@ -49,17 +49,23 @@ Status: [x] done · [~] partial · [ ] todo.
 - [x] Alarm → Heat 1–4 clock (60 s each), hostages (tied civilians) delay each level 20 s (max 3), Dot leaves 60 s into Heat 4
 - [x] Cops push in (front, then alley; shields at 3, tactical at 4); cuffed when they (or alert guards) hold you 2 s
 - [x] Payout receipt (take, +25% clean, −10% Dot, −bail) + rating (Ghost/Professional/Pacifist/Loud/Cuffed)
-- [ ] Combat: mouse aim + click fire, R reload, ammo, pocket pistol (silenced 6 m), HP 100 + armor regen 4 s; cops shoot back. Cuffing by proximity stands in until then.
+- [x] Combat (`src/sim/combat.ts`): masked only. Hold left mouse to fire the silenced pocket pistol (12 + 24 rounds, 50 dmg, 6 m noise), R reloads (1.6 s). Hitscan stops at walls; spread doubles while moving.
+  - A shot heard by a guard is called in (3 s window); civilians who hear it panic. A guard who's shot but standing calls it in.
+  - Shot guards die (no pager, body still raises the alarm); shot civilians count as casualties ($5k cleanup, Bloodbath rating). Shot-out cameras go dark and the desk notices in 15 s.
+  - Cops: patrol 100 HP, shield 150 (blocks from the front, 120°), tactical 200. Cops and alerted guards shoot back with line of sight within 14 m (hit chance falls with distance and when you sprint). HP 100, armor regen 4 s after the last hit (suit has 0 armor). At 0 HP you're cuffed. Proximity cuffing still applies.
+- [ ] Combat follow-ups: weapon unlocks (tranq, SMG, shotgun, baton), vests, medkit; muzzle flash/hit sparks/sound; guards keep distance and take cover instead of rushing
 - [ ] Intimidate (shout) civilians into cowering; right now only the alarm makes them cower
 - [ ] Body bags / drag a body into a closet
 - [ ] Panic button (civilians run to it; breaker kills it)
-- [ ] Guards fight in the loud phase (right now they just chase and cuff)
+- [~] Guards fight in the loud phase: they shoot and chase; no cover AI yet
 - [x] Blender kit swapped in (`src/view/kit.ts`, `src/view/kitLevel.ts`): instanced walls/windows/doorways/floors/trim with cutaway, door leaves, counter segments, display cases (intact → smashed → bagged; tall against walls), safe door + loot, van, desks, security cameras, sticky note, sign, bags. Stand-in characters with clips (idle/walk/run/crouch/carry/interact/hands_up/ziptied); cops reuse the guard rig, darkened. `?graybox` forces the old look; a failed load falls back to it too.
 - [ ] Kit follow-ups: `floor_back` maps to lino everywhere (ASSETS.md wants concrete in the safe room, closet and hall, which needs a Tiled tile or zone); trim corners not placed; ceiling lamps left out (they read as dark blobs from 55°); ~340 draw calls with shadows (6 ms/frame at 1024×768 on the dev GPU): merge static props if integrated GPUs struggle
 - [ ] Meshy characters when they land: per-model attach map (`attach('hand_R')`), same clip names
 - [ ] Audio: stealth/loud stems, barks, SFX hooks off sim events
 
 ## Open questions for Kyle
+- Lethality (design doc open question): guards and patrol cops die in 2 hits; enemies hit about 50% of the time for 8–14 damage, so you last about 10–12 hits. Tune by feel.
+- Shooting a guard kills him (counts against Ghost/Pacifist). Should the pocket pistol knock out instead, leaving killing to the louder guns?
 - Detection is spec-exact. Two calls to make by feel: should standing still count as "walk" (1.0, current) or lower? Should guards notice you bumping into them from behind (a small all-around radius)? It's off now (spec has none).
 - Unmasked + camera: I made the desk send the nearest guard to check (no alarm). Spec only covers the masked case.
 - Pagers: I read "the Dispatcher's patience runs out on the fourth call" as 3 answers OK and the 4th trips the alarm.

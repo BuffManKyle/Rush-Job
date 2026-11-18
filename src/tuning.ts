@@ -51,6 +51,7 @@ export const T = {
     hearingMultiplier: 1.0,
     doorOpenTime: 0.4,
     doorCloseDelay: 1.5,
+    hp: 100,
     peripheralRadius: 1.2, // bumping right into someone counts as being seen at close range
   },
 
@@ -59,6 +60,7 @@ export const T = {
     range: 15,
     deskAlarmTime: 3, // security desk raises the alarm this long after a camera hits 100
     trackSpeed: 60, // deg/s when locked on
+    deadReportTime: 15, // shot-out camera: the desk notices this long after
   },
 
   civilian: {
@@ -97,7 +99,41 @@ export const T = {
     maxCalls: 3, // the Dispatcher's patience runs out on the 4th call
   },
 
+  weapon: {
+    // pocket pistol (silenced), DESIGN.md "Weapons": 36 rounds, 6 m noise
+    mag: 12,
+    reserve: 24,
+    damage: 50, // guards and patrol cops drop in 2 hits
+    fireInterval: 0.22,
+    reloadTime: 1.6,
+    range: 25,
+    spread: 3, // degrees, doubled while moving
+    noise: 6,
+  },
+
+  health: {
+    hp: 100,
+    armor: 0, // tailored suit: no armor (vests later)
+    armorRegenDelay: 4,
+    armorRegenRate: 30,
+  },
+
+  enemyFire: {
+    range: 14,
+    intervalMin: 0.9,
+    intervalMax: 1.6,
+    hitBase: 0.7,
+    hitFalloff: 0.03, // per meter
+    hitMin: 0.2,
+    sprintPenalty: 0.15,
+    guardDamage: 10,
+    copDamage: 8,
+    tacticalDamage: 14,
+  },
+
   heat: {
+    hp: { patrol: 100, shield: 150, tactical: 200 },
+    shieldArc: 120, // degrees in front of a shield unit that block shots
     firstDelay: 60, // alarm → Heat 1 (Bank: 90)
     levelTime: 60, // each further level; Dot leaves this long after Heat 4 starts
     hostageDelay: 20, // each zip-tied civilian delays the next level
