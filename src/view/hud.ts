@@ -60,7 +60,7 @@ export class Hud {
     this.banner = el('div', 'hud-banner', this.root);
     this.fade = el('div', 'hud-fade', this.root);
     this.pause = el('div', 'hud-pause hidden', this.root);
-    el('div', 'hud-help', this.root, 'WASD move · Shift sprint · C crouch · E interact (hold) · G mask up (hold) · Wheel zoom · F1 debug · Esc pause');
+    el('div', 'hud-help', this.root, 'WASD move · Shift sprint · C crouch · E interact (hold) · G mask up (hold) · Q mark · Wheel zoom · F1 debug · Esc pause');
     this.unsub = sim.events.on((e) => this.onEvent(e));
   }
 
@@ -72,7 +72,7 @@ export class Hud {
     switch (e.type) {
       case 'bark': {
         const text = line(e.line);
-        if (e.who.startsWith('guard_')) this.say(e.who, text);
+        if (this.sim.walkers().some((w) => w.id === e.who)) this.say(e.who, text);
         else this.sub(`${e.who === 'accountant' ? 'The Accountant' : e.who === 'desk' ? 'Security desk' : e.who}: ${text}`);
         break;
       }
@@ -157,7 +157,7 @@ export class Hud {
       const show = o.suspicion > 0.5 && !sim.alarm.tripped;
       m.el.style.display = show ? 'flex' : 'none';
       if (!show) continue;
-      const head = WorldView.lerpPos(o, alpha, o.kind === 'guard' ? 2.15 : 3.0);
+      const head = WorldView.lerpPos(o, alpha, o.kind === 'camera' ? 3.0 : 2.15);
       const s = cam.worldToScreen(head);
       m.el.style.transform = `translate(${s.x - 24}px, ${s.y - 30}px)`;
       const v = o.suspicion;
@@ -172,7 +172,7 @@ export class Hud {
     // speech bubbles track their guard
     for (const b of this.bubbles) {
       b.ttl -= dt;
-      const g = sim.guards.find((q) => q.id === b.who);
+      const g = sim.walkers().find((q) => q.id === b.who);
       if (!g) continue;
       const s = cam.worldToScreen(WorldView.lerpPos(g, alpha, 2.6));
       b.el.style.transform = `translate(${s.x}px, ${s.y - 34}px) translateX(-50%)`;
@@ -226,7 +226,7 @@ export class Hud {
           <button data-a="same">Restart, same seed (R)</button>
           <button data-a="new">New seed (N)</button>
         </div>
-        <p class="dim">WASD move (screen-relative) · Shift sprint (noise 4 m) · C crouch · E hold to interact · G hold to mask up · Wheel zoom · F1 debug</p>
+        <p class="dim">WASD move (screen-relative) · Shift sprint (noise 4 m) · C crouch · E hold to interact · G hold to mask up · Q mark guard/camera under cursor · Wheel zoom · F1 debug</p>
       </div>`;
     this.pause.querySelectorAll('button').forEach((b) =>
       b.addEventListener('click', () => {

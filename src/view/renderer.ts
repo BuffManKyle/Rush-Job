@@ -63,6 +63,7 @@ interface ObserverView {
   cone: THREE.Mesh;
   coneGeo: THREE.BufferGeometry;
   coneMat: THREE.MeshBasicMaterial;
+  tag: THREE.Mesh;
 }
 
 export class WorldView {
@@ -312,6 +313,18 @@ export class WorldView {
           m.castShadow = true;
           root.add(m);
         }
+      } else if (o.kind === 'civilian') {
+        const shirt = o.role === 'staff' ? 0xf0f0f0 : [0xb85c7a, 0x6d9a4a, 0xc9a24a, 0x8a6fc0][[...o.id].reduce((a, ch) => a + ch.charCodeAt(0), 0) % 4];
+        const body = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.28, 1.15, 14), new THREE.MeshStandardMaterial({ color: shirt }));
+        body.position.y = 0.58;
+        const head = new THREE.Mesh(new THREE.SphereGeometry(0.2, 14, 10), new THREE.MeshStandardMaterial({ color: 0xc89870 }));
+        head.position.y = 1.36;
+        const nose = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.06, 0.06), new THREE.MeshStandardMaterial({ color: 0xc89870 }));
+        nose.position.set(0.2, 1.36, 0);
+        for (const m of [body, head, nose]) {
+          m.castShadow = true;
+          root.add(m);
+        }
       } else {
         const cam = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.18, 0.18), new THREE.MeshStandardMaterial({ color: PALETTE.camera }));
         cam.position.set(0.15, 2.6, 0);
@@ -331,7 +344,12 @@ export class WorldView {
       cone.frustumCulled = false;
       cone.renderOrder = 2;
       this.scene.add(cone);
-      this.observers.set(o.id, { root, cone, coneGeo, coneMat });
+      // Q-mark tag: a teal diamond that shows through walls
+      const tag = new THREE.Mesh(new THREE.OctahedronGeometry(0.18), new THREE.MeshBasicMaterial({ color: PALETTE.teal, depthTest: false, transparent: true }));
+      tag.renderOrder = 20;
+      tag.visible = false;
+      this.scene.add(tag);
+      this.observers.set(o.id, { root, cone, coneGeo, coneMat, tag });
     }
   }
 
@@ -355,6 +373,15 @@ export class WorldView {
       v.root.position.copy(pos);
       const yaw = lerpAngle(o.prevYaw, o.yaw, alpha);
       v.root.rotation.y = -yaw;
+      const marked = sim.marked.has(o.id);
+      v.tag.visible = marked;
+      if (marked) {
+        v.tag.position.set(pos.x, (o.kind === 'guard' ? 2.45 : 3.05) + Math.sin(performance.now() / 300) * 0.06, pos.z);
+        v.tag.rotation.y += dt * 2;
+      }
+      // marked cones draw on top of walls ("seen through walls")
+      v.coneMat.depthTest = !marked;
+      v.cone.renderOrder = marked ? 15 : 2;
       this.updateCone(o, v, pos, yaw, showCones);
     }
 
@@ -400,7 +427,9 @@ export class WorldView {
     const s = o.suspicion;
     const c = s >= 100 ? PALETTE.coneReport : s >= 60 ? PALETTE.coneInvestigate : s >= 30 ? PALETTE.coneLook : PALETTE.coneIdle;
     v.coneMat.color.setHex(c);
-    v.coneMat.opacity = s >= 100 ? 0.32 : s > 0 ? 0.2 + s * 0.001 : 0.13;
+    v.coneMat.opacity = (s >= 100 ? 0.32 : s > 0 ? 0.2 + s * 0.001 : 0.13) * (o.kind === 'civilian' && s <= 0 ? 0.55 : 1);
+    // cowering civilians stop looking
+    if (o.kind === 'civilian' && o.state === 'cower') v.cone.visible = false;
   }
 
   private updateNoise(): void {

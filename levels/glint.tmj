@@ -2245,6 +2245,30 @@
      "width": 288,
      "height": 96,
      "properties": []
+    },
+    {
+     "id": 36,
+     "name": "wander_showroom",
+     "type": "wander",
+     "x": 96,
+     "y": 467.2,
+     "width": 640,
+     "height": 121.6,
+     "rotation": 0,
+     "visible": true,
+     "properties": []
+    },
+    {
+     "id": 37,
+     "name": "wander_counter",
+     "type": "wander",
+     "x": 272,
+     "y": 358.4,
+     "width": 272,
+     "height": 44.8,
+     "rotation": 0,
+     "visible": true,
+     "properties": []
     }
    ]
   },
@@ -2661,8 +2685,116 @@
      ]
     }
    ]
+  },
+  {
+   "id": 10,
+   "name": "civilians",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "objects": [
+    {
+     "id": 38,
+     "name": "clerk",
+     "type": "civilian",
+     "x": 400,
+     "y": 371.2,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "role",
+       "type": "string",
+       "value": "staff"
+      },
+      {
+       "name": "wander",
+       "type": "string",
+       "value": "wander_counter"
+      }
+     ]
+    },
+    {
+     "id": 39,
+     "name": "customer_1",
+     "type": "civilian",
+     "x": 272,
+     "y": 496,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "role",
+       "type": "string",
+       "value": "customer"
+      },
+      {
+       "name": "wander",
+       "type": "string",
+       "value": "wander_showroom"
+      }
+     ]
+    },
+    {
+     "id": 40,
+     "name": "customer_2",
+     "type": "civilian",
+     "x": 624,
+     "y": 560,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "role",
+       "type": "string",
+       "value": "customer"
+      },
+      {
+       "name": "wander",
+       "type": "string",
+       "value": "wander_showroom"
+      }
+     ]
+    },
+    {
+     "id": 41,
+     "name": "customer_3",
+     "type": "civilian",
+     "x": 496,
+     "y": 486.4,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "role",
+       "type": "string",
+       "value": "customer"
+      },
+      {
+       "name": "wander",
+       "type": "string",
+       "value": "wander_showroom"
+      }
+     ]
+    }
+   ]
   }
  ],
- "nextlayerid": 10,
- "nextobjectid": 36
+ "nextlayerid": 11,
+ "nextobjectid": 42
 }

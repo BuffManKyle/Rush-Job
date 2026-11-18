@@ -10,9 +10,10 @@ export interface InputFrame {
   crouch: boolean;
   interact: boolean; // E held
   mask: boolean; // G held
+  mark: boolean; // Q pressed this tick (edge)
 }
 
-export const NO_INPUT: InputFrame = { moveX: 0, moveY: 0, aimX: 0, aimY: 0, sprint: false, crouch: false, interact: false, mask: false };
+export const NO_INPUT: InputFrame = { moveX: 0, moveY: 0, aimX: 0, aimY: 0, sprint: false, crouch: false, interact: false, mask: false, mark: false };
 
 export type BagWeight = 'light' | 'medium' | 'heavy';
 
@@ -100,7 +101,22 @@ export interface SecurityCamera extends ObserverBase {
   dispatched: boolean;
 }
 
-export type Observer = Guard | SecurityCamera;
+export type CivilianState = 'wander' | 'look' | 'flee' | 'cower';
+
+export interface Civilian extends ObserverBase {
+  kind: 'civilian';
+  role: 'customer' | 'staff';
+  wanderZone: string;
+  state: CivilianState;
+  stateTime: number;
+  path: Vec2[];
+  goal: Vec2 | null;
+  idleTimer: number;
+  fleeTo: string | null; // guard id
+  moving: boolean;
+}
+
+export type Observer = Guard | SecurityCamera | Civilian;
 
 export interface CaseState {
   id: string;

@@ -46,6 +46,11 @@ export interface CameraDef extends Vec2 {
   sweep: number; // radians, full arc
   period: number;
 }
+export interface CivilianDef extends Vec2 {
+  id: string;
+  role: 'customer' | 'staff';
+  wander: string; // zone id they mill around in
+}
 export interface MarkerDef extends Vec2 {
   id: string;
   type: string;
@@ -65,6 +70,7 @@ export interface Level {
   routes: RouteDef[];
   cameras: CameraDef[];
   markers: MarkerDef[];
+  civilians: CivilianDef[];
 }
 
 /* Minimal Tiled JSON shapes we read. */
@@ -167,6 +173,7 @@ export function loadTiled(json: string): Level {
     routes: [],
     cameras: [],
     markers: [],
+    civilians: [],
   };
 
   const isWall = (cx: number, cy: number) => cx < 0 || cy < 0 || cx >= w || cy >= h || walls[cy * w + cx] !== 0;
@@ -196,6 +203,7 @@ export function loadTiled(json: string): Level {
         case 'restricted':
         case 'van_drop':
         case 'lobby':
+        case 'wander':
           level.zones.push({ id, type, ...r });
           break;
         case 'player_start':
@@ -216,6 +224,9 @@ export function loadTiled(json: string): Level {
             sweep: (num(p.sweep, 60) * Math.PI) / 180,
             period: num(p.period, 6),
           });
+          break;
+        case 'civilian':
+          level.civilians.push({ id, x: r.x, y: r.y, role: p.role === 'staff' ? 'staff' : 'customer', wander: str(p.wander, '') });
           break;
         case 'code_note':
           level.markers.push({ id, type, group: str(p.group, ''), x: r.x, y: r.y });

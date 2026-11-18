@@ -107,7 +107,7 @@ export class DebugOverlay {
     const rows = sim.observers
       .map((o) => {
         const i = o.info;
-        const state = o.kind === 'guard' ? o.state : o.locked ? 'locked-on' : 'sweep';
+        const state = o.kind === 'camera' ? (o.locked ? 'locked-on' : 'sweep') : o.state;
         const why = !i.inRange ? 'out of range' : !i.inCone ? 'out of cone' : !i.los ? 'no LOS' : i.fStatus === 0 ? 'sees you, not suspicious' : 'SEES YOU';
         return `<tr><td>${o.label}</td><td>${state}</td><td class="num">${o.suspicion.toFixed(1)}</td><td class="num">${i.rate >= 0 ? '+' : ''}${i.rate.toFixed(1)}/s</td><td class="num">${f(i.dist)} m</td><td>${why}</td><td class="num">${f(i.fDist)}×${f(i.fMove)}×${f(i.fStatus)}×${f(i.fBag)}</td></tr>`;
       })

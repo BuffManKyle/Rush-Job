@@ -64,6 +64,11 @@ export const T = {
   civilian: {
     cone: 120,
     range: 8,
+    radius: 0.28,
+    speed: 1.0,
+    fleeSpeed: 3.2,
+    turnRate: 240,
+    screamRadius: 10,
   },
 
   noise: {

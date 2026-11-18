@@ -77,6 +77,7 @@ export class Input {
       crouch: this.crouchToggle,
       interact: this.down.has('KeyE'),
       mask: this.down.has('KeyG'),
+      mark: this.consume('KeyQ'),
     };
   }
 }

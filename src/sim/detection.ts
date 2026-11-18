@@ -81,7 +81,7 @@ export function emptyInfo(): DetectionInfo {
 
 /** Plain-language explanation of what an observer saw, for alarm causes. */
 export function describe(o: Observer, p: Player): string {
-  const what = p.masked ? 'masked' : 'trespassing';
+  const what = p.masked ? 'masked' : 'in a staff area';
   const how = p.crouch ? 'crouched' : p.sprinting && p.moving ? 'sprinting' : 'walking';
   const bag = p.carrying ? ', carrying a bag' : '';
   return `${o.label} saw you ${what}, ${how}${bag}, ${o.info.dist.toFixed(1)} m away`;

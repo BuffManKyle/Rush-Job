@@ -6,12 +6,14 @@ import { describe, emptyInfo, updateSuspicion, angleDiff } from './detection';
 import { EventBus } from './events';
 import { Grid, type DoorState } from './grid';
 import { guardSpotted, investigate, setState, updateGuard } from './guard';
+import { civilianSpotted, updateCivilian } from './civilian';
 import { inRect, type Level, type Vec2 } from './level';
 import { Rng } from './rng';
 import type {
   ActiveInteraction,
   AlarmState,
   CaseState,
+  Civilian,
   Guard,
   InputFrame,
   Interactable,
@@ -40,6 +42,7 @@ export class Sim {
   readonly player: Player;
   readonly guards: Guard[] = [];
   readonly cameras: SecurityCamera[] = [];
+  readonly civilians: Civilian[] = [];
   readonly cases: CaseState[] = [];
   readonly interactables: Interactable[] = [];
   noises: NoiseRing[] = [];
@@ -48,6 +51,8 @@ export class Sim {
   /** Interactable the player would act on right now, and what it offers (for the HUD prompt). */
   focus: { id: string; offer: string } | null = null;
   secured = 0;
+  /** Observers the player has tagged with Q during casing. */
+  readonly marked = new Set<string>();
   readonly shuffle: ShuffleResult;
   private interactLatch = false; // E must be released between completed actions
   private savedProgress = new Map<string, number>();
@@ -144,6 +149,37 @@ export class Sim {
       });
     }
 
+    for (const c of level.civilians) {
+      const yaw = shuf.range(-Math.PI, Math.PI);
+      const label = c.role === 'staff' ? 'Clerk' : `Customer ${c.id.replace(/\D+/g, '') || ''}`.trim();
+      this.civilians.push({
+        kind: 'civilian',
+        id: c.id,
+        label,
+        pos: { x: c.x, y: c.y },
+        prev: { x: c.x, y: c.y },
+        yaw,
+        prevYaw: yaw,
+        cone: T.civilian.cone * DEG,
+        range: T.civilian.range,
+        suspicion: 0,
+        peak: 0,
+        sinceSeen: 99,
+        sees: false,
+        lastKnown: null,
+        info: emptyInfo(),
+        role: c.role,
+        wanderZone: c.wander,
+        state: 'wander',
+        stateTime: 0,
+        path: [],
+        goal: null,
+        idleTimer: shuf.range(0.5, 4),
+        fleeTo: null,
+        moving: false,
+      });
+    }
+
     const notes = level.markers.filter((m) => m.group === 'safe_code');
     const note = notes.length ? shuf.pick(notes) : null;
     const safeCode = String(1000 + shuf.int(9000));
@@ -188,7 +224,7 @@ export class Sim {
   }
 
   get observers(): Observer[] {
-    return [...this.guards, ...this.cameras];
+    return [...this.guards, ...this.cameras, ...this.civilians];
   }
 
   lineIds(prefix: string): string[] {
@@ -215,7 +251,7 @@ export class Sim {
 
   private cellOccupied(cx: number, cy: number): boolean {
     const near = (p: Vec2, r: number) => p.x + r > cx && p.x - r < cx + 1 && p.y + r > cy && p.y - r < cy + 1;
-    return near(this.player.pos, T.player.radius) || this.guards.some((g) => near(g.pos, T.guard.radius));
+    return near(this.player.pos, T.player.radius) || this.walkers().some((g) => near(g.pos, T.guard.radius));
   }
 
   emitNoise(x: number, y: number, r: number, source: string): void {
@@ -265,6 +301,7 @@ export class Sim {
       o.prevYaw = o.yaw;
     }
 
+    if (input.mark) this.mark(input.aimX, input.aimY);
     this.updatePlayer(input, dt);
     this.updateInteraction(input, dt);
     this.updateDoors(dt);
@@ -283,11 +320,13 @@ export class Sim {
       const crossed = updateSuspicion(this.grid, o, p, dt);
       if (crossed) {
         if (o.kind === 'guard') guardSpotted(this, o, describe(o, p));
+        else if (o.kind === 'civilian') civilianSpotted(this, o);
         else this.cameraSpotted(o);
       }
     }
     for (const g of this.guards) updateGuard(this, g, dt);
     for (const c of this.cameras) this.updateCamera(c, dt);
+    for (const c of this.civilians) updateCivilian(this, c, dt);
     this.separate();
 
     for (const n of this.noises) n.age += dt;
@@ -502,13 +541,13 @@ export class Sim {
       const cy = d.cy + 0.5;
       if (!d.open) {
         // guards open doors in front of them (they have keys)
-        for (const g of this.guards) {
-          if (!g.path.length && g.state !== 'alert') continue;
+        for (const g of this.walkers()) {
+          if (!g.path.length && !(g.kind === 'guard' && g.state === 'alert')) continue;
           if (Math.hypot(g.pos.x - cx, g.pos.y - cy) < 1.05) this.setDoor(d, true, true);
         }
       } else if (d.openedByGuard) {
         const someoneNear =
-          Math.hypot(this.player.pos.x - cx, this.player.pos.y - cy) < 1.3 || this.guards.some((g) => Math.hypot(g.pos.x - cx, g.pos.y - cy) < 1.3);
+          Math.hypot(this.player.pos.x - cx, this.player.pos.y - cy) < 1.3 || this.walkers().some((g) => Math.hypot(g.pos.x - cx, g.pos.y - cy) < 1.3);
         if (someoneNear) d.closeTimer = T.guard.doorCloseDelay;
         else {
           d.closeTimer -= dt;
@@ -570,11 +609,37 @@ export class Sim {
     }
   }
 
+  /** Q: tag the observer nearest the cursor (within 2 m). Marking needs line of sight from the player. */
+  private mark(ax: number, ay: number): void {
+    let best: Observer | null = null;
+    let bd = 2;
+    for (const o of this.observers) {
+      const d = Math.hypot(o.pos.x - ax, o.pos.y - ay);
+      if (d < bd && this.grid.canSee(this.player.pos, o.pos)) {
+        bd = d;
+        best = o;
+      }
+    }
+    if (!best) return;
+    if (this.marked.has(best.id)) {
+      this.marked.delete(best.id);
+      this.events.emit({ type: 'message', text: `Unmarked ${best.label}`, tone: 'info' });
+    } else {
+      this.marked.add(best.id);
+      this.events.emit({ type: 'message', text: `Marked ${best.label}`, tone: 'info' });
+    }
+  }
+
+  /** Everyone who walks around and opens doors. */
+  walkers(): (Guard | Civilian)[] {
+    return [...this.guards, ...this.civilians];
+  }
+
   /** Keep the player from walking through guards. */
   private separate(): void {
     const p = this.player;
     const min = T.player.radius + T.guard.radius;
-    for (const g of this.guards) {
+    for (const g of this.walkers()) {
       const dx = p.pos.x - g.pos.x;
       const dy = p.pos.y - g.pos.y;
       const d = Math.hypot(dx, dy);
