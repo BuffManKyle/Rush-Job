@@ -1,0 +1,434 @@
+{
+ "lib": "props",
+ "glb": "assets/models/props.glb",
+ "pieces": [
+  {
+   "name": "security_camera",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 130,
+   "children": [
+    "security_camera_head",
+    "security_camera_led"
+   ],
+   "bounds": {
+    "min": [
+     -0.32,
+     -0.143,
+     -0.09
+    ],
+    "max": [
+     0.256,
+     2.77,
+     0.09
+    ]
+   },
+   "note": "pivot on the floor under the swivel; child 'security_camera_head' swivels about Y at y=2.45, lens looks +X (east) at rotation 0 (= Tiled yaw 0); 'security_camera_led' is RJ_Ok, set it to RJ_Danger when it sees you"
+  },
+  {
+   "name": "keypad",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 156,
+   "children": [
+    "keypad_led"
+   ],
+   "bounds": {
+    "min": [
+     -0.08,
+     1.15,
+     0.1
+    ],
+    "max": [
+     0.08,
+     1.37,
+     0.145
+    ]
+   },
+   "note": "number pad; pivot = centre of the wall cell it hangs on, panel on the -Y (south) face at 1.25 m; child 'keypad_led' starts RJ_Ok (swap to RJ_Danger on a wrong code)"
+  },
+  {
+   "name": "card_reader",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 48,
+   "children": [
+    "card_reader_led"
+   ],
+   "bounds": {
+    "min": [
+     -0.08,
+     1.15,
+     0.1
+    ],
+    "max": [
+     0.08,
+     1.37,
+     0.162
+    ]
+   },
+   "note": "keycard slot (bank); pivot = centre of the wall cell it hangs on, panel on the -Y (south) face at 1.25 m; child 'card_reader_led' starts RJ_Ok (swap to RJ_Danger on a wrong code)"
+  },
+  {
+   "name": "safe",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 326,
+   "children": [
+    "safe_door",
+    "safe_loot"
+   ],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.4
+    ],
+    "max": [
+     0.9,
+     1.25,
+     0.395
+    ]
+   },
+   "note": "back-room safe, door faces south; child 'safe_door' hinges at the front-left corner (rotate about Y, negative = open outward to the left); 'safe_loot' hides once bagged"
+  },
+  {
+   "name": "bag_light",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 100,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.275,
+     0.02,
+     -0.156
+    ],
+    "max": [
+     0.275,
+     0.4,
+     0.156
+    ]
+   },
+   "note": "duffel, long axis X, pivot on the floor under its centre; jewelry: 90% speed, sprint ok, throw 6 m"
+  },
+  {
+   "name": "bag_medium",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 100,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.36,
+     0.02,
+     -0.198
+    ],
+    "max": [
+     0.36,
+     0.48,
+     0.198
+    ]
+   },
+   "note": "duffel, long axis X, pivot on the floor under its centre; cash: 75% speed, no sprint, throw 4 m"
+  },
+  {
+   "name": "bag_heavy",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 100,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.45,
+     0.02,
+     -0.239
+    ],
+    "max": [
+     0.45,
+     0.56,
+     0.239
+    ]
+   },
+   "note": "duffel, long axis X, pivot on the floor under its centre; gold / paintings: 60% speed, throw 3 m"
+  },
+  {
+   "name": "van",
+   "kind": "prop",
+   "cells": [
+    2,
+    5
+   ],
+   "tris": 412,
+   "children": [
+    "van_door_l",
+    "van_door_r"
+   ],
+   "bounds": {
+    "min": [
+     -1.035,
+     0.0,
+     -2.46
+    ],
+    "max": [
+     1.035,
+     2.16,
+     2.48
+    ]
+   },
+   "note": "Dot's van: nose north (-Z), rear doors south (+Z) toward the drop zone; children 'van_door_l'/'van_door_r' hinge at the rear corners (rotate about Y); fits the 4 x 4 Tiled rect lengthwise with room to spare"
+  },
+  {
+   "name": "desk_office",
+   "kind": "prop",
+   "cells": [
+    3,
+    1
+   ],
+   "tris": 238,
+   "children": [],
+   "bounds": {
+    "min": [
+     -1.4,
+     0.0,
+     -0.4
+    ],
+    "max": [
+     1.4,
+     1.2,
+     0.4
+    ]
+   },
+   "note": "owner's desk, 3 x 1 cells (matches Tiled 'desk'); front = customer side (south), chair side north"
+  },
+  {
+   "name": "security_desk",
+   "kind": "prop",
+   "cells": [
+    2,
+    1
+   ],
+   "tris": 134,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.95,
+     0.0,
+     -0.4
+    ],
+    "max": [
+     0.95,
+     1.75,
+     0.4
+    ]
+   },
+   "note": "security monitors, 2 x 1 cells; guard sits on the north side facing the screens; the screens (RJ_Screen) face north"
+  },
+  {
+   "name": "office_chair",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 196,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.295,
+     0.0,
+     -0.31
+    ],
+    "max": [
+     0.295,
+     1.05,
+     0.257
+    ]
+   },
+   "note": "faces south (-Y blender / +Z glTF); swivel freely"
+  },
+  {
+   "name": "filing_cabinet",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 98,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.25,
+     0.0,
+     -0.3
+    ],
+    "max": [
+     0.25,
+     1.3,
+     0.34
+    ]
+   },
+   "note": "0.5 x 0.6, drawers face south"
+  },
+  {
+   "name": "bookshelf",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 498,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.17
+    ],
+    "max": [
+     0.5,
+     2.0,
+     0.17
+    ]
+   },
+   "note": "1 x 0.35 m, open side south"
+  },
+  {
+   "name": "plant",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 104,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.194,
+     0.0,
+     -0.194
+    ],
+    "max": [
+     0.194,
+     1.36,
+     0.194
+    ]
+   },
+   "note": "potted plant, 0.4 m pot"
+  },
+  {
+   "name": "lamp_ceiling",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 68,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.266,
+     2.249,
+     -0.28
+    ],
+    "max": [
+     0.266,
+     2.8,
+     0.28
+    ]
+   },
+   "note": "hanging pendant, pivot on the floor under it, shade bottom at 2.25 m; RJ_Sodium is emissive"
+  },
+  {
+   "name": "trash_bin",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 36,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.157,
+     0.0,
+     -0.157
+    ],
+    "max": [
+     0.157,
+     0.45,
+     0.157
+    ]
+   },
+   "note": "0.3 m bin"
+  },
+  {
+   "name": "sticky_note",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 36,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.04,
+     0.0,
+     -0.04
+    ],
+    "max": [
+     0.04,
+     0.004,
+     0.04
+    ]
+   },
+   "note": "the safe code: an 8 cm note lying flat at y=0.002; lift it onto a desk/counter top in code (set position.y to the surface height)"
+  },
+  {
+   "name": "water_cooler",
+   "kind": "prop",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 48,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.17,
+     0.0,
+     -0.17
+    ],
+    "max": [
+     0.17,
+     1.35,
+     0.18
+    ]
+   },
+   "note": "break-room filler"
+  }
+ ],
+ "bytes": 191168
+}

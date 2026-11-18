@@ -12,6 +12,8 @@ Conventions (the contract with the game code; also written up in ASSETS.md):
     Multi-cell props pivot at the centre of their footprint, on the floor.
   * Moving parts are child nodes whose pivot is the hinge / swivel (door leaf, safe door,
     camera head). Hideable parts (jewels, glass) are child nodes too, so code can toggle them.
+  * Metalness stays <= 0.35: the game has no environment map, and fully metallic surfaces
+    render near-black in three.js without one.
   * Materials come from MATS below, all named RJ_<Name>, so code can find and swap them
     (e.g. tint RJ_Danger for the alarm). Only RJ_ materials ever ship.
 """
@@ -62,17 +64,17 @@ MATS = {
     # props
     "Wood":      dict(c="wood", r=0.6),
     "WoodDark":  dict(c="wood_dark", r=0.55),
-    "Steel":     dict(c="steel", r=0.35, m=0.8),
-    "SteelDark": dict(c="steel_dark", r=0.45, m=0.6),
+    "Steel":     dict(c="steel", r=0.35, m=0.3),
+    "SteelDark": dict(c="steel_dark", r=0.45, m=0.3),
     "Black":     dict(c="black", r=0.6),
     "White":     dict(c="white", r=0.7),
-    "Gold":      dict(c="gold", r=0.25, m=1.0),
+    "Gold":      dict(c="gold", r=0.35, m=0.35),
     "Teal":      dict(c="teal", r=0.5),
     "TealDark":  dict(c="teal_dark", r=0.5),
     "Navy":      dict(c="navy", r=0.6),
     "Glass":     dict(c="glass", r=0.05, a=0.28),
     "Velvet":    dict(c="navy_deep", r=1.0),     # jewel trays
-    "Safe":      dict(c="safe", r=0.45, m=0.5),
+    "Safe":      dict(c="safe", r=0.45, m=0.2),
     "Plant":     dict(c="plant", r=0.9),
     "VanPaint":  dict(c="van", r=0.4),
     "Rubber":    dict(c="rubber", r=0.9),
@@ -363,12 +365,12 @@ def setup_render(res=(400, 400)):
     bg.inputs[1].default_value = 1.0
     if not sc.objects.get("RJ_Key"):
         key = bpy.data.objects.new("RJ_Key", bpy.data.lights.new("RJ_Key", "SUN"))
-        key.data.energy = 3.5
+        key.data.energy = 4.0
         key.data.color = srgb_to_lin(PAL["sodium_pale"])
         key.rotation_euler = Euler((math.radians(50), math.radians(10), math.radians(-35)))
         sc.collection.objects.link(key)
         fill = bpy.data.objects.new("RJ_Fill", bpy.data.lights.new("RJ_Fill", "SUN"))
-        fill.data.energy = 1.2
+        fill.data.energy = 0.6
         fill.data.color = srgb_to_lin(PAL["teal_light"])
         fill.rotation_euler = Euler((math.radians(60), 0, math.radians(150)))
         sc.collection.objects.link(fill)
@@ -470,6 +472,28 @@ def finish(lib, pieces, previews=None, extra_scene=None):
         json.dump(manifest, f, indent=1)
     print(f"RJ_DONE {lib}: {len(pieces)} pieces, {manifest['bytes']} bytes -> {path}")
     return manifest
+
+
+def text_into(part, text, size, depth, m, loc=(0, 0, 0), rx=90.0, rz=0.0, align='CENTER'):
+    """Add extruded text (Blender's built-in font) to a Part. By default the text stands up,
+    readable from the front (-Y). loc is the baseline centre."""
+    cu = bpy.data.curves.new("rj_text", type='FONT')
+    cu.body = text
+    cu.size = size
+    cu.extrude = depth / 2
+    cu.align_x = align
+    cu.resolution_u = 2
+    cu.fill_mode = 'BOTH'
+    ob = bpy.data.objects.new("rj_text", cu)
+    bpy.context.scene.collection.objects.link(ob)
+    dg = bpy.context.evaluated_depsgraph_get()
+    me = ob.evaluated_get(dg).to_mesh()
+    with part.at(loc, rx=rx, rz=rz):
+        for poly in me.polygons:
+            part.face([tuple(me.vertices[i].co) for i in poly.vertices], m)
+    ob.evaluated_get(dg).to_mesh_clear()
+    bpy.data.objects.remove(ob, do_unlink=True)
+    bpy.data.curves.remove(cu)
 
 
 def place_copy(ob, loc, rz=0.0, name=None):
