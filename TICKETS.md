@@ -37,6 +37,8 @@ Status: [x] done · [~] partial · [ ] todo.
 - [ ] First-person go/no-go call (Nov 24). Camera rules respected so far: gameplay never reads the camera.
 
 ## Week 2 — Jewelry Store (Nov 25–Dec 1), in DESIGN.md order
+
+> **Ownership (Nov 18):** loadout and gadget slots, the gadgets (noisemaker, glass cutter, ECM, body bags, medkit, lockpick kit, keycard cloner), the pre-job loadout picker, intimidate, and the panic button and breaker belong to the **rj-gadgets** session. This session (game code) leaves them alone. Shared files (`sim.ts`, `hud.ts`, `interactions.ts`, `tuning.ts`, `input.ts`, `main.ts`): re-read right before editing, keep commits small.
 - [x] Casing rules + marking
 - [~] Mask up: done; needs the camera push-in and the sound sting
 - [x] Takedowns (masked, from behind, or any side while he's radioing) + zip ties (4)
