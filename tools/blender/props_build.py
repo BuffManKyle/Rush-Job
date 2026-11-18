@@ -95,7 +95,7 @@ for x in (SW * 0.5 - 0.15, SW * 0.5 + 0.12):
 # ---- loot bags ---------------------------------------------------------------------------
 BAGS = {"light": (0.55, 0.3, "Teal", "jewelry: 90% speed, sprint ok, throw 6 m"),
         "medium": (0.72, 0.38, "Gold", "cash: 75% speed, no sprint, throw 4 m"),
-        "heavy": (0.9, 0.46, "Steel", "gold / paintings: 60% speed, throw 3 m")}
+        "heavy": (0.9, 0.46, "Cream", "gold / paintings: 60% speed, throw 3 m")}
 for wname, (L, R, strap, note) in BAGS.items():
     p = P(f"bag_{wname}", note=f"duffel, long axis X, pivot on the floor under its centre; {note}", elev=35, azim=-30)
     p.extras["rj_weight"] = wname
@@ -104,14 +104,15 @@ for wname, (L, R, strap, note) in BAGS.items():
     for i in range(8):
         a = math.pi * 2 * (i + 0.5) / 8
         oct_.append((R * 0.5 * math.cos(a), R * 0.5 + R * 0.45 * math.sin(a)))
-    p.prism(oct_, -L / 2, L / 2, "Fabric", axis='x')
+    p.prism(oct_, -L / 2, L / 2, "BagCanvas", axis='x')   # lighter than the suit, so it reads on the player
     # end caps a shade darker + straps over the top
     for s in (-1, 1):
         p.box(s * L / 2 - (0.02 if s > 0 else 0), -R * 0.32, R * 0.15, s * L / 2 + (0.02 if s < 0 else 0), R * 0.32, R * 0.85, "Black", bottom=True)
     for x in (-L * 0.22, L * 0.22):
-        p.box(x - 0.03, -R * 0.52, 0.02, x + 0.03, R * 0.52, R * 0.97, strap, bottom=True)
+        p.box(x - 0.045, -R * 0.52, 0.02, x + 0.045, R * 0.52, R * 0.97, strap, bottom=True)
     p.box(-L * 0.22, -0.02, R * 0.97, L * 0.22, 0.02, R * 1.0 + 0.1, strap, bottom=True)   # handle
     p.box(-L * 0.3, -R * 0.47, R * 0.75, L * 0.3, -R * 0.44, R * 0.8, "Steel", bottom=True)  # zip
+    p.box(-L / 2 + 0.03, -R * 0.14, R * 0.9, L / 2 - 0.03, R * 0.14, R * 0.95, strap, bottom=True)  # weight stripe on top (seen from above)
 
 
 # ---- Dot's van ---------------------------------------------------------------------------

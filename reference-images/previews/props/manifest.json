@@ -111,7 +111,7 @@
     1,
     1
    ],
-   "tris": 100,
+   "tris": 112,
    "children": [],
    "bounds": {
     "min": [
@@ -134,7 +134,7 @@
     1,
     1
    ],
-   "tris": 100,
+   "tris": 112,
    "children": [],
    "bounds": {
     "min": [
@@ -157,7 +157,7 @@
     1,
     1
    ],
-   "tris": 100,
+   "tris": 112,
    "children": [],
    "bounds": {
     "min": [
@@ -430,5 +430,5 @@
    "note": "break-room filler"
   }
  ],
- "bytes": 191112
+ "bytes": 193320
 }

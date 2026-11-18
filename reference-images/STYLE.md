@@ -58,7 +58,8 @@ Values are sRGB hex. Swatches are the names used in `rj.py`.
 | | `plant` | `#3f7a55` | Plants |
 | | `van` | `#86cdb0` | Dot's van (mint) |
 | | `rubber` | `#202125` | Tyres |
-| | `fabric` | `#34373e` | Loot bags |
+| | `fabric` | `#34373e` | Body bags, straps, tape |
+| | `bag` | `#6f7788` | Loot bags: slate canvas, lighter than the suits so a carried bag reads from above |
 | | `paper` | `#f4e48a` | Sticky notes (the safe code) |
 | | `cash` | `#6f9a55` | Cash stacks |
 | Cast (stand-ins) | `skin` | `#c99a78` | |
@@ -94,7 +95,7 @@ Every shipped mesh uses only these, named `RJ_<Name>` in the GLB so the game can
 | `RJ_Glass` | glass | Alpha blend, 28% |
 | `RJ_Velvet` | navy_deep | Jewel trays and busts |
 | `RJ_Safe` | safe | Metallic |
-| `RJ_Plant`, `RJ_VanPaint`, `RJ_Rubber`, `RJ_Fabric`, `RJ_Paper`, `RJ_Cash` | | |
+| `RJ_Plant`, `RJ_VanPaint`, `RJ_Rubber`, `RJ_Fabric`, `RJ_BagCanvas`, `RJ_Paper`, `RJ_Cash` | | Loot bags use `RJ_BagCanvas`, with straps and a top stripe in the weight colour: teal (light), gold (medium), cream (heavy) |
 | `RJ_Sodium` | sodium | **Emissive** 4.0: lamps |
 | `RJ_Screen` | teal_light | **Emissive** 2.0: monitors |
 | `RJ_Danger` | danger | **Emissive** 3.0: the only red |

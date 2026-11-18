@@ -39,7 +39,7 @@ PAL = {
     "steel": "#8a9199", "steel_dark": "#3a3f47", "black": "#16171b", "white": "#f2efe8",
     "glass": "#a8dede", "danger": "#e0262f", "amber": "#f2b230", "hatch": "#1b1b1f",
     "safe": "#3d4a45", "plant": "#3f7a55", "van": "#86cdb0", "rubber": "#202125",
-    "fabric": "#34373e", "paper": "#f4e48a", "cash": "#6f9a55",
+    "fabric": "#34373e", "bag": "#6f7788", "paper": "#f4e48a", "cash": "#6f9a55",
     "skin": "#c99a78", "suit": "#2b2b30", "uniform": "#2f4470", "mask": "#f2efe8",
 }
 
@@ -79,6 +79,7 @@ MATS = {
     "VanPaint":  dict(c="van", r=0.4),
     "Rubber":    dict(c="rubber", r=0.9),
     "Fabric":    dict(c="fabric", r=1.0),
+    "BagCanvas": dict(c="bag", r=1.0),       # loot bags: lighter than the suits they're carried on
     "Paper":     dict(c="paper", r=1.0),
     "Cash":      dict(c="cash", r=0.9),
     "Cream":     dict(c="plaster", r=0.8),
