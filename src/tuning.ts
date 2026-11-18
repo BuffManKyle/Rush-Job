@@ -109,6 +109,7 @@ export const T = {
     range: 25,
     spread: 3, // degrees, doubled while moving
     noise: 6,
+    assistArc: 60, // degrees (total) around your facing that snap to a guard, cop or camera
   },
 
   health: {
@@ -178,8 +179,7 @@ export const T = {
     zoomPlanning: 26,
     zoomDefault: 16,
     fov: 40,
-    mouseLead: 0.22, // fraction of the player→aim vector the camera leads by
-    mouseLeadMax: 3.5,
+    facingLead: 1.5, // camera looks this far ahead of the player along their facing
     followLerp: 8, // per second
     wallHeight: 3.0,
     wallStub: 0.35,

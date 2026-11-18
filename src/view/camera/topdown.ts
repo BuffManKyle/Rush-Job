@@ -1,4 +1,4 @@
-// Angled top-down follow camera: ~55° down, slight lead toward the mouse, wheel zoom between "close" and "planning".
+// Angled top-down follow camera: ~55° down, slight lead along the player's facing, wheel zoom between "close" and "planning".
 import * as THREE from 'three';
 import { T } from '../../tuning';
 import type { GameCamera, ScreenPoint } from './types';
@@ -24,8 +24,9 @@ export class TopDownCamera implements GameCamera {
   follow(target: THREE.Vector3, aim: THREE.Vector3 | null, dt: number): void {
     const want = target.clone();
     if (aim) {
-      const lead = aim.clone().sub(target).setY(0).multiplyScalar(T.view.mouseLead);
-      if (lead.length() > T.view.mouseLeadMax) lead.setLength(T.view.mouseLeadMax);
+      // `aim` is a point ahead of the player; lead toward it
+      const lead = aim.clone().sub(target).setY(0);
+      if (lead.length() > T.view.facingLead) lead.setLength(T.view.facingLead);
       want.add(lead);
     }
     if (!this.initialized) {

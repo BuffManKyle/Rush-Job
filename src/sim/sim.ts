@@ -354,12 +354,12 @@ export class Sim {
     }
 
     if (input.mark) this.mark(input.aimX, input.aimY);
-    if (input.throw && !this.interaction && this.player.frozen <= 0) throwBag(this, { x: input.aimX, y: input.aimY });
+    if (input.throw && !this.interaction && this.player.frozen <= 0) throwBag(this, this.facingPoint(T.bags[this.player.carrying ?? 'light'].throw));
     updateBags(this, dt);
     updateShots(this, dt);
     this.updatePlayer(input, dt);
     this.updateInteraction(input, dt);
-    updatePlayerWeapon(this, input.fire, input.reload, { x: input.aimX, y: input.aimY }, dt);
+    updatePlayerWeapon(this, input.fire, input.reload, dt);
     this.updateDoors(dt);
 
     // Detection first, then AI reacts to the new meter values.
@@ -457,11 +457,13 @@ export class Sim {
     p.moving = actual > 0.3;
     if (!p.moving) p.sprinting = false;
 
-    // face the aim point
-    const want = Math.atan2(input.aimY - p.pos.y, input.aimX - p.pos.x);
-    const d = angleDiff(p.yaw, want);
-    const max = T.player.turnRate * DEG * dt;
-    p.yaw += Math.max(-max, Math.min(max, d));
+    // face where you're walking (WASD only; the mouse doesn't turn the player)
+    if (Math.hypot(mx, my) > 0.1) {
+      const want = Math.atan2(my, mx);
+      const d = angleDiff(p.yaw, want);
+      const max = T.player.turnRate * DEG * dt;
+      p.yaw += Math.max(-max, Math.min(max, d));
+    }
 
     // footsteps when sprinting
     p.noiseTimer -= dt;
@@ -736,6 +738,12 @@ export class Sim {
       this.marked.add(best.id);
       this.events.emit({ type: 'message', text: `Marked ${best.label}`, tone: 'info' });
     }
+  }
+
+  /** The point `dist` meters ahead of the player along their facing. */
+  facingPoint(dist: number): Vec2 {
+    const p = this.player;
+    return { x: p.pos.x + Math.cos(p.yaw) * dist, y: p.pos.y + Math.sin(p.yaw) * dist };
   }
 
   /** Everyone who walks around and opens doors. */

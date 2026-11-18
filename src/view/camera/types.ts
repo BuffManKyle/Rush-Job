@@ -12,7 +12,7 @@ export interface ScreenPoint {
  */
 export interface GameCamera {
   readonly camera: THREE.PerspectiveCamera;
-  /** Track a world-space target; `aim` is the world-space aim point for mouse lead (may be null). */
+  /** Track a world-space target; `aim` is a world-space point to lead toward (the player's facing), or null. */
   follow(target: THREE.Vector3, aim: THREE.Vector3 | null, dt: number): void;
   /** World-space ray through a point in normalized device coordinates (-1..1). */
   aimRay(ndcX: number, ndcY: number): THREE.Ray;

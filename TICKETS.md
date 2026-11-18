@@ -6,7 +6,7 @@ Status: [x] done · [~] partial · [ ] todo.
 ## How to play-test
 - `npm install`, then `npm run dev` → http://localhost:5173 (the browser pane uses `.claude/launch.json`).
 - `?seed=123` replays a run exactly. The seed shows on the pause screen (Esc) and the payout receipt.
-- Controls: WASD (screen-relative) · Shift sprint · C crouch · E hold to interact · G hold to mask up · Q mark · F throw bag · wheel zoom · F1 debug · Esc pause.
+- Controls: WASD (screen-relative; you face where you walk) · Shift sprint · C crouch · E hold to interact · G hold to mask up · Q mark (cursor) · F throw bag · Click or Space shoot · R reload · wheel zoom · F1 debug · Esc pause.
 - F1 debug: nav grid, routes (active bright, inactive dim), guard paths, noise radii, and per-observer detection math (why the meter moves). It also shows the shuffle results (spoilers).
 - Console: `rj.sim` (read-only state), `rj.test.manual = true; rj.test.run(30, { moveY: -1 })` steps the sim by hand.
 
@@ -63,9 +63,12 @@ Status: [x] done · [~] partial · [ ] todo.
 - [ ] Meshy characters when they land: per-model attach map (`attach('hand_R')`), same clip names
 - [ ] Audio: stealth/loud stems, barks, SFX hooks off sim events
 
+## Decisions (Kyle)
+- Nov 18: Shots kill (keep lethality as is).
+- Nov 18: No mouse aiming. The player faces their movement direction (WASD). Shots go along the facing and snap to the nearest guard, cop or camera within ±30° (`weapon.assistArc`); bags throw along the facing; the camera leads 1.5 m ahead of the facing. The mouse is only used for Q marking, clicking to fire and zooming. This departs from DESIGN.md "Camera" ("Mouse aims"); the design doc owner should record it there.
+
 ## Open questions for Kyle
 - Lethality (design doc open question): guards and patrol cops die in 2 hits; enemies hit about 50% of the time for 8–14 damage, so you last about 10–12 hits. Tune by feel.
-- Shooting a guard kills him (counts against Ghost/Pacifist). Should the pocket pistol knock out instead, leaving killing to the louder guns?
 - Detection is spec-exact. Two calls to make by feel: should standing still count as "walk" (1.0, current) or lower? Should guards notice you bumping into them from behind (a small all-around radius)? It's off now (spec has none).
 - Unmasked + camera: I made the desk send the nearest guard to check (no alarm). Spec only covers the masked case.
 - Pagers: I read "the Dispatcher's patience runs out on the fourth call" as 3 answers OK and the 4th trips the alarm.

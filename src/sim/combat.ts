@@ -38,7 +38,36 @@ function trace(sim: Sim, from: Vec2, dir: Vec2, range: number): { t: number; hit
   return { t: bt, hit: best };
 }
 
-export function updatePlayerWeapon(sim: Sim, fire: boolean, reload: boolean, aim: Vec2, dt: number): void {
+/**
+ * Aim assist: the player only aims by facing (WASD), so snap to the closest live, visible target
+ * within `T.weapon.assistArc` of the facing direction. Falls back to straight ahead.
+ */
+function assistedAim(sim: Sim): number {
+  const p = sim.player;
+  const W = T.weapon;
+  const arc = (W.assistArc * Math.PI) / 360;
+  let best = p.yaw;
+  let bestScore = Infinity;
+  const consider = (pos: Vec2, priority: number) => {
+    const d = Math.hypot(pos.x - p.pos.x, pos.y - p.pos.y);
+    if (d > W.range || d < 0.2) return;
+    const a = Math.atan2(pos.y - p.pos.y, pos.x - p.pos.x);
+    const off = Math.abs(angleDiff(p.yaw, a));
+    if (off > arc || !sim.grid.canSee(p.pos, pos)) return;
+    const score = off * 4 + d * 0.1 + priority;
+    if (score < bestScore) {
+      bestScore = score;
+      best = a;
+    }
+  };
+  // threats first, then guards, cameras, and civilians last (never preferred over a threat)
+  for (const c of sim.cops) if (!c.down) consider(c.pos, 0);
+  for (const g of sim.guards) if (!isDown(g)) consider(g.pos, 0);
+  for (const c of sim.cameras) if (!c.dead) consider(c.pos, 1);
+  return best;
+}
+
+export function updatePlayerWeapon(sim: Sim, fire: boolean, reload: boolean, dt: number): void {
   const p = sim.player;
   const W = T.weapon;
   p.fireCd = Math.max(0, p.fireCd - dt);
@@ -67,7 +96,8 @@ export function updatePlayerWeapon(sim: Sim, fire: boolean, reload: boolean, aim
   }
   p.mag--;
   p.fireCd = W.fireInterval;
-  const base = Math.atan2(aim.y - p.pos.y, aim.x - p.pos.x);
+  const base = assistedAim(sim);
+  p.yaw = base; // turn to the target you shot at
   const spread = ((W.spread * Math.PI) / 180) * (p.moving ? 2 : 1) * (sim.rng.next() - 0.5);
   const a = base + spread;
   const dir = { x: Math.cos(a), y: Math.sin(a) };

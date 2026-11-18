@@ -67,7 +67,7 @@ export class Hud {
     this.hurt = el('div', 'hud-hurt', this.root);
     this.vitals = el('div', 'hud-vitals', this.root);
     this.pause = el('div', 'hud-pause hidden', this.root);
-    el('div', 'hud-help', this.root, 'WASD move · Shift sprint · C crouch · E interact (hold) · G mask up (hold) · Q mark · F throw bag · Click shoot · R reload · Wheel zoom · F1 debug · Esc pause');
+    el('div', 'hud-help', this.root, 'WASD move · Shift sprint · C crouch · E interact (hold) · G mask up (hold) · Q mark · F throw bag · Click or Space shoot · R reload · Wheel zoom · F1 debug · Esc pause');
     this.unsub = sim.events.on((e) => this.onEvent(e));
   }
 

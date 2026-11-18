@@ -87,7 +87,7 @@ export class Input {
       mask: this.down.has('KeyG'),
       mark: this.consume('KeyQ'),
       throw: this.consume('KeyF'),
-      fire: this.mouseDown,
+      fire: this.mouseDown || this.down.has('Space'),
       reload: this.consume('KeyR'),
     };
   }
