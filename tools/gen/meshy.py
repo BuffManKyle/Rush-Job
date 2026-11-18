@@ -154,10 +154,13 @@ def poll(kind, tid, job=None):
     files = {}
     urls = dict(r.get("model_urls") or {})
     urls.update({k: v for k, v in (r.get("result") or {}).items() if isinstance(v, str) and v.startswith("http")})
+    for k, v in ((r.get("result") or {}).get("basic_animations") or {}).items():   # free with a rig
+        if isinstance(v, str) and v.startswith("http") and "glb" in k:
+            urls[k] = v
     if r.get("thumbnail_url"):
         urls["thumbnail"] = r["thumbnail_url"]
     for name, url in urls.items():
-        if not url or name not in ("glb", "thumbnail", "rigged_character_glb_url", "animation_glb_url"):
+        if not url or not (name in ("glb", "thumbnail") or "glb" in name):
             continue        # only what we use; the provider keeps the rest for 3 days
         ext = url.split("?")[0].rsplit(".", 1)[-1][:5]
         dst = os.path.join(OUT, f"{job or tid}_{name}.{ext}")

@@ -1,0 +1,13 @@
+{
+  "_note": "Texture pass on the approved guard preview. enable_pbr off: flat albedo only, matching the flat-colour style and the no-env-map metalness rule.",
+  "kind": "text-to-3d",
+  "job": "pilot-guard-refine",
+  "stream": "chars",
+  "request": {
+    "mode": "refine",
+    "preview_task_id": "01a1ef5a-7457-740d-bff1-635148f4e37b",
+    "ai_model": "meshy-6-lite",
+    "enable_pbr": false,
+    "texture_prompt": "flat stylized colors, navy blue uniform and cap, gold badge, black belt and shoes, warm skin tone, no logos, no text"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "_note": "crouch_walk clip for the player pilot: Meshy library action 524, picked from its preview.",
+  "kind": "animations",
+  "job": "pilot-player-crouch_walk",
+  "stream": "chars",
+  "request": {"rig_task_id": "01a1ef67-4844-7524-81ea-d7b61da92bec", "action_id": 524}
+}

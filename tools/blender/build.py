@@ -89,6 +89,8 @@ def main():
     scripts = sorted(glob.glob(os.path.join(HERE, "*_build.py")))
     if args:
         scripts = [s for s in scripts if os.path.basename(s)[:-9] in args]
+    else:   # on-demand gates are only run by name
+        scripts = [s for s in scripts if os.path.basename(s)[:-9] not in ("inspect",)]
     if not scripts:
         raise SystemExit("no matching *_build.py")
     for s in scripts:

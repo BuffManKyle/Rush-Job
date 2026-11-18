@@ -9,12 +9,13 @@ map in game) and 0 on skin/fabric, triangle budgets (props 2k, characters 8k), m
 shared RJ_* ones, node names have no '.' (three.js strips them), no image embedded twice, characters
 carry the 10 clips. build.py runs it after every build.
 """
-import glob, hashlib, json, os, struct, sys
+import glob, hashlib, json, math, os, struct, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 CLIPS = {"idle", "walk", "run", "crouch_idle", "crouch_walk", "carry_walk", "aim_shoot", "hands_up", "ziptied", "interact"}
-NONMETAL = {"RJ_Skin", "RJ_Fabric", "RJ_Suit", "RJ_Uniform", "RJ_Plaster", "RJ_Brick", "RJ_Velvet"}
+CORE = {"idle", "walk", "run", "aim_shoot", "hands_up"}          # every character needs these
+NONMETAL = {"RJ_Char_player", "RJ_Char_guard", "RJ_Skin", "RJ_Fabric", "RJ_Suit", "RJ_Uniform", "RJ_Plaster", "RJ_Brick", "RJ_Velvet"}
 
 
 def read(path):
@@ -27,11 +28,21 @@ def read(path):
     return g, binc
 
 
+def vec3s(g, binc, a):
+    """Read a float VEC3 accessor (non-sparse) as a list of tuples."""
+    if a.get("type") != "VEC3" or a.get("componentType") != 5126 or "bufferView" not in a:
+        return []
+    bv = g["bufferViews"][a["bufferView"]]
+    off = bv.get("byteOffset", 0) + a.get("byteOffset", 0)
+    stride = bv.get("byteStride", 12)
+    return [struct.unpack_from("<3f", binc, off + i * stride) for i in range(a["count"])]
+
+
 def lint(path):
     errs, notes = [], []
     g, binc = read(path)
     name = os.path.basename(path)
-    is_char = name.startswith("char_")
+    is_char = name.startswith("char_") or name.startswith("standin_")
     for m in g.get("materials", []):
         mn = m.get("name", "?")
         pbr = m.get("pbrMetallicRoughness", {})
@@ -88,10 +99,34 @@ def lint(path):
             seen[h] = im.get("name")
     if is_char:
         have = {a["name"] for a in g.get("animations", [])}
-        if have != CLIPS:
-            errs.append(f"clips {sorted(have)} != the 10 expected (missing {sorted(CLIPS - have)})")
+        if not CORE <= have:
+            errs.append(f"missing core clips {sorted(CORE - have)}")
+        if have - CLIPS:
+            errs.append(f"unknown clip names {sorted(have - CLIPS)}")
         if not g.get("skins"):
             errs.append("character has no skin")
+        roots = [g["nodes"][i] for i in g["scenes"][g.get("scene", 0)]["nodes"]]
+        if not any("rj_attach" in (n.get("extras") or {}) for n in g["nodes"]):
+            errs.append("no rj_attach extras (attach points by role)")
+        # root motion: the hips' translation must not travel over a clip (the sim moves the root)
+        hips = {i for i, n in enumerate(g["nodes"]) if n.get("name", "").lower() == "hips"}
+        parent = {c: i for i, n in enumerate(g["nodes"]) for c in n.get("children", [])}
+
+        def world_scale(i):          # uniform scale of a node's ancestors (Meshy rigs store cm under 0.01)
+            k, i = 1.0, parent.get(i)
+            while i is not None:
+                k *= g["nodes"][i].get("scale", [1, 1, 1])[0]
+                i = parent.get(i)
+            return k
+        for a in g.get("animations", []):
+            for ch in a["channels"]:
+                if ch["target"].get("node") in hips and ch["target"]["path"] == "translation":
+                    out_acc = acc[a["samplers"][ch["sampler"]]["output"]]
+                    v = vec3s(g, binc, out_acc)
+                    if len(v) > 1:
+                        travel = math.hypot(v[-1][0] - v[0][0], v[-1][2] - v[0][2]) * world_scale(ch["target"]["node"])
+                        if travel > 0.1:
+                            errs.append(f"clip {a['name']}: hips travel {travel:.2f} m (strip root motion)")
     return errs
 
 

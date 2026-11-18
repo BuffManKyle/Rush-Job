@@ -1,0 +1,217 @@
+{
+ "lib": "meshy",
+ "glbs": [
+  "assets/models/char_player.glb",
+  "assets/models/char_guard.glb"
+ ],
+ "pieces": [
+  {
+   "name": "player_aim_shoot",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7244,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "player_carry_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7244,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "player_crouch_idle",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7244,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "player_crouch_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7244,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "player_hands_up",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7244,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "player_idle",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7244,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "player_interact",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7244,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "player_run",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7244,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "player_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7244,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "guard_aim_shoot",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7242,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "guard_hands_up",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7242,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "guard_idle",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7242,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "guard_run",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7242,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "guard_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7242,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "guard_ziptied",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7242,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  }
+ ],
+ "bytes": 1564240,
+ "chars": {
+  "player": {
+   "clips": [
+    "aim_shoot",
+    "carry_walk",
+    "crouch_idle",
+    "crouch_walk",
+    "hands_up",
+    "idle",
+    "interact",
+    "run",
+    "walk"
+   ],
+   "tris": 7244
+  },
+  "guard": {
+   "clips": [
+    "aim_shoot",
+    "hands_up",
+    "idle",
+    "run",
+    "walk",
+    "ziptied"
+   ],
+   "tris": 7242
+  }
+ }
+}

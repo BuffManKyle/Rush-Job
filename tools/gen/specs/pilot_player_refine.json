@@ -1,0 +1,13 @@
+{
+  "_note": "Texture pass on the approved player preview. enable_pbr off: flat albedo only, matching the flat-colour style and the no-env-map metalness rule.",
+  "kind": "text-to-3d",
+  "job": "pilot-player-refine",
+  "stream": "chars",
+  "request": {
+    "mode": "refine",
+    "preview_task_id": "01a1ef58-8969-7056-8352-1bfbfdbea4cf",
+    "ai_model": "meshy-6-lite",
+    "enable_pbr": false,
+    "texture_prompt": "flat stylized colors, plain white mask, charcoal suit, teal tie, black gloves and shoes, no logos, no text"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "_note": "Auto-rig the textured guard pilot at 1.8 m. Rig binds to this exact mesh; keep it unchanged.",
+  "kind": "rigging",
+  "job": "pilot-guard-rig",
+  "stream": "chars",
+  "request": {"input_task_id": "01a1ef66-8dba-7475-bdcb-c9627927bf38", "height_meters": 1.8}
+}

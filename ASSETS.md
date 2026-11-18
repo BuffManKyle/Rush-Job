@@ -55,13 +55,19 @@ Walls, windows and doors are whole cells, the same as the graybox and the collis
 | camera point | `security_camera` at the point, `rotation.y` from `yaw` | lens is +X at 0, which matches Tiled yaw 0 = east |
 | code_note point | `sticky_note`, lifted to the surface height | any |
 | bags | `bag_light` / `bag_medium` / `bag_heavy` (`userData.rj_weight`) | any |
-| player / guards / civilians | `char_player`, `char_guard`, `char_civilian` (stand-ins) | face +Z |
+| player / guards / civilians | `char_player`, `char_guard` (Meshy pilots), `char_civilian` (stand-in) | face +Z |
 
-## Characters (stand-ins until Meshy)
+## Characters
 
-`char_*.glb` share one stand-in skeleton: `hips > spine > head`, `spine > upperarm_L/R > forearm_L/R > hand_L/R`, `hips > thigh_L/R > shin_L/R` (underscores, because three.js strips dots from node names). Attach guns and bags to `hand_R`. Clips (looping, 30 fps): `idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact`. Use an `AnimationMixer`, look clips up by name, and clone characters with `SkeletonUtils.clone`.
+Load `assets/models/char_<name>.glb`. It is the Meshy model when one exists (`char_player`, `char_guard` today), and otherwise a copy of the stand-in. Stand-ins are also kept as `standin_<name>.glb`. Either way:
+- **Attach points by role.** The rig node carries `userData.rj_attach`, e.g. `{"hand_R": "RightHand", "hand_L": "LeftHand", "head": "Head", "spine": "Spine02", "hips": "Hips"}` on Meshy rigs and `{"hand_R": "hand_R", ...}` on stand-ins. Do `obj.getObjectByName(attach.hand_R).add(gun)`.
+- **Clips by name** through an `AnimationMixer`, from this set: `idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact`. Every character has at least `idle, walk, run, aim_shoot, hands_up`. A missing clip falls back to `idle`, never to the bind pose.
+- Clone with `SkeletonUtils.clone`. Metres, feet at y = 0, facing +Z, no net root travel (the lint checks this).
+- Meshy rigs are 24-joint Mixamo-style (`Hips`, `Spine`, `Spine01`, `Spine02`, `neck`, `Head`, `LeftArm`, `LeftForeArm`, `LeftHand`, …) with the bones stored in centimetres under a 0.01 scale. Use world positions, not raw bone `position` values.
 
-**When the Meshy characters land, each keeps its own Meshy rig. They are not retargeted onto the stand-in skeleton.** Clips retargeted onto a shared rig tear meshes (see the `opengame-characters` skill), so every Meshy figure plays library clips on the rig Meshy made for it. What stays stable for game code:
+Stand-in skeleton, for reference: `hips > spine > head`, `spine > upperarm_L/R > forearm_L/R > hand_L/R`, `hips > thigh_L/R > shin_L/R`. It has all 10 clips.
+
+**Each Meshy character keeps its own Meshy rig. They are not retargeted onto the stand-in skeleton.** Clips retargeted onto a shared rig tear meshes (see the `opengame-characters` skill), so every Meshy figure plays library clips on the rig Meshy made for it. What stays stable for game code:
 - **Clip names.** Each Meshy GLB will expose the same 10 names, renamed from Meshy's library actions at import.
 - **Attach points by role, not by bone name.** Code asks for `attach('hand_R')` through a per-model map. The stand-in maps to `hand_R`; Meshy's rig has 24 joints, no fingers, and torso bones numbered in the opposite direction to Mixamo, so its map is filled in at import.
 - **Same convention.** Metres, Y-up, facing +Z, origin at the feet, no root motion (the sim moves the root; clips only bob and sway).
@@ -72,7 +78,7 @@ The entry form asks for evidence of what each sponsor tool produced, so every ge
 
 | Tool | Used for | Status | Caps (set by Kyle) |
 | --- | --- | --- | --- |
-| Meshy | Player, guards, police ×3, civilians, staff, the Accountant, Dot | Pilots underway through the API (text-to-3d `meshy-6-lite`). Untextured previews of the player and guard are done; next: Kyle's look check, then texture, rig, clips. Stand-ins ship until then. | 150 credits for the pilots, keep a 100-credit reserve (balance 1,090 of 1,100) |
+| Meshy | Player, guards, police ×3, civilians, staff, the Accountant, Dot | Pilots done through the API: player and guard textured, rigged and animated (`char_player.glb`, `char_guard.glb`), waiting on Kyle's in-game review before the batch. | 150 credits for the pilots (64 used), 100-credit reserve; balance 1,036 of 1,100 |
 | fal | Concept art, model sheets, item icons, posters, title and cover art | Waiting on Kyle's go-ahead | not set |
 | ElevenLabs | Voices, SFX, music (audio session) | not started here | not set |
 
@@ -89,6 +95,18 @@ Generated-file evidence (one row per file: tool, model version, job id, date, co
 | --- | --- | --- | --- | --- | --- |
 | `assets/gen/meshy/pilot-player-preview_glb.glb` | Meshy text-to-3d preview, meshy-6-lite | `01a1ef58-8969-7056-8352-1bfbfdbea4cf` | 2026-11-18 | 5 credits | Player pilot, untextured shape check (7,261 tris, A-pose) |
 | `assets/gen/meshy/pilot-guard-preview_glb.glb` | Meshy text-to-3d preview, meshy-6-lite | `01a1ef5a-7457-740d-bff1-635148f4e37b` | 2026-11-18 | 5 credits | Guard pilot, untextured shape check (7,247 tris, A-pose) |
+| `assets/gen/meshy/pilot-player-refine_glb.glb` | Meshy text-to-3d | `01a1ef65-da8b-73ec-bf57-e7d9aceed677` | 2026-11-18 | 10 credits | Player pilot: textured mesh (meshy-6-lite, no PBR) |
+| `assets/gen/meshy/pilot-guard-refine_glb.glb` | Meshy text-to-3d | `01a1ef66-8dba-7475-bdcb-c9627927bf38` | 2026-11-18 | 10 credits | Guard pilot: textured mesh (meshy-6-lite, no PBR) |
+| `assets/gen/meshy/pilot-player-rig_rigged_character_glb_url.glb`, `assets/gen/meshy/pilot-player-rig_walking_armature_glb_url.glb`, `assets/gen/meshy/pilot-player-rig_running_armature_glb_url.glb` | Meshy rigging | `01a1ef67-4844-7524-81ea-d7b61da92bec` | 2026-11-18 | 5 credits | Player pilot: auto-rig at 1.8 m, plus the free walk and run clips |
+| `assets/gen/meshy/pilot-guard-rig_rigged_character_glb_url.glb`, `assets/gen/meshy/pilot-guard-rig_walking_armature_glb_url.glb`, `assets/gen/meshy/pilot-guard-rig_running_armature_glb_url.glb` | Meshy rigging | `01a1ef67-ab2c-71f6-b63c-8f6dfc9c91cd` | 2026-11-18 | 5 credits | Guard pilot: auto-rig at 1.8 m, plus the free walk and run clips |
+| `assets/gen/meshy/pilot-player-idle_animation_glb_url.glb` | Meshy animations | `01a1ef68-dc07-707a-b645-02c192b4e4b6` | 2026-11-18 | 3 credits | Player pilot: `idle` clip (library action 0) |
+| `assets/gen/meshy/pilot-player-crouch_walk_animation_glb_url.glb` | Meshy animations | `01a1ef69-26da-75c0-8ea3-9e9d64fc58cc` | 2026-11-18 | 3 credits | Player pilot: `crouch_walk` clip (library action 524) |
+| `assets/gen/meshy/pilot-player-aim_shoot_animation_glb_url.glb` | Meshy animations | `01a1ef69-58cb-76e5-8286-10593b4bc56c` | 2026-11-18 | 3 credits | Player pilot: `aim_shoot` clip (library action 234) |
+| `assets/gen/meshy/pilot-player-interact_animation_glb_url.glb` | Meshy animations | `01a1ef69-86a8-769f-8bd0-68d8fb2d2d04` | 2026-11-18 | 3 credits | Player pilot: `interact` clip (library action 165) |
+| `assets/gen/meshy/pilot-guard-idle_animation_glb_url.glb` | Meshy animations | `01a1ef69-b46f-715b-9fd7-f24f57357782` | 2026-11-18 | 3 credits | Guard pilot: `idle` clip (library action 0) |
+| `assets/gen/meshy/pilot-guard-aim_shoot_animation_glb_url.glb` | Meshy animations | `01a1ef69-e39d-775b-b444-03082039fbe9` | 2026-11-18 | 3 credits | Guard pilot: `aim_shoot` clip (library action 234) |
+| `assets/gen/meshy/pilot-guard-ziptied_animation_glb_url.glb` | Meshy animations | `01a1ef6a-127e-71aa-bf88-7867aab8d714` | 2026-11-18 | 3 credits | Guard pilot: `ziptied` clip (library action 363) |
+| `assets/gen/meshy/pilot-player-carry_walk_animation_glb_url.glb` | Meshy animations | `01a1ef6a-6032-7561-994d-7078272906d4` | 2026-11-18 | 3 credits | Player pilot: `carry_walk` clip (library action 552) |
 
 ## Asset table
 
@@ -151,7 +169,10 @@ Generated-file evidence (one row per file: tool, model version, job id, date, co
 | `counter_register` | script `tools/blender/glint_build.py` | done | `assets/models/glint.glb` | 88 tris. 1 m counter segment with the cash register (faces the staff side, north). |
 | `counter_end` | script `tools/blender/glint_build.py` | done | `assets/models/glint.glb` | 10 tris. end cap: a closed panel on the segment's +X (east) end; rotate 180 for the west end. |
 | `sign_glint` | script `tools/blender/glint_build.py` | done | `assets/models/glint.glb` | 1504 tris. 'GLINT & SONS' fascia sign, 5 m wide; hang it on the storefront wall's south face above the door (pivot = cell centre at floor level, sign at 2.55-3.2 m). |
-| `char_player` | script (stand-in for Meshy) | placeholder | `assets/models/char_player.glb` | shared rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
-| `char_guard` | script (stand-in for Meshy) | placeholder | `assets/models/char_guard.glb` | shared rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
-| `char_civilian` | script (stand-in for Meshy) | placeholder | `assets/models/char_civilian.glb` | shared rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
+| `char_player` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_player.glb` | 7244 tris, own Meshy rig, clips: aim_shoot, carry_walk, crouch_idle, crouch_walk, hands_up, idle, interact, run, walk |
+| `char_guard` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_guard.glb` | 7242 tris, own Meshy rig, clips: aim_shoot, hands_up, idle, run, walk, ziptied |
+| `standin_player` | script (stand-in) | placeholder | `assets/models/standin_player.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
+| `standin_guard` | script (stand-in) | placeholder | `assets/models/standin_guard.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
+| `standin_civilian` | script (stand-in) | placeholder | `assets/models/standin_civilian.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
+| `char_civilian` | script (stand-in) | placeholder | `assets/models/char_civilian.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
 <!-- RJ-TABLE:END -->

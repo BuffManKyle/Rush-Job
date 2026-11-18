@@ -1,0 +1,7 @@
+{
+  "_note": "Auto-rig the textured player pilot at 1.8 m. Rig binds to this exact mesh; keep it unchanged.",
+  "kind": "rigging",
+  "job": "pilot-player-rig",
+  "stream": "chars",
+  "request": {"input_task_id": "01a1ef65-da8b-73ec-bf57-e7d9aceed677", "height_meters": 1.8}
+}

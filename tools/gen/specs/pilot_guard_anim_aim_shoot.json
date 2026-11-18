@@ -1,0 +1,7 @@
+{
+  "_note": "aim_shoot clip for the guard pilot: Meshy library action 234, picked from its preview.",
+  "kind": "animations",
+  "job": "pilot-guard-aim_shoot",
+  "stream": "chars",
+  "request": {"rig_task_id": "01a1ef67-ab2c-71f6-b63c-8f6dfc9c91cd", "action_id": 234}
+}

@@ -267,12 +267,21 @@ for outfit in OUTFITS:
     bpy.ops.object.select_all(action='DESELECT')
     rig.select_set(True); mesh.select_set(True)
     bpy.context.view_layer.objects.active = rig
-    path = os.path.join(rj.MODELS, f"char_{name}.glb")
+    # Meshy characters own char_<name>.glb; the stand-in is always standin_<name>.glb, and also
+    # char_<name>.glb for characters that have no Meshy version yet
+    has_meshy = os.path.exists(os.path.join(rj.ROOT, "assets", "gen", "meshy", f"pilot-{name}-rig_rigged_character_glb_url.glb"))
+    rig["rj_attach"] = json.dumps({b: b for b in ("hand_R", "hand_L", "head", "spine", "hips")})
+    rig["rj_source"] = "standin"
+    path = os.path.join(rj.MODELS, f"standin_{name}.glb")
     bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, export_yup=True,
                               export_apply=False, export_skins=True, export_animations=True,
                               export_animation_mode='ACTIONS', export_cameras=False, export_lights=False,
-                              export_extras=False)
-    manifest["glbs"].append(f"assets/models/char_{name}.glb")
+                              export_extras=True)
+    manifest["glbs"].append(f"assets/models/standin_{name}.glb")
+    if not has_meshy:
+        import shutil
+        shutil.copyfile(path, os.path.join(rj.MODELS, f"char_{name}.glb"))
+        manifest["glbs"].append(f"assets/models/char_{name}.glb")
     print(f"RJ_CHAR {name}: {tris} tris, {os.path.getsize(path)} bytes")
     rig.animation_data_clear()
     for act in list(bpy.data.actions):

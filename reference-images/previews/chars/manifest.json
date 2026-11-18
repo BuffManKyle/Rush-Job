@@ -1,8 +1,9 @@
 {
  "lib": "chars",
  "glbs": [
-  "assets/models/char_player.glb",
-  "assets/models/char_guard.glb",
+  "assets/models/standin_player.glb",
+  "assets/models/standin_guard.glb",
+  "assets/models/standin_civilian.glb",
   "assets/models/char_civilian.glb"
  ],
  "pieces": [
@@ -286,5 +287,5 @@
   "thigh_R",
   "shin_R"
  ],
- "bytes": 400316
+ "bytes": 530876
 }

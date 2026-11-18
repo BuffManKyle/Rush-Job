@@ -3,6 +3,102 @@
  "glbs": [],
  "pieces": [
   {
+   "name": "pilot-guard-aim_shoot_animation_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.67 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-aim_shoot_animation_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.67 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-aim_shoot_animation_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.67 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-aim_shoot_animation_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.67 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-idle_animation_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.71 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-idle_animation_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.71 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-idle_animation_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.71 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-idle_animation_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.71 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
    "name": "pilot-guard-preview_glb_front",
    "kind": "inspect",
    "cells": [
@@ -51,6 +147,582 @@
    "note": "7247 tris, h 1.90 m, low z -0.95, w 1.23 d 0.48"
   },
   {
+   "name": "pilot-guard-refine_glb_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7242,
+   "children": [],
+   "bounds": {},
+   "note": "7242 tris, h 1.90 m, low z -0.95, w 1.23 d 0.48"
+  },
+  {
+   "name": "pilot-guard-refine_glb_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7242,
+   "children": [],
+   "bounds": {},
+   "note": "7242 tris, h 1.90 m, low z -0.95, w 1.23 d 0.48"
+  },
+  {
+   "name": "pilot-guard-refine_glb_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7242,
+   "children": [],
+   "bounds": {},
+   "note": "7242 tris, h 1.90 m, low z -0.95, w 1.23 d 0.48"
+  },
+  {
+   "name": "pilot-guard-refine_glb_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7242,
+   "children": [],
+   "bounds": {},
+   "note": "7242 tris, h 1.90 m, low z -0.95, w 1.23 d 0.48"
+  },
+  {
+   "name": "pilot-guard-rig_rigged_character_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.80 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_rigged_character_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.80 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_rigged_character_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.80 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_rigged_character_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.80 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_running_armature_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 2.84 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_running_armature_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 2.84 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_running_armature_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 2.84 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_running_armature_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 2.84 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_running_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.78 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_running_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.78 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_running_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.78 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_running_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.78 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_walking_armature_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 2.91 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_walking_armature_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 2.91 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_walking_armature_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 2.91 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_walking_armature_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 2.91 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_walking_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.84 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_walking_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.84 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_walking_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.84 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-rig_walking_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.84 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-ziptied_animation_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.00 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-ziptied_animation_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.00 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-ziptied_animation_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.00 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-guard-ziptied_animation_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7322,
+   "children": [],
+   "bounds": {},
+   "note": "7322 tris, h 2.00 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-aim_shoot_animation_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.73 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-aim_shoot_animation_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.73 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-aim_shoot_animation_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.73 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-aim_shoot_animation_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.73 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-carry_walk_animation_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.84 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-carry_walk_animation_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.84 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-carry_walk_animation_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.84 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-carry_walk_animation_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.84 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-crouch_walk_animation_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.47 m, low z -1.00, w 1.90 d 2.07"
+  },
+  {
+   "name": "pilot-player-crouch_walk_animation_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.47 m, low z -1.00, w 1.90 d 2.07"
+  },
+  {
+   "name": "pilot-player-crouch_walk_animation_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.47 m, low z -1.00, w 1.90 d 2.07"
+  },
+  {
+   "name": "pilot-player-crouch_walk_animation_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.47 m, low z -1.00, w 1.90 d 2.07"
+  },
+  {
+   "name": "pilot-player-idle_animation_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.76 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-idle_animation_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.76 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-idle_animation_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.76 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-idle_animation_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.76 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-interact_animation_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.21 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-interact_animation_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.21 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-interact_animation_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.21 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-interact_animation_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.21 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
    "name": "pilot-player-preview_glb_front",
    "kind": "inspect",
    "cells": [
@@ -97,6 +769,294 @@
    "children": [],
    "bounds": {},
    "note": "7261 tris, h 1.90 m, low z -0.95, w 1.28 d 0.47"
+  },
+  {
+   "name": "pilot-player-refine_glb_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7244,
+   "children": [],
+   "bounds": {},
+   "note": "7244 tris, h 1.90 m, low z -0.95, w 1.28 d 0.47"
+  },
+  {
+   "name": "pilot-player-refine_glb_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7244,
+   "children": [],
+   "bounds": {},
+   "note": "7244 tris, h 1.90 m, low z -0.95, w 1.28 d 0.47"
+  },
+  {
+   "name": "pilot-player-refine_glb_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7244,
+   "children": [],
+   "bounds": {},
+   "note": "7244 tris, h 1.90 m, low z -0.95, w 1.28 d 0.47"
+  },
+  {
+   "name": "pilot-player-refine_glb_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7244,
+   "children": [],
+   "bounds": {},
+   "note": "7244 tris, h 1.90 m, low z -0.95, w 1.28 d 0.47"
+  },
+  {
+   "name": "pilot-player-rig_rigged_character_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.80 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_rigged_character_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.80 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_rigged_character_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.80 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_rigged_character_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.80 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_running_armature_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 2.97 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_running_armature_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 2.97 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_running_armature_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 2.97 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_running_armature_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 2.97 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_running_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.79 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_running_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.79 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_running_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.79 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_running_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.79 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_walking_armature_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 3.04 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_walking_armature_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 3.04 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_walking_armature_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 3.04 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_walking_armature_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 368,
+   "children": [],
+   "bounds": {},
+   "note": "368 tris, h 3.04 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_walking_glb_url_front",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.86 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_walking_glb_url_side",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.86 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_walking_glb_url_game",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.86 m, low z -1.00, w 1.90 d 2.00"
+  },
+  {
+   "name": "pilot-player-rig_walking_glb_url_back",
+   "kind": "inspect",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7324,
+   "children": [],
+   "bounds": {},
+   "note": "7324 tris, h 2.86 m, low z -1.00, w 1.90 d 2.00"
   }
  ],
  "bytes": 0
