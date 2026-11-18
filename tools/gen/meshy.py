@@ -7,7 +7,8 @@
     py tools/gen/meshy.py poll <endpoint> <task_id>   # free: re-poll a job (never re-buy on a timeout)
 
 Rules (see the opengame-assets skill):
-  * The key comes from MESHY_API_KEY in the environment. Never commit it, never ship it.
+  * The key comes from MESHY_API_KEY, or else from ~/.rushjob/meshy.key (outside the repo).
+    Never commit it, never ship it.
   * Every paid call is appended to tools/gen/spend.jsonl BEFORE it is made, and the call is refused
     when it would cross the cap in tools/gen/caps.json. A null cap means "Kyle hasn't set one", and
     nothing is bought.
@@ -44,10 +45,15 @@ KINDS = {
 }
 
 
+KEY_FILE = os.path.join(os.path.expanduser("~"), ".rushjob", "meshy.key")   # outside the repo
+
+
 def key():
     k = os.environ.get("MESHY_API_KEY")
+    if not k and os.path.exists(KEY_FILE):
+        k = open(KEY_FILE).read().strip()
     if not k:
-        raise SystemExit("MESHY_API_KEY is not set (keep it in your environment, never in the repo)")
+        raise SystemExit(f"No Meshy key: set MESHY_API_KEY or save it in {KEY_FILE} (never in the repo)")
     return k
 
 
