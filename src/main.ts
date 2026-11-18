@@ -12,6 +12,7 @@ import type { GameCamera } from './view/camera/types';
 import { DebugOverlay } from './view/debug';
 import { Hud } from './view/hud';
 import { WorldView } from './view/renderer';
+import { loadKit, type Kit } from './view/kit';
 
 const app = document.getElementById('app')!;
 const hudEl = document.getElementById('hud')!;
@@ -36,7 +37,7 @@ function start(seed: number): void {
     game.hud.dispose();
   }
   const sim = new Sim(level, seed);
-  const view = new WorldView(app, sim);
+  const view = new WorldView(app, sim, kit);
   const hud = new Hud(hudEl, sim);
   const debug = new DebugOverlay(hudEl.firstElementChild as HTMLElement, view.debugGroup, sim);
   if (debugOn) debug.toggle();
@@ -49,7 +50,7 @@ function start(seed: number): void {
   resize();
   setPaused(false);
   // expose for console debugging / automated play-tests (read-only by convention)
-  (window as unknown as { rj: unknown }).rj = { sim, cam, THREE, start, test };
+  (window as unknown as { rj: unknown }).rj = { sim, cam, view, THREE, start, test };
 }
 
 function setPaused(p: boolean): void {
@@ -140,5 +141,16 @@ const test = {
   },
 };
 
-start(seedFromUrl());
-requestAnimationFrame(frame);
+// Boot: the kit is ~1 MB of GLBs. Show a plain loading line, then start. If it fails, the graybox runs.
+let kit: Kit | null = null;
+const loading = document.createElement('div');
+loading.className = 'boot-loading';
+loading.textContent = 'Casing the joint...';
+document.body.appendChild(loading);
+const params = new URLSearchParams(location.search);
+(params.has('graybox') ? Promise.resolve(null) : loadKit((d, t) => (loading.textContent = `Casing the joint... ${Math.round((d / t) * 100)}%`))).then((k) => {
+  kit = k;
+  loading.remove();
+  start(seedFromUrl());
+  requestAnimationFrame(frame);
+});

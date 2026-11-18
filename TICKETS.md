@@ -54,7 +54,9 @@ Status: [x] done · [~] partial · [ ] todo.
 - [ ] Body bags / drag a body into a closet
 - [ ] Panic button (civilians run to it; breaker kills it)
 - [ ] Guards fight in the loud phase (right now they just chase and cuff)
-- [ ] Swap graybox for the Blender kit + Meshy characters (assets/models/*.glb exist; contract note in the shared notes folder)
+- [x] Blender kit swapped in (`src/view/kit.ts`, `src/view/kitLevel.ts`): instanced walls/windows/doorways/floors/trim with cutaway, door leaves, counter segments, display cases (intact → smashed → bagged; tall against walls), safe door + loot, van, desks, security cameras, sticky note, sign, bags. Stand-in characters with clips (idle/walk/run/crouch/carry/interact/hands_up/ziptied); cops reuse the guard rig, darkened. `?graybox` forces the old look; a failed load falls back to it too.
+- [ ] Kit follow-ups: `floor_back` maps to lino everywhere (ASSETS.md wants concrete in the safe room, closet and hall, which needs a Tiled tile or zone); trim corners not placed; ceiling lamps left out (they read as dark blobs from 55°); ~340 draw calls with shadows (6 ms/frame at 1024×768 on the dev GPU): merge static props if integrated GPUs struggle
+- [ ] Meshy characters when they land: per-model attach map (`attach('hand_R')`), same clip names
 - [ ] Audio: stealth/loud stems, barks, SFX hooks off sim events
 
 ## Open questions for Kyle

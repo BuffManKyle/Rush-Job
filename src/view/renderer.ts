@@ -6,6 +6,8 @@ import { F_COVER, F_PROP, F_WALL, F_WINDOW } from '../sim/grid';
 import type { Sim } from '../sim/sim';
 import type { Observer } from '../sim/types';
 import type { GameCamera } from './camera/types';
+import { play, type CharInstance, type Kit } from './kit';
+import { KitLevel } from './kitLevel';
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const lerpAngle = (a: number, b: number, t: number) => {
@@ -76,7 +78,7 @@ export class WorldView {
   private observers = new Map<string, ObserverView>();
   private doors = new Map<string, THREE.Group>();
   private cases = new Map<string, { glass: THREE.Mesh; loot: THREE.Mesh }>();
-  private bagMeshes = new Map<string, THREE.Mesh>();
+  private bagMeshes = new Map<string, THREE.Object3D>();
   private copMeshes = new Map<string, THREE.Group>();
   private safeMeshes = new Map<string, THREE.Mesh>();
   private noiseRings: THREE.Mesh[] = [];
@@ -86,10 +88,14 @@ export class WorldView {
   private key: THREE.DirectionalLight;
   private hemi: THREE.HemisphereLight;
   private tmpM = new THREE.Matrix4();
+  private kitLevel: KitLevel | null = null;
+  private chars = new Map<string, CharInstance>(); // 'player', observer ids, cop ids
+  private copChars = new Map<string, CharInstance>();
 
   constructor(
     container: HTMLElement,
     private sim: Sim,
+    private kit: Kit | null = null,
   ) {
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
@@ -115,8 +121,10 @@ export class WorldView {
     this.alarmLight.position.set(L.w / 2, 6, L.h / 2);
     this.scene.add(this.alarmLight);
 
-    this.buildLevel();
+    if (kit && KitLevel.covers(kit)) this.kitLevel = new KitLevel(this.scene, sim, kit);
+    else this.buildLevel();
     this.buildActors();
+    if (kit) this.dressActors(kit);
     this.scene.add(this.debugGroup);
   }
 
@@ -357,6 +365,87 @@ export class WorldView {
     }
   }
 
+  /** Swap graybox actor bodies for kit characters / camera models. The graybox stays as the fallback. */
+  private dressActors(kit: Kit): void {
+    const hideGraybox = (g: THREE.Object3D) => g.children.forEach((c) => (c.visible = c.userData.keep === true));
+    const attach = (root: THREE.Object3D, ch: CharInstance) => {
+      // characters face +Z; actors face +X at rotation 0
+      ch.root.rotation.y = Math.PI / 2;
+      root.add(ch.root);
+      play(ch, 'idle', 0);
+    };
+    const pc = kit.character('player');
+    if (pc) {
+      this.player.children.forEach((c) => {
+        if ((c as THREE.Mesh).geometry instanceof THREE.RingGeometry) c.userData.keep = true;
+      });
+      hideGraybox(this.player);
+      attach(this.player, pc);
+      this.chars.set('player', pc);
+    }
+    for (const o of this.sim.observers) {
+      const v = this.observers.get(o.id)!;
+      if (o.kind === 'camera') {
+        const m = this.kitLevel?.cameraModel();
+        if (m) {
+          hideGraybox(v.root);
+          v.root.add(m);
+        }
+        continue;
+      }
+      const ch = kit.character(o.kind);
+      if (!ch) continue;
+      if (o.kind === 'civilian' && o.role === 'customer') {
+        // vary customers: retint the shirt
+        const tint = [0xb85c7a, 0x6d9a4a, 0xc9a24a, 0x8a6fc0][[...o.id].reduce((a, c) => a + c.charCodeAt(0), 0) % 4];
+        for (const m of ch.meshes) {
+          const mat = m.material as THREE.MeshStandardMaterial;
+          if (mat.name === 'RJ_Cream') {
+            m.material = mat.clone();
+            (m.material as THREE.MeshStandardMaterial).color.setHex(tint);
+          }
+        }
+      }
+      hideGraybox(v.root);
+      attach(v.root, ch);
+      this.chars.set(o.id, ch);
+    }
+  }
+
+  private animate(dt: number): void {
+    const sim = this.sim;
+    const p = sim.player;
+    const pc = this.chars.get('player');
+    if (pc) {
+      for (const m of pc.meshes) if ((m.material as THREE.Material).name === 'RJ_Mask') m.visible = p.masked;
+      let clip = 'idle';
+      if (sim.interaction) clip = 'interact';
+      else if (p.crouch) clip = p.moving ? 'crouch_walk' : 'crouch_idle';
+      else if (p.carrying) clip = p.moving ? 'carry_walk' : 'idle';
+      else if (p.moving) clip = p.sprinting ? 'run' : 'walk';
+      play(pc, clip);
+      pc.mixer.update(dt);
+    }
+    for (const g of sim.guards) {
+      const ch = this.chars.get(g.id);
+      if (!ch) continue;
+      const clip = g.state === 'tied' ? 'ziptied' : g.state === 'down' ? 'idle' : g.state === 'report' ? 'interact' : g.moving ? (g.state === 'alert' || g.state === 'investigate' ? 'run' : 'walk') : 'idle';
+      play(ch, clip);
+      ch.mixer.update(g.state === 'down' ? 0 : dt);
+    }
+    for (const c of sim.civilians) {
+      const ch = this.chars.get(c.id);
+      if (!ch) continue;
+      const clip = c.state === 'tied' ? 'ziptied' : c.state === 'cower' ? 'hands_up' : c.moving ? (c.state === 'flee' ? 'run' : 'walk') : 'idle';
+      play(ch, clip);
+      ch.mixer.update(dt);
+    }
+    for (const ch of this.copChars.values()) {
+      play(ch, 'run');
+      ch.mixer.update(dt);
+    }
+  }
+
   /** Interpolated world position of a sim entity (alpha = fraction into the next tick). */
   static lerpPos(e: { pos: { x: number; y: number }; prev: { x: number; y: number } }, alpha: number, y = 0): THREE.Vector3 {
     return new THREE.Vector3(lerp(e.prev.x, e.pos.x, alpha), y, lerp(e.prev.y, e.pos.y, alpha));
@@ -368,8 +457,9 @@ export class WorldView {
     const pp = WorldView.lerpPos(p, alpha);
     this.player.position.copy(pp);
     this.player.rotation.y = -lerpAngle(p.prevYaw, p.yaw, alpha);
-    this.player.scale.y = p.crouch ? 0.72 : 1;
+    this.player.scale.y = p.crouch && !this.chars.has('player') ? 0.72 : 1;
     (this.playerHead.material as THREE.MeshStandardMaterial).color.setHex(p.masked ? PALETTE.playerMask : PALETTE.player);
+    this.animate(dt);
 
     for (const o of sim.observers) {
       const v = this.observers.get(o.id)!;
@@ -377,8 +467,10 @@ export class WorldView {
       v.root.position.copy(pos);
       const yaw = lerpAngle(o.prevYaw, o.yaw, alpha);
       v.root.rotation.set(0, -yaw, 0);
-      const lying = (o.kind === 'guard' && (o.state === 'down' || o.state === 'tied')) || (o.kind === 'civilian' && o.state === 'tied');
-      const sitting = o.kind === 'civilian' && o.state === 'cower';
+      const animated = this.chars.has(o.id);
+      // animated characters play 'ziptied' / 'hands_up' upright; the graybox lies down or squats instead
+      const lying = (o.kind === 'guard' && (o.state === 'down' || (!animated && o.state === 'tied'))) || (!animated && o.kind === 'civilian' && o.state === 'tied');
+      const sitting = !animated && o.kind === 'civilian' && o.state === 'cower';
       if (lying) {
         v.root.rotateZ(-Math.PI / 2);
         v.root.position.y = 0.3;
@@ -396,14 +488,17 @@ export class WorldView {
       this.updateCone(o, v, pos, yaw, showCones && !lying);
     }
 
-    for (const d of sim.grid.doors) {
-      const g = this.doors.get(d.id)!;
-      g.rotation.y = g.userData.baseYaw + d.swing * (Math.PI / 2) * 0.95;
-    }
-    for (const c of sim.cases) {
-      const v = this.cases.get(c.id)!;
-      v.glass.visible = !c.smashed;
-      v.loot.visible = !c.looted;
+    if (this.kitLevel) this.kitLevel.update(pp, dt, cam.wantsCutaway);
+    else {
+      for (const d of sim.grid.doors) {
+        const g = this.doors.get(d.id)!;
+        g.rotation.y = g.userData.baseYaw + d.swing * (Math.PI / 2) * 0.95;
+      }
+      for (const c of sim.cases) {
+        const v = this.cases.get(c.id)!;
+        v.glass.visible = !c.smashed;
+        v.loot.visible = !c.looted;
+      }
     }
 
     this.updateBags(alpha);
@@ -413,7 +508,7 @@ export class WorldView {
       if (m) (m.material as THREE.MeshStandardMaterial).emissive.setHex(sf.open ? (sf.looted ? 0x000000 : 0x3a2a00) : 0x000000);
     }
     this.updateNoise();
-    if (cam.wantsCutaway) this.updateCutaway(pp, dt);
+    if (cam.wantsCutaway && !this.kitLevel) this.updateCutaway(pp, dt);
 
     const alarm = sim.alarm.tripped;
     this.alarmLight.intensity = alarm ? 30 + 30 * Math.sin(performance.now() / 120) : 0;
@@ -452,7 +547,13 @@ export class WorldView {
   private updateBags(alpha: number): void {
     const size = { light: 0.32, medium: 0.42, heavy: 0.52 };
     for (const b of this.sim.bags) {
-      let m = this.bagMeshes.get(b.id);
+      let m = this.bagMeshes.get(b.id) as THREE.Object3D | undefined;
+      if (!m) m = this.kitLevel?.bagModel(b.weight) ?? undefined;
+      if (m && !this.bagMeshes.has(b.id)) {
+        m.userData.kit = true;
+        this.scene.add(m);
+        this.bagMeshes.set(b.id, m);
+      }
       if (!m) {
         const s = size[b.weight];
         m = new THREE.Mesh(new THREE.BoxGeometry(s, s * 0.8, s * 1.2), new THREE.MeshStandardMaterial({ color: 0x23262e, roughness: 0.9 }));
@@ -466,13 +567,13 @@ export class WorldView {
       if (b.state === 'carried') {
         // on the player's back
         const yaw = this.player.rotation.y;
-        m.position.set(this.player.position.x - Math.cos(-yaw) * 0.35, 1.0, this.player.position.z - Math.sin(-yaw) * 0.35);
+        m.position.set(this.player.position.x - Math.cos(-yaw) * 0.35, m.userData.kit ? 0.75 : 1.0, this.player.position.z - Math.sin(-yaw) * 0.35);
         m.rotation.y = yaw;
       } else {
         const x = lerp(b.prev.x, b.pos.x, alpha);
         const z = lerp(b.prev.y, b.pos.y, alpha);
         const arc = b.state === 'flying' ? Math.sin(Math.PI * Math.max(0, Math.min(1, 1 - b.flight / T.bags.flightTime))) * 1.2 : 0;
-        m.position.set(x, 0.18 + arc, z);
+        m.position.set(x, (m.userData.kit ? 0 : 0.18) + arc, z);
       }
     }
   }
@@ -499,6 +600,20 @@ export class WorldView {
           g.add(shield);
         }
         g.traverse((o) => ((o as THREE.Mesh).castShadow = true));
+        const ch = this.kit?.character('guard');
+        if (ch) {
+          // stand-in cop: the guard rig in darker colors, keeping the shield and light bar
+          body.visible = head.visible = false;
+          for (const m of ch.meshes) {
+            const mat = (m.material as THREE.MeshStandardMaterial).clone();
+            if (mat.name === 'RJ_Uniform' || mat.name === 'RJ_Navy') mat.color.setHex(c.kind === 'tactical' ? 0x22252b : 0x101a33);
+            m.material = mat;
+          }
+          ch.root.rotation.y = Math.PI / 2;
+          g.add(ch.root);
+          red.position.y = blue.position.y = 1.75;
+          this.copChars.set(c.id, ch);
+        }
         this.scene.add(g);
         this.copMeshes.set(c.id, g);
       }

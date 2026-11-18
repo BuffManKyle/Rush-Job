@@ -78,3 +78,5 @@ kbd { display: inline-block; min-width: 1.6em; padding: 0 0.35em; border: 1px so
 .hud-debug table { border-collapse: collapse; margin: 4px 0; }
 .hud-debug td, .hud-debug th { padding: 1px 6px; text-align: left; white-space: nowrap; }
 .hud-debug .num { text-align: right; }
+
+.boot-loading { position: fixed; inset: 0; display: grid; place-items: center; color: var(--teal); font: 600 18px system-ui; letter-spacing: 0.06em; }
