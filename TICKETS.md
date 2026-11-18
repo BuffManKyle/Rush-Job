@@ -87,7 +87,6 @@ Status: [x] done · [~] partial · [ ] todo.
 - [ ] Measure: fps at 1080p on integrated GPU (target median 45+), load time (<10 s), memory (<1.2 GB)
 
 ## Bugs / tech debt
-- Carried bags are dark gray on a dark suit: readable but low contrast from the top-down camera. A brighter strap or rim on `bag_*` would help (assets).
 - External tilesets (.tsx) aren't supported; embed tilesets in the map.
 - HUD meters are DOM positioned via `worldToScreen` (not true 3D sprites): fine for top-down, revisit if first person.
 - Cops path straight at the player through guard-only doors; no cover/flanking AI yet.
