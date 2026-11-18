@@ -1,0 +1,870 @@
+{
+ "lib": "kit",
+ "glb": "assets/models/kit.glb",
+ "pieces": [
+  {
+   "name": "wall_full_int_post",
+   "kind": "wall",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 20,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.1,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.1,
+     2.8,
+     0.112
+    ]
+   },
+   "note": "centre post; add one arm per neighbour"
+  },
+  {
+   "name": "wall_full_int_arm",
+   "kind": "wall",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 12,
+   "children": [],
+   "bounds": {
+    "min": [
+     0.1,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.5,
+     2.8,
+     0.112
+    ]
+   },
+   "note": "post -> +X edge; rotate for other sides"
+  },
+  {
+   "name": "wall_full_int_straight",
+   "kind": "wall",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 12,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.5,
+     2.8,
+     0.112
+    ]
+   },
+   "note": "straight run along X (E-W)"
+  },
+  {
+   "name": "wall_low_int_post",
+   "kind": "wall",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 20,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.1,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.1,
+     0.4,
+     0.112
+    ]
+   },
+   "note": "centre post; add one arm per neighbour"
+  },
+  {
+   "name": "wall_low_int_arm",
+   "kind": "wall",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 12,
+   "children": [],
+   "bounds": {
+    "min": [
+     0.1,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.5,
+     0.4,
+     0.112
+    ]
+   },
+   "note": "post -> +X edge; rotate for other sides"
+  },
+  {
+   "name": "wall_low_int_straight",
+   "kind": "wall",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 12,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.5,
+     0.4,
+     0.112
+    ]
+   },
+   "note": "straight run along X (E-W)"
+  },
+  {
+   "name": "wall_full_ext_post",
+   "kind": "wall",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 20,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.1,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.1,
+     2.8,
+     0.112
+    ]
+   },
+   "note": "centre post; add one arm per neighbour"
+  },
+  {
+   "name": "wall_full_ext_arm",
+   "kind": "wall",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 12,
+   "children": [],
+   "bounds": {
+    "min": [
+     0.1,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.5,
+     2.8,
+     0.112
+    ]
+   },
+   "note": "post -> +X edge; rotate for other sides"
+  },
+  {
+   "name": "wall_full_ext_straight",
+   "kind": "wall",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 12,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.5,
+     2.8,
+     0.112
+    ]
+   },
+   "note": "straight run along X (E-W)"
+  },
+  {
+   "name": "wall_low_ext_post",
+   "kind": "wall",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 20,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.1,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.1,
+     0.4,
+     0.112
+    ]
+   },
+   "note": "centre post; add one arm per neighbour"
+  },
+  {
+   "name": "wall_low_ext_arm",
+   "kind": "wall",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 12,
+   "children": [],
+   "bounds": {
+    "min": [
+     0.1,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.5,
+     0.4,
+     0.112
+    ]
+   },
+   "note": "post -> +X edge; rotate for other sides"
+  },
+  {
+   "name": "wall_low_ext_straight",
+   "kind": "wall",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 12,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.5,
+     0.4,
+     0.112
+    ]
+   },
+   "note": "straight run along X (E-W)"
+  },
+  {
+   "name": "doorway_full_int",
+   "kind": "doorway",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 138,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.12
+    ],
+    "max": [
+     0.5,
+     2.8,
+     0.12
+    ]
+   },
+   "note": "0.9 m x 2.1 m opening; door pieces hinge at x=-0.45"
+  },
+  {
+   "name": "doorway_low_int",
+   "kind": "doorway",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 42,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.5,
+     0.4,
+     0.112
+    ]
+   },
+   "note": "0.9 m x 2.1 m opening; door pieces hinge at x=-0.45"
+  },
+  {
+   "name": "doorway_full_ext",
+   "kind": "doorway",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 138,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.12
+    ],
+    "max": [
+     0.5,
+     2.8,
+     0.12
+    ]
+   },
+   "note": "0.9 m x 2.1 m opening; door pieces hinge at x=-0.45"
+  },
+  {
+   "name": "doorway_low_ext",
+   "kind": "doorway",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 42,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.5,
+     0.4,
+     0.112
+    ]
+   },
+   "note": "0.9 m x 2.1 m opening; door pieces hinge at x=-0.45"
+  },
+  {
+   "name": "window_full_int",
+   "kind": "window",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 92,
+   "children": [
+    "window_full_int_glass"
+   ],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.13
+    ],
+    "max": [
+     0.5,
+     2.8,
+     0.15
+    ]
+   },
+   "note": "sill 0.9 m, head 2.1 m; child 'glass' can be hidden when smashed"
+  },
+  {
+   "name": "window_low_int",
+   "kind": "window",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 12,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.5,
+     0.4,
+     0.112
+    ]
+   },
+   "note": "sill 0.9 m, head 2.1 m; child 'glass' can be hidden when smashed"
+  },
+  {
+   "name": "window_full_ext",
+   "kind": "window",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 92,
+   "children": [
+    "window_full_ext_glass"
+   ],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.13
+    ],
+    "max": [
+     0.5,
+     2.8,
+     0.15
+    ]
+   },
+   "note": "sill 0.9 m, head 2.1 m; child 'glass' can be hidden when smashed"
+  },
+  {
+   "name": "window_low_ext",
+   "kind": "window",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 12,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.112
+    ],
+    "max": [
+     0.5,
+     0.4,
+     0.112
+    ]
+   },
+   "note": "sill 0.9 m, head 2.1 m; child 'glass' can be hidden when smashed"
+  },
+  {
+   "name": "window_shop_full",
+   "kind": "window",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 42,
+   "children": [
+    "window_shop_full_glass"
+   ],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.1
+    ],
+    "max": [
+     0.5,
+     2.8,
+     0.1
+    ]
+   },
+   "note": "storefront glass 0.35-2.5 m; child 'glass' hideable"
+  },
+  {
+   "name": "window_shop_low",
+   "kind": "window",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.1
+    ],
+    "max": [
+     0.5,
+     0.35,
+     0.1
+    ]
+   },
+   "note": "storefront glass 0.35-2.5 m; child 'glass' hideable"
+  },
+  {
+   "name": "door_wood",
+   "kind": "door",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 118,
+   "children": [
+    "door_wood_leaf"
+   ],
+   "bounds": {
+    "min": [
+     -0.456,
+     0.0,
+     -0.07
+    ],
+    "max": [
+     0.89,
+     2.09,
+     0.07
+    ]
+   },
+   "note": "staff / office door; child '<name>_leaf' pivots at the hinge (x=-0.45), rotate about Y to open"
+  },
+  {
+   "name": "door_metal",
+   "kind": "door",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 128,
+   "children": [
+    "door_metal_leaf"
+   ],
+   "bounds": {
+    "min": [
+     -0.456,
+     0.0,
+     -0.07
+    ],
+    "max": [
+     0.89,
+     2.09,
+     0.07
+    ]
+   },
+   "note": "security closet / safe room door; child '<name>_leaf' pivots at the hinge (x=-0.45), rotate about Y to open"
+  },
+  {
+   "name": "door_glass",
+   "kind": "door",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 138,
+   "children": [
+    "door_glass_leaf"
+   ],
+   "bounds": {
+    "min": [
+     -0.456,
+     0.0,
+     -0.07
+    ],
+    "max": [
+     0.89,
+     2.09,
+     0.07
+    ]
+   },
+   "note": "shop entrance, gold frame; child '<name>_leaf' pivots at the hinge (x=-0.45), rotate about Y to open"
+  },
+  {
+   "name": "floor_showroom",
+   "kind": "floor",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 2,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.5
+    ],
+    "max": [
+     0.5,
+     0.0,
+     0.5
+    ]
+   },
+   "note": "1 x 1 m quad at y=0; texture tiles seamlessly across cells"
+  },
+  {
+   "name": "floor_marble",
+   "kind": "floor",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 2,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.5
+    ],
+    "max": [
+     0.5,
+     0.0,
+     0.5
+    ]
+   },
+   "note": "1 x 1 m quad at y=0; texture tiles seamlessly across cells"
+  },
+  {
+   "name": "floor_wood",
+   "kind": "floor",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 2,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.5
+    ],
+    "max": [
+     0.5,
+     0.0,
+     0.5
+    ]
+   },
+   "note": "1 x 1 m quad at y=0; texture tiles seamlessly across cells"
+  },
+  {
+   "name": "floor_carpet",
+   "kind": "floor",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 2,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.5
+    ],
+    "max": [
+     0.5,
+     0.0,
+     0.5
+    ]
+   },
+   "note": "1 x 1 m quad at y=0; texture tiles seamlessly across cells"
+  },
+  {
+   "name": "floor_concrete",
+   "kind": "floor",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 2,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.5
+    ],
+    "max": [
+     0.5,
+     0.0,
+     0.5
+    ]
+   },
+   "note": "1 x 1 m quad at y=0; texture tiles seamlessly across cells"
+  },
+  {
+   "name": "floor_lino",
+   "kind": "floor",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 2,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.5
+    ],
+    "max": [
+     0.5,
+     0.0,
+     0.5
+    ]
+   },
+   "note": "1 x 1 m quad at y=0; texture tiles seamlessly across cells"
+  },
+  {
+   "name": "floor_sidewalk",
+   "kind": "floor",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 2,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.5
+    ],
+    "max": [
+     0.5,
+     0.0,
+     0.5
+    ]
+   },
+   "note": "1 x 1 m quad at y=0; texture tiles seamlessly across cells"
+  },
+  {
+   "name": "floor_asphalt",
+   "kind": "floor",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 2,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.5
+    ],
+    "max": [
+     0.5,
+     0.0,
+     0.5
+    ]
+   },
+   "note": "1 x 1 m quad at y=0; texture tiles seamlessly across cells"
+  },
+  {
+   "name": "ceiling",
+   "kind": "ceiling",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 2,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     2.8,
+     -0.5
+    ],
+    "max": [
+     0.5,
+     2.8,
+     0.5
+    ]
+   },
+   "note": "1 x 1 m, faces down, at y=2.8; hide for the top-down camera"
+  },
+  {
+   "name": "curb",
+   "kind": "floor",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.0,
+     0.3
+    ],
+    "max": [
+     0.5,
+     0.15,
+     0.5
+    ]
+   },
+   "note": "sidewalk-to-road edge along the cell's south (+Z) edge, 0.15 m high"
+  },
+  {
+   "name": "trim_restricted",
+   "kind": "trim",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 20,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.004,
+     0.35
+    ],
+    "max": [
+     0.5,
+     0.004,
+     0.5
+    ]
+   },
+   "note": "hatched strip on the cell's south (+Z) edge, inside the restricted side; rotate per edge"
+  },
+  {
+   "name": "trim_restricted_corner",
+   "kind": "trim",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 2,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.5,
+     0.004,
+     0.35
+    ],
+    "max": [
+     -0.35,
+     0.004,
+     0.5
+    ]
+   },
+   "note": "fills the SW corner where two strips meet (inner corners)"
+  }
+ ],
+ "bytes": 165612
+}
