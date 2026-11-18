@@ -1,4 +1,9 @@
 {
+  "$schema": "https://opengame.io/schema/opengame.json",
   "title": "Rush Job",
-  "kind": "game"
+  "genre": "action-adventure",
+  "kind": "game",
+  "build": { "command": "npm run build", "output": "dist" },
+  "controls": ["keyboard", "mouse"],
+  "requires": { "desktopOnly": true }
 }
