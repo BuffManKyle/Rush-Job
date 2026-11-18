@@ -89,6 +89,7 @@ function setPaused(p: boolean): void {
 }
 
 function resize(): void {
+  if (!game) return; // the boot loadout picker is up
   const w = window.innerWidth;
   const h = window.innerHeight;
   game.view.resize(w, h);
