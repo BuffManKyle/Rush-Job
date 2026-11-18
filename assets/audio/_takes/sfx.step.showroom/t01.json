@@ -1,0 +1,18 @@
+{
+ "id": "sfx.step.showroom",
+ "take": 1,
+ "t": "2026-11-18T23:48:58Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Eight separate footsteps of leather dress shoes on polished stone tile in a small quiet jewelry shop, walking pace, evenly spaced with silence between each step, close mic, dry, no music, no voices",
+  "duration_seconds": 5.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "55"
+ },
+ "bytes": 53078
+}

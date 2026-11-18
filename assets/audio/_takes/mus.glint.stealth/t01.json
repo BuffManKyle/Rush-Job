@@ -1,0 +1,15 @@
+{
+ "id": "mus.glint.stealth",
+ "take": 1,
+ "t": "2026-11-18T23:49:08Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "Cool, sly noir jazz-funk for sneaking through a small upscale jewelry shop at night. 96 BPM, D minor, 4/4, steady tempo throughout. Brushed jazz drums with a light ghost-note swing, a walking-but-funky upright bass ostinato, soft Rhodes chords, a vibraphone adding glassy sparkle, and a muted trumpet playing a short sly five-note minor blues motif with space between phrases. Restrained and confident, like a professional who knows exactly what they're doing. Structure: 8-bar A section, 8-bar variation of A, 8-bar B section with a slightly higher, more curious melody, then back to the top. No intro, no ending, no fade: it must loop seamlessly. Instrumental only, no vocals. No electronic beats, no synths, no four-on-the-floor kick.",
+  "music_length_ms": 65000,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 1838253
+}

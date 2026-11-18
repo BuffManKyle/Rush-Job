@@ -1,0 +1,18 @@
+{
+ "id": "cue.pager.ring",
+ "take": 1,
+ "t": "2026-11-18T23:48:58Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Old belt pager ringing: a shrill two-tone electronic chirp, repeating fast in a steady rhythm, bright and piercing around 3 kHz, no echo, seamless loop",
+  "duration_seconds": 2.0,
+  "prompt_influence": 0.5,
+  "loop": true,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "22"
+ },
+ "bytes": 37862
+}

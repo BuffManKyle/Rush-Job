@@ -120,11 +120,15 @@ def rate(kind):
 
 
 def spent():
-    total = 0.0
+    last = {}   # (id, take) -> the call's latest row: pending, then ok or failed
     for r in ledger():
-        if r.get("status") == "ok":
+        if r.get("status") in ("pending", "ok", "failed"):
+            last[(r["id"], r["take"])] = r
+    total = 0.0
+    for r in last.values():
+        if r["status"] == "ok":
             total += r["credits_actual"] if r.get("credits_actual") is not None else r["credits_est"]
-        elif r.get("status") == "pending":     # crashed mid-call: assume it was charged
+        elif r["status"] == "pending":     # crashed mid-call: assume it was charged
             total += r["credits_est"]
     return total
 
@@ -255,7 +259,13 @@ def reconcile(before, rows):
 # ---------- commands ----------
 
 def cmd_balance(a):
-    s = subscription()
+    try:
+        s = subscription()
+    except RuntimeError as e:
+        if "user_read" in str(e):
+            raise SystemExit("This API key can't read the account (no user_read permission). Generation still "
+                             "works; costs come from response headers. Enable 'User: read' on the key to see the balance.")
+        raise
     print(f"tier {s.get('tier')}  credits used {s.get('character_count')} of {s.get('character_limit')}  "
           f"resets {datetime.fromtimestamp(s['next_character_count_reset_unix']).date() if s.get('next_character_count_reset_unix') else '?'}")
 

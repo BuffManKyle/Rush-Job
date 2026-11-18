@@ -1,0 +1,18 @@
+{
+ "id": "sfx.case.smash",
+ "take": 1,
+ "t": "2026-11-18T23:48:58Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A glass jewelry display case smashed with one blow: loud sharp crack, glass bursting, shards and jewelry rattling onto a stone floor, close, punchy",
+  "duration_seconds": 2.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "22"
+ },
+ "bytes": 28583
+}
