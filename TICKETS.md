@@ -46,7 +46,7 @@ Status: [x] done · [~] partial · [ ] todo.
 - [x] Safe: code from the shuffled sticky note (read it, enter it, bag the gold)
 - [x] Bags: light (jewelry, stacks to $12k) and heavy (gold); speed/sprint rules; F throws 6/4/3 m; secured in the van zone
 - [x] Two bags at once (one per hand). With one bag you can still shoot and aim. With two: no shooting, aiming, takedowns or zip ties, no sprint, and an extra 0.85× speed. Movement follows the heavier bag. F throws the last bag picked up; jewelry tops up a light bag with room first.
-- [x] Carry animation: legs play walk/run scaled to real speed (`view.walkAnimSpeed`/`runAnimSpeed`), with the bag arm(s) held in the idle pose (`walk@L`, `walk@LR`, ...). Bags hang at the player's sides at hand height, 0.7× size. The Meshy `carry_walk` clip (9.3 s, box-carry cadence) is no longer used.
+- [x] Carry animation: legs play walk/run scaled to real speed (`view.walkAnimSpeed`/`runAnimSpeed`), with the bag arm(s) held in the idle pose (`walk@L`, `walk@LR`, ...). Bags are slung across the back at shoulder height (the second stacked on top), 0.7× size. At the player's sides the far bag hid behind the torso from the 55° camera. The Meshy `carry_walk` clip (9.3 s, box-carry cadence) is no longer used.
 - [x] Van: hold E in the drop zone to leave → payout
 - [x] Alarm → Heat 1–4 clock (60 s each), hostages (tied civilians) delay each level 20 s (max 3), Dot leaves 60 s into Heat 4
 - [x] Cops push in (front, then alley; shields at 3, tactical at 4); cuffed when they (or alert guards) hold you 2 s
@@ -85,6 +85,7 @@ Status: [x] done · [~] partial · [ ] todo.
 - [ ] Measure: fps at 1080p on integrated GPU (target median 45+), load time (<10 s), memory (<1.2 GB)
 
 ## Bugs / tech debt
+- Carried bags are dark gray on a dark suit: readable but low contrast from the top-down camera. A brighter strap or rim on `bag_*` would help (assets).
 - External tilesets (.tsx) aren't supported; embed tilesets in the map.
 - HUD meters are DOM positioned via `worldToScreen` (not true 3D sprites): fine for top-down, revisit if first person.
 - Cops path straight at the player through guard-only doors; no cover/flanking AI yet.

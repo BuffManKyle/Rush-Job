@@ -586,26 +586,25 @@ export class WorldView {
         this.bagMeshes.set(b.id, m);
       }
       m.visible = b.state !== 'secured';
-      const hand = b.state === 'carried' ? this.bagHand(b.id) : null;
-      if (hand) {
-        // hang at the player's side, at the hand's height (so it bobs with the arm); long axis along the facing
+      if (b.state === 'carried') {
+        // Slung across the back at shoulder height, the second bag stacked on top. Bags at the player's sides
+        // were hidden behind the torso from the 55° camera whenever that side faced away from it; the back
+        // stack reads from above at any facing. The hands still show as full through the arm poses.
         const k = T.bags.carryScale;
         if (m.userData.h === undefined) m.userData.h = new THREE.Box3().setFromObject(m).getSize(new THREE.Vector3()).y;
+        const slot = this.bagSlot(b.id);
         const yaw = -this.player.rotation.y;
-        const side = hand === this.chars.get('player')?.bones.hand_L ? -1 : 1;
-        const hy = hand.getWorldPosition(new THREE.Vector3()).y;
+        const spine = this.chars.get('player')?.bones.spine;
+        const baseY = spine ? spine.getWorldPosition(new THREE.Vector3()).y : 1.0;
+        const back = 0.24 + slot * 0.04;
         m.scale.setScalar(k);
         m.position.set(
-          this.player.position.x - Math.sin(yaw) * side * 0.34 - Math.cos(yaw) * 0.05,
-          Math.max(0.02, hy - m.userData.h * k * 0.9),
-          this.player.position.z + Math.cos(yaw) * side * 0.34 - Math.sin(yaw) * 0.05,
+          this.player.position.x - Math.cos(yaw) * back,
+          baseY - 0.1 + slot * m.userData.h * k * 0.95,
+          this.player.position.z - Math.sin(yaw) * back,
         );
-        m.rotation.set(0, this.player.rotation.y, 0);
-      } else if (b.state === 'carried') {
-        // on the player's back
-        const yaw = this.player.rotation.y;
-        m.position.set(this.player.position.x - Math.cos(-yaw) * 0.35, m.userData.kit ? 0.75 : 1.0, this.player.position.z - Math.sin(-yaw) * 0.35);
-        m.rotation.y = yaw;
+        // long axis across the shoulders; the top bag sits at a slight angle so the stack reads as two
+        m.rotation.set(0, this.player.rotation.y + Math.PI / 2 + (slot ? 0.35 : 0), 0);
       } else {
         m.scale.setScalar(1);
         const x = lerp(b.prev.x, b.pos.x, alpha);
@@ -664,13 +663,10 @@ export class WorldView {
   }
 
   private tracers: THREE.Line[] = [];
-  /** Which hand bone a carried bag hangs from: first bag left, second right. */
-  private bagHand(id: string): THREE.Object3D | null {
-    const pc = this.chars.get('player');
-    if (!pc) return null;
+  /** Stack position of a carried bag: 0 = first picked up (bottom), 1 = second (top). */
+  private bagSlot(id: string): number {
     const carried = this.sim.bags.filter((b) => b.state === 'carried').sort((a, b) => a.carriedAt - b.carriedAt);
-    const slot = carried.findIndex((b) => b.id === id);
-    return (slot === 0 ? pc.bones.hand_L : slot === 1 ? pc.bones.hand_R : null) ?? null;
+    return Math.max(0, carried.findIndex((b) => b.id === id));
   }
 
   private updateTracers(): void {
