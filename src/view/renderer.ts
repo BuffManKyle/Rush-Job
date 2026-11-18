@@ -619,7 +619,9 @@ export class WorldView {
           body.visible = head.visible = false;
           for (const m of ch.meshes) {
             const mat = (m.material as THREE.MeshStandardMaterial).clone();
+            // stand-in rig: flat uniform colors; Meshy rig: one textured material, so darken it with a tint
             if (mat.name === 'RJ_Uniform' || mat.name === 'RJ_Navy') mat.color.setHex(c.kind === 'tactical' ? 0x22252b : 0x101a33);
+            else if (mat.map) mat.color.setHex(c.kind === 'tactical' ? 0x555555 : 0x7080b0);
             m.material = mat;
           }
           ch.root.rotation.y = Math.PI / 2;
