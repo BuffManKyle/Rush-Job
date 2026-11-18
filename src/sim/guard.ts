@@ -62,7 +62,8 @@ function walkTo(sim: Sim, g: Guard, goal: Vec2, speed: number, dt: number): bool
 }
 
 export function investigate(sim: Sim, g: Guard, at: Vec2, why: 'noise' | 'saw' | 'dispatch'): void {
-  if (g.state === 'report' || g.state === 'alert') return;
+  // downed, tied or dead guards don't hear anything
+  if (g.state === 'report' || g.state === 'alert' || g.state === 'down' || g.state === 'tied') return;
   g.target = { x: at.x, y: at.y };
   if (g.state !== 'investigate') {
     setState(g, 'investigate');

@@ -39,20 +39,21 @@ function trace(sim: Sim, from: Vec2, dir: Vec2, range: number): { t: number; hit
 }
 
 /**
- * Aim assist: the player only aims by facing (WASD), so snap to the closest live, visible target
- * within `T.weapon.assistArc` of the facing direction. Falls back to straight ahead.
+ * Aim assist: snap to the live, visible target closest to `dir` within `arcDeg` (total), so a shot
+ * in someone's general direction hits them even when the cursor trails a running target.
+ * Falls back to `dir` itself.
  */
-function assistedAim(sim: Sim): number {
+function assistedAim(sim: Sim, dir: number, arcDeg: number): number {
   const p = sim.player;
   const W = T.weapon;
-  const arc = (W.assistArc * Math.PI) / 360;
-  let best = p.yaw;
+  const arc = (arcDeg * Math.PI) / 360;
+  let best = dir;
   let bestScore = Infinity;
   const consider = (pos: Vec2, priority: number) => {
     const d = Math.hypot(pos.x - p.pos.x, pos.y - p.pos.y);
     if (d > W.range || d < 0.2) return;
     const a = Math.atan2(pos.y - p.pos.y, pos.x - p.pos.x);
-    const off = Math.abs(angleDiff(p.yaw, a));
+    const off = Math.abs(angleDiff(dir, a));
     if (off > arc || !sim.grid.canSee(p.pos, pos)) return;
     const score = off * 4 + d * 0.1 + priority;
     if (score < bestScore) {
@@ -62,6 +63,7 @@ function assistedAim(sim: Sim): number {
   };
   // threats first, then guards, cameras, and civilians last (never preferred over a threat)
   for (const c of sim.cops) if (!c.down) consider(c.pos, 0);
+  // civilians are never auto-targeted: hitting one has to be a real mistake
   for (const g of sim.guards) if (!isDown(g)) consider(g.pos, 0);
   for (const c of sim.cameras) if (!c.dead) consider(c.pos, 1);
   return best;
@@ -97,7 +99,9 @@ export function updatePlayerWeapon(sim: Sim, fire: boolean, reload: boolean, dt:
   p.mag--;
   p.fireCd = W.fireInterval;
   // aiming (right mouse): exactly at the cursor; hip fire: along the facing with assist
-  const base = aimAt ? Math.atan2(aimAt.y - p.pos.y, aimAt.x - p.pos.x) : assistedAim(sim);
+  const base = aimAt
+    ? assistedAim(sim, Math.atan2(aimAt.y - p.pos.y, aimAt.x - p.pos.x), W.aimAssistArc)
+    : assistedAim(sim, p.yaw, W.assistArc);
   p.yaw = base; // turn to the target you shot at
   const spread = ((W.spread * Math.PI) / 180) * (p.moving ? 2 : 1) * (aimAt ? 0.5 : 1) * (sim.rng.next() - 0.5);
   const a = base + spread;

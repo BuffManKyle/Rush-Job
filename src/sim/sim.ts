@@ -720,7 +720,7 @@ export class Sim {
     c.suspicion = T.detection.investigate;
     const at = c.lastKnown ?? p.pos;
     let best: Guard | null = null;
-    for (const g of this.guards) if (!best || Math.hypot(g.pos.x - at.x, g.pos.y - at.y) < Math.hypot(best.pos.x - at.x, best.pos.y - at.y)) best = g;
+    for (const g of this.guards) if (!isDown(g) && (!best || Math.hypot(g.pos.x - at.x, g.pos.y - at.y) < Math.hypot(best.pos.x - at.x, best.pos.y - at.y))) best = g;
     if (best) {
       investigate(this, best, at, 'dispatch');
       this.events.emit({ type: 'bark', who: 'desk', line: 'desk.camera.01' });

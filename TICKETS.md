@@ -65,7 +65,7 @@ Status: [x] done · [~] partial · [ ] todo.
 
 ## Decisions (Kyle)
 - Nov 18: Shots kill (keep lethality as is).
-- Nov 18: The player faces their movement direction (WASD). Hold right mouse (masked) to aim: you face the cursor, move at 2.2 m/s, and shots go exactly at the cursor with half the spread. Left click (or Space) fires; without aiming, shots go along the facing and snap to the nearest guard, cop or camera within ±30° (`weapon.assistArc`). Bags throw along the facing. The camera leads ahead of the facing, or toward the cursor while aiming.
+- Nov 18: The player faces their movement direction (WASD). Hold right mouse (masked) to aim: you face the cursor, move at 2.2 m/s, and shots go toward the cursor with half the spread. Aimed shots snap to the target nearest the cursor direction within ±25° (`weapon.aimAssistArc`), so a trailing cursor still hits a runner; civilians are never auto-targeted. Left click (or Space) fires; without aiming, shots go along the facing and snap to the nearest guard, cop or camera within ±30° (`weapon.assistArc`). Bags throw along the facing. The camera leads ahead of the facing, or toward the cursor while aiming.
 
 ## Open questions for Kyle
 - Lethality (design doc open question): guards and patrol cops die in 2 hits; enemies hit about 50% of the time for 8–14 damage, so you last about 10–12 hits. Tune by feel.

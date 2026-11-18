@@ -98,6 +98,10 @@ export function updateCivilian(sim: Sim, c: Civilian, dt: number): void {
 function tell(sim: Sim, c: Civilian, g: Guard): void {
   const where = c.lastKnown ?? sim.player.pos;
   const who = c.role === 'staff' ? 'The clerk' : 'A customer';
+  if (g.state === 'down' || g.state === 'tied') {
+    go(c, 'cower'); // the guard they ran to is down: nobody to tell
+    return;
+  }
   if (sim.player.masked) {
     if (g.state !== 'report' && g.state !== 'alert') {
       setState(g, 'report');
@@ -119,7 +123,7 @@ function tell(sim: Sim, c: Civilian, g: Guard): void {
 export function civilianSpotted(sim: Sim, c: Civilian): void {
   if (c.state === 'flee' || c.state === 'cower') return;
   let best: Guard | null = null;
-  for (const g of sim.guards) if (!best || Math.hypot(g.pos.x - c.pos.x, g.pos.y - c.pos.y) < Math.hypot(best.pos.x - c.pos.x, best.pos.y - c.pos.y)) best = g;
+  for (const g of sim.guards) if (g.state !== 'down' && g.state !== 'tied' && (!best || Math.hypot(g.pos.x - c.pos.x, g.pos.y - c.pos.y) < Math.hypot(best.pos.x - c.pos.x, best.pos.y - c.pos.y))) best = g;
   sim.events.emit({ type: 'bark', who: c.id, line: sim.rng.pick(sim.lineIds(sim.player.masked ? 'civ.scream' : 'civ.staffonly')) });
   if (sim.player.masked) sim.emitNoise(c.pos.x, c.pos.y, T.civilian.screamRadius, 'scream');
   if (!best) {

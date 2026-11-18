@@ -111,7 +111,8 @@ export const T = {
     range: 25,
     spread: 3, // degrees, doubled while moving
     noise: 6,
-    assistArc: 60, // degrees (total) around your facing that snap to a guard, cop or camera
+    assistArc: 60, // hip fire: degrees (total) around your facing that snap to a guard, cop or camera
+    aimAssistArc: 50, // aiming: degrees (total) around the cursor direction that snap to a target
   },
 
   health: {
