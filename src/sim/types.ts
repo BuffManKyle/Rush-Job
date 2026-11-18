@@ -32,6 +32,7 @@ export interface Player {
   carryValue: number;
   inRestricted: boolean;
   escorts: number;
+  zipTies: number;
   frozen: number; // seconds of no control (escort fade)
   noiseTimer: number;
 }
@@ -66,7 +67,7 @@ export interface ObserverBase {
   info: DetectionInfo;
 }
 
-export type GuardState = 'patrol' | 'look' | 'investigate' | 'search' | 'return' | 'report' | 'alert';
+export type GuardState = 'patrol' | 'look' | 'investigate' | 'search' | 'return' | 'report' | 'alert' | 'down' | 'tied';
 
 export interface Guard extends ObserverBase {
   kind: 'guard';
@@ -88,6 +89,11 @@ export interface Guard extends ObserverBase {
   lookHold: number;
   moving: boolean;
   reportReason: string;
+  /** Pager: >0 counts down to the first ring after a takedown; ringing counts up while it rings. */
+  pagerDelay: number;
+  pagerRinging: number;
+  pagerDone: boolean;
+  downTime: number;
 }
 
 export interface SecurityCamera extends ObserverBase {
@@ -98,10 +104,11 @@ export interface SecurityCamera extends ObserverBase {
   phase: number;
   locked: boolean;
   deskTimer: number; // >0 while the desk is about to raise the alarm
+  deskReason: string;
   dispatched: boolean;
 }
 
-export type CivilianState = 'wander' | 'look' | 'flee' | 'cower';
+export type CivilianState = 'wander' | 'look' | 'flee' | 'cower' | 'tied';
 
 export interface Civilian extends ObserverBase {
   kind: 'civilian';

@@ -8,6 +8,7 @@ import type { Sim } from '../sim/sim';
 import type { GameCamera } from './camera/types';
 import { WorldView } from './renderer';
 
+const SPEAKERS: Record<string, string> = { accountant: 'The Accountant', desk: 'Security desk', dispatcher: 'The Dispatcher', player: 'You', dot: 'Dot' };
 const RING_R = 22;
 const RING_C = 2 * Math.PI * RING_R;
 
@@ -73,7 +74,7 @@ export class Hud {
       case 'bark': {
         const text = line(e.line);
         if (this.sim.walkers().some((w) => w.id === e.who)) this.say(e.who, text);
-        else this.sub(`${e.who === 'accountant' ? 'The Accountant' : e.who === 'desk' ? 'Security desk' : e.who}: ${text}`);
+        else this.sub(`${SPEAKERS[e.who] ?? e.who}: ${text}`);
         break;
       }
       case 'message':
@@ -117,8 +118,9 @@ export class Hud {
     const area = p.inRestricted ? '<span class="restricted">STAFF ONLY</span>' : '<span>public</span>';
     const move = p.crouch ? 'crouched' : p.sprinting && p.moving ? 'sprinting' : p.moving ? 'walking' : 'still';
     const bag = p.carrying ? ` · bag $${p.carryValue.toLocaleString()}` : '';
+    const ties = p.masked ? ` · zip ties ${p.zipTies}` : '';
     const take = sim.secured ? ` · secured $${sim.secured.toLocaleString()}` : '';
-    this.status.innerHTML = `<div class="title">${sim.level.title}</div>${mode} · ${area} · ${move}${bag}${take}`;
+    this.status.innerHTML = `<div class="title">${sim.level.title}</div>${mode} · ${area} · ${move}${ties}${bag}${take}`;
 
     // interact prompt + ring
     const f = sim.focus;
@@ -191,7 +193,11 @@ export class Hud {
       this.banner.innerHTML = `<div class="big">ALARM</div><div>${sim.alarm.cause}.</div><div class="dim">Loud phase comes in week 2. Esc → restart.</div>`;
     } else {
       const o = sim.observers.find((q) => this.countdown(q.id) !== null);
-      if (o) {
+      const pager = sim.guards.find((g) => g.pagerRinging > 0);
+      if (pager) {
+        this.banner.className = 'hud-banner warn';
+        this.banner.innerHTML = `<div>${pager.label}'s pager is ringing. Hold <kbd>E</kbd> on him to answer: alarm in <b>${Math.max(0, T.pager.timeout - pager.pagerRinging).toFixed(1)} s</b></div>`;
+      } else if (o) {
         const t = this.countdown(o.id)!;
         const what = o.kind === 'camera' ? `Security desk saw you on the ${o.label.toLowerCase()}` : `${o.label} is radioing it in`;
         this.banner.className = 'hud-banner warn';

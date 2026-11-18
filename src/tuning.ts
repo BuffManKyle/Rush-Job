@@ -81,6 +81,22 @@ export const T = {
     c4: 999,
   },
 
+  takedown: {
+    time: 0.6, // hold E behind an unaware guard
+    behindAngle: 110, // degrees off the guard's facing that counts as "from behind"
+    reach: 1.2,
+    downedWakeTime: 40, // an untied guard gets up (and calls it in) after this long
+    zipTieTime: 2,
+    zipTies: 4,
+  },
+
+  pager: {
+    delay: 3, // rings this long after a takedown
+    timeout: 10, // unanswered this long = alarm
+    answerTime: 4,
+    maxCalls: 3, // the Dispatcher's patience runs out on the 4th call
+  },
+
   casing: {
     escortsBeforeAlarm: 1, // first catch = escorted out, the next one trips the alarm
     escortFadeTime: 1.2,

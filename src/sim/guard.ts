@@ -77,6 +77,8 @@ export function updateGuard(sim: Sim, g: Guard, dt: number): void {
   g.moving = false;
   const sus = g.suspicion;
 
+  if (g.state === 'down' || g.state === 'tied') return; // handled in takedown.ts
+  if (sim.interaction?.targetId === g.id && sim.interaction.defId === 'takedown') return; // in a headlock
   if (sim.alarm.tripped && g.state !== 'alert') setState(g, 'alert');
 
   // threshold reactions (the meter itself is updated by detection.ts before this runs)

@@ -7,6 +7,7 @@ import { EventBus } from './events';
 import { Grid, type DoorState } from './grid';
 import { guardSpotted, investigate, setState, updateGuard } from './guard';
 import { civilianSpotted, updateCivilian } from './civilian';
+import { answeredPager, checkBodies, civilianInteractable, guardInteractable, isDown, takeDown, updateDowned, zipTie } from './takedown';
 import { inRect, type Level, type Vec2 } from './level';
 import { Rng } from './rng';
 import type {
@@ -51,6 +52,7 @@ export class Sim {
   /** Interactable the player would act on right now, and what it offers (for the HUD prompt). */
   focus: { id: string; offer: string } | null = null;
   secured = 0;
+  pagerCalls = 0;
   /** Observers the player has tagged with Q during casing. */
   readonly marked = new Set<string>();
   readonly shuffle: ShuffleResult;
@@ -118,6 +120,10 @@ export class Sim {
         lookHold: 0,
         moving: false,
         reportReason: '',
+        pagerDelay: 0,
+        pagerRinging: 0,
+        pagerDone: false,
+        downTime: 0,
       });
     }
 
@@ -145,6 +151,7 @@ export class Sim {
         phase: shuf.range(0, Math.PI * 2),
         locked: false,
         deskTimer: 0,
+        deskReason: '',
         dispatched: false,
       });
     }
@@ -201,11 +208,14 @@ export class Sim {
       carryValue: 0,
       inRestricted: false,
       escorts: 0,
+      zipTies: T.takedown.zipTies,
       frozen: 0,
       noiseTimer: 0,
     };
 
     for (const d of this.grid.doors) this.interactables.push(this.doorInteractable(d));
+    for (const g of this.guards) this.interactables.push(guardInteractable(this, g));
+    for (const c of this.civilians) this.interactables.push(civilianInteractable(this, c));
     for (const p of level.props.filter((q) => q.type === 'case')) {
       const c: CaseState = { id: p.id, x: p.x + p.w / 2, y: p.y + p.h / 2, value: p.value, smashed: false, looted: false };
       this.cases.push(c);
@@ -267,7 +277,7 @@ export class Sim {
     this.alarm = { tripped: true, cause, time: this.time };
     this.events.emit({ type: 'alarm', cause });
     this.events.emit({ type: 'bark', who: 'accountant', line: 'accountant.alarm.01' });
-    for (const g of this.guards) setState(g, 'alert');
+    for (const g of this.guards) if (!isDown(g)) setState(g, 'alert');
   }
 
   escort(g: Guard): void {
@@ -308,8 +318,9 @@ export class Sim {
 
     // Detection first, then AI reacts to the new meter values.
     for (const o of this.observers) {
-      if (this.alarm.tripped || p.frozen > 0) {
+      if (this.alarm.tripped || p.frozen > 0 || (o.kind === 'guard' && isDown(o)) || (o.kind === 'civilian' && o.state === 'tied')) {
         o.sees = false;
+        if (o.kind !== 'camera' && o.suspicion < 100) o.suspicion = 0;
         continue;
       }
       if (o.kind === 'guard' && (o.state === 'report' || o.state === 'alert')) {
@@ -327,6 +338,8 @@ export class Sim {
     for (const g of this.guards) updateGuard(this, g, dt);
     for (const c of this.cameras) this.updateCamera(c, dt);
     for (const c of this.civilians) updateCivilian(this, c, dt);
+    updateDowned(this, dt);
+    checkBodies(this);
     this.separate();
 
     for (const n of this.noises) n.age += dt;
@@ -455,6 +468,10 @@ export class Sim {
       else if (p.frozen > 0) why = 'escorted';
       if (why) {
         if (def.keepProgress) this.savedProgress.set(`${cur.targetId}:${cur.defId}`, cur.progress);
+        if (cur.defId === 'answer_pager' && why !== 'gone') {
+          this.events.emit({ type: 'bark', who: 'dispatcher', line: 'dispatcher.hangup.01' });
+          this.tripAlarm('You hung up on the Dispatcher mid-call');
+        }
         this.events.emit({ type: 'interactCancel', id: cur.targetId, def: cur.defId, why });
         this.interaction = null;
       } else {
@@ -516,6 +533,21 @@ export class Sim {
       case 'case_smash':
         if (kase) kase.smashed = true;
         break;
+      case 'takedown': {
+        const g = this.guards.find((q) => q.id === targetId);
+        if (g) takeDown(this, g);
+        break;
+      }
+      case 'zip_tie': {
+        const t = this.walkers().find((q) => q.id === targetId);
+        if (t) zipTie(this, t);
+        break;
+      }
+      case 'answer_pager': {
+        const g = this.guards.find((q) => q.id === targetId);
+        if (g) answeredPager(this, g);
+        break;
+      }
       case 'bag_loot':
         if (kase) {
           kase.looted = true;
@@ -580,7 +612,7 @@ export class Sim {
       this.events.emit({ type: 'reporting', who: c.id, time: Math.max(0, c.deskTimer) });
       if (c.deskTimer <= 0) {
         this.events.emit({ type: 'bark', who: 'desk', line: 'desk.alarm.01' });
-        this.tripAlarm(`${c.label} saw you masked, and the security desk raised the alarm`);
+        this.tripAlarm(c.deskReason || `${c.label} saw you masked, and the security desk raised the alarm`);
       }
     }
   }
@@ -640,6 +672,7 @@ export class Sim {
     const p = this.player;
     const min = T.player.radius + T.guard.radius;
     for (const g of this.walkers()) {
+      if (g.kind === 'guard' && isDown(g)) continue;
       const dx = p.pos.x - g.pos.x;
       const dy = p.pos.y - g.pos.y;
       const d = Math.hypot(dx, dy);

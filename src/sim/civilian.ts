@@ -52,6 +52,7 @@ function randomPointIn(sim: Sim, zoneId: string): Vec2 | null {
 export function updateCivilian(sim: Sim, c: Civilian, dt: number): void {
   c.stateTime += dt;
   c.moving = false;
+  if (c.state === 'tied') return;
   if (sim.alarm.tripped && c.state !== 'cower') go(c, 'cower');
 
   switch (c.state) {

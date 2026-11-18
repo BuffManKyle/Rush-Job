@@ -372,7 +372,14 @@ export class WorldView {
       const pos = WorldView.lerpPos(o, alpha);
       v.root.position.copy(pos);
       const yaw = lerpAngle(o.prevYaw, o.yaw, alpha);
-      v.root.rotation.y = -yaw;
+      v.root.rotation.set(0, -yaw, 0);
+      const lying = (o.kind === 'guard' && (o.state === 'down' || o.state === 'tied')) || (o.kind === 'civilian' && o.state === 'tied');
+      const sitting = o.kind === 'civilian' && o.state === 'cower';
+      if (lying) {
+        v.root.rotateZ(-Math.PI / 2);
+        v.root.position.y = 0.3;
+      }
+      v.root.scale.y = sitting ? 0.6 : 1;
       const marked = sim.marked.has(o.id);
       v.tag.visible = marked;
       if (marked) {
@@ -382,7 +389,7 @@ export class WorldView {
       // marked cones draw on top of walls ("seen through walls")
       v.coneMat.depthTest = !marked;
       v.cone.renderOrder = marked ? 15 : 2;
-      this.updateCone(o, v, pos, yaw, showCones);
+      this.updateCone(o, v, pos, yaw, showCones && !lying);
     }
 
     for (const d of sim.grid.doors) {

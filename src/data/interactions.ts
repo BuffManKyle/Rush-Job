@@ -24,5 +24,8 @@ export const INTERACTIONS: Record<string, InteractionDef> = {
   door_close: { id: 'door_close', label: 'Close', time: T.doors.openTime, noise: 0, interrupt: ['release'] },
   lockpick: { id: 'lockpick', label: 'Pick lock', time: T.doors.lockpickTime, noise: 0, interrupt: ['release', 'move'], keepProgress: true },
   case_smash: { id: 'case_smash', label: 'Smash case', time: 0.6, noise: 0, noiseOnComplete: T.noise.smashGlass, interrupt: ['release'], requiresMask: true },
+  takedown: { id: 'takedown', label: 'Take down', time: T.takedown.time, noise: 0, interrupt: ['release'], requiresMask: true },
+  zip_tie: { id: 'zip_tie', label: 'Zip-tie', time: T.takedown.zipTieTime, noise: 0, interrupt: ['release', 'move'], requiresMask: true },
+  answer_pager: { id: 'answer_pager', label: 'Answer pager', time: T.pager.answerTime, noise: 0, interrupt: ['release', 'move'], requiresMask: true },
   bag_loot: { id: 'bag_loot', label: 'Bag loot', time: 1.5, noise: 0, interrupt: ['release', 'move'], requiresMask: true },
 };
