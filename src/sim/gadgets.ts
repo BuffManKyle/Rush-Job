@@ -121,7 +121,7 @@ export function useSlot(sim: Sim, slot: number, aim: Vec2): void {
   }
   if (T.gadgets.requireMask && !p.masked) return say(sim, 'Mask up first (hold G).', 'warn');
   if (g.cooldown > 0) return;
-  if (s.charges <= 0) return say(sim, `Out of ${def.name.toLowerCase()}.`, 'warn');
+  if (s.charges <= 0) return say(sim, `${def.name}: none left.`, 'warn');
   let ok = false;
   switch (s.id) {
     case 'noisemaker':

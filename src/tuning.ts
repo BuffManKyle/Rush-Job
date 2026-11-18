@@ -206,11 +206,13 @@ export const T = {
     noise: 5, // a shout carries: guards in this radius come to look
     cooldown: 1.5,
     cowerTime: 30, // an intimidated (untied) civilian gets back up after this long and runs for help
+    cowerJitter: 8, // plus up to this much, so they don't all get up at once
   },
 
   power: {
     breakerTime: 2, // hold E at the breaker
-    deskNotice: 15, // the security desk notices the dead feeds and raises the alarm this long after
+    dispatchDelay: 8, // the desk takes this long to send a guard to the breaker
+    resetTime: 3, // the guard fiddles with the breaker this long before the power comes back
   },
 
   panic: {

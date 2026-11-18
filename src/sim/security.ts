@@ -20,8 +20,10 @@ export interface SecurityState {
   breaker: Vec2 | null;
   powerOn: boolean;
   powerCutAt: number;
-  /** The guard sent to reset the breaker. */
+  /** The guard sent to reset the breaker, once the desk gets round to it. */
   breakerGuard: string | null;
+  dispatchIn: number; // seconds until the desk sends someone (Infinity = nobody pending)
+  resetting: number; // seconds the guard has been at the breaker
   shoutCd: number;
   /** Civilian id -> seconds spent pressing a panic button. */
   pressing: Map<string, number>;
@@ -36,6 +38,8 @@ export function createSecurity(sim: Sim): SecurityState {
     powerOn: true,
     powerCutAt: -1,
     breakerGuard: null,
+    dispatchIn: Infinity,
+    resetting: 0,
     shoutCd: 0,
     pressing: new Map(),
   };
@@ -64,7 +68,14 @@ export function cutPower(sim: Sim): void {
   }
   sim.emitNoise(s.breaker!.x, s.breaker!.y, 3, 'breaker');
   sim.events.emit({ type: 'bark', who: 'desk', line: 'desk.power.01' });
-  // the desk sends the nearest standing guard to flip it back
+  s.dispatchIn = T.power.dispatchDelay;
+  s.resetting = 0;
+  sim.events.emit({ type: 'message', text: `Power's out: cameras dark, panic button dead. The desk will send someone in about ${T.power.dispatchDelay} s.`, tone: 'info' });
+}
+
+/** The desk sends the nearest standing guard to flip the breaker back. */
+function dispatchToBreaker(sim: Sim): void {
+  const s = sim.security;
   let best = null as null | (typeof sim.guards)[number];
   for (const g of sim.guards) {
     if (isDown(g) || g.state === 'report' || g.state === 'alert') continue;
@@ -73,8 +84,8 @@ export function cutPower(sim: Sim): void {
   if (best) {
     investigate(sim, best, s.breaker!, 'dispatch');
     s.breakerGuard = best.id;
-    sim.events.emit({ type: 'message', text: `Power's out: cameras dark, panic button dead. ${best.label} is on his way to the breaker.`, tone: 'warn' });
-  } else sim.events.emit({ type: 'message', text: "Power's out: cameras dark, panic button dead. Nobody's left to fix it.", tone: 'info' });
+    sim.events.emit({ type: 'message', text: `${best.label} is on his way to the breaker.`, tone: 'warn' });
+  } else sim.events.emit({ type: 'message', text: "Nobody's left to fix the breaker.", tone: 'info' });
 }
 
 const dist = (a: Vec2, b: Vec2) => Math.hypot(a.x - b.x, a.y - b.y);
@@ -84,11 +95,18 @@ export function updateSecurity(sim: Sim, input: InputFrame, dt: number): void {
   s.shoutCd = Math.max(0, s.shoutCd - dt);
   if (input.shout) shout(sim);
 
+  if (!s.powerOn && s.dispatchIn !== Infinity) {
+    s.dispatchIn -= dt;
+    if (s.dispatchIn <= 0) {
+      s.dispatchIn = Infinity;
+      dispatchToBreaker(sim);
+    }
+  }
   // the dispatched guard reaches the breaker and flips it back on
   if (!s.powerOn && s.breakerGuard && s.breaker) {
     const g = sim.guards.find((q) => q.id === s.breakerGuard);
     if (!g || isDown(g) || g.state === 'alert' || g.state === 'report') s.breakerGuard = null;
-    else if (dist(g.pos, s.breaker) < 1.3) {
+    else if (dist(g.pos, s.breaker) < 1.3 && (s.resetting += dt) >= T.power.resetTime) {
       s.powerOn = true;
       s.breakerGuard = null;
       sim.events.emit({ type: 'bark', who: g.id, line: 'guard.breaker.01' });
@@ -109,7 +127,7 @@ export function shout(sim: Sim): void {
     if (c.state === 'tied' || c.state === 'dead') continue;
     const d = dist(c.pos, p.pos);
     if (d > T.intimidate.radius || !sim.grid.canSee(p.pos, c.pos)) continue;
-    cower(sim, c, sim.alarm.tripped ? Infinity : T.intimidate.cowerTime);
+    cower(sim, c, sim.alarm.tripped ? Infinity : T.intimidate.cowerTime + sim.rng.range(0, T.intimidate.cowerJitter));
     n++;
   }
   sim.emitNoise(p.pos.x, p.pos.y, T.intimidate.noise, 'shout');

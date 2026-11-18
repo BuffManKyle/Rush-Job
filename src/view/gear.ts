@@ -17,7 +17,8 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
  * lines the item's +Z up with the rig's hand forward. Tunable live from the console: `rj.gear.handRot`.
  */
 export const HAND = {
-  rot: new THREE.Euler(Math.PI / 2, 0, 0),
+  // fitted to the player rig's aim_shoot pose (hand +Y runs down the arm): gun +Z along the facing, +Y up
+  rot: new THREE.Euler(-1.622, -0.063, 2.654),
   offset: new THREE.Vector3(0, 0.0, 0),
 };
 
