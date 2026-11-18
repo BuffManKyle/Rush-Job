@@ -1,0 +1,239 @@
+// DOM HUD. Reads sim state and listens to sim events; never writes to the sim.
+import * as THREE from 'three';
+import { T } from '../tuning';
+import { line } from '../data/dialogue';
+import { INTERACTIONS } from '../data/interactions';
+import type { SimEvent } from '../sim/events';
+import type { Sim } from '../sim/sim';
+import type { GameCamera } from './camera/types';
+import { WorldView } from './renderer';
+
+const RING_R = 22;
+const RING_C = 2 * Math.PI * RING_R;
+
+function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, parent: HTMLElement, html = ''): HTMLElementTagNameMap[K] {
+  const e = document.createElement(tag);
+  e.className = cls;
+  if (html) e.innerHTML = html;
+  parent.appendChild(e);
+  return e;
+}
+
+interface Bubble {
+  who: string;
+  el: HTMLDivElement;
+  ttl: number;
+}
+
+export class Hud {
+  private root: HTMLElement;
+  private status: HTMLDivElement;
+  private prompt: HTMLDivElement;
+  private ring: HTMLDivElement;
+  private ringArc: SVGCircleElement;
+  private ringLabel: HTMLDivElement;
+  private meters = new Map<string, { el: HTMLDivElement; fill: HTMLDivElement; icon: HTMLDivElement }>();
+  private bubbles: Bubble[] = [];
+  private subtitle: HTMLDivElement;
+  private subtitleTtl = 0;
+  private toast: HTMLDivElement;
+  private toastTtl = 0;
+  private banner: HTMLDivElement;
+  private fade: HTMLDivElement;
+  readonly pause: HTMLDivElement;
+  private unsub: () => void;
+
+  constructor(
+    parent: HTMLElement,
+    private sim: Sim,
+  ) {
+    parent.innerHTML = '';
+    this.root = el('div', 'hud-root', parent);
+    this.status = el('div', 'hud-status', this.root);
+    this.prompt = el('div', 'hud-prompt', this.root);
+    this.ring = el('div', 'hud-ring', this.root);
+    this.ring.innerHTML = `<svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="${RING_R}" class="bg"/><circle cx="28" cy="28" r="${RING_R}" class="fg" stroke-dasharray="${RING_C}" stroke-dashoffset="${RING_C}"/></svg><div class="lbl"></div>`;
+    this.ringArc = this.ring.querySelector('.fg')!;
+    this.ringLabel = this.ring.querySelector('.lbl')!;
+    this.subtitle = el('div', 'hud-subtitle', this.root);
+    this.toast = el('div', 'hud-toast', this.root);
+    this.banner = el('div', 'hud-banner', this.root);
+    this.fade = el('div', 'hud-fade', this.root);
+    this.pause = el('div', 'hud-pause hidden', this.root);
+    el('div', 'hud-help', this.root, 'WASD move · Shift sprint · C crouch · E interact (hold) · G mask up (hold) · Wheel zoom · F1 debug · Esc pause');
+    this.unsub = sim.events.on((e) => this.onEvent(e));
+  }
+
+  dispose(): void {
+    this.unsub();
+  }
+
+  private onEvent(e: SimEvent): void {
+    switch (e.type) {
+      case 'bark': {
+        const text = line(e.line);
+        if (e.who.startsWith('guard_')) this.say(e.who, text);
+        else this.sub(`${e.who === 'accountant' ? 'The Accountant' : e.who === 'desk' ? 'Security desk' : e.who}: ${text}`);
+        break;
+      }
+      case 'message':
+        this.toast.textContent = e.text;
+        this.toast.dataset.tone = e.tone ?? 'info';
+        this.toastTtl = 4;
+        break;
+      case 'interactCancel':
+        if (e.why === 'moved') this.flashPrompt('Interrupted: you moved');
+        break;
+    }
+  }
+
+  private flashPrompt(t: string): void {
+    this.toast.textContent = t;
+    this.toast.dataset.tone = 'warn';
+    this.toastTtl = 1.5;
+  }
+
+  private say(who: string, text: string): void {
+    const old = this.bubbles.find((b) => b.who === who);
+    if (old) {
+      old.el.remove();
+      this.bubbles = this.bubbles.filter((b) => b !== old);
+    }
+    const b = el('div', 'hud-bubble', this.root, text.replace('[placeholder] ', ''));
+    this.bubbles.push({ who, el: b, ttl: 3 });
+  }
+
+  private sub(text: string): void {
+    this.subtitle.textContent = text.replace('[placeholder] ', '');
+    this.subtitleTtl = 4;
+  }
+
+  update(dt: number, alpha: number, cam: GameCamera): void {
+    const sim = this.sim;
+    const p = sim.player;
+
+    // status line
+    const mode = p.masked ? '<b class="masked">MASKED</b>' : '<b>UNMASKED</b> · casing';
+    const area = p.inRestricted ? '<span class="restricted">STAFF ONLY</span>' : '<span>public</span>';
+    const move = p.crouch ? 'crouched' : p.sprinting && p.moving ? 'sprinting' : p.moving ? 'walking' : 'still';
+    const bag = p.carrying ? ` · bag $${p.carryValue.toLocaleString()}` : '';
+    const take = sim.secured ? ` · secured $${sim.secured.toLocaleString()}` : '';
+    this.status.innerHTML = `<div class="title">${sim.level.title}</div>${mode} · ${area} · ${move}${bag}${take}`;
+
+    // interact prompt + ring
+    const f = sim.focus;
+    const it = f ? sim.interactables.find((i) => i.id === f.id) : null;
+    let promptText = '';
+    if (!p.masked && p.maskProgress > 0) promptText = 'Masking up...';
+    else if (f && it) {
+      if (f.offer.startsWith('!')) promptText = f.offer.slice(1);
+      else promptText = `<kbd>E</kbd> ${INTERACTIONS[f.offer]?.label ?? f.offer}`;
+    } else if (!p.masked) promptText = '<span class="dim">Hold <kbd>G</kbd> to mask up</span>';
+    this.prompt.innerHTML = promptText;
+
+    const act = sim.interaction;
+    const ringAt = act && it ? new THREE.Vector3(it.x, 1.2, it.y) : p.maskProgress > 0 ? WorldView.lerpPos(p, alpha, 2.0) : null;
+    const frac = act ? act.progress / act.time : p.maskProgress;
+    if (ringAt) {
+      const s = cam.worldToScreen(ringAt);
+      this.ring.style.display = 'block';
+      this.ring.style.transform = `translate(${s.x - 28}px, ${s.y - 28}px)`;
+      this.ringArc.setAttribute('stroke-dashoffset', String(RING_C * (1 - Math.min(1, frac))));
+      const remaining = act ? Math.max(0, act.time - act.progress) : (1 - p.maskProgress) * T.player.maskTime;
+      this.ringLabel.textContent = remaining.toFixed(1);
+    } else this.ring.style.display = 'none';
+
+    // suspicion meters over each observer
+    for (const o of sim.observers) {
+      let m = this.meters.get(o.id);
+      if (!m) {
+        const wrap = el('div', 'hud-meter', this.root);
+        const icon = el('div', 'icon', wrap);
+        const bar = el('div', 'bar', wrap);
+        const fill = el('div', 'fill', bar);
+        m = { el: wrap, fill, icon };
+        this.meters.set(o.id, m);
+      }
+      const show = o.suspicion > 0.5 && !sim.alarm.tripped;
+      m.el.style.display = show ? 'flex' : 'none';
+      if (!show) continue;
+      const head = WorldView.lerpPos(o, alpha, o.kind === 'guard' ? 2.15 : 3.0);
+      const s = cam.worldToScreen(head);
+      m.el.style.transform = `translate(${s.x - 24}px, ${s.y - 30}px)`;
+      const v = o.suspicion;
+      m.fill.style.width = `${v}%`;
+      const lvl = v >= 100 ? 'report' : v >= 60 ? 'investigate' : v >= 30 ? 'look' : 'low';
+      m.el.dataset.level = lvl;
+      m.el.dataset.rising = o.sees ? '1' : '0';
+      const rep = this.countdown(o.id);
+      m.icon.textContent = v >= 100 ? (rep !== null ? `! ${rep.toFixed(1)}` : '!') : v >= 30 ? '?' : '';
+    }
+
+    // speech bubbles track their guard
+    for (const b of this.bubbles) {
+      b.ttl -= dt;
+      const g = sim.guards.find((q) => q.id === b.who);
+      if (!g) continue;
+      const s = cam.worldToScreen(WorldView.lerpPos(g, alpha, 2.6));
+      b.el.style.transform = `translate(${s.x}px, ${s.y - 34}px) translateX(-50%)`;
+      b.el.style.opacity = String(Math.min(1, b.ttl * 2));
+    }
+    this.bubbles = this.bubbles.filter((b) => (b.ttl > 0 ? true : (b.el.remove(), false)));
+
+    this.subtitleTtl -= dt;
+    this.subtitle.style.opacity = this.subtitleTtl > 0 ? '1' : '0';
+    this.toastTtl -= dt;
+    this.toast.style.opacity = this.toastTtl > 0 ? '1' : '0';
+
+    // banner: alarm, or someone about to raise it
+    if (sim.alarm.tripped) {
+      this.banner.className = 'hud-banner alarm';
+      this.banner.innerHTML = `<div class="big">ALARM</div><div>${sim.alarm.cause}.</div><div class="dim">Loud phase comes in week 2. Esc → restart.</div>`;
+    } else {
+      const o = sim.observers.find((q) => this.countdown(q.id) !== null);
+      if (o) {
+        const t = this.countdown(o.id)!;
+        const what = o.kind === 'camera' ? `Security desk saw you on the ${o.label.toLowerCase()}` : `${o.label} is radioing it in`;
+        this.banner.className = 'hud-banner warn';
+        this.banner.innerHTML = `<div>${what}: alarm in <b>${t.toFixed(1)} s</b></div>`;
+      } else this.banner.className = 'hud-banner';
+    }
+
+    // escort fade
+    const fz = p.frozen;
+    const half = T.casing.escortFadeTime / 2;
+    this.fade.style.opacity = fz > 0 ? String(1 - Math.abs(fz - half) / half) : '0';
+  }
+
+  /** Seconds until this observer raises the alarm, or null if it isn't trying to. */
+  private countdown(id: string): number | null {
+    const g = this.sim.guards.find((q) => q.id === id);
+    if (g) return g.state === 'report' ? Math.max(0, g.reportTimer) : null;
+    const c = this.sim.cameras.find((q) => q.id === id);
+    return c && c.deskTimer > 0 ? c.deskTimer : null;
+  }
+
+  showPause(show: boolean, seed: number, onRestart: (newSeed: boolean) => void, onResume: () => void): void {
+    this.pause.classList.toggle('hidden', !show);
+    if (!show) return;
+    this.pause.innerHTML = `
+      <div class="panel">
+        <h1>Paused</h1>
+        <div class="seed">Seed <code>${seed}</code></div>
+        <p class="dim">Share the seed to replay this exact run: add <code>?seed=${seed}</code> to the URL.</p>
+        <div class="buttons">
+          <button data-a="resume">Resume (Esc)</button>
+          <button data-a="same">Restart, same seed (R)</button>
+          <button data-a="new">New seed (N)</button>
+        </div>
+        <p class="dim">WASD move (screen-relative) · Shift sprint (noise 4 m) · C crouch · E hold to interact · G hold to mask up · Wheel zoom · F1 debug</p>
+      </div>`;
+    this.pause.querySelectorAll('button').forEach((b) =>
+      b.addEventListener('click', () => {
+        const a = b.dataset.a;
+        if (a === 'resume') onResume();
+        else onRestart(a === 'new');
+      }),
+    );
+  }
+}
