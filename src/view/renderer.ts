@@ -8,6 +8,8 @@ import type { Observer } from '../sim/types';
 import type { GameCamera } from './camera/types';
 import { play, type CharInstance, type Kit } from './kit';
 import { KitLevel } from './kitLevel';
+import { jammed } from '../sim/gadgets';
+import { powerOut } from '../sim/security';
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const lerpAngle = (a: number, b: number, t: number) => {
@@ -90,6 +92,13 @@ export class WorldView {
   private tmpM = new THREE.Matrix4();
   private kitLevel: KitLevel | null = null;
   private chars = new Map<string, CharInstance>(); // 'player', observer ids, cop ids
+  /** The player's animated character (for attaching held gear), if the kit loaded. */
+  get playerChar(): CharInstance | null {
+    return this.chars.get('player') ?? null;
+  }
+  get playerRoot(): THREE.Object3D {
+    return this.player;
+  }
   private copChars = new Map<string, CharInstance>();
 
   constructor(
@@ -497,6 +506,9 @@ export class WorldView {
         v.root.position.y = 0.3;
       }
       v.root.scale.y = sitting ? 0.6 : 1;
+      // body-bagged: the gear view draws the bag instead
+      const bagged = o.kind !== 'camera' && o.bagged;
+      v.root.visible = !bagged;
       const marked = sim.marked.has(o.id);
       v.tag.visible = marked;
       if (marked) {
@@ -506,7 +518,9 @@ export class WorldView {
       // marked cones draw on top of walls ("seen through walls")
       v.coneMat.depthTest = !marked;
       v.cone.renderOrder = marked ? 15 : 2;
-      this.updateCone(o, v, pos, yaw, showCones && !lying && !(o.kind === 'camera' && o.dead));
+      // jammed (ECM) or unpowered cameras are blind: no cone
+      const blind = o.kind === 'camera' && (jammed(sim) || powerOut(sim));
+      this.updateCone(o, v, pos, yaw, showCones && !lying && !blind && !(o.kind === 'camera' && o.dead));
     }
 
     if (this.kitLevel) this.kitLevel.update(pp, dt, cam.wantsCutaway);

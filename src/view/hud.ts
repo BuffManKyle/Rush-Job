@@ -9,6 +9,7 @@ import type { GameCamera } from './camera/types';
 import { WorldView } from './renderer';
 import { computePayout } from '../sim/payout';
 import { HEAT_NAMES } from '../sim/police';
+import { WEAPONS } from '../data/loadout';
 
 const SPEAKERS: Record<string, string> = { accountant: 'The Accountant', desk: 'Security desk', dispatcher: 'The Dispatcher', player: 'You', dot: 'Dot' };
 const RING_R = 22;
@@ -67,7 +68,7 @@ export class Hud {
     this.hurt = el('div', 'hud-hurt', this.root);
     this.vitals = el('div', 'hud-vitals', this.root);
     this.pause = el('div', 'hud-pause hidden', this.root);
-    el('div', 'hud-help', this.root, 'WASD move · Shift sprint · C crouch · E interact (hold) · G mask up (hold) · Q mark · F throw bag · Right mouse aim · Left click/Space shoot · R reload · Wheel zoom · F1 debug · Esc pause');
+    el('div', 'hud-help', this.root, 'WASD move · Shift sprint · C crouch · E interact (hold) · G mask up (hold) · Q mark · F throw bag · 1/2 gadgets · V shout · Right mouse aim · Left click/Space shoot · R reload · Wheel zoom · F1 debug · Esc pause');
     this.unsub = sim.events.on((e) => this.onEvent(e));
   }
 
@@ -232,7 +233,7 @@ export class Hud {
       const hpPct = (p.hp / T.health.hp) * 100;
       const armor = p.armorMax > 0 ? `<div class="bar armor"><span style="width:${(p.armor / p.armorMax) * 100}%"></span></div>` : '';
       const ammo = p.reloadTimer > 0 ? 'RELOADING' : `${p.mag} / ${p.reserve}`;
-      this.vitals.innerHTML = `${armor}<div class="bar hp ${hpPct < 35 ? 'low' : ''}"><span style="width:${hpPct}%"></span></div><div class="ammo">Pocket pistol (silenced) · <b>${ammo}</b>${p.mag === 0 && p.reloadTimer <= 0 ? ' · <kbd>R</kbd>' : ''}</div>`;
+      this.vitals.innerHTML = `${armor}<div class="bar hp ${hpPct < 35 ? 'low' : ''}"><span style="width:${hpPct}%"></span></div><div class="ammo">${WEAPONS[sim.loadout.weapon].name} · <b>${ammo}</b>${p.mag === 0 && p.reloadTimer <= 0 ? ' · <kbd>R</kbd>' : ''}</div>`;
     }
     this.hurt.style.opacity = String(Math.min(0.6, this.hitFlash * 2 + (p.masked && p.hp < 35 ? 0.15 : 0)));
     document.body.classList.toggle('aiming', p.aiming && !sim.ended);
@@ -268,6 +269,7 @@ export class Hud {
           <button data-a="same">Run it again (R)</button>
           <button data-a="new">New seed (N)</button>
         </div>
+        <p class="dim">Change loadout: <kbd>L</kbd></p>
       </div>`;
     // typewriter: reveal rows one at a time
     this.pause.querySelectorAll<HTMLElement>('.row, .rating').forEach((r, i) => {
@@ -290,6 +292,7 @@ export class Hud {
           <button data-a="same">Restart, same seed (R)</button>
           <button data-a="new">New seed (N)</button>
         </div>
+        <p class="dim">Change loadout: <kbd>L</kbd> (restarts the job)</p>
         <p class="dim">WASD move (screen-relative) · Shift sprint (noise 4 m) · C crouch · E hold to interact · G hold to mask up · Q mark guard/camera under cursor · Wheel zoom · F1 debug</p>
       </div>`;
     this.pause.querySelectorAll('button').forEach((b) =>

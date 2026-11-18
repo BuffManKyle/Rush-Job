@@ -13,6 +13,10 @@ import { DebugOverlay } from './view/debug';
 import { Hud } from './view/hud';
 import { WorldView } from './view/renderer';
 import { loadKit, type Kit } from './view/kit';
+import { GearView } from './view/gear';
+import { GearHud } from './view/gearHud';
+import { pickLoadout, savedLoadout } from './view/loadoutPicker';
+import { cleanLoadout, type Loadout } from './data/loadout';
 
 const app = document.getElementById('app')!;
 const hudEl = document.getElementById('hud')!;
@@ -25,6 +29,23 @@ interface Game {
   hud: Hud;
   debug: DebugOverlay;
   cam: GameCamera;
+  gear: GearView;
+  gearHud: GearHud;
+}
+
+let loadout: Loadout = savedLoadout();
+let picking = false;
+
+/** Open the loadout picker (boot, or L on the pause/payout screen), then start with the pick. */
+function kitUp(seed: number): void {
+  if (picking) return;
+  picking = true;
+  pickLoadout(level.title).then((l) => {
+    picking = false;
+    loadout = l;
+    start(seed);
+    input.clearPressed();
+  });
 }
 
 let game: Game;
@@ -35,14 +56,18 @@ function start(seed: number): void {
   if (game) {
     game.view.dispose();
     game.hud.dispose();
+    game.gear.dispose();
+    game.gearHud.dispose();
   }
-  const sim = new Sim(level, seed);
+  const sim = new Sim(level, seed, loadout);
   const view = new WorldView(app, sim, kit);
   const hud = new Hud(hudEl, sim);
   const debug = new DebugOverlay(hudEl.firstElementChild as HTMLElement, view.debugGroup, sim);
   if (debugOn) debug.toggle();
   const cam = new TopDownCamera();
-  game = { sim, view, hud, debug, cam };
+  const gear = new GearView(view, sim, kit);
+  const gearHud = new GearHud(hudEl.firstElementChild as HTMLElement, sim);
+  game = { sim, view, hud, debug, cam, gear, gearHud };
   input.resetCrouch();
   const url = new URL(location.href);
   url.searchParams.set('seed', String(seed));
@@ -50,7 +75,7 @@ function start(seed: number): void {
   resize();
   setPaused(false);
   // expose for console debugging / automated play-tests (read-only by convention)
-  (window as unknown as { rj: unknown }).rj = { sim, cam, view, THREE, start, test };
+  (window as unknown as { rj: unknown }).rj = { sim, cam, view, gear, loadout, THREE, start, test, kitUp };
 }
 
 function setPaused(p: boolean): void {
@@ -83,12 +108,18 @@ function frame(now: number): void {
     hud.showPayout((fresh) => start(fresh ? (Math.random() * 1e9) >>> 0 : sim.seed));
     if (input.consume('KeyR')) return start(sim.seed);
     if (input.consume('KeyN')) return start((Math.random() * 1e9) >>> 0);
+    if (input.consume('KeyL')) return kitUp(sim.seed);
   } else if (input.consume('Escape')) setPaused(!paused);
   if (input.consume('F1')) {
     debugOn = !debugOn;
     debug.toggle();
   }
+  if (picking) {
+    input.clearPressed();
+    return;
+  }
   if (paused) {
+    if (input.consume('KeyL')) return kitUp(sim.seed);
     if (input.consume('KeyR')) return start(sim.seed);
     if (input.consume('KeyN')) return start((Math.random() * 1e9) >>> 0);
   }
@@ -121,7 +152,9 @@ function draw(alpha: number, dt: number): void {
   const ahead = sim.player.aiming ? { x: input.aimWorld.x, y: input.aimWorld.z } : sim.facingPoint(T.view.facingLead);
   cam.follow(pp, new THREE.Vector3(ahead.x, 1, ahead.y), dt);
   view.update(alpha, dt, cam, true);
+  game.gear.update(alpha, dt);
   hud.update(dt, alpha, cam);
+  game.gearHud.update();
   debug.update(dt, paused);
   view.render(cam);
 }
@@ -129,6 +162,11 @@ function draw(alpha: number, dt: number): void {
 /** Automated play-test hook: `rj.test.manual = true`, then `rj.test.run(30, { moveY: -1 })` steps 1 s with that input. */
 const test = {
   manual: false,
+  /** Restart the same seed with a different loadout, e.g. `rj.test.kit({ gadgets: ['noisemaker', 'smoke'] })`. */
+  kit(l: Partial<Loadout>): void {
+    loadout = cleanLoadout({ ...loadout, ...l });
+    start(game.sim.seed);
+  },
   run(ticks: number, inp: Partial<InputFrame> = {}): void {
     const sim = game.sim;
     for (let i = 0; i < ticks; i++) {
@@ -153,6 +191,12 @@ const params = new URLSearchParams(location.search);
 (params.has('graybox') ? Promise.resolve(null) : loadKit((d, t) => (loading.textContent = `Casing the joint... ${Math.round((d / t) * 100)}%`))).then((k) => {
   kit = k;
   loading.remove();
-  start(seedFromUrl());
-  requestAnimationFrame(frame);
+  // kit up first (skip with ?nopick: uses the last loadout)
+  const go = (l: Loadout) => {
+    loadout = l;
+    start(seedFromUrl());
+    requestAnimationFrame(frame);
+  };
+  if (params.has('nopick')) go(loadout);
+  else pickLoadout(level.title).then(go);
 });

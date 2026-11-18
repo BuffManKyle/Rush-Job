@@ -2850,8 +2850,43 @@
      ]
     }
    ]
+  },
+  {
+   "id": 11,
+   "name": "security",
+   "type": "objectgroup",
+   "visible": true,
+   "opacity": 1,
+   "x": 0,
+   "y": 0,
+   "objects": [
+    {
+     "id": 45,
+     "name": "panic_counter",
+     "type": "panic_button",
+     "x": 528.0,
+     "y": 403.2,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true
+    },
+    {
+     "id": 46,
+     "name": "breaker",
+     "type": "breaker",
+     "x": 720.0,
+     "y": 264.0,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true
+    }
+   ]
   }
  ],
- "nextlayerid": 11,
- "nextobjectid": 45
+ "nextlayerid": 12,
+ "nextobjectid": 47
 }

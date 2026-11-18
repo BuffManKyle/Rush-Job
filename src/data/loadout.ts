@@ -165,6 +165,7 @@ export const UNLOCK_ALL = true;
 
 /** Sanitize a loadout read from storage or a URL (unknown ids fall back to the default). */
 export function cleanLoadout(raw: unknown): Loadout {
+  if (!raw || typeof raw !== 'object') return { ...DEFAULT_LOADOUT, gadgets: [...DEFAULT_LOADOUT.gadgets] };
   const r = (raw ?? {}) as Partial<Loadout>;
   const g = Array.isArray(r.gadgets) ? r.gadgets : [];
   const ok = (id: unknown): GadgetId | null => (typeof id === 'string' && id in GADGETS && !GADGETS[id as GadgetId].unavailable ? (id as GadgetId) : null);
