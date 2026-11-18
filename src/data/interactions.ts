@@ -33,4 +33,15 @@ export const INTERACTIONS: Record<string, InteractionDef> = {
   safe_loot: { id: 'safe_loot', label: 'Bag the gold', time: 2, noise: 0, interrupt: ['release', 'move'], requiresMask: true },
   leave: { id: 'leave', label: 'Get in the van and go', time: 1, noise: 0, interrupt: ['release', 'move'] },
   bag_loot: { id: 'bag_loot', label: 'Bag loot', time: 1.5, noise: 0, interrupt: ['release', 'move'], requiresMask: true },
+  // gadgets (src/data/loadout.ts): offered only when the gadget is in a slot
+  case_cut: { id: 'case_cut', label: 'Cut the glass (quiet)', time: T.gadgets.glassCutter.time, noise: 0, interrupt: ['release', 'move'], requiresMask: true },
+  body_bag: { id: 'body_bag', label: 'Body-bag him', time: T.gadgets.bodyBag.time, noise: 0, interrupt: ['release', 'move'], requiresMask: true },
+  breaker: { id: 'breaker', label: 'Kill the power', time: T.power.breakerTime, noise: 0, interrupt: ['release', 'move'] },
+};
+
+/** Which gadget an interaction needs in a slot (the HUD shows its model in hand while you hold E). */
+export const INTERACTION_TOOL: Record<string, string> = {
+  case_cut: 'glass_cutter',
+  body_bag: 'body_bags',
+  lockpick: 'lockpick_kit',
 };

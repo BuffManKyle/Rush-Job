@@ -10,9 +10,12 @@ import { civilianSpotted, updateCivilian } from './civilian';
 import { bagLoot, canBag, noteInteractable, pickUp, safeInteractable, throwBag, updateBags, vanInteractable, type Bag, type SafeState } from './loot';
 import { updateEnemyFire, updatePlayerWeapon, updateShots } from './combat';
 import { startHeat, updateHeat, type Cop, type HeatState } from './police';
-import { answeredPager, checkBodies, civilianInteractable, guardInteractable, isDown, takeDown, updateDowned, zipTie } from './takedown';
+import { answeredPager, bodyBag, checkBodies, civilianInteractable, guardInteractable, isDown, takeDown, updateDowned, zipTie } from './takedown';
 import { inRect, type Level, type Vec2 } from './level';
 import { Rng } from './rng';
+import { DEFAULT_LOADOUT, type Loadout } from '../data/loadout';
+import { createGear, hasGadget, jammed, lockpickTime, spend, updateGadgets, type GearState } from './gadgets';
+import { breakerInteractable, createSecurity, cutPower, powerOut, updateSecurity, type SecurityState } from './security';
 import type {
   ActiveInteraction,
   AlarmState,
@@ -68,6 +71,10 @@ export class Sim {
   /** Observers the player has tagged with Q during casing. */
   readonly marked = new Set<string>();
   readonly shuffle: ShuffleResult;
+  /** Loadout slots, charges and everything gadgets left in the world (gadgets.ts). */
+  readonly gear: GearState;
+  /** Panic buttons, the breaker and intimidation (security.ts). */
+  readonly security: SecurityState;
   private interactLatch = false; // E must be released between completed actions
   private savedProgress = new Map<string, number>();
   private lineCache = new Map<string, string[]>();
@@ -75,7 +82,9 @@ export class Sim {
   constructor(
     readonly level: Level,
     readonly seed: number,
+    readonly loadout: Loadout = DEFAULT_LOADOUT,
   ) {
+    this.gear = createGear(loadout);
     this.rng = new Rng(seed).fork('sim');
     this.grid = new Grid(level);
     const shuf = new Rng(seed).fork('shuffle');
@@ -139,6 +148,7 @@ export class Sim {
         hp: T.guard.hp,
         dead: false,
         fireCd: 1,
+        bagged: false,
       });
     }
 
@@ -200,6 +210,8 @@ export class Sim {
         idleTimer: shuf.range(0.5, 4),
         fleeTo: null,
         moving: false,
+        cowerTime: Infinity,
+        bagged: false,
       });
     }
 
@@ -227,8 +239,10 @@ export class Sim {
       escorts: 0,
       zipTies: T.takedown.zipTies,
       hp: T.health.hp,
-      armor: T.health.armor,
-      armorMax: T.health.armor,
+      armor: T.health.armor + T.armor[loadout.armor].armor,
+      armorMax: T.health.armor + T.armor[loadout.armor].armor,
+      speedMul: T.armor[loadout.armor].speed,
+      casingBonus: T.armor[loadout.armor].casingBonus,
       lastHit: -99,
       mag: T.weapon.mag,
       reserve: T.weapon.reserve,
@@ -239,6 +253,9 @@ export class Sim {
       noiseTimer: 0,
     };
 
+    this.security = createSecurity(this);
+    const breaker = breakerInteractable(this);
+    if (breaker) this.interactables.push(breaker);
     for (const d of this.grid.doors) this.interactables.push(this.doorInteractable(d));
     for (const g of this.guards) this.interactables.push(guardInteractable(this, g));
     for (const p of level.props.filter((q) => q.type === 'safe')) {
@@ -259,7 +276,11 @@ export class Sim {
         y: c.y,
         offer: () => {
           if (c.looted) return null;
-          if (!c.smashed) return this.player.masked ? 'case_smash' : '!Mask up first (hold G)';
+          if (!c.smashed) {
+            if (!this.player.masked) return '!Mask up first (hold G)';
+            // glass cutter: quiet and slow; once the alarm is up, smash for speed
+            return hasGadget(this, 'glass_cutter') && !this.alarm.tripped ? 'case_cut' : 'case_smash';
+          }
           return canBag(this, 'light') ?? 'bag_loot';
         },
       });
@@ -360,15 +381,17 @@ export class Sim {
     updateBags(this, dt);
     updateShots(this, dt);
     this.updatePlayer(input, dt);
+    updateGadgets(this, input, dt);
+    updateSecurity(this, input, dt);
     this.updateInteraction(input, dt);
     updatePlayerWeapon(this, input.fire, input.reload, dt, this.player.aiming ? { x: input.aimX, y: input.aimY } : null);
     this.updateDoors(dt);
 
     // Detection first, then AI reacts to the new meter values.
     for (const o of this.observers) {
-      if (this.alarm.tripped || p.frozen > 0 || (o.kind === 'guard' && isDown(o)) || (o.kind === 'civilian' && (o.state === 'tied' || o.state === 'dead')) || (o.kind === 'camera' && o.dead)) {
+      if (this.alarm.tripped || p.frozen > 0 || (o.kind === 'guard' && isDown(o)) || (o.kind === 'civilian' && (o.state === 'tied' || o.state === 'dead')) || (o.kind === 'camera' && (o.dead || jammed(this) || powerOut(this)))) {
         o.sees = false;
-        if (o.kind !== 'camera' && o.suspicion < 100) o.suspicion = 0;
+        if ((o.kind !== 'camera' || !o.dead) && o.suspicion < 100) o.suspicion = 0;
         continue;
       }
       if (o.kind === 'guard' && (o.state === 'report' || o.state === 'alert')) {
@@ -440,6 +463,7 @@ export class Sim {
     let speed: number = p.crouch ? T.player.crouchSpeed : p.sprinting ? T.player.sprintSpeed : T.player.walkSpeed;
     if (bag) speed *= bag.speed;
     if (p.bagCount >= 2) speed *= T.bags.twoBagSpeed;
+    speed *= p.speedMul; // heavy vest
     if (p.maskProgress > 0) speed = Math.min(speed, T.player.crouchSpeed);
     p.aiming = input.aim && p.masked && p.bagCount < 2; // no free hand with two bags
     if (p.aiming) speed = Math.min(speed, T.player.aimSpeed);
@@ -556,7 +580,7 @@ export class Sim {
       const def = INTERACTIONS[f.offer];
       if (!def) return;
       if (def.requiresMask && !p.masked) return;
-      const time = def.id === 'lockpick' ? T.doors.lockpickTime : def.time;
+      const time = def.id === 'lockpick' ? lockpickTime(this) : def.time;
       this.interaction = {
         targetId: f.it.id,
         defId: def.id,
@@ -586,7 +610,19 @@ export class Sim {
         }
         break;
       case 'case_smash':
+      case 'case_cut':
         if (kase) kase.smashed = true;
+        break;
+      case 'body_bag': {
+        const t = this.walkers().find((q) => q.id === targetId);
+        if (t && hasGadget(this, 'body_bags')) {
+          spend(this, 'body_bags');
+          bodyBag(this, t);
+        }
+        break;
+      }
+      case 'breaker':
+        cutPower(this);
         break;
       case 'takedown': {
         const g = this.guards.find((q) => q.id === targetId);
@@ -673,6 +709,8 @@ export class Sim {
   }
 
   private updateCamera(c: SecurityCamera, dt: number): void {
+    // jammed or no power: blind and still; nothing gets reported (a shot-out camera's pending report waits too)
+    if (jammed(this) || powerOut(this)) return;
     if (c.dead) {
       if (c.deskTimer > 0) {
         c.deskTimer -= dt;

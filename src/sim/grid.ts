@@ -133,7 +133,22 @@ export class Grid {
 
   canSee(a: Vec2, b: Vec2, coverNear?: Vec2): boolean {
     const d = Math.hypot(b.x - a.x, b.y - a.y);
+    if (this.smokes.length && this.smokeBlocks(a, b)) return false;
     return this.raycast(a.x, a.y, b.x, b.y, coverNear) >= d - 1e-4;
+  }
+
+  /** Smoke clouds (gadgets.ts keeps this list): nobody sees through, into or out of one. */
+  smokes: { x: number; y: number; r: number }[] = [];
+
+  private smokeBlocks(a: Vec2, b: Vec2): boolean {
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    const l2 = dx * dx + dy * dy || 1e-9;
+    for (const s of this.smokes) {
+      const t = Math.max(0, Math.min(1, ((s.x - a.x) * dx + (s.y - a.y) * dy) / l2));
+      if (Math.hypot(a.x + dx * t - s.x, a.y + dy * t - s.y) < s.r) return true;
+    }
+    return false;
   }
 
   /** Move a circle by (dx, dy), sliding along solid cells. `passDoors` lets guards walk through door cells. */

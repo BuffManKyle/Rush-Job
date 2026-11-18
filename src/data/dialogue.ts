@@ -51,6 +51,16 @@ export const LINES: Record<string, string> = {
   'accountant.alarm.01': '[placeholder] That would be the alarm. Itemizing the damage.',
   'accountant.escort.01': '[placeholder] Escorted out. That one\'s free. The next one isn\'t.',
   'accountant.locked.01': '[placeholder] Locked. You did bring a lockpick, I hope.',
+  'player.shout.01': '[placeholder] Everybody down! Nobody moves, nobody gets hurt!',
+  'player.shout.02': '[placeholder] On the floor! Hands where I can see them!',
+  'player.shout.03': '[placeholder] Down! Now! This is not a sale!',
+  'civ.cower.01': '[placeholder] Okay okay okay!',
+  'civ.cower.02': "[placeholder] Don't shoot!",
+  'civ.getup.01': '[placeholder] (whispering) I think he left... HELP!',
+  'civ.panic.01': '[placeholder] (slams the panic button)',
+  'desk.power.01': '[placeholder] Lost every feed. Somebody check the breaker.',
+  'guard.breaker.01': '[placeholder] Who flipped the breaker? ...There.',
+  'accountant.c4.01': '[placeholder] Subtle. Truly. The whole block heard that.',
 };
 
 export function line(id: string): string {

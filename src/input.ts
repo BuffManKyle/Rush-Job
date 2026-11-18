@@ -96,6 +96,9 @@ export class Input {
       fire: this.mouseDown || this.down.has('Space'),
       reload: this.consume('KeyR'),
       aim: this.rightDown,
+      gadget1: this.consume('Digit1') || this.consume('Numpad1'),
+      gadget2: this.consume('Digit2') || this.consume('Numpad2'),
+      shout: this.consume('KeyV'),
     };
   }
 }

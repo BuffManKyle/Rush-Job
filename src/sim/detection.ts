@@ -16,7 +16,7 @@ export function angleDiff(a: number, b: number): number {
 export function statusMultiplier(p: Player): number {
   const s = T.detection.status;
   if (p.masked) return p.inRestricted ? s.maskedRestricted : s.maskedPublic;
-  return p.inRestricted ? s.unmaskedRestricted * T.detection.suitCasingMultiplier : s.unmaskedPublic;
+  return p.inRestricted ? s.unmaskedRestricted * (p.casingBonus ? T.detection.suitCasingMultiplier : 1) : s.unmaskedPublic;
 }
 
 export function moveMultiplier(p: Player): number {

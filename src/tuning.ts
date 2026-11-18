@@ -179,6 +179,44 @@ export const T = {
     heavy: { speed: 0.6, sprint: false, throw: 3 },
   },
 
+  // Loadout: armor and gadgets (DESIGN.md "Gear, guns & progression"). Gadget defs: src/data/loadout.ts.
+  armor: {
+    suit: { armor: 0, speed: 1.0, casingBonus: true },
+    light_vest: { armor: 50, speed: 1.0, casingBonus: true },
+    heavy_vest: { armor: 100, speed: 0.9, casingBonus: false }, // can't be hidden under the suit
+  },
+
+  gadgets: {
+    requireMask: true, // number-key gadgets come out with the mask (DESIGN.md "Mask up")
+    useCooldown: 0.6, // seconds between number-key uses
+    heldShowTime: 1.2, // the used gadget stays in hand this long (view)
+    throwRange: 10, // max throw distance toward the cursor
+    throwFlightTime: 0.6,
+    noisemaker: { charges: 3, radius: 8, pulses: 3, pulseInterval: 1.0, armTime: 0.3 },
+    glassCutter: { time: 4 },
+    bodyBag: { charges: 2, time: 3 },
+    ecm: { charges: 1, duration: 20 },
+    medkit: { charges: 1 },
+    smoke: { charges: 2, radius: 3, duration: 12 },
+    c4: { charges: 2, fuse: 5, blastRadius: 2.5, blastDamage: 60 },
+  },
+
+  intimidate: {
+    radius: 8, // civilians within this (and line of sight) drop and cower
+    noise: 5, // a shout carries: guards in this radius come to look
+    cooldown: 1.5,
+    cowerTime: 30, // an intimidated (untied) civilian gets back up after this long and runs for help
+  },
+
+  power: {
+    breakerTime: 2, // hold E at the breaker
+    deskNotice: 15, // the security desk notices the dead feeds and raises the alarm this long after
+  },
+
+  panic: {
+    pressTime: 0.8, // a civilian at the button needs this long to press it
+  },
+
   view: {
     pitch: 55, // degrees down from horizontal
     zoomClose: 13, // camera distance from target, meters

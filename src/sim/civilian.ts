@@ -6,6 +6,7 @@ import { investigate, setState } from './guard';
 import { inRect, type Vec2 } from './level';
 import type { Civilian, CivilianState, Guard } from './types';
 import type { Sim } from './sim';
+import { nearestPanic, pressPanic } from './security';
 
 const DEG = Math.PI / 180;
 
@@ -54,6 +55,7 @@ export function updateCivilian(sim: Sim, c: Civilian, dt: number): void {
   c.moving = false;
   if (c.state === 'tied' || c.state === 'dead') return;
   if (sim.alarm.tripped && c.state !== 'cower') go(c, 'cower');
+  if (sim.alarm.tripped) c.cowerTime = Infinity; // after the alarm they stay down for good
 
   switch (c.state) {
     case 'wander': {
@@ -79,6 +81,25 @@ export function updateCivilian(sim: Sim, c: Civilian, dt: number): void {
       break;
     }
     case 'flee': {
+      const btn = sim.security.panicButtons.find((b) => b.id === c.fleeTo);
+      if (btn) {
+        if (!sim.security.powerOn) {
+          go(c, 'cower');
+          c.cowerTime = Infinity;
+          break;
+        }
+        if (Math.hypot(btn.pos.x - c.pos.x, btn.pos.y - c.pos.y) < 0.9) {
+          turnToward(c, Math.atan2(btn.pos.y - c.pos.y, btn.pos.x - c.pos.x), dt);
+          if (pressPanic(sim, c, btn, dt)) {
+            go(c, 'cower');
+            c.cowerTime = Infinity;
+          }
+          break;
+        }
+        if (!c.path.length) c.path = sim.grid.findPath(c.pos, btn.pos, T.civilian.radius) ?? [];
+        walk(sim, c, T.civilian.fleeSpeed, dt);
+        break;
+      }
       const g = sim.guards.find((q) => q.id === c.fleeTo);
       if (!g) {
         go(c, 'cower');
@@ -90,6 +111,18 @@ export function updateCivilian(sim: Sim, c: Civilian, dt: number): void {
       break;
     }
     case 'cower':
+      // shouted down but not tied: after a while they get brave, get up and run for help
+      if (c.cowerTime !== Infinity) {
+        c.cowerTime -= dt;
+        if (c.cowerTime <= 0 && !sim.alarm.tripped) {
+          c.cowerTime = Infinity;
+          go(c, 'wander');
+          c.lastKnown = { ...sim.player.pos };
+          c.suspicion = 100;
+          sim.events.emit({ type: 'bark', who: c.id, line: 'civ.getup.01' });
+          civilianSpotted(sim, c);
+        }
+      }
       break;
   }
 }
@@ -126,10 +159,14 @@ export function civilianSpotted(sim: Sim, c: Civilian): void {
   for (const g of sim.guards) if (g.state !== 'down' && g.state !== 'tied' && (!best || Math.hypot(g.pos.x - c.pos.x, g.pos.y - c.pos.y) < Math.hypot(best.pos.x - c.pos.x, best.pos.y - c.pos.y))) best = g;
   sim.events.emit({ type: 'bark', who: c.id, line: sim.rng.pick(sim.lineIds(sim.player.masked ? 'civ.scream' : 'civ.staffonly')) });
   if (sim.player.masked) sim.emitNoise(c.pos.x, c.pos.y, T.civilian.screamRadius, 'scream');
-  if (!best) {
+  // the nearest guard or panic button, whichever is closer (masked only: an unmasked trespass goes to a guard)
+  const gd = best ? Math.hypot(best.pos.x - c.pos.x, best.pos.y - c.pos.y) : Infinity;
+  const btn = sim.player.masked ? nearestPanic(sim, c.pos, gd) : null;
+  if (!best && !btn) {
     go(c, 'cower');
+    c.cowerTime = Infinity;
     return;
   }
   go(c, 'flee');
-  c.fleeTo = best.id;
+  c.fleeTo = btn ? btn.id : best!.id;
 }

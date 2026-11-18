@@ -15,9 +15,12 @@ export interface InputFrame {
   fire: boolean; // left mouse (or Space) held
   aim: boolean; // right mouse held: face the cursor and shoot at it
   reload: boolean; // R pressed this tick (edge)
+  gadget1: boolean; // 1 pressed this tick (edge): use gadget slot 1
+  gadget2: boolean; // 2 pressed this tick (edge): use gadget slot 2
+  shout: boolean; // V pressed this tick (edge): intimidate civilians
 }
 
-export const NO_INPUT: InputFrame = { moveX: 0, moveY: 0, aimX: 0, aimY: 0, sprint: false, crouch: false, interact: false, mask: false, mark: false, throw: false, fire: false, reload: false, aim: false };
+export const NO_INPUT: InputFrame = { moveX: 0, moveY: 0, aimX: 0, aimY: 0, sprint: false, crouch: false, interact: false, mask: false, mark: false, throw: false, fire: false, reload: false, aim: false, gadget1: false, gadget2: false, shout: false };
 
 export type BagWeight = 'light' | 'medium' | 'heavy';
 
@@ -41,6 +44,8 @@ export interface Player {
   hp: number;
   armor: number;
   armorMax: number;
+  speedMul: number; // armor: heavy vest is slower
+  casingBonus: boolean; // tailored suit look: slower casing suspicion (not with a heavy vest)
   lastHit: number;
   mag: number;
   reserve: number;
@@ -111,6 +116,7 @@ export interface Guard extends ObserverBase {
   hp: number;
   dead: boolean;
   fireCd: number;
+  bagged: boolean; // in a body bag: bodies checks skip him and he never wakes
 }
 
 export interface SecurityCamera extends ObserverBase {
@@ -137,8 +143,10 @@ export interface Civilian extends ObserverBase {
   path: Vec2[];
   goal: Vec2 | null;
   idleTimer: number;
-  fleeTo: string | null; // guard id
+  fleeTo: string | null; // guard id or panic button id
   moving: boolean;
+  cowerTime: number; // seconds left cowering after a shout before they get up (Infinity = for good)
+  bagged: boolean;
 }
 
 export type Observer = Guard | SecurityCamera | Civilian;

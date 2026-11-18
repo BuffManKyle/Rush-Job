@@ -5,6 +5,8 @@ import { setState } from './guard';
 import { civilianSpotted } from './civilian';
 import type { Civilian, Guard, Interactable, Observer } from './types';
 import type { Sim } from './sim';
+import { hasGadget, jammed } from './gadgets';
+import { powerOut } from './security';
 
 const DEG = Math.PI / 180;
 
@@ -28,12 +30,15 @@ export function guardInteractable(sim: Sim, g: Guard): Interactable {
     },
     offer: () => {
       const p = sim.player;
-      if (g.dead) return null;
-      if (g.state === 'tied') return g.pagerRinging > 0 ? 'answer_pager' : null;
+      if (g.pagerRinging > 0 && !g.dead) return 'answer_pager'; // a bagged guard's pager still rings
+      if (g.bagged) return null;
+      const bag = hasGadget(sim, 'body_bags') && p.masked ? (p.bagCount >= 2 ? '!Both hands full' : 'body_bag') : null;
+      if (g.dead) return bag;
+      if (g.state === 'tied') return bag;
       if (g.state === 'down') {
-        if (g.pagerRinging > 0) return 'answer_pager';
         if (p.bagCount >= 2) return '!Both hands full';
-        return p.zipTies > 0 ? 'zip_tie' : '!Out of zip ties';
+        // tie first; a body bag also works on an untied guard once you're out of ties
+        return p.zipTies > 0 ? 'zip_tie' : (bag ?? '!Out of zip ties');
       }
       if (!p.masked || g.state === 'alert' || p.bagCount >= 2) return null;
       // a guard on the radio can be stopped from any side; otherwise it has to be from behind
@@ -53,6 +58,7 @@ export function civilianInteractable(sim: Sim, c: Civilian): Interactable {
       return c.pos.y;
     },
     offer: () => {
+      if (c.state === 'dead' && !c.bagged && sim.player.masked && hasGadget(sim, 'body_bags')) return sim.player.bagCount >= 2 ? '!Both hands full' : 'body_bag';
       if (!sim.player.masked || c.state !== 'cower') return null;
       if (sim.player.bagCount >= 2) return '!Both hands full';
       return sim.player.zipTies > 0 ? 'zip_tie' : '!Out of zip ties';
@@ -100,7 +106,7 @@ export function updateDowned(sim: Sim, dt: number): void {
   for (const g of sim.guards) {
     if (!isDown(g)) continue;
     g.downTime += dt;
-    if (!g.pagerDone && !sim.alarm.tripped) {
+    if (!g.pagerDone && !sim.alarm.tripped && !jammed(sim)) {
       if (g.pagerDelay > 0) {
         g.pagerDelay -= dt;
         if (g.pagerDelay <= 0) {
@@ -118,7 +124,7 @@ export function updateDowned(sim: Sim, dt: number): void {
         }
       }
     }
-    if (g.state === 'down' && !g.dead && g.downTime >= T.takedown.downedWakeTime && !sim.alarm.tripped) {
+    if (g.state === 'down' && !g.dead && !g.bagged && g.downTime >= T.takedown.downedWakeTime && !sim.alarm.tripped) {
       sim.events.emit({ type: 'bark', who: g.id, line: 'guard.wake.01' });
       setState(g, 'report');
       g.reportTimer = T.guard.reportTime;
@@ -131,14 +137,14 @@ export function updateDowned(sim: Sim, dt: number): void {
 export function checkBodies(sim: Sim): void {
   if (sim.alarm.tripped) return;
   const bodies = [
-    ...sim.guards.filter(isDown).map((g) => ({ id: g.id, pos: g.pos, label: `${g.label} ${g.dead ? 'shot' : g.state === 'tied' ? 'zip-tied' : 'out cold'}` })),
+    ...sim.guards.filter((g) => isDown(g) && !g.bagged).map((g) => ({ id: g.id, pos: g.pos, label: `${g.label} ${g.dead ? 'shot' : g.state === 'tied' ? 'zip-tied' : 'out cold'}` })),
     ...sim.civilians
-      .filter((c) => c.state === 'tied' || c.state === 'dead')
+      .filter((c) => c.state === 'tied' || (c.state === 'dead' && !c.bagged))
       .map((c) => ({ id: c.id, pos: c.pos, label: c.state === 'dead' ? `a shot ${c.label.toLowerCase()}` : `a zip-tied ${c.label.toLowerCase()}` })),
   ];
   if (!bodies.length) return;
   for (const o of sim.observers) {
-    if (!canObserve(o)) continue;
+    if (!canObserve(sim, o)) continue;
     for (const b of bodies) {
       if (b.id === o.id) continue;
       if (!look(sim.grid, o, { pos: b.pos, crouch: false } as never, scratch)) continue;
@@ -151,10 +157,10 @@ export function checkBodies(sim: Sim): void {
 
 const scratch = { inRange: false, inCone: false, los: false, dist: 0, fDist: 0, fMove: 0, fStatus: 0, fBag: 1, rate: 0 };
 
-function canObserve(o: Observer): boolean {
+function canObserve(sim: Sim, o: Observer): boolean {
   if (o.kind === 'guard') return !isDown(o) && o.state !== 'report' && o.state !== 'alert';
   if (o.kind === 'civilian') return o.state === 'wander' || o.state === 'look';
-  return !o.dead && o.deskTimer <= 0;
+  return !o.dead && o.deskTimer <= 0 && !jammed(sim) && !powerOut(sim);
 }
 
 function foundBody(sim: Sim, o: Observer, what: string): void {
@@ -174,4 +180,10 @@ function foundBody(sim: Sim, o: Observer, what: string): void {
     o.suspicion = 100;
     civilianSpotted(sim, o);
   }
+}
+
+/** Zip the body into a bag: nobody finds it and he doesn't wake up. */
+export function bodyBag(sim: Sim, target: Guard | Civilian): void {
+  target.bagged = true;
+  sim.events.emit({ type: 'message', text: 'Bagged. Nobody finds the body now.', tone: 'info' });
 }
