@@ -114,6 +114,84 @@ def hands_up(rig, name):
     return act
 
 
+MASKED = {"player"}       # characters whose mask the game hides while casing
+
+
+def split_mask(mesh, name):
+    """Give the mask its own material RJ_Mask (same texture), and put a skin-toned face (RJ_Face)
+    4 mm behind it, so the game can hide RJ_Mask while the player is unmasked without leaving a
+    hole. Mask faces = light, unsaturated texels on the front of the head."""
+    import bmesh
+    import numpy as np
+    me = mesh.data
+    base = me.materials[0]
+    img = next(n.image for n in base.node_tree.nodes if n.type == 'TEX_IMAGE' and n.image)
+    w, h = img.size
+    px = np.array(img.pixels[:], dtype=np.float32).reshape(h, w, img.channels)
+    mw = mesh.matrix_world
+    lo, hi = rj._world_bounds([mesh])
+    height = hi.z - lo.z
+    uv = me.uv_layers.active.data
+
+    def texel(p):
+        u = sum(uv[i].uv.x for i in p.loop_indices) / p.loop_total
+        v = sum(uv[i].uv.y for i in p.loop_indices) / p.loop_total
+        return px[min(h - 1, int(v * h)) % h, min(w - 1, int(u * w)) % w, :3]
+
+    def head(p, z_frac):
+        c = mw @ p.center
+        return c.z > lo.z + z_frac * height and (mw.to_3x3() @ p.normal).normalized().y < 0.5
+
+    # seeds: bright, grey-white faces on the front of the head
+    seeds = [p.index for p in me.polygons if head(p, 0.8)
+             and min(texel(p)) > 0.5 and max(texel(p)) - min(texel(p)) < 0.12]
+    # grow across edges into connected pale faces (the shaded chin and edges), stopping at the
+    # dark hood and suit
+    edge_faces = {}
+    for p in me.polygons:
+        for ek in p.edge_keys:
+            edge_faces.setdefault(ek, []).append(p.index)
+    picks, todo = set(seeds), list(seeds)
+    while todo:
+        p = me.polygons[todo.pop()]
+        for ek in p.edge_keys:
+            for q in edge_faces[ek]:
+                if q in picks:
+                    continue
+                qp = me.polygons[q]
+                t = texel(qp)
+                if head(qp, 0.72) and min(t) > 0.28 and max(t) - min(t) < 0.16:
+                    picks.add(q); todo.append(q)
+    picks = sorted(picks)
+    if len(picks) < 20:
+        raise SystemExit(f"mask split for {name}: only {len(picks)} light faces found; check the threshold")
+    mask_mat = base.copy(); mask_mat.name = "RJ_Mask"
+    face_mat = bpy.data.materials.new("RJ_Face")
+    try: face_mat.use_nodes = True
+    except Exception: pass
+    bsdf = next(n for n in face_mat.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
+    bsdf.inputs['Base Color'].default_value = (*rj.srgb_to_lin(rj.PAL["skin"]), 1)
+    bsdf.inputs['Roughness'].default_value = 0.8
+    me.materials.append(mask_mat); me.materials.append(face_mat)
+    mi_mask, mi_face = len(me.materials) - 2, len(me.materials) - 1
+    bm = bmesh.new(); bm.from_mesh(me)
+    bm.faces.ensure_lookup_table()
+    faces = [bm.faces[i] for i in picks]
+    for f in faces:
+        f.material_index = mi_mask
+    dup = bmesh.ops.duplicate(bm, geom=faces)           # keeps the deform weights
+    new_faces = [g for g in dup["geom"] if isinstance(g, bmesh.types.BMFace)]
+    new_verts = {v for f in new_faces for v in f.verts}
+    inv = mw.inverted().to_3x3()
+    inset = inv @ Vector((0, 0.004, 0))                  # 4 mm toward the back of the head
+    for v in new_verts:
+        v.co += inset
+    for f in new_faces:
+        f.material_index = mi_face
+    bm.to_mesh(me); bm.free(); me.update()
+    print(f"RJ_MASK {name}: {len(picks)} faces -> RJ_Mask, face patch RJ_Face behind it")
+
+
 def build(name, clips):
     rj._reset_scene()
     for a in list(bpy.data.actions):
@@ -137,6 +215,8 @@ def build(name, clips):
         for n in m.node_tree.nodes:
             if n.type == 'TEX_IMAGE' and n.image and max(n.image.size) > 1024:
                 n.image.scale(1024, 1024)
+    if name in MASKED:
+        split_mask(mesh, name)
     # clips
     acts = {}
     for clip, suffix in clips.items():
@@ -206,6 +286,26 @@ for name, clips in CHARS.items():
             manifest["pieces"].append({"name": f"{name}_{clip}", "kind": "char", "cells": [1, 1], "tris": tris,
                                        "children": [], "bounds": {}, "note": ""})
         ad.action = None
+        if name in MASKED:                     # masked vs unmasked head close-ups (preview only)
+            bpy.context.scene.frame_set(1)
+            mm = bpy.data.materials["RJ_Mask"]
+            bs = next(n for n in mm.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
+            head = rj._world_bounds([mesh]); top = head[1].z
+            for label, alpha in (("masked", 1.0), ("unmasked", 0.0)):
+                bs.inputs['Alpha'].default_value = alpha
+                try: mm.surface_render_method = 'BLENDED' if alpha < 1 else 'DITHERED'
+                except Exception: pass
+                post = rj.Part("RJ_HeadFrame")
+                post.box(-0.25, -0.25, top - 0.45, 0.25, 0.25, top, "Glass")
+                pf = post.build(); pf.hide_render = True
+                rj.frame(cam, [pf], elev=10, azim=-20, pad=1.0)
+                bpy.data.objects.remove(pf, do_unlink=True)
+                rj.render(os.path.join(outdir, f"{name}_{label}.png"))
+                manifest["pieces"].append({"name": f"{name}_{label}", "kind": "char", "cells": [1, 1], "tris": tris,
+                                           "children": [], "bounds": {}, "note": ""})
+            bs.inputs['Alpha'].default_value = 1.0
+            try: mm.surface_render_method = 'DITHERED'
+            except Exception: pass
 manifest["bytes"] = sum(os.path.getsize(os.path.join(rj.ROOT, g)) for g in manifest["glbs"])
 os.makedirs(outdir, exist_ok=True)
 json.dump(manifest, open(os.path.join(outdir, "manifest.json"), "w"), indent=1)

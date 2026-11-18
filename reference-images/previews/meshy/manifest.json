@@ -12,7 +12,7 @@
     1,
     1
    ],
-   "tris": 7244,
+   "tris": 7549,
    "children": [],
    "bounds": {},
    "note": ""
@@ -24,7 +24,7 @@
     1,
     1
    ],
-   "tris": 7244,
+   "tris": 7549,
    "children": [],
    "bounds": {},
    "note": ""
@@ -36,7 +36,7 @@
     1,
     1
    ],
-   "tris": 7244,
+   "tris": 7549,
    "children": [],
    "bounds": {},
    "note": ""
@@ -48,7 +48,7 @@
     1,
     1
    ],
-   "tris": 7244,
+   "tris": 7549,
    "children": [],
    "bounds": {},
    "note": ""
@@ -60,7 +60,7 @@
     1,
     1
    ],
-   "tris": 7244,
+   "tris": 7549,
    "children": [],
    "bounds": {},
    "note": ""
@@ -72,7 +72,7 @@
     1,
     1
    ],
-   "tris": 7244,
+   "tris": 7549,
    "children": [],
    "bounds": {},
    "note": ""
@@ -84,7 +84,7 @@
     1,
     1
    ],
-   "tris": 7244,
+   "tris": 7549,
    "children": [],
    "bounds": {},
    "note": ""
@@ -96,7 +96,7 @@
     1,
     1
    ],
-   "tris": 7244,
+   "tris": 7549,
    "children": [],
    "bounds": {},
    "note": ""
@@ -108,7 +108,31 @@
     1,
     1
    ],
-   "tris": 7244,
+   "tris": 7549,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "player_masked",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7549,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "player_unmasked",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 7549,
    "children": [],
    "bounds": {},
    "note": ""
@@ -186,7 +210,7 @@
    "note": ""
   }
  ],
- "bytes": 1564240,
+ "bytes": 1585624,
  "chars": {
   "player": {
    "clips": [
@@ -200,7 +224,7 @@
     "run",
     "walk"
    ],
-   "tris": 7244
+   "tris": 7549
   },
   "guard": {
    "clips": [
