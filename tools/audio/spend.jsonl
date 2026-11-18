@@ -8,3 +8,4 @@
 {"t": "2026-11-18T23:48:58Z", "id": "cue.pager.ring", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 80.0, "status": "ok", "file": "assets/audio/_takes/cue.pager.ring/t01.ogg", "credits_actual": 22.0}
 {"t": "2026-11-18T23:48:59Z", "id": "sfx.van.honk", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.5, "status": "ok", "file": "assets/audio/_takes/sfx.van.honk/t01.ogg", "credits_actual": 17.0}
 {"t": "2026-11-18T23:49:08Z", "id": "mus.glint.stealth", "take": 1, "kind": "music", "seconds": 65.0, "credits_est": 3900.0, "status": "ok", "file": "assets/audio/_takes/mus.glint.stealth/t01.ogg", "credits_actual": null}
+{"t": "2026-11-18T23:52:44Z", "id": "mus.glint.stealth", "take": 1, "kind": "music", "seconds": 65.0, "credits_est": 3900.0, "status": "ok", "file": "assets/audio/_takes/mus.glint.stealth/t01.ogg", "credits_actual": 1010.0, "note": "actual from Kyle's ElevenLabs dashboard (no cost header on music)"}
