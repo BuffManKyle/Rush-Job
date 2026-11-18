@@ -1,0 +1,476 @@
+{
+ "lib": "gear",
+ "glb": "assets/models/gear.glb",
+ "pieces": [
+  {
+   "name": "pistol_silenced",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 148,
+   "children": [
+    "pistol_silenced_muzzle"
+   ],
+   "bounds": {
+    "min": [
+     -0.023,
+     -0.069,
+     -0.056
+    ],
+    "max": [
+     0.023,
+     0.131,
+     0.365
+    ]
+   },
+   "note": "pocket pistol with suppressor (start weapon); origin at the palm, muzzle +Z"
+  },
+  {
+   "name": "tranq_pistol",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 174,
+   "children": [
+    "tranq_pistol_muzzle"
+   ],
+   "bounds": {
+    "min": [
+     -0.022,
+     -0.069,
+     -0.056
+    ],
+    "max": [
+     0.022,
+     0.131,
+     0.281
+    ]
+   },
+   "note": "tranq pistol: teal grip panels, CO2 bulb under the barrel, dart in the muzzle"
+  },
+  {
+   "name": "smg_compact",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 124,
+   "children": [
+    "smg_compact_grip2",
+    "smg_compact_muzzle"
+   ],
+   "bounds": {
+    "min": [
+     -0.03,
+     -0.113,
+     -0.138
+    ],
+    "max": [
+     0.037,
+     0.138,
+     0.338
+    ]
+   },
+   "note": "compact SMG, two-handed: _grip2 on the foregrip, folded stock"
+  },
+  {
+   "name": "shotgun_pump",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 176,
+   "children": [
+    "shotgun_pump_grip2",
+    "shotgun_pump_muzzle"
+   ],
+   "bounds": {
+    "min": [
+     -0.031,
+     -0.081,
+     -0.431
+    ],
+    "max": [
+     0.031,
+     0.113,
+     0.688
+    ]
+   },
+   "note": "pump shotgun, two-handed: _grip2 on the wooden pump"
+  },
+  {
+   "name": "stun_baton",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 136,
+   "children": [
+    "stun_baton_muzzle"
+   ],
+   "bounds": {
+    "min": [
+     -0.03,
+     -0.03,
+     -0.106
+    ],
+    "max": [
+     0.03,
+     0.03,
+     0.556
+    ]
+   },
+   "note": "stun baton: silent melee takedown; electrodes are RJ_Ok (teal), not red"
+  },
+  {
+   "name": "zip_ties",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 240,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.044,
+     0.0,
+     -0.049
+    ],
+    "max": [
+     0.128,
+     0.025,
+     0.119
+    ]
+   },
+   "note": "bundle of 4 zip ties, loops lying flat so they read from above (held)"
+  },
+  {
+   "name": "lockpick_kit",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 204,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.075,
+     -0.01,
+     -0.05
+    ],
+    "max": [
+     0.075,
+     0.015,
+     0.179
+    ]
+   },
+   "note": "leather lockpick wallet, open, picks fanned out (held)"
+  },
+  {
+   "name": "noisemaker",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 116,
+   "children": [
+    "noisemaker_grip"
+   ],
+   "bounds": {
+    "min": [
+     -0.077,
+     0.0,
+     -0.081
+    ],
+    "max": [
+     0.077,
+     0.2,
+     0.085
+    ]
+   },
+   "note": "throwable noisemaker: a squat speaker puck, origin on the floor; _grip for carrying"
+  },
+  {
+   "name": "glass_cutter",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 140,
+   "children": [
+    "glass_cutter_muzzle"
+   ],
+   "bounds": {
+    "min": [
+     -0.054,
+     -0.054,
+     -0.113
+    ],
+    "max": [
+     0.054,
+     0.114,
+     0.087
+    ]
+   },
+   "note": "suction-cup circle glass cutter (held, cup end forward)"
+  },
+  {
+   "name": "body_bag_folded",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 36,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.125,
+     -0.056,
+     -0.094
+    ],
+    "max": [
+     0.125,
+     0.056,
+     0.094
+    ]
+   },
+   "note": "folded body bag, as carried (held)"
+  },
+  {
+   "name": "body_bag",
+   "kind": "gear",
+   "cells": [
+    2,
+    1
+   ],
+   "tris": 100,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.945,
+     0.0,
+     -0.27
+    ],
+    "max": [
+     0.945,
+     0.26,
+     0.27
+    ]
+   },
+   "note": "filled body bag lying on the floor, 2 x 1 cells; long axis X, origin on the floor"
+  },
+  {
+   "name": "ecm_jammer",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 148,
+   "children": [
+    "ecm_jammer_grip",
+    "ecm_jammer_led"
+   ],
+   "bounds": {
+    "min": [
+     -0.113,
+     0.0,
+     -0.081
+    ],
+    "max": [
+     0.113,
+     0.325,
+     0.081
+    ]
+   },
+   "note": "ECM jammer placed on the floor; child ecm_jammer_led starts RJ_Ok (cameras and pagers off for 20 s)"
+  },
+  {
+   "name": "keycard_cloner",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 72,
+   "children": [
+    "keycard_cloner_card"
+   ],
+   "bounds": {
+    "min": [
+     -0.044,
+     -0.015,
+     -0.037
+    ],
+    "max": [
+     0.044,
+     0.02,
+     0.188
+    ]
+   },
+   "note": "handheld keycard cloner; child keycard_cloner_card slides out when a copy is made"
+  },
+  {
+   "name": "keycard",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 48,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.054,
+     0.0,
+     -0.034
+    ],
+    "max": [
+     0.054,
+     0.004,
+     0.034
+    ]
+   },
+   "note": "bank keycard (the manager carries one): white card, teal stripe, gold chip; lies flat, origin under its centre"
+  },
+  {
+   "name": "smoke_grenade",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 116,
+   "children": [
+    "smoke_grenade_grip"
+   ],
+   "bounds": {
+    "min": [
+     -0.045,
+     0.0,
+     -0.041
+    ],
+    "max": [
+     0.062,
+     0.188,
+     0.041
+    ]
+   },
+   "note": "smoke grenade canister, stands on its base; _grip for holding"
+  },
+  {
+   "name": "medkit",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 54,
+   "children": [
+    "medkit_grip"
+   ],
+   "bounds": {
+    "min": [
+     -0.14,
+     0.0,
+     -0.052
+    ],
+    "max": [
+     0.14,
+     0.225,
+     0.054
+    ]
+   },
+   "note": "medkit case with a TEAL cross (red stays reserved for danger); stands on its base"
+  },
+  {
+   "name": "c4",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 100,
+   "children": [
+    "c4_grip",
+    "c4_timer"
+   ],
+   "bounds": {
+    "min": [
+     -0.106,
+     0.0,
+     -0.087
+    ],
+    "max": [
+     0.106,
+     0.096,
+     0.075
+    ]
+   },
+   "note": "C4 charge: two putty blocks, taped detonator; child c4_timer is RJ_Danger (armed = danger). Origin on the floor"
+  },
+  {
+   "name": "mirror_kit",
+   "kind": "gear",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 136,
+   "children": [
+    "mirror_kit_muzzle"
+   ],
+   "bounds": {
+    "min": [
+     -0.054,
+     -0.037,
+     -0.1
+    ],
+    "max": [
+     0.054,
+     0.037,
+     0.611
+    ]
+   },
+   "note": "telescopic inspection mirror for bending laser beams (held); mirror face at the far end"
+  },
+  {
+   "name": "thermal_drill",
+   "kind": "gear",
+   "cells": [
+    1,
+    2
+   ],
+   "tris": 326,
+   "children": [
+    "thermal_drill_bit"
+   ],
+   "bounds": {
+    "min": [
+     -0.3,
+     -0.055,
+     -0.5
+    ],
+    "max": [
+     0.3,
+     0.87,
+     0.42
+    ]
+   },
+   "note": "thermal drill on its stand, ~1.1 m long, bit points +Z (into the vault door); child thermal_drill_bit spins about Z; the status screen (RJ_Screen) faces the back"
+  }
+ ],
+ "bytes": 176592
+}

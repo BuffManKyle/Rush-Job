@@ -162,6 +162,7 @@ class Part:
         self.verts, self.faces, self.fmat, self.mats = [], [], [], []
         self.xf = Matrix.Identity(4)
         self.children = []
+        self.sockets = []           # (name, location): empty nodes for attach points (grip, muzzle)
         self.extras = {}
 
     # -- transform stack: with P.at((x, y, z), rz=deg): ... --
@@ -177,8 +178,16 @@ class Part:
             m = m @ Matrix.Diagonal((s, s, s, 1)) if not hasattr(s, '__len__') else m @ Matrix.Diagonal((*s, 1))
         return Part._At(self, m)
 
+    def socket(self, name, loc):
+        """An empty node at loc (this part's space): e.g. 'muzzle' where shots and flashes start."""
+        self.sockets.append((name, (self.xf @ Vector(loc)).to_tuple()))
+
     def child(self, name, pivot=(0, 0, 0)):
-        c = Part(name, pivot)
+        """A moving or hideable sub-part. It inherits the current transform (e.g. a scale set
+        with `at`): its pivot goes through it, and so does its own geometry, minus the offset."""
+        c = Part(name, (self.xf @ Vector(pivot)).to_tuple())
+        c.xf = self.xf.copy()
+        c.xf.translation = (0, 0, 0)
         self.children.append(c)
         return c
 
@@ -303,6 +312,12 @@ class Part:
             ob[k] = json.dumps(val) if isinstance(val, dict) else val
         for c in self.children:
             c.build(ob)
+        for sname, loc in self.sockets:
+            e = bpy.data.objects.new(sname, None)
+            e.empty_display_size = 0.05
+            bpy.context.scene.collection.objects.link(e)
+            e.parent = ob
+            e.location = loc
         return ob
 
 

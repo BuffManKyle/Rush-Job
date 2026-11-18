@@ -57,6 +57,15 @@ Walls, windows and doors are whole cells, the same as the graybox and the collis
 | bags | `bag_light` / `bag_medium` / `bag_heavy` (`userData.rj_weight`) | any |
 | player / guards / civilians | `char_player`, `char_guard` (Meshy pilots), `char_civilian` (stand-in) | face +Z |
 
+## Gear (weapons and gadgets): assets/models/gear.glb
+
+Scripted, not generated: held objects need exact shapes. Everything is about 1.25× real size so it reads from the 55° camera. Look up pieces by name like the kit.
+- **Held items** (`userData.rj_held`): `pistol_silenced`, `tranq_pistol`, `smg_compact`, `shotgun_pump`, `stun_baton`, `zip_ties`, `lockpick_kit`, `glass_cutter`, `body_bag_folded`, `keycard_cloner`, `mirror_kit`. **The origin is the right palm**, and the business end points **+Z** (forward). Add the piece to the `hand_R` attach bone and apply one fixed rotation per rig, so the gun's +Z lines up with the hand's forward.
+- **Sockets** are empty child nodes: `<piece>_muzzle` (shots, tracers, flash; also the baton tip, the cutter cup and the mirror face) and `<piece>_grip2` (left hand on `smg_compact`, `shotgun_pump`). Placed items have `<piece>_grip`, for carrying them in the hand.
+- **Placed or thrown items** have their origin on the floor under their centre: `noisemaker`, `ecm_jammer`, `smoke_grenade`, `medkit`, `c4`, `keycard`, `body_bag` (2 × 1 cells, filled, lying down) and `thermal_drill` (1 × 2 cells, bit pointing +Z into the vault door).
+- **Children:** `thermal_drill_bit` spins about Z. `c4_timer` is `RJ_Danger` (armed; pulse it). `ecm_jammer_led` is `RJ_Ok` while jamming. `keycard_cloner_card` slides out when a copy is made.
+- Red appears only on the armed C4 timer. The medkit cross and the baton electrodes are teal.
+
 ## Characters
 
 Load `assets/models/char_<name>.glb`. It is the Meshy model when one exists (`char_player`, `char_guard` today), and otherwise a copy of the stand-in. Stand-ins are also kept as `standin_<name>.glb`. Either way:
@@ -169,6 +178,25 @@ Generated-file evidence (one row per file: tool, model version, job id, date, co
 | `counter_register` | script `tools/blender/glint_build.py` | done | `assets/models/glint.glb` | 88 tris. 1 m counter segment with the cash register (faces the staff side, north). |
 | `counter_end` | script `tools/blender/glint_build.py` | done | `assets/models/glint.glb` | 10 tris. end cap: a closed panel on the segment's +X (east) end; rotate 180 for the west end. |
 | `sign_glint` | script `tools/blender/glint_build.py` | done | `assets/models/glint.glb` | 1504 tris. 'GLINT & SONS' fascia sign, 5 m wide; hang it on the storefront wall's south face above the door (pivot = cell centre at floor level, sign at 2.55-3.2 m). |
+| `pistol_silenced` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 148 tris. pocket pistol with suppressor (start weapon); origin at the palm, muzzle +Z. Children: `pistol_silenced_muzzle`. |
+| `tranq_pistol` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 174 tris. tranq pistol: teal grip panels, CO2 bulb under the barrel, dart in the muzzle. Children: `tranq_pistol_muzzle`. |
+| `smg_compact` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 124 tris. compact SMG, two-handed: _grip2 on the foregrip, folded stock. Children: `smg_compact_grip2`, `smg_compact_muzzle`. |
+| `shotgun_pump` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 176 tris. pump shotgun, two-handed: _grip2 on the wooden pump. Children: `shotgun_pump_grip2`, `shotgun_pump_muzzle`. |
+| `stun_baton` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 136 tris. stun baton: silent melee takedown; electrodes are RJ_Ok (teal), not red. Children: `stun_baton_muzzle`. |
+| `zip_ties` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 240 tris. bundle of 4 zip ties, loops lying flat so they read from above (held). |
+| `lockpick_kit` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 204 tris. leather lockpick wallet, open, picks fanned out (held). |
+| `noisemaker` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 116 tris. throwable noisemaker: a squat speaker puck, origin on the floor; _grip for carrying. Children: `noisemaker_grip`. |
+| `glass_cutter` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 140 tris. suction-cup circle glass cutter (held, cup end forward). Children: `glass_cutter_muzzle`. |
+| `body_bag_folded` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 36 tris. folded body bag, as carried (held). |
+| `body_bag` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 100 tris. filled body bag lying on the floor, 2 x 1 cells; long axis X, origin on the floor. |
+| `ecm_jammer` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 148 tris. ECM jammer placed on the floor; child ecm_jammer_led starts RJ_Ok (cameras and pagers off for 20 s). Children: `ecm_jammer_grip`, `ecm_jammer_led`. |
+| `keycard_cloner` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 72 tris. handheld keycard cloner; child keycard_cloner_card slides out when a copy is made. Children: `keycard_cloner_card`. |
+| `keycard` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 48 tris. bank keycard (the manager carries one): white card, teal stripe, gold chip; lies flat, origin under its centre. |
+| `smoke_grenade` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 116 tris. smoke grenade canister, stands on its base; _grip for holding. Children: `smoke_grenade_grip`. |
+| `medkit` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 54 tris. medkit case with a TEAL cross (red stays reserved for danger); stands on its base. Children: `medkit_grip`. |
+| `c4` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 100 tris. C4 charge: two putty blocks, taped detonator; child c4_timer is RJ_Danger (armed = danger). Origin on the floor. Children: `c4_grip`, `c4_timer`. |
+| `mirror_kit` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 136 tris. telescopic inspection mirror for bending laser beams (held); mirror face at the far end. Children: `mirror_kit_muzzle`. |
+| `thermal_drill` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 326 tris. thermal drill on its stand, ~1.1 m long, bit points +Z (into the vault door); child thermal_drill_bit spins about Z; the status screen (RJ_Screen) faces the back. Children: `thermal_drill_bit`. |
 | `char_player` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_player.glb` | 7549 tris, own Meshy rig, clips: aim_shoot, carry_walk, crouch_idle, crouch_walk, hands_up, idle, interact, run, walk |
 | `char_guard` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_guard.glb` | 7242 tris, own Meshy rig, clips: aim_shoot, hands_up, idle, run, walk, ziptied |
 | `standin_player` | script (stand-in) | placeholder | `assets/models/standin_player.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |

@@ -84,7 +84,8 @@ def lint(path):
         budget = 8000 if is_char else 2000
         if out["tris"] > budget:
             errs.append(f"{rn}: {out['tris']} tris > {budget}")
-        if out["miny"] < -0.01:
+        held = (g["nodes"][ri].get("extras") or {}).get("rj_held")
+        if out["miny"] < -0.01 and not held:
             errs.append(f"{rn}: lowest point y={out['miny']:.3f} is below the floor (origin must be at the base)")
         if out["maxy"] > 6.0 and kind != "char":
             errs.append(f"{rn}: {out['maxy']:.2f} m tall; wrong units?")
