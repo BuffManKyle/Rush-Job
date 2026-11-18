@@ -3,280 +3,96 @@
  "glb": "assets/models/kit.glb",
  "pieces": [
   {
-   "name": "wall_full_int_post",
+   "name": "wall_full_int",
    "kind": "wall",
    "cells": [
     1,
     1
    ],
-   "tris": 20,
+   "tris": 18,
    "children": [],
    "bounds": {
     "min": [
-     -0.1,
+     -0.512,
      0.0,
-     -0.112
+     -0.512
     ],
     "max": [
-     0.1,
-     2.8,
-     0.112
+     0.512,
+     3.0,
+     0.512
     ]
    },
-   "note": "centre post; add one arm per neighbour"
+   "note": "one wall cell (plaster)"
   },
   {
-   "name": "wall_full_int_arm",
+   "name": "wall_low_int",
    "kind": "wall",
    "cells": [
     1,
     1
    ],
-   "tris": 12,
+   "tris": 18,
    "children": [],
    "bounds": {
     "min": [
-     0.1,
+     -0.512,
      0.0,
-     -0.112
+     -0.512
     ],
     "max": [
-     0.5,
-     2.8,
-     0.112
+     0.512,
+     0.35,
+     0.512
     ]
    },
-   "note": "post -> +X edge; rotate for other sides"
+   "note": "one wall cell (plaster)"
   },
   {
-   "name": "wall_full_int_straight",
+   "name": "wall_full_ext",
    "kind": "wall",
    "cells": [
     1,
     1
    ],
-   "tris": 12,
+   "tris": 18,
    "children": [],
    "bounds": {
     "min": [
-     -0.5,
+     -0.512,
      0.0,
-     -0.112
+     -0.512
     ],
     "max": [
-     0.5,
-     2.8,
-     0.112
+     0.512,
+     3.0,
+     0.512
     ]
    },
-   "note": "straight run along X (E-W)"
+   "note": "one wall cell (brick, building exterior)"
   },
   {
-   "name": "wall_low_int_post",
+   "name": "wall_low_ext",
    "kind": "wall",
    "cells": [
     1,
     1
    ],
-   "tris": 20,
+   "tris": 18,
    "children": [],
    "bounds": {
     "min": [
-     -0.1,
+     -0.512,
      0.0,
-     -0.112
+     -0.512
     ],
     "max": [
-     0.1,
-     0.4,
-     0.112
+     0.512,
+     0.35,
+     0.512
     ]
    },
-   "note": "centre post; add one arm per neighbour"
-  },
-  {
-   "name": "wall_low_int_arm",
-   "kind": "wall",
-   "cells": [
-    1,
-    1
-   ],
-   "tris": 12,
-   "children": [],
-   "bounds": {
-    "min": [
-     0.1,
-     0.0,
-     -0.112
-    ],
-    "max": [
-     0.5,
-     0.4,
-     0.112
-    ]
-   },
-   "note": "post -> +X edge; rotate for other sides"
-  },
-  {
-   "name": "wall_low_int_straight",
-   "kind": "wall",
-   "cells": [
-    1,
-    1
-   ],
-   "tris": 12,
-   "children": [],
-   "bounds": {
-    "min": [
-     -0.5,
-     0.0,
-     -0.112
-    ],
-    "max": [
-     0.5,
-     0.4,
-     0.112
-    ]
-   },
-   "note": "straight run along X (E-W)"
-  },
-  {
-   "name": "wall_full_ext_post",
-   "kind": "wall",
-   "cells": [
-    1,
-    1
-   ],
-   "tris": 20,
-   "children": [],
-   "bounds": {
-    "min": [
-     -0.1,
-     0.0,
-     -0.112
-    ],
-    "max": [
-     0.1,
-     2.8,
-     0.112
-    ]
-   },
-   "note": "centre post; add one arm per neighbour"
-  },
-  {
-   "name": "wall_full_ext_arm",
-   "kind": "wall",
-   "cells": [
-    1,
-    1
-   ],
-   "tris": 12,
-   "children": [],
-   "bounds": {
-    "min": [
-     0.1,
-     0.0,
-     -0.112
-    ],
-    "max": [
-     0.5,
-     2.8,
-     0.112
-    ]
-   },
-   "note": "post -> +X edge; rotate for other sides"
-  },
-  {
-   "name": "wall_full_ext_straight",
-   "kind": "wall",
-   "cells": [
-    1,
-    1
-   ],
-   "tris": 12,
-   "children": [],
-   "bounds": {
-    "min": [
-     -0.5,
-     0.0,
-     -0.112
-    ],
-    "max": [
-     0.5,
-     2.8,
-     0.112
-    ]
-   },
-   "note": "straight run along X (E-W)"
-  },
-  {
-   "name": "wall_low_ext_post",
-   "kind": "wall",
-   "cells": [
-    1,
-    1
-   ],
-   "tris": 20,
-   "children": [],
-   "bounds": {
-    "min": [
-     -0.1,
-     0.0,
-     -0.112
-    ],
-    "max": [
-     0.1,
-     0.4,
-     0.112
-    ]
-   },
-   "note": "centre post; add one arm per neighbour"
-  },
-  {
-   "name": "wall_low_ext_arm",
-   "kind": "wall",
-   "cells": [
-    1,
-    1
-   ],
-   "tris": 12,
-   "children": [],
-   "bounds": {
-    "min": [
-     0.1,
-     0.0,
-     -0.112
-    ],
-    "max": [
-     0.5,
-     0.4,
-     0.112
-    ]
-   },
-   "note": "post -> +X edge; rotate for other sides"
-  },
-  {
-   "name": "wall_low_ext_straight",
-   "kind": "wall",
-   "cells": [
-    1,
-    1
-   ],
-   "tris": 12,
-   "children": [],
-   "bounds": {
-    "min": [
-     -0.5,
-     0.0,
-     -0.112
-    ],
-    "max": [
-     0.5,
-     0.4,
-     0.112
-    ]
-   },
-   "note": "straight run along X (E-W)"
+   "note": "one wall cell (brick, building exterior)"
   },
   {
    "name": "doorway_full_int",
@@ -285,21 +101,21 @@
     1,
     1
    ],
-   "tris": 138,
+   "tris": 102,
    "children": [],
    "bounds": {
     "min": [
      -0.5,
      0.0,
-     -0.12
+     -0.53
     ],
     "max": [
      0.5,
-     2.8,
-     0.12
+     3.0,
+     0.53
     ]
    },
-   "note": "0.9 m x 2.1 m opening; door pieces hinge at x=-0.45"
+   "note": "door cell: lintel 2.1-3.0 m over a 1 m opening, passage along Z"
   },
   {
    "name": "doorway_low_int",
@@ -308,21 +124,21 @@
     1,
     1
    ],
-   "tris": 42,
+   "tris": 10,
    "children": [],
    "bounds": {
     "min": [
      -0.5,
      0.0,
-     -0.112
+     -0.5
     ],
     "max": [
      0.5,
-     0.4,
-     0.112
+     0.015,
+     0.5
     ]
    },
-   "note": "0.9 m x 2.1 m opening; door pieces hinge at x=-0.45"
+   "note": "door cell: lintel 2.1-3.0 m over a 1 m opening, passage along Z; low = threshold only"
   },
   {
    "name": "doorway_full_ext",
@@ -331,21 +147,21 @@
     1,
     1
    ],
-   "tris": 138,
+   "tris": 102,
    "children": [],
    "bounds": {
     "min": [
      -0.5,
      0.0,
-     -0.12
+     -0.53
     ],
     "max": [
      0.5,
-     2.8,
-     0.12
+     3.0,
+     0.53
     ]
    },
-   "note": "0.9 m x 2.1 m opening; door pieces hinge at x=-0.45"
+   "note": "door cell: lintel 2.1-3.0 m over a 1 m opening, passage along Z"
   },
   {
    "name": "doorway_low_ext",
@@ -354,21 +170,21 @@
     1,
     1
    ],
-   "tris": 42,
+   "tris": 10,
    "children": [],
    "bounds": {
     "min": [
      -0.5,
      0.0,
-     -0.112
+     -0.5
     ],
     "max": [
      0.5,
-     0.4,
-     0.112
+     0.015,
+     0.5
     ]
    },
-   "note": "0.9 m x 2.1 m opening; door pieces hinge at x=-0.45"
+   "note": "door cell: lintel 2.1-3.0 m over a 1 m opening, passage along Z; low = threshold only"
   },
   {
    "name": "window_full_int",
@@ -377,23 +193,23 @@
     1,
     1
    ],
-   "tris": 92,
+   "tris": 78,
    "children": [
     "window_full_int_glass"
    ],
    "bounds": {
     "min": [
-     -0.5,
+     -0.512,
      0.0,
-     -0.13
+     -0.56
     ],
     "max": [
-     0.5,
-     2.8,
-     0.15
+     0.512,
+     3.0,
+     0.56
     ]
    },
-   "note": "sill 0.9 m, head 2.1 m; child 'glass' can be hidden when smashed"
+   "note": "window cell: sill 0.9 m, head 2.3 m; child glass is hideable (smashed)"
   },
   {
    "name": "window_low_int",
@@ -402,21 +218,21 @@
     1,
     1
    ],
-   "tris": 12,
+   "tris": 10,
    "children": [],
    "bounds": {
     "min": [
-     -0.5,
+     -0.512,
      0.0,
-     -0.112
+     -0.512
     ],
     "max": [
-     0.5,
-     0.4,
-     0.112
+     0.512,
+     0.35,
+     0.512
     ]
    },
-   "note": "sill 0.9 m, head 2.1 m; child 'glass' can be hidden when smashed"
+   "note": "window cell: sill 0.9 m, head 2.3 m; child glass is hideable (smashed)"
   },
   {
    "name": "window_full_ext",
@@ -425,23 +241,23 @@
     1,
     1
    ],
-   "tris": 92,
+   "tris": 78,
    "children": [
     "window_full_ext_glass"
    ],
    "bounds": {
     "min": [
-     -0.5,
+     -0.512,
      0.0,
-     -0.13
+     -0.56
     ],
     "max": [
-     0.5,
-     2.8,
-     0.15
+     0.512,
+     3.0,
+     0.56
     ]
    },
-   "note": "sill 0.9 m, head 2.1 m; child 'glass' can be hidden when smashed"
+   "note": "window cell: sill 0.9 m, head 2.3 m; child glass is hideable (smashed)"
   },
   {
    "name": "window_low_ext",
@@ -450,21 +266,21 @@
     1,
     1
    ],
-   "tris": 12,
+   "tris": 10,
    "children": [],
    "bounds": {
     "min": [
-     -0.5,
+     -0.512,
      0.0,
-     -0.112
+     -0.512
     ],
     "max": [
-     0.5,
-     0.4,
-     0.112
+     0.512,
+     0.35,
+     0.512
     ]
    },
-   "note": "sill 0.9 m, head 2.1 m; child 'glass' can be hidden when smashed"
+   "note": "window cell: sill 0.9 m, head 2.3 m; child glass is hideable (smashed)"
   },
   {
    "name": "window_shop_full",
@@ -473,7 +289,7 @@
     1,
     1
    ],
-   "tris": 42,
+   "tris": 46,
    "children": [
     "window_shop_full_glass"
    ],
@@ -481,15 +297,15 @@
     "min": [
      -0.5,
      0.0,
-     -0.1
+     -0.5
     ],
     "max": [
      0.5,
-     2.8,
-     0.1
+     3.0,
+     0.56
     ]
    },
-   "note": "storefront glass 0.35-2.5 m; child 'glass' hideable"
+   "note": "storefront cell: glass 0.35-2.5 m, gold mullion; child glass hideable"
   },
   {
    "name": "window_shop_low",
@@ -504,15 +320,15 @@
     "min": [
      -0.5,
      0.0,
-     -0.1
+     -0.5
     ],
     "max": [
      0.5,
      0.35,
-     0.1
+     0.5
     ]
    },
-   "note": "storefront glass 0.35-2.5 m; child 'glass' hideable"
+   "note": "storefront cell: glass 0.35-2.5 m, gold mullion; child glass hideable"
   },
   {
    "name": "door_wood",
@@ -521,23 +337,23 @@
     1,
     1
    ],
-   "tris": 118,
+   "tris": 138,
    "children": [
     "door_wood_leaf"
    ],
    "bounds": {
     "min": [
-     -0.456,
+     -0.469,
      0.0,
-     -0.07
+     -0.08
     ],
     "max": [
-     0.89,
-     2.09,
-     0.07
+     0.92,
+     2.08,
+     0.08
     ]
    },
-   "note": "staff / office door; child '<name>_leaf' pivots at the hinge (x=-0.45), rotate about Y to open"
+   "note": "staff / office door; child 'door_wood_leaf' hinges at x=-0.46 (rotate about Y to open), like the graybox leaf"
   },
   {
    "name": "door_metal",
@@ -546,23 +362,23 @@
     1,
     1
    ],
-   "tris": 128,
+   "tris": 148,
    "children": [
     "door_metal_leaf"
    ],
    "bounds": {
     "min": [
-     -0.456,
+     -0.469,
      0.0,
-     -0.07
+     -0.08
     ],
     "max": [
-     0.89,
-     2.09,
-     0.07
+     0.92,
+     2.08,
+     0.08
     ]
    },
-   "note": "security closet / safe room door; child '<name>_leaf' pivots at the hinge (x=-0.45), rotate about Y to open"
+   "note": "security closet / safe room door; child 'door_metal_leaf' hinges at x=-0.46 (rotate about Y to open), like the graybox leaf"
   },
   {
    "name": "door_glass",
@@ -577,17 +393,17 @@
    ],
    "bounds": {
     "min": [
-     -0.456,
+     -0.469,
      0.0,
-     -0.07
+     -0.08
     ],
     "max": [
-     0.89,
-     2.09,
-     0.07
+     0.92,
+     2.08,
+     0.08
     ]
    },
-   "note": "shop entrance, gold frame; child '<name>_leaf' pivots at the hinge (x=-0.45), rotate about Y to open"
+   "note": "shop entrance, gold frame; child 'door_glass_leaf' hinges at x=-0.46 (rotate about Y to open), like the graybox leaf"
   },
   {
    "name": "floor_showroom",
@@ -785,16 +601,16 @@
    "bounds": {
     "min": [
      -0.5,
-     2.8,
+     3.0,
      -0.5
     ],
     "max": [
      0.5,
-     2.8,
+     3.0,
      0.5
     ]
    },
-   "note": "1 x 1 m, faces down, at y=2.8; hide for the top-down camera"
+   "note": "1 x 1 m quad facing down at y=3.0; hide it for the top-down camera"
   },
   {
    "name": "curb",
@@ -817,7 +633,7 @@
      0.5
     ]
    },
-   "note": "sidewalk-to-road edge along the cell's south (+Z) edge, 0.15 m high"
+   "note": "sidewalk-to-road edge along the cell's south (+Z) edge, 0.15 m high; lay on the sidewalk row"
   },
   {
    "name": "trim_restricted",
@@ -866,5 +682,5 @@
    "note": "fills the SW corner where two strips meet (inner corners)"
   }
  ],
- "bytes": 165612
+ "bytes": 133032
 }

@@ -300,7 +300,7 @@ class Part:
             ob.parent = parent
         ob.location = self.pivot
         for k, val in self.extras.items():
-            ob[k] = json.dumps(val) if isinstance(val, (dict, list)) else val
+            ob[k] = json.dumps(val) if isinstance(val, dict) else val
         for c in self.children:
             c.build(ob)
         return ob

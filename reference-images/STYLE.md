@@ -16,7 +16,8 @@ Stylized low-poly with a slick noir-pop finish: chunky shapes, flat colour, navy
 6. **Amber hatch means restricted.** Staff-only floors get the amber and black hatched trim strip at their boundary. Nothing else uses amber hatching. Plain amber can appear elsewhere, but sparingly.
 7. **Wall tops are ink.** Wall caps are the darkest navy, so from above the floor plan reads like a drawn map, and the cutaway stub reads as a line.
 8. **One accent per heist.** Jewelry Store: teal and gold. Bank: green marble and brass. Gallery: white and magenta lasers.
-9. **Budgets.** Props under 2k triangles (most are under 500), characters 5–8k, a full heist on screen under 300k, the whole game under 30 MB.
+9. **Low metalness.** Metalness stays at 0.35 or below: the game has no environment map, and fully metallic surfaces render near-black in three.js without one. Gold reads as gold through colour, not reflections.
+10. **Budgets.** Props under 2k triangles (most are under 500), characters 5–8k, a full heist on screen under 300k, the whole game under 30 MB.
 
 ## Palette
 

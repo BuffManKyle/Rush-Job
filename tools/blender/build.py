@@ -53,7 +53,7 @@ def sheet(lib):
         font = ImageFont.truetype("consola.ttf", 15); big = ImageFont.truetype("consola.ttf", 20)
     except OSError:
         font = big = ImageFont.load_default()
-    dr.text((10, 10), f"{lib}.glb  {len(items)} pieces  {man['bytes'] / 1024:.0f} KB", fill=(255, 213, 154), font=big)
+    dr.text((10, 10), f"{lib}  {len(items)} previews  {man['bytes'] / 1024:.0f} KB", fill=(255, 213, 154), font=big)
     for i, (p, f) in enumerate(items):
         x, y = (i % cols) * cell, 40 + (i // cols) * (cell + 34)
         im = Image.open(f).convert("RGB").resize((cell - 6, cell - 6))
@@ -67,9 +67,14 @@ def sheet(lib):
 
 def meshopt(lib):
     gp = shutil.which("gltfpack")
-    path = os.path.join(ROOT, "assets", "models", lib + ".glb")
     if not gp:
         print("  (gltfpack not on PATH: GLB left uncompressed, meshopt pending)"); return
+    man = json.load(open(os.path.join(PREVIEWS, lib, "manifest.json")))
+    for rel in man.get("glbs") or [man["glb"]]:
+        pack(gp, os.path.join(ROOT, rel))
+
+
+def pack(gp, path):
     tmp = path + ".tmp.glb"
     # -cc: meshopt compression; -kn/-km: keep node and material names (the loader uses them);
     # -noq off by default would quantize; keep quantization, it is lossless enough for low-poly.
@@ -93,6 +98,7 @@ def main():
         if preview:
             sheet(lib)
         meshopt(lib)
+    subprocess.run([sys.executable, os.path.join(HERE, "assets_table.py")], check=True)
 
 
 if __name__ == "__main__":
