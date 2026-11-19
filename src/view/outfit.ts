@@ -1,5 +1,5 @@
-// Dress a character for a loadout: mask tint, weapon in the right hand, gadgets on the belt, vest on the chest.
-// Used by the loadout screen (and the mask tint in game). Vests are primitives until rj-assets makes real ones.
+// Dress a character for a loadout: the mask (masks.glb on the Head bone), weapon in the right hand, gadgets on
+// the belt, vest on the chest. Used by the loadout screen (and the mask in game). Vests are primitives until rj-assets makes real ones.
 import * as THREE from 'three';
 import { GADGETS, MASKS, WEAPONS, type Loadout } from '../data/loadout';
 import type { CharInstance, Kit } from './kit';
@@ -10,6 +10,40 @@ export const BELT: [THREE.Vector3, THREE.Vector3] = [new THREE.Vector3(-0.24, 0.
 // player rig (chibi): hips 0.86 m, neck 1.30 m, so the chest centre is about 1.1 m
 export const CHEST = new THREE.Vector3(0, 1.1, 0.14);
 
+/** Piece name in masks.glb for each loadout mask (rj-assets, ASSETS.md "Masks"). */
+const MASK_PIECE: Record<Loadout['mask'], string> = { plain: 'mask_regular', rumor: 'mask_rumor', suit: 'mask_suit', objector: 'mask_objector', headline: 'mask_headline' };
+
+/**
+ * Put the loadout's mask on the character's head. Real masks come from masks.glb, in the character's
+ * model space; the skeleton's bind inverse for Head moves one into the bone. The built-in RJ_Mask mesh
+ * is hidden so it doesn't peek through. Without the model, falls back to tinting RJ_Mask.
+ * Returns the worn mask object (null on the fallback).
+ */
+export function wearMask(ch: CharInstance, kit: Kit | null, mask: Loadout['mask']): THREE.Object3D | null {
+  ch.root.getObjectByName('rj_worn_mask')?.removeFromParent();
+  const head = ch.root.getObjectByName('Head');
+  const skinned = ch.meshes.find((m) => (m as THREE.SkinnedMesh).isSkinnedMesh) as THREE.SkinnedMesh | undefined;
+  const piece = kit?.clone(MASK_PIECE[mask]);
+  const idx = head && skinned ? skinned.skeleton.bones.indexOf(head as THREE.Bone) : -1;
+  if (!piece || !head || !skinned || idx < 0) {
+    tintMask(ch, mask);
+    return null;
+  }
+  piece.applyMatrix4(skinned.skeleton.boneInverses[idx]);
+  piece.name = 'rj_worn_mask';
+  piece.traverse((o) => {
+    const m = o as THREE.Mesh;
+    if (m.isMesh) {
+      m.castShadow = true;
+      m.frustumCulled = false;
+    }
+  });
+  head.add(piece);
+  for (const m of ch.meshes) if ((m.material as THREE.Material).name.startsWith('RJ_Mask')) m.visible = false;
+  return piece;
+}
+
+/** Fallback when masks.glb is missing: tint the built-in RJ_Mask material. */
 export function tintMask(ch: CharInstance, mask: Loadout['mask']): void {
   const def = MASKS[mask];
   for (const m of ch.meshes) {
@@ -83,7 +117,7 @@ export function undress(o: Outfit | null): void {
 }
 
 export function dress(ch: CharInstance, kit: Kit | null, l: Loadout): Outfit {
-  tintMask(ch, l.mask);
+  wearMask(ch, kit, l.mask);
   const out: Outfit = { weapon: null, belt: [null, null], vest: null };
 
   const hand = ch.bones.hand_R;

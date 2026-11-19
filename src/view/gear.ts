@@ -8,7 +8,7 @@ import { INTERACTION_TOOL } from '../data/interactions';
 import { powerOut } from '../sim/security';
 import type { Sim } from '../sim/sim';
 import type { Kit } from './kit';
-import { tintMask } from './outfit';
+import { wearMask } from './outfit';
 import type { WorldView } from './renderer';
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -25,6 +25,7 @@ export const HAND = {
 
 export class GearView {
   private group = new THREE.Group();
+  private mask: THREE.Object3D | null = null; // the real mask from masks.glb, worn only once masked
   private held: THREE.Object3D | null = null;
   private heldName = '';
   private heldCache = new Map<string, THREE.Object3D>();
@@ -44,7 +45,7 @@ export class GearView {
     private kit: Kit | null,
   ) {
     view.scene.add(this.group);
-    if (view.playerChar) tintMask(view.playerChar, sim.loadout.mask);
+    this.mask = view.playerChar ? wearMask(view.playerChar, kit, sim.loadout.mask) : null;
     view.scene.traverse((o) => {
       const l = o as THREE.Light;
       if (l.isLight && !(l as THREE.PointLight).isPointLight) this.lights.push({ light: l, base: l.intensity });
@@ -148,6 +149,11 @@ export class GearView {
     const sim = this.sim;
     const now = performance.now() / 1000;
     this.updateHeld();
+    // the renderer shows the built-in RJ_Mask mesh when masked; with a real mask on, hide that and show ours
+    if (this.mask) {
+      this.mask.visible = sim.player.masked;
+      for (const m of this.view.playerChar?.meshes ?? []) if ((m.material as THREE.Material).name.startsWith('RJ_Mask')) m.visible = false;
+    }
 
     // thrown: arc in flight, then lie where they land; smoke grows a cloud
     const seen = new Set<string>();
