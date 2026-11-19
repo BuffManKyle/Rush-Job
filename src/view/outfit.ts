@@ -1,5 +1,5 @@
 // Dress a character for a loadout: the mask (masks.glb on the Head bone), weapon in the right hand, gadgets on
-// the belt, vest on the chest. Used by the loadout screen (and the mask in game). Vests are primitives until rj-assets makes real ones.
+// the belt, vest on the chest. Used by the loadout screen (and the mask in game). Vests come from vests.glb (primitive boxes if it's missing).
 import * as THREE from 'three';
 import { GADGETS, MASKS, WEAPONS, type Loadout } from '../data/loadout';
 import type { CharInstance, Kit } from './kit';
@@ -21,16 +21,27 @@ const MASK_PIECE: Record<Loadout['mask'], string> = { plain: 'mask_regular', rum
  */
 export function wearMask(ch: CharInstance, kit: Kit | null, mask: Loadout['mask']): THREE.Object3D | null {
   ch.root.getObjectByName('rj_worn_mask')?.removeFromParent();
-  const head = ch.root.getObjectByName('Head');
-  const skinned = ch.meshes.find((m) => (m as THREE.SkinnedMesh).isSkinnedMesh) as THREE.SkinnedMesh | undefined;
-  const piece = kit?.clone(MASK_PIECE[mask]);
-  const idx = head && skinned ? skinned.skeleton.bones.indexOf(head as THREE.Bone) : -1;
-  if (!piece || !head || !skinned || idx < 0) {
+  const piece = wearOnBone(ch, kit, MASK_PIECE[mask], 'Head', 'rj_worn_mask');
+  if (!piece) {
     tintMask(ch, mask);
     return null;
   }
+  for (const m of ch.meshes) if ((m.material as THREE.Material).name.startsWith('RJ_Mask')) m.visible = false;
+  return piece;
+}
+
+/**
+ * Attach a piece authored in char_player model space (rest pose, feet at 0, +Z forward) to a bone:
+ * the skeleton's bind inverse for that bone moves it into bone space (ASSETS.md "Masks" / "Vests").
+ */
+function wearOnBone(ch: CharInstance, kit: Kit | null, pieceName: string, boneName: string, tag: string): THREE.Object3D | null {
+  const bone = ch.root.getObjectByName(boneName);
+  const skinned = ch.meshes.find((m) => (m as THREE.SkinnedMesh).isSkinnedMesh) as THREE.SkinnedMesh | undefined;
+  const piece = kit?.clone(pieceName);
+  const idx = bone && skinned ? skinned.skeleton.bones.indexOf(bone as THREE.Bone) : -1;
+  if (!piece || !bone || !skinned || idx < 0) return null;
   piece.applyMatrix4(skinned.skeleton.boneInverses[idx]);
-  piece.name = 'rj_worn_mask';
+  piece.name = tag;
   piece.traverse((o) => {
     const m = o as THREE.Mesh;
     if (m.isMesh) {
@@ -38,9 +49,25 @@ export function wearMask(ch: CharInstance, kit: Kit | null, mask: Loadout['mask'
       m.frustumCulled = false;
     }
   });
-  head.add(piece);
-  for (const m of ch.meshes) if ((m.material as THREE.Material).name.startsWith('RJ_Mask')) m.visible = false;
+  bone.add(piece);
   return piece;
+}
+
+const VEST_PIECE: Record<Loadout['armor'], string | null> = { suit: null, light_vest: 'vest_light', heavy_vest: 'vest_heavy' };
+
+/** Put the loadout's vest on: vests.glb on Spine01 (rj-assets), or a primitive box if the model is missing. */
+export function wearVest(ch: CharInstance, kit: Kit | null, armor: Loadout['armor']): THREE.Object3D | null {
+  ch.root.getObjectByName('rj_worn_vest')?.removeFromParent();
+  const name = VEST_PIECE[armor];
+  if (!name) return null;
+  const real = wearOnBone(ch, kit, name, 'Spine01', 'rj_worn_vest');
+  if (real) return real;
+  const v = vest(armor);
+  if (!v) return null;
+  v.name = 'rj_worn_vest';
+  v.position.set(0, CHEST.y, -0.02);
+  ch.root.add(v);
+  return v;
 }
 
 /** Fallback when masks.glb is missing: tint the built-in RJ_Mask material. */
@@ -59,6 +86,7 @@ export function tintMask(ch: CharInstance, mask: Loadout['mask']): void {
   }
 }
 
+/** Fallback vest: primitive boxes. */
 function vest(kind: Loadout['armor']): THREE.Object3D | null {
   if (kind === 'suit') return null;
   const heavy = kind === 'heavy_vest';
@@ -147,11 +175,6 @@ export function dress(ch: CharInstance, kit: Kit | null, l: Loadout): Outfit {
     out.belt[i] = holder;
   });
 
-  const v = vest(l.armor);
-  if (v) {
-    v.position.set(0, CHEST.y, -0.02);
-    ch.root.add(v);
-    out.vest = v;
-  }
+  out.vest = wearVest(ch, kit, l.armor);
   return out;
 }

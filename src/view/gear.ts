@@ -8,7 +8,7 @@ import { INTERACTION_TOOL } from '../data/interactions';
 import { powerOut } from '../sim/security';
 import type { Sim } from '../sim/sim';
 import type { Kit } from './kit';
-import { wearMask } from './outfit';
+import { wearMask, wearVest } from './outfit';
 import type { WorldView } from './renderer';
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -25,6 +25,7 @@ export const HAND = {
 
 export class GearView {
   private group = new THREE.Group();
+  private vest: THREE.Object3D | null = null;
   private mask: THREE.Object3D | null = null; // the real mask from masks.glb, worn only once masked
   private held: THREE.Object3D | null = null;
   private heldName = '';
@@ -46,6 +47,7 @@ export class GearView {
   ) {
     view.scene.add(this.group);
     this.mask = view.playerChar ? wearMask(view.playerChar, kit, sim.loadout.mask) : null;
+    this.vest = view.playerChar ? wearVest(view.playerChar, kit, sim.loadout.armor) : null; // armor shows in game too
     view.customMask = !!this.mask; // the renderer leaves RJ_Mask alone (wearMask hid it); we follow player.masked below
     view.scene.traverse((o) => {
       const l = o as THREE.Light;
@@ -152,6 +154,8 @@ export class GearView {
     this.updateHeld();
     // the real mask comes out with the mask-up, like the built-in one did
     if (this.mask) this.mask.visible = sim.player.masked;
+    // a light vest hides under the suit jacket while casing (that's why it keeps the casing bonus); a heavy one doesn't
+    if (this.vest) this.vest.visible = sim.player.masked || sim.player.casingBonus === false;
 
     // thrown: arc in flight, then lie where they land; smoke grows a cloud
     const seen = new Set<string>();
