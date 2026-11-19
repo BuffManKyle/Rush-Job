@@ -1,0 +1,18 @@
+{
+ "id": "cue.c4.beep",
+ "take": 3,
+ "t": "2026-11-19T00:41:27Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Three separate single short beeps from a small digital timer, clean square-wave electronic tone, identical, silence between each, no hiss, no whistle, no steam, dry",
+  "duration_seconds": 2.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "22"
+ },
+ "bytes": 31497
+}

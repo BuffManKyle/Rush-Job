@@ -141,7 +141,7 @@
    "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "Security guard jogging, only the rattle of a belt with keys, handcuffs and a radio bouncing in rhythm, no footsteps, close mic, dry, seamless loop",
+   "prompt": "Security guard jogging, only his leather duty belt creaking and a holstered radio and flashlight thumping against his hip in rhythm, no keys, no jingling, no metal chains, no footsteps, close mic, dry, seamless loop",
    "when": "layered under guard and cop footsteps when they're alert or running (keys, belt, radio). Tells you a guard is hurrying.",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -237,7 +237,7 @@
    "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "Soft rising electronic shimmer, short and clean, like a meter refilling, subtle, no music",
+   "prompt": "A kevlar vest settling: two velcro straps pressed down firmly and a heavy fabric shrug, grounded and physical, no electronic sounds, no shimmer, no power-up, dry",
    "when": "armor starts regenerating (4 s after the last hit, *planned* with vests).",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -413,7 +413,7 @@
    "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "Large window pane shattering, sharp crack then glass shards raining onto a sidewalk, loud, close",
+   "prompt": "A window pane breaking from one single impact at the very start: a solid crack and the glass falling apart, mid-heavy and full, not shrill, no piercing high frequencies, no repeated hits, no stutter, then shards settling on pavement",
    "when": "a window broken by a shot or a thrown bag (*planned*). Noise like smashed glass (12 m).",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -797,7 +797,7 @@
    "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "Glass shattering: a thick pane of display-case glass breaks with one bright loud crash, then many glass shards tinkle and scatter across a stone floor, clearly breaking glass, no metal clicks, no gun or mechanical sounds, close",
+   "prompt": "Glass shattering from one single impact at the very start, no stutter, no repeated hits: a thick pane of display-case glass breaks with one loud full crash, not shrill, then many glass shards tinkle and scatter across a stone floor, clearly breaking glass, no metal clicks, no gun or mechanical sounds, close",
    "when": "`interactDone def=case_smash` (12 m noise). Loud and sharp: every guard nearby heard it.",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -877,7 +877,7 @@
    "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "Heavy gold bars dropped one by one into a thick canvas bag, dense metallic clunks muffled by fabric, close mic, dry",
+   "prompt": "Heavy solid gold bars set one at a time into a thick canvas bag: three deep dense thunks, very heavy and solid, muffled by fabric, no rattling, no clattering of small objects, no plastic, close mic, dry",
    "when": "`interactStart def=safe_loot` (2 s) and gold in the Bank vault.",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -919,13 +919,13 @@
    "group": "2. Interactions and gadgets",
    "priority": "P1",
    "target": "sfx/bag_throw_01..02.ogg",
-   "seconds": 1.5,
+   "seconds": 1.0,
    "loop": false,
-   "takes": 1,
-   "slice": 2,
+   "takes": 2,
+   "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "Two separate whooshes of a heavy duffel bag swung and thrown through the air, fabric flap, silence between, dry",
+   "prompt": "One single short toss of a heavy duffel bag: one quick fabric whoosh lasting under half a second, then silence, not swinging, not spinning, no repeated whooshes, dry",
    "when": "F throws a bag.",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -1149,7 +1149,7 @@
    "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "A crowbar forcing a locked door: steel bar wedged in, wood splinters and cracks loudly, the lock bursts with a bang, close",
+   "prompt": "A crowbar forcing a wooden door: a creaking strain of wood, then a loud splintering crack as the frame breaks and the door bangs open, dull and woody, the steel bar does not ring, no bells, no metallic ringing, close",
    "when": "crowbar on a door (10 m noise, *planned*).",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -1174,14 +1174,14 @@
    "kind": "sfx",
    "group": "2. Interactions and gadgets",
    "priority": "P2",
-   "target": "cue/c4_beep.ogg",
-   "seconds": 3.0,
+   "target": "cue/c4_beep_01..03.ogg",
+   "seconds": 2.0,
    "loop": false,
    "takes": 1,
-   "slice": -1,
+   "slice": 3,
    "source": "generate",
    "search_terms": null,
-   "prompt": "Explosive timer beeping: sharp high electronic beeps that speed up and end in a fast continuous tone, dry",
+   "prompt": "Three separate single short beeps from a small digital timer, clean square-wave electronic tone, identical, silence between each, no hiss, no whistle, no steam, dry",
    "when": "the fuse after placing C4. Play single beeps closer together as it counts down.",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -1469,7 +1469,7 @@
    "slice": 4,
    "source": "generate",
    "search_terms": null,
-   "prompt": "Four separate small brass shell casings bouncing on a hard floor, tiny metallic tinkles, silence between each, close",
+   "prompt": "Four separate small brass shell casings each dropping onto a hard tile floor and bouncing twice with a bright metallic tink, complete silence between each, no background noise, no hiss, no scratching, close",
    "when": "after each player shot, 0.3–0.5 s later, quiet.",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -1917,7 +1917,7 @@
    "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "A crisp soft UI ping, short bright tick with a tiny shimmer, clean, dry",
+   "prompt": "A single dry crisp tick, like a ballpoint pen clicking once, short and clean, no shimmer, no sparkle, no chime, no magic sound",
    "when": "Q marks a guard, camera or objective (\"Marked ...\").",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -1949,7 +1949,7 @@
    "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "A thin electric laser hum with a faint high buzz, steady, quiet, seamless loop",
+   "prompt": "A low steady electrical hum, a tonal mains buzz like a neon sign transformer, smooth and constant, no hiss, no white noise, no air sounds, quiet, seamless loop",
    "when": "near a laser grid (Gallery). World-placed.",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -1965,7 +1965,7 @@
    "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "A laser security beam broken: a sharp electronic zap and a fast high warning tone, dry",
+   "prompt": "A laser security beam broken: one sharp electric crackle snap, then a clean bright two-tone electronic alarm beep, no hiss, no air, no smoke sounds, dry",
    "when": "a beam is broken.",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -2141,7 +2141,7 @@
    "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "A police megaphone switching on outside a building: a click and a short squeal of feedback, open air echo",
+   "prompt": "A police megaphone switching on outside a building: a plastic trigger click and a short low electronic feedback squeal that cuts off, no voice, no speech, no words, open air",
    "when": "before every sergeant or negotiator bullhorn line (voice from [[05 Police]], put through a megaphone filter).",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -2627,7 +2627,7 @@
    "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "A hard plastic mask placed on a wooden table with a hollow knock and a soft elastic snap, dry",
+   "prompt": "A soft leather mask strap pulled snug with a gentle fabric rustle and a quiet buckle click, no knocking, no hollow sounds, dry",
    "when": "choosing a mask in the loadout.",
    "model_id": "eleven_text_to_sound_v2"
   },
@@ -2675,7 +2675,7 @@
    "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "An old adding machine crank pulled once with a mechanical ka-chunk and a small bell, dry",
+   "prompt": "A fountain pen ticking a quick neat checkmark on paper, then two coins set down softly on a wooden desk with a small clean clink, dry",
    "when": "a plus row (take, objectives, discretion bonus).",
    "model_id": "eleven_text_to_sound_v2"
   },

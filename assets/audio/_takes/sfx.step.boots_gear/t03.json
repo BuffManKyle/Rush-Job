@@ -1,0 +1,18 @@
+{
+ "id": "sfx.step.boots_gear",
+ "take": 3,
+ "t": "2026-11-19T00:40:41Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Security guard jogging, only his leather duty belt creaking and a holstered radio and flashlight thumping against his hip in rhythm, no keys, no jingling, no metal chains, no footsteps, close mic, dry, seamless loop",
+  "duration_seconds": 4.0,
+  "prompt_influence": 0.5,
+  "loop": true,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "44"
+ },
+ "bytes": 65524
+}

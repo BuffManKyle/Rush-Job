@@ -1,0 +1,18 @@
+{
+ "id": "sfx.laser.hum",
+ "take": 3,
+ "t": "2026-11-19T00:40:53Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A low steady electrical hum, a tonal mains buzz like a neon sign transformer, smooth and constant, no hiss, no white noise, no air sounds, quiet, seamless loop",
+  "duration_seconds": 3.0,
+  "prompt_influence": 0.5,
+  "loop": true,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "33"
+ },
+ "bytes": 49827
+}

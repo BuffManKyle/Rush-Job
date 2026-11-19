@@ -1,0 +1,18 @@
+{
+ "id": "sfx.bag.stuff_gold",
+ "take": 3,
+ "t": "2026-11-19T00:41:18Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Heavy solid gold bars set one at a time into a thick canvas bag: three deep dense thunks, very heavy and solid, muffled by fabric, no rattling, no clattering of small objects, no plastic, close mic, dry",
+  "duration_seconds": 2.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "22"
+ },
+ "bytes": 21996
+}

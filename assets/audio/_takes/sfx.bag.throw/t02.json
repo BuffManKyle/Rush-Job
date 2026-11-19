@@ -1,0 +1,18 @@
+{
+ "id": "sfx.bag.throw",
+ "take": 2,
+ "t": "2026-11-19T00:41:14Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "One single short toss of a heavy duffel bag: one quick fabric whoosh lasting under half a second, then silence, not swinging, not spinning, no repeated whooshes, dry",
+  "duration_seconds": 1.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "11"
+ },
+ "bytes": 10702
+}

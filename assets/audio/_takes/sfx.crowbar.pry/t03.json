@@ -1,0 +1,18 @@
+{
+ "id": "sfx.crowbar.pry",
+ "take": 3,
+ "t": "2026-11-19T00:41:03Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A crowbar forcing a wooden door: a creaking strain of wood, then a loud splintering crack as the frame breaks and the door bangs open, dull and woody, the steel bar does not ring, no bells, no metallic ringing, close",
+  "duration_seconds": 2.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "22"
+ },
+ "bytes": 33782
+}

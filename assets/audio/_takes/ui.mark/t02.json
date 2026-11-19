@@ -1,0 +1,18 @@
+{
+ "id": "ui.mark",
+ "take": 2,
+ "t": "2026-11-19T00:40:29Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A single dry crisp tick, like a ballpoint pen clicking once, short and clean, no shimmer, no sparkle, no chime, no magic sound",
+  "duration_seconds": 0.6,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "7"
+ },
+ "bytes": 12067
+}
