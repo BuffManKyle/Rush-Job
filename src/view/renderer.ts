@@ -612,7 +612,9 @@ export class WorldView {
         const yaw = -this.player.rotation.y;
         const spine = this.chars.get('player')?.bones.spine;
         const baseY = spine ? spine.getWorldPosition(new THREE.Vector3()).y : 1.0;
-        const back = 0.24 + slot * 0.04;
+        // Meshy torso's rear is ~0.28 m behind centre at bag height (measured, hood excluded); the bag is ~0.22 m deep
+        // at carryScale, so centre it ~0.38 m back to rest against the back instead of sinking into it
+        const back = T.bags.carryBack + slot * 0.04;
         m.scale.setScalar(k);
         m.position.set(
           this.player.position.x - Math.cos(yaw) * back,
