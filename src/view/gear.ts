@@ -46,6 +46,7 @@ export class GearView {
   ) {
     view.scene.add(this.group);
     this.mask = view.playerChar ? wearMask(view.playerChar, kit, sim.loadout.mask) : null;
+    view.customMask = !!this.mask; // the renderer leaves RJ_Mask alone (wearMask hid it); we follow player.masked below
     view.scene.traverse((o) => {
       const l = o as THREE.Light;
       if (l.isLight && !(l as THREE.PointLight).isPointLight) this.lights.push({ light: l, base: l.intensity });
@@ -149,11 +150,8 @@ export class GearView {
     const sim = this.sim;
     const now = performance.now() / 1000;
     this.updateHeld();
-    // the renderer shows the built-in RJ_Mask mesh when masked; with a real mask on, hide that and show ours
-    if (this.mask) {
-      this.mask.visible = sim.player.masked;
-      for (const m of this.view.playerChar?.meshes ?? []) if ((m.material as THREE.Material).name.startsWith('RJ_Mask')) m.visible = false;
-    }
+    // the real mask comes out with the mask-up, like the built-in one did
+    if (this.mask) this.mask.visible = sim.player.masked;
 
     // thrown: arc in flight, then lie where they land; smoke grows a cloud
     const seen = new Set<string>();
