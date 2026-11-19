@@ -1,0 +1,18 @@
+{
+ "id": "cue.c4.beep",
+ "take": 1,
+ "t": "2026-11-19T00:02:51Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Explosive timer beeping: sharp high electronic beeps that speed up and end in a fast continuous tone, dry",
+  "duration_seconds": 3.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "33"
+ },
+ "bytes": 52149
+}

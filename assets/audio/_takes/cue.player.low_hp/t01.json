@@ -1,0 +1,18 @@
+{
+ "id": "cue.player.low_hp",
+ "take": 1,
+ "t": "2026-11-19T00:02:02Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Slow heavy heartbeat, deep and muffled, steady rhythm, nothing else, seamless loop",
+  "duration_seconds": 4.0,
+  "prompt_influence": 0.5,
+  "loop": true,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "44"
+ },
+ "bytes": 72798
+}

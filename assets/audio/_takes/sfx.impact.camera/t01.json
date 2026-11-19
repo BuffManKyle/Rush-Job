@@ -1,0 +1,18 @@
+{
+ "id": "sfx.impact.camera",
+ "take": 1,
+ "t": "2026-11-19T00:03:16Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A security camera shot out: plastic housing shatters, small glass lens breaks, a short electrical spark fizz and a dying servo whine",
+  "duration_seconds": 2.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "22"
+ },
+ "bytes": 32354
+}

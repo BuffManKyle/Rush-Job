@@ -1,0 +1,18 @@
+{
+ "id": "sfx.case.smash",
+ "take": 3,
+ "t": "2026-11-19T00:01:32Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Glass shattering: a thick pane of display-case glass breaks with one bright loud crash, then many glass shards tinkle and scatter across a stone floor, clearly breaking glass, no metal clicks, no gun or mechanical sounds, close",
+  "duration_seconds": 2.5,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "28"
+ },
+ "bytes": 32965
+}

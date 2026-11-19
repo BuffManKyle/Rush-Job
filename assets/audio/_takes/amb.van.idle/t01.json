@@ -1,0 +1,18 @@
+{
+ "id": "amb.van.idle",
+ "take": 1,
+ "t": "2026-11-19T00:03:49Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "An old delivery van idling in an alley, steady rough engine rumble with a slight rattle of loose metal, seamless loop",
+  "duration_seconds": 8.0,
+  "prompt_influence": 0.5,
+  "loop": true,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "88"
+ },
+ "bytes": 134230
+}

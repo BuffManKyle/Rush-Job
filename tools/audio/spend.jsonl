@@ -9,3 +9,447 @@
 {"t": "2026-11-18T23:48:59Z", "id": "sfx.van.honk", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.5, "status": "ok", "file": "assets/audio/_takes/sfx.van.honk/t01.ogg", "credits_actual": 17.0}
 {"t": "2026-11-18T23:49:08Z", "id": "mus.glint.stealth", "take": 1, "kind": "music", "seconds": 65.0, "credits_est": 3900.0, "status": "ok", "file": "assets/audio/_takes/mus.glint.stealth/t01.ogg", "credits_actual": null}
 {"t": "2026-11-18T23:52:44Z", "id": "mus.glint.stealth", "take": 1, "kind": "music", "seconds": 65.0, "credits_est": 3900.0, "status": "ok", "file": "assets/audio/_takes/mus.glint.stealth/t01.ogg", "credits_actual": 1010.0, "note": "actual from Kyle's ElevenLabs dashboard (no cost header on music)"}
+{"t": "2026-11-19T00:01:28Z", "id": "sfx.case.smash", "take": 2, "kind": "sfx", "seconds": 2.5, "credits_est": 27.6, "status": "pending"}
+{"t": "2026-11-19T00:01:31Z", "id": "sfx.case.smash", "take": 2, "kind": "sfx", "seconds": 2.5, "credits_est": 27.6, "status": "ok", "file": "assets/audio/_takes/sfx.case.smash/t02.ogg", "credits_actual": 28.0}
+{"t": "2026-11-19T00:01:31Z", "id": "sfx.case.smash", "take": 3, "kind": "sfx", "seconds": 2.5, "credits_est": 27.7, "status": "pending"}
+{"t": "2026-11-19T00:01:32Z", "id": "sfx.case.smash", "take": 3, "kind": "sfx", "seconds": 2.5, "credits_est": 27.7, "status": "ok", "file": "assets/audio/_takes/sfx.case.smash/t03.ogg", "credits_actual": 28.0}
+{"t": "2026-11-19T00:01:32Z", "id": "sfx.case.smash", "take": 4, "kind": "sfx", "seconds": 2.5, "credits_est": 27.7, "status": "pending"}
+{"t": "2026-11-19T00:01:34Z", "id": "sfx.case.smash", "take": 4, "kind": "sfx", "seconds": 2.5, "credits_est": 27.7, "status": "ok", "file": "assets/audio/_takes/sfx.case.smash/t04.ogg", "credits_actual": 28.0}
+{"t": "2026-11-19T00:01:35Z", "id": "sfx.van.honk", "take": 2, "kind": "sfx", "seconds": 1.5, "credits_est": 16.7, "status": "pending"}
+{"t": "2026-11-19T00:01:37Z", "id": "sfx.van.honk", "take": 2, "kind": "sfx", "seconds": 1.5, "credits_est": 16.7, "status": "ok", "file": "assets/audio/_takes/sfx.van.honk/t02.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:01:37Z", "id": "sfx.van.honk", "take": 3, "kind": "sfx", "seconds": 1.5, "credits_est": 16.7, "status": "pending"}
+{"t": "2026-11-19T00:01:38Z", "id": "sfx.van.honk", "take": 3, "kind": "sfx", "seconds": 1.5, "credits_est": 16.7, "status": "ok", "file": "assets/audio/_takes/sfx.van.honk/t03.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:01:38Z", "id": "sfx.van.honk", "take": 4, "kind": "sfx", "seconds": 1.5, "credits_est": 16.7, "status": "pending"}
+{"t": "2026-11-19T00:01:39Z", "id": "sfx.van.honk", "take": 4, "kind": "sfx", "seconds": 1.5, "credits_est": 16.7, "status": "ok", "file": "assets/audio/_takes/sfx.van.honk/t04.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:01:39Z", "id": "cue.pager.ring", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.3, "status": "pending"}
+{"t": "2026-11-19T00:01:43Z", "id": "cue.pager.ring", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.3, "status": "ok", "file": "assets/audio/_takes/cue.pager.ring/t02.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:01:43Z", "id": "cue.pager.ring", "take": 3, "kind": "sfx", "seconds": 2.0, "credits_est": 22.3, "status": "pending"}
+{"t": "2026-11-19T00:01:45Z", "id": "cue.pager.ring", "take": 3, "kind": "sfx", "seconds": 2.0, "credits_est": 22.3, "status": "ok", "file": "assets/audio/_takes/cue.pager.ring/t03.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:01:46Z", "id": "sfx.step.showroom", "take": 2, "kind": "sfx", "seconds": 5.0, "credits_est": 55.7, "status": "pending"}
+{"t": "2026-11-19T00:01:48Z", "id": "sfx.step.showroom", "take": 2, "kind": "sfx", "seconds": 5.0, "credits_est": 55.7, "status": "ok", "file": "assets/audio/_takes/sfx.step.showroom/t02.ogg", "credits_actual": 55.0}
+{"t": "2026-11-19T00:01:49Z", "id": "sfx.step.marble", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.6, "status": "pending"}
+{"t": "2026-11-19T00:01:49Z", "id": "sfx.step.wood", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.6, "status": "pending"}
+{"t": "2026-11-19T00:01:49Z", "id": "sfx.step.carpet", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.6, "status": "pending"}
+{"t": "2026-11-19T00:01:51Z", "id": "sfx.step.wood", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.6, "status": "ok", "file": "assets/audio/_takes/sfx.step.wood/t01.ogg", "credits_actual": 55.0}
+{"t": "2026-11-19T00:01:51Z", "id": "sfx.step.concrete", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.5, "status": "pending"}
+{"t": "2026-11-19T00:01:51Z", "id": "sfx.step.marble", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.6, "status": "ok", "file": "assets/audio/_takes/sfx.step.marble/t01.ogg", "credits_actual": 55.0}
+{"t": "2026-11-19T00:01:51Z", "id": "sfx.step.lino", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.4, "status": "pending"}
+{"t": "2026-11-19T00:01:51Z", "id": "sfx.step.carpet", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.6, "status": "ok", "file": "assets/audio/_takes/sfx.step.carpet/t01.ogg", "credits_actual": 55.0}
+{"t": "2026-11-19T00:01:51Z", "id": "sfx.step.sidewalk", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.4, "status": "pending"}
+{"t": "2026-11-19T00:01:53Z", "id": "sfx.step.sidewalk", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.4, "status": "ok", "file": "assets/audio/_takes/sfx.step.sidewalk/t01.ogg", "credits_actual": 55.0}
+{"t": "2026-11-19T00:01:53Z", "id": "sfx.step.asphalt", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.3, "status": "pending"}
+{"t": "2026-11-19T00:01:53Z", "id": "sfx.step.concrete", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.5, "status": "ok", "file": "assets/audio/_takes/sfx.step.concrete/t01.ogg", "credits_actual": 55.0}
+{"t": "2026-11-19T00:01:53Z", "id": "sfx.step.boots_gear", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.2, "status": "pending"}
+{"t": "2026-11-19T00:01:54Z", "id": "sfx.step.lino", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.4, "status": "ok", "file": "assets/audio/_takes/sfx.step.lino/t01.ogg", "credits_actual": 55.0}
+{"t": "2026-11-19T00:01:54Z", "id": "sfx.player.crouch", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:01:55Z", "id": "sfx.step.asphalt", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.3, "status": "ok", "file": "assets/audio/_takes/sfx.step.asphalt/t01.ogg", "credits_actual": 55.0}
+{"t": "2026-11-19T00:01:55Z", "id": "sfx.player.crouch", "take": 2, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:01:56Z", "id": "sfx.player.crouch", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.player.crouch/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:01:56Z", "id": "sfx.player.mask_pull", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:01:56Z", "id": "sfx.player.crouch", "take": 2, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.player.crouch/t02.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:01:56Z", "id": "sfx.player.mask_snap", "take": 1, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "pending"}
+{"t": "2026-11-19T00:01:57Z", "id": "sfx.step.boots_gear", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.2, "status": "ok", "file": "assets/audio/_takes/sfx.step.boots_gear/t01.ogg", "credits_actual": 44.0}
+{"t": "2026-11-19T00:01:57Z", "id": "sfx.player.mask_snap", "take": 2, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "pending"}
+{"t": "2026-11-19T00:01:57Z", "id": "sfx.player.mask_pull", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.player.mask_pull/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:01:57Z", "id": "sfx.player.hit", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:01:58Z", "id": "sfx.player.mask_snap", "take": 1, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "ok", "file": "assets/audio/_takes/sfx.player.mask_snap/t01.ogg", "credits_actual": 7.0}
+{"t": "2026-11-19T00:01:58Z", "id": "sfx.player.armor_hit", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:01:59Z", "id": "sfx.player.mask_snap", "take": 2, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "ok", "file": "assets/audio/_takes/sfx.player.mask_snap/t02.ogg", "credits_actual": 7.0}
+{"t": "2026-11-19T00:01:59Z", "id": "sfx.player.armor_regen", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:01:59Z", "id": "sfx.player.hit", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.player.hit/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:01:59Z", "id": "cue.player.low_hp", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.2, "status": "pending"}
+{"t": "2026-11-19T00:02:00Z", "id": "sfx.player.armor_hit", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.player.armor_hit/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:02:00Z", "id": "sfx.player.medkit", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:01Z", "id": "sfx.player.armor_regen", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.player.armor_regen/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:01Z", "id": "sfx.door.wood_open", "take": 1, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "pending"}
+{"t": "2026-11-19T00:02:02Z", "id": "sfx.player.medkit", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.player.medkit/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:02Z", "id": "sfx.door.wood_open", "take": 2, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "pending"}
+{"t": "2026-11-19T00:02:02Z", "id": "cue.player.low_hp", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.2, "status": "ok", "file": "assets/audio/_takes/cue.player.low_hp/t01.ogg", "credits_actual": 44.0}
+{"t": "2026-11-19T00:02:02Z", "id": "sfx.door.wood_close", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:02:03Z", "id": "sfx.door.wood_open", "take": 1, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "ok", "file": "assets/audio/_takes/sfx.door.wood_open/t01.ogg", "credits_actual": 13.0}
+{"t": "2026-11-19T00:02:03Z", "id": "sfx.door.wood_close", "take": 2, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:02:04Z", "id": "sfx.door.wood_open", "take": 2, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "ok", "file": "assets/audio/_takes/sfx.door.wood_open/t02.ogg", "credits_actual": 13.0}
+{"t": "2026-11-19T00:02:04Z", "id": "sfx.door.metal_open", "take": 1, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "pending"}
+{"t": "2026-11-19T00:02:04Z", "id": "sfx.door.wood_close", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.door.wood_close/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:02:04Z", "id": "sfx.door.metal_open", "take": 2, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "pending"}
+{"t": "2026-11-19T00:02:05Z", "id": "sfx.door.wood_close", "take": 2, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.door.wood_close/t02.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:02:05Z", "id": "sfx.door.metal_close", "take": 1, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "pending"}
+{"t": "2026-11-19T00:02:06Z", "id": "sfx.door.metal_open", "take": 1, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "ok", "file": "assets/audio/_takes/sfx.door.metal_open/t01.ogg", "credits_actual": 13.0}
+{"t": "2026-11-19T00:02:06Z", "id": "sfx.door.metal_close", "take": 2, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "pending"}
+{"t": "2026-11-19T00:02:06Z", "id": "sfx.door.metal_open", "take": 2, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "ok", "file": "assets/audio/_takes/sfx.door.metal_open/t02.ogg", "credits_actual": 13.0}
+{"t": "2026-11-19T00:02:06Z", "id": "sfx.door.glass_open", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:07Z", "id": "sfx.door.metal_close", "take": 1, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "ok", "file": "assets/audio/_takes/sfx.door.metal_close/t01.ogg", "credits_actual": 13.0}
+{"t": "2026-11-19T00:02:07Z", "id": "sfx.door.glass_close", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "pending"}
+{"t": "2026-11-19T00:02:08Z", "id": "sfx.door.glass_open", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.door.glass_open/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:08Z", "id": "sfx.door.locked_rattle", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:08Z", "id": "sfx.door.metal_close", "take": 2, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "ok", "file": "assets/audio/_takes/sfx.door.metal_close/t02.ogg", "credits_actual": 13.0}
+{"t": "2026-11-19T00:02:08Z", "id": "sfx.door.locked_rattle", "take": 2, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:08Z", "id": "sfx.door.glass_close", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "ok", "file": "assets/audio/_takes/sfx.door.glass_close/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:02:08Z", "id": "sfx.window.open", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:09Z", "id": "sfx.door.locked_rattle", "take": 2, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.door.locked_rattle/t02.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:09Z", "id": "sfx.window.smash", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:10Z", "id": "sfx.door.locked_rattle", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.door.locked_rattle/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:10Z", "id": "sfx.window.smash", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:10Z", "id": "sfx.window.open", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.window.open/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:10Z", "id": "sfx.lockpick.loop", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:02:11Z", "id": "sfx.window.smash", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.window.smash/t02.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:11Z", "id": "sfx.lockpick.pin", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:02:11Z", "id": "sfx.window.smash", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.window.smash/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:11Z", "id": "sfx.lockpick.open", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:02:13Z", "id": "sfx.lockpick.pin", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.lockpick.pin/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:02:13Z", "id": "sfx.note.peel", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "pending"}
+{"t": "2026-11-19T00:02:13Z", "id": "sfx.lockpick.open", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.lockpick.open/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:02:13Z", "id": "sfx.keypad.beep", "take": 1, "kind": "sfx", "seconds": 3.5999999999999996, "credits_est": 39.8, "status": "pending"}
+{"t": "2026-11-19T00:02:14Z", "id": "sfx.lockpick.loop", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.lockpick.loop/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:02:14Z", "id": "sfx.safe.unlock", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:15Z", "id": "sfx.keypad.beep", "take": 1, "kind": "sfx", "seconds": 3.5999999999999996, "credits_est": 39.8, "status": "ok", "file": "assets/audio/_takes/sfx.keypad.beep/t01.ogg", "credits_actual": 40.0}
+{"t": "2026-11-19T00:02:15Z", "id": "sfx.safe.door_open", "take": 1, "kind": "sfx", "seconds": 2.5, "credits_est": 27.6, "status": "pending"}
+{"t": "2026-11-19T00:02:15Z", "id": "sfx.note.peel", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "ok", "file": "assets/audio/_takes/sfx.note.peel/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:02:15Z", "id": "sfx.safe.code_wrong", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "pending"}
+{"t": "2026-11-19T00:02:16Z", "id": "sfx.safe.unlock", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.safe.unlock/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:16Z", "id": "sfx.keycard.ok", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:17Z", "id": "sfx.safe.door_open", "take": 1, "kind": "sfx", "seconds": 2.5, "credits_est": 27.6, "status": "ok", "file": "assets/audio/_takes/sfx.safe.door_open/t01.ogg", "credits_actual": 28.0}
+{"t": "2026-11-19T00:02:17Z", "id": "sfx.keycard.ok", "take": 2, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:17Z", "id": "sfx.safe.code_wrong", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "ok", "file": "assets/audio/_takes/sfx.safe.code_wrong/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:02:17Z", "id": "sfx.keycard.deny", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:18Z", "id": "sfx.keycard.ok", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.keycard.ok/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:18Z", "id": "sfx.cloner.loop", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:02:19Z", "id": "sfx.keycard.ok", "take": 2, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.keycard.ok/t02.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:19Z", "id": "sfx.cloner.done", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:02:20Z", "id": "sfx.keycard.deny", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.keycard.deny/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:20Z", "id": "sfx.takedown.grab", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:02:21Z", "id": "sfx.cloner.loop", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.cloner.loop/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:02:21Z", "id": "sfx.ziptie.zip", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:22Z", "id": "sfx.cloner.done", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.cloner.done/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:02:22Z", "id": "sfx.ziptie.zip", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:22Z", "id": "sfx.takedown.grab", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.takedown.grab/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:02:22Z", "id": "sfx.ziptie.zip", "take": 3, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:23Z", "id": "sfx.ziptie.zip", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.ziptie.zip/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:23Z", "id": "sfx.body.drag", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:02:23Z", "id": "sfx.ziptie.zip", "take": 3, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.ziptie.zip/t03.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:23Z", "id": "sfx.bodybag.zip", "take": 1, "kind": "sfx", "seconds": 2.5, "credits_est": 27.6, "status": "pending"}
+{"t": "2026-11-19T00:02:24Z", "id": "sfx.ziptie.zip", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.ziptie.zip/t02.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:24Z", "id": "cue.pager.ring_urgent", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:26Z", "id": "sfx.bodybag.zip", "take": 1, "kind": "sfx", "seconds": 2.5, "credits_est": 27.6, "status": "ok", "file": "assets/audio/_takes/sfx.bodybag.zip/t01.ogg", "credits_actual": 28.0}
+{"t": "2026-11-19T00:02:26Z", "id": "sfx.pager.pickup", "take": 1, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "pending"}
+{"t": "2026-11-19T00:02:27Z", "id": "sfx.body.drag", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.body.drag/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:02:27Z", "id": "sfx.pager.hangup", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:02:28Z", "id": "cue.pager.ring_urgent", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/cue.pager.ring_urgent/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:28Z", "id": "sfx.radio.squelch_in", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:29Z", "id": "sfx.pager.pickup", "take": 1, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "ok", "file": "assets/audio/_takes/sfx.pager.pickup/t01.ogg", "credits_actual": 7.0}
+{"t": "2026-11-19T00:02:29Z", "id": "sfx.radio.squelch_out", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:29Z", "id": "sfx.pager.hangup", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.pager.hangup/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:02:29Z", "id": "sfx.earpiece.click", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:02:30Z", "id": "sfx.radio.squelch_in", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.radio.squelch_in/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:30Z", "id": "sfx.glasscutter.loop", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.2, "status": "pending"}
+{"t": "2026-11-19T00:02:31Z", "id": "sfx.radio.squelch_out", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.radio.squelch_out/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:31Z", "id": "sfx.earpiece.click", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.earpiece.click/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:02:31Z", "id": "sfx.glasscutter.pop", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:02:31Z", "id": "sfx.bag.stuff_jewelry", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:33Z", "id": "sfx.glasscutter.pop", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.glasscutter.pop/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:02:33Z", "id": "sfx.bag.stuff_jewelry", "take": 2, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:33Z", "id": "sfx.bag.stuff_jewelry", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.bag.stuff_jewelry/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:33Z", "id": "sfx.bag.stuff_jewelry", "take": 3, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:33Z", "id": "sfx.glasscutter.loop", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.2, "status": "ok", "file": "assets/audio/_takes/sfx.glasscutter.loop/t01.ogg", "credits_actual": 44.0}
+{"t": "2026-11-19T00:02:33Z", "id": "sfx.bag.stuff_cash", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:34Z", "id": "sfx.bag.stuff_jewelry", "take": 2, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.bag.stuff_jewelry/t02.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:34Z", "id": "sfx.bag.stuff_cash", "take": 2, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:35Z", "id": "sfx.bag.stuff_jewelry", "take": 3, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.bag.stuff_jewelry/t03.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:35Z", "id": "sfx.bag.stuff_cash", "take": 3, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:35Z", "id": "sfx.bag.stuff_cash", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.bag.stuff_cash/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:35Z", "id": "sfx.bag.stuff_gold", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:35Z", "id": "sfx.bag.stuff_cash", "take": 2, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.bag.stuff_cash/t02.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:35Z", "id": "sfx.bag.stuff_gold", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:36Z", "id": "sfx.bag.stuff_cash", "take": 3, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.bag.stuff_cash/t03.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:36Z", "id": "sfx.bag.painting", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:37Z", "id": "sfx.bag.stuff_gold", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.bag.stuff_gold/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:37Z", "id": "sfx.bag.pickup", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:37Z", "id": "sfx.bag.stuff_gold", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.bag.stuff_gold/t02.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:37Z", "id": "sfx.bag.throw", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:38Z", "id": "sfx.bag.painting", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.bag.painting/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:38Z", "id": "sfx.bag.land_light", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:38Z", "id": "sfx.bag.throw", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.bag.throw/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:38Z", "id": "sfx.bag.land_heavy", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:39Z", "id": "sfx.bag.pickup", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.bag.pickup/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:39Z", "id": "sfx.drill.place", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:02:39Z", "id": "sfx.bag.land_light", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.bag.land_light/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:39Z", "id": "sfx.drill.start", "take": 1, "kind": "sfx", "seconds": 2.5, "credits_est": 27.7, "status": "pending"}
+{"t": "2026-11-19T00:02:40Z", "id": "sfx.drill.place", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.drill.place/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:02:40Z", "id": "sfx.drill.loop", "take": 1, "kind": "sfx", "seconds": 6.0, "credits_est": 66.4, "status": "pending"}
+{"t": "2026-11-19T00:02:40Z", "id": "sfx.bag.land_heavy", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.bag.land_heavy/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:40Z", "id": "cue.drill.jam", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:41Z", "id": "sfx.drill.start", "take": 1, "kind": "sfx", "seconds": 2.5, "credits_est": 27.7, "status": "ok", "file": "assets/audio/_takes/sfx.drill.start/t01.ogg", "credits_actual": 28.0}
+{"t": "2026-11-19T00:02:41Z", "id": "cue.drill.jam", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:42Z", "id": "cue.drill.jam", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/cue.drill.jam/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:42Z", "id": "cue.drill.jam", "take": 3, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:43Z", "id": "cue.drill.jam", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/cue.drill.jam/t02.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:43Z", "id": "sfx.drill.fix", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:43Z", "id": "sfx.drill.loop", "take": 1, "kind": "sfx", "seconds": 6.0, "credits_est": 66.4, "status": "ok", "file": "assets/audio/_takes/sfx.drill.loop/t01.ogg", "credits_actual": 66.0}
+{"t": "2026-11-19T00:02:43Z", "id": "sfx.drill.fix", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:44Z", "id": "cue.drill.jam", "take": 3, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/cue.drill.jam/t03.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:44Z", "id": "sfx.drill.done", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:02:44Z", "id": "sfx.drill.fix", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.drill.fix/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:44Z", "id": "sfx.hack.typing", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.3, "status": "pending"}
+{"t": "2026-11-19T00:02:45Z", "id": "sfx.drill.fix", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.drill.fix/t02.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:45Z", "id": "sfx.hack.stage", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:02:45Z", "id": "sfx.drill.done", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.drill.done/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:02:45Z", "id": "cue.hack.trace", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:47Z", "id": "sfx.hack.stage", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.hack.stage/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:02:47Z", "id": "sfx.timelock.open", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:02:47Z", "id": "sfx.hack.typing", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.3, "status": "ok", "file": "assets/audio/_takes/sfx.hack.typing/t01.ogg", "credits_actual": 44.0}
+{"t": "2026-11-19T00:02:47Z", "id": "sfx.vault.door_open", "take": 1, "kind": "sfx", "seconds": 6.0, "credits_est": 66.4, "status": "pending"}
+{"t": "2026-11-19T00:02:48Z", "id": "cue.hack.trace", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/cue.hack.trace/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:48Z", "id": "sfx.crowbar.pry", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:49Z", "id": "sfx.timelock.open", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.timelock.open/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:02:49Z", "id": "sfx.crowbar.pry", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:49Z", "id": "sfx.crowbar.pry", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.crowbar.pry/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:49Z", "id": "sfx.c4.place", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:50Z", "id": "sfx.vault.door_open", "take": 1, "kind": "sfx", "seconds": 6.0, "credits_est": 66.4, "status": "ok", "file": "assets/audio/_takes/sfx.vault.door_open/t01.ogg", "credits_actual": 66.0}
+{"t": "2026-11-19T00:02:50Z", "id": "cue.c4.beep", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:02:50Z", "id": "sfx.crowbar.pry", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.crowbar.pry/t02.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:50Z", "id": "sfx.c4.blast", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:02:51Z", "id": "sfx.c4.place", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.c4.place/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:51Z", "id": "sfx.c4.blast", "take": 2, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:02:51Z", "id": "cue.c4.beep", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/cue.c4.beep/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:02:51Z", "id": "sfx.breaker.off", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:02:52Z", "id": "sfx.c4.blast", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.c4.blast/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:02:52Z", "id": "sfx.breaker.on", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:52Z", "id": "sfx.c4.blast", "take": 2, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.c4.blast/t02.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:02:52Z", "id": "sfx.noisemaker.throw", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:02:54Z", "id": "sfx.breaker.on", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.breaker.on/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:54Z", "id": "sfx.noisemaker.loop", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.2, "status": "pending"}
+{"t": "2026-11-19T00:02:54Z", "id": "sfx.breaker.off", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.breaker.off/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:02:54Z", "id": "sfx.ecm.on", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:55Z", "id": "sfx.noisemaker.throw", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.noisemaker.throw/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:02:55Z", "id": "sfx.ecm.loop", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.3, "status": "pending"}
+{"t": "2026-11-19T00:02:56Z", "id": "sfx.ecm.on", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.ecm.on/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:56Z", "id": "cue.ecm.ending", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:02:56Z", "id": "sfx.noisemaker.loop", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.2, "status": "ok", "file": "assets/audio/_takes/sfx.noisemaker.loop/t01.ogg", "credits_actual": 44.0}
+{"t": "2026-11-19T00:02:56Z", "id": "sfx.smoke.throw", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:57Z", "id": "cue.ecm.ending", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/cue.ecm.ending/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:02:57Z", "id": "sfx.smoke.hiss", "take": 1, "kind": "sfx", "seconds": 8.0, "credits_est": 88.4, "status": "pending"}
+{"t": "2026-11-19T00:02:58Z", "id": "sfx.smoke.throw", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.smoke.throw/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:02:58Z", "id": "sfx.junction.cut", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:02:59Z", "id": "sfx.ecm.loop", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.3, "status": "ok", "file": "assets/audio/_takes/sfx.ecm.loop/t01.ogg", "credits_actual": 55.0}
+{"t": "2026-11-19T00:02:59Z", "id": "sfx.camera.loop_feed", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:00Z", "id": "sfx.smoke.hiss", "take": 1, "kind": "sfx", "seconds": 8.0, "credits_est": 88.4, "status": "ok", "file": "assets/audio/_takes/sfx.smoke.hiss/t01.ogg", "credits_actual": 88.0}
+{"t": "2026-11-19T00:03:00Z", "id": "sfx.mirror.place", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:03:00Z", "id": "sfx.junction.cut", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.junction.cut/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:03:00Z", "id": "sfx.player.intimidate", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:03:01Z", "id": "sfx.camera.loop_feed", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.camera.loop_feed/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:01Z", "id": "sfx.player.intimidate", "take": 2, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:03:02Z", "id": "sfx.mirror.place", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.mirror.place/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:03:02Z", "id": "sfx.pistol.shot", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:03:03Z", "id": "sfx.player.intimidate", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.player.intimidate/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:03:03Z", "id": "sfx.pistol.reload", "take": 1, "kind": "sfx", "seconds": 1.6, "credits_est": 17.7, "status": "pending"}
+{"t": "2026-11-19T00:03:03Z", "id": "sfx.player.intimidate", "take": 2, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.player.intimidate/t02.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:03:03Z", "id": "sfx.gun.dryfire", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:03:04Z", "id": "sfx.pistol.shot", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.pistol.shot/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:04Z", "id": "sfx.gun.casing", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:03:05Z", "id": "sfx.pistol.reload", "take": 1, "kind": "sfx", "seconds": 1.6, "credits_est": 17.7, "status": "ok", "file": "assets/audio/_takes/sfx.pistol.reload/t01.ogg", "credits_actual": 18.0}
+{"t": "2026-11-19T00:03:05Z", "id": "sfx.tranq.shot", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:05Z", "id": "sfx.gun.dryfire", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.gun.dryfire/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:03:05Z", "id": "sfx.tranq.hit", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:03:07Z", "id": "sfx.tranq.shot", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.tranq.shot/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:07Z", "id": "sfx.smg.shot", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:03:07Z", "id": "sfx.gun.casing", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.gun.casing/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:07Z", "id": "sfx.smg.reload", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:07Z", "id": "sfx.tranq.hit", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.tranq.hit/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:03:07Z", "id": "sfx.shotgun.shot", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:03:08Z", "id": "sfx.smg.shot", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.smg.shot/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:09Z", "id": "sfx.shotgun.pump", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:03:09Z", "id": "sfx.smg.reload", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.smg.reload/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:09Z", "id": "sfx.shotgun.reload", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:09Z", "id": "sfx.shotgun.shot", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.shotgun.shot/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:09Z", "id": "sfx.baton.zap", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:11Z", "id": "sfx.shotgun.reload", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.shotgun.reload/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:11Z", "id": "sfx.guard.shot", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:03:11Z", "id": "sfx.baton.zap", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.baton.zap/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:11Z", "id": "sfx.cop.shot", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:03:11Z", "id": "sfx.shotgun.pump", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/sfx.shotgun.pump/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:03:11Z", "id": "sfx.tactical.shot", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:03:13Z", "id": "sfx.guard.shot", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.guard.shot/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:13Z", "id": "sfx.impact.wall", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:03:13Z", "id": "sfx.cop.shot", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.cop.shot/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:13Z", "id": "sfx.impact.body", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "pending"}
+{"t": "2026-11-19T00:03:13Z", "id": "sfx.tactical.shot", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.tactical.shot/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:13Z", "id": "sfx.impact.shield", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:14Z", "id": "sfx.impact.wall", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.impact.wall/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:14Z", "id": "sfx.impact.camera", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:15Z", "id": "sfx.impact.shield", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.impact.shield/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:15Z", "id": "sfx.impact.glass", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:15Z", "id": "sfx.impact.body", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.2, "status": "ok", "file": "assets/audio/_takes/sfx.impact.body/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:15Z", "id": "cue.bullet.whiz", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "pending"}
+{"t": "2026-11-19T00:03:16Z", "id": "sfx.impact.camera", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.impact.camera/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:16Z", "id": "cue.detect.look", "take": 1, "kind": "sfx", "seconds": 0.8, "credits_est": 8.8, "status": "pending"}
+{"t": "2026-11-19T00:03:17Z", "id": "cue.bullet.whiz", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "ok", "file": "assets/audio/_takes/cue.bullet.whiz/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:17Z", "id": "cue.detect.look", "take": 2, "kind": "sfx", "seconds": 0.8, "credits_est": 8.8, "status": "pending"}
+{"t": "2026-11-19T00:03:17Z", "id": "sfx.impact.glass", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.impact.glass/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:17Z", "id": "cue.detect.investigate", "take": 1, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "pending"}
+{"t": "2026-11-19T00:03:18Z", "id": "cue.detect.look", "take": 1, "kind": "sfx", "seconds": 0.8, "credits_est": 8.8, "status": "ok", "file": "assets/audio/_takes/cue.detect.look/t01.ogg", "credits_actual": 9.0}
+{"t": "2026-11-19T00:03:18Z", "id": "cue.detect.investigate", "take": 2, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "pending"}
+{"t": "2026-11-19T00:03:19Z", "id": "cue.detect.investigate", "take": 1, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "ok", "file": "assets/audio/_takes/cue.detect.investigate/t01.ogg", "credits_actual": 13.0}
+{"t": "2026-11-19T00:03:19Z", "id": "cue.detect.spotted", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "pending"}
+{"t": "2026-11-19T00:03:19Z", "id": "cue.detect.look", "take": 2, "kind": "sfx", "seconds": 0.8, "credits_est": 8.8, "status": "ok", "file": "assets/audio/_takes/cue.detect.look/t02.ogg", "credits_actual": 9.0}
+{"t": "2026-11-19T00:03:19Z", "id": "cue.detect.investigate", "take": 2, "kind": "sfx", "seconds": 1.2, "credits_est": 13.3, "status": "ok", "file": "assets/audio/_takes/cue.detect.investigate/t02.ogg", "credits_actual": 13.0}
+{"t": "2026-11-19T00:03:19Z", "id": "cue.detect.spotted", "take": 2, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "pending"}
+{"t": "2026-11-19T00:03:19Z", "id": "cue.detect.reporting", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "pending"}
+{"t": "2026-11-19T00:03:20Z", "id": "cue.detect.spotted", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "ok", "file": "assets/audio/_takes/cue.detect.spotted/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:03:20Z", "id": "cue.detect.meter", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "pending"}
+{"t": "2026-11-19T00:03:21Z", "id": "cue.detect.reporting", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "ok", "file": "assets/audio/_takes/cue.detect.reporting/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:21Z", "id": "cue.detect.lost", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "pending"}
+{"t": "2026-11-19T00:03:21Z", "id": "cue.detect.spotted", "take": 2, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "ok", "file": "assets/audio/_takes/cue.detect.spotted/t02.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:03:21Z", "id": "cue.body.found", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:03:23Z", "id": "cue.detect.lost", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "ok", "file": "assets/audio/_takes/cue.detect.lost/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:03:23Z", "id": "cue.escorted", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:03:23Z", "id": "cue.body.found", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/cue.body.found/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:03:23Z", "id": "sfx.camera.servo", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "pending"}
+{"t": "2026-11-19T00:03:23Z", "id": "cue.detect.meter", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "ok", "file": "assets/audio/_takes/cue.detect.meter/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:24Z", "id": "cue.camera.lock", "take": 1, "kind": "sfx", "seconds": 0.8, "credits_est": 8.8, "status": "pending"}
+{"t": "2026-11-19T00:03:25Z", "id": "cue.escorted", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/cue.escorted/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:03:25Z", "id": "ui.mark", "take": 1, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "pending"}
+{"t": "2026-11-19T00:03:26Z", "id": "sfx.camera.servo", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "ok", "file": "assets/audio/_takes/sfx.camera.servo/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:26Z", "id": "ui.unmark", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "pending"}
+{"t": "2026-11-19T00:03:26Z", "id": "cue.camera.lock", "take": 1, "kind": "sfx", "seconds": 0.8, "credits_est": 8.8, "status": "ok", "file": "assets/audio/_takes/cue.camera.lock/t01.ogg", "credits_actual": 9.0}
+{"t": "2026-11-19T00:03:26Z", "id": "sfx.laser.hum", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "pending"}
+{"t": "2026-11-19T00:03:26Z", "id": "ui.mark", "take": 1, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "ok", "file": "assets/audio/_takes/ui.mark/t01.ogg", "credits_actual": 7.0}
+{"t": "2026-11-19T00:03:26Z", "id": "cue.laser.trip", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:03:27Z", "id": "ui.unmark", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "ok", "file": "assets/audio/_takes/ui.unmark/t01.ogg", "credits_actual": 6.0}
+{"t": "2026-11-19T00:03:27Z", "id": "sfx.alarm.bell", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.3, "status": "pending"}
+{"t": "2026-11-19T00:03:28Z", "id": "sfx.laser.hum", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "ok", "file": "assets/audio/_takes/sfx.laser.hum/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:28Z", "id": "sfx.alarm.klaxon", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.3, "status": "pending"}
+{"t": "2026-11-19T00:03:29Z", "id": "cue.laser.trip", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/cue.laser.trip/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:03:29Z", "id": "sfx.alarm.gallery", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.3, "status": "pending"}
+{"t": "2026-11-19T00:03:30Z", "id": "sfx.alarm.bell", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.3, "status": "ok", "file": "assets/audio/_takes/sfx.alarm.bell/t01.ogg", "credits_actual": 55.0}
+{"t": "2026-11-19T00:03:30Z", "id": "sfx.alarm.shutters", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.2, "status": "pending"}
+{"t": "2026-11-19T00:03:32Z", "id": "sfx.alarm.gallery", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.3, "status": "ok", "file": "assets/audio/_takes/sfx.alarm.gallery/t01.ogg", "credits_actual": 55.0}
+{"t": "2026-11-19T00:03:32Z", "id": "amb.siren.far", "take": 1, "kind": "sfx", "seconds": 10.0, "credits_est": 110.5, "status": "pending"}
+{"t": "2026-11-19T00:03:32Z", "id": "sfx.alarm.shutters", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.2, "status": "ok", "file": "assets/audio/_takes/sfx.alarm.shutters/t01.ogg", "credits_actual": 44.0}
+{"t": "2026-11-19T00:03:32Z", "id": "amb.siren.near", "take": 1, "kind": "sfx", "seconds": 10.0, "credits_est": 110.5, "status": "pending"}
+{"t": "2026-11-19T00:03:32Z", "id": "sfx.alarm.klaxon", "take": 1, "kind": "sfx", "seconds": 5.0, "credits_est": 55.3, "status": "ok", "file": "assets/audio/_takes/sfx.alarm.klaxon/t01.ogg", "credits_actual": 55.0}
+{"t": "2026-11-19T00:03:32Z", "id": "amb.siren.swarm", "take": 1, "kind": "sfx", "seconds": 10.0, "credits_est": 110.5, "status": "pending"}
+{"t": "2026-11-19T00:03:35Z", "id": "amb.siren.far", "take": 1, "kind": "sfx", "seconds": 10.0, "credits_est": 110.5, "status": "ok", "file": "assets/audio/_takes/amb.siren.far/t01.ogg", "credits_actual": 110.0}
+{"t": "2026-11-19T00:03:35Z", "id": "sfx.police.arrive", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "pending"}
+{"t": "2026-11-19T00:03:35Z", "id": "amb.siren.near", "take": 1, "kind": "sfx", "seconds": 10.0, "credits_est": 110.5, "status": "ok", "file": "assets/audio/_takes/amb.siren.near/t01.ogg", "credits_actual": 110.0}
+{"t": "2026-11-19T00:03:35Z", "id": "sfx.police.arrive", "take": 2, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "pending"}
+{"t": "2026-11-19T00:03:36Z", "id": "amb.siren.swarm", "take": 1, "kind": "sfx", "seconds": 10.0, "credits_est": 110.5, "status": "ok", "file": "assets/audio/_takes/amb.siren.swarm/t01.ogg", "credits_actual": 110.0}
+{"t": "2026-11-19T00:03:36Z", "id": "sfx.police.breach", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:37Z", "id": "sfx.police.arrive", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "ok", "file": "assets/audio/_takes/sfx.police.arrive/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:37Z", "id": "sfx.police.breach", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:37Z", "id": "sfx.police.arrive", "take": 2, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "ok", "file": "assets/audio/_takes/sfx.police.arrive/t02.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:37Z", "id": "sfx.police.shield_move", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "pending"}
+{"t": "2026-11-19T00:03:38Z", "id": "sfx.police.breach", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.police.breach/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:38Z", "id": "sfx.bullhorn.open", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:03:38Z", "id": "sfx.police.breach", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.police.breach/t02.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:38Z", "id": "sfx.bullhorn.open", "take": 2, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:03:39Z", "id": "sfx.police.shield_move", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "ok", "file": "assets/audio/_takes/sfx.police.shield_move/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:39Z", "id": "amb.police.radio", "take": 1, "kind": "sfx", "seconds": 10.0, "credits_est": 110.4, "status": "pending"}
+{"t": "2026-11-19T00:03:39Z", "id": "sfx.bullhorn.open", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.bullhorn.open/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:03:40Z", "id": "cue.heat.up", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:40Z", "id": "sfx.bullhorn.open", "take": 2, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.bullhorn.open/t02.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:03:40Z", "id": "cue.heat.up", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:41Z", "id": "cue.heat.up", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/cue.heat.up/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:41Z", "id": "cue.heat.up", "take": 3, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:42Z", "id": "cue.heat.up", "take": 2, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/cue.heat.up/t02.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:42Z", "id": "cue.heat.up", "take": 4, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:43Z", "id": "amb.police.radio", "take": 1, "kind": "sfx", "seconds": 10.0, "credits_est": 110.4, "status": "ok", "file": "assets/audio/_takes/amb.police.radio/t01.ogg", "credits_actual": 110.0}
+{"t": "2026-11-19T00:03:43Z", "id": "sfx.player.cuffed", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:03:43Z", "id": "cue.heat.up", "take": 3, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/cue.heat.up/t03.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:43Z", "id": "sfx.police.helicopter", "take": 1, "kind": "sfx", "seconds": 10.0, "credits_est": 110.5, "status": "pending"}
+{"t": "2026-11-19T00:03:44Z", "id": "cue.heat.up", "take": 4, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/cue.heat.up/t04.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:44Z", "id": "sfx.van.honk_long", "take": 1, "kind": "sfx", "seconds": 2.5, "credits_est": 27.6, "status": "pending"}
+{"t": "2026-11-19T00:03:44Z", "id": "sfx.player.cuffed", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.player.cuffed/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:03:44Z", "id": "sfx.van.bag_drop", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:03:46Z", "id": "sfx.van.bag_drop", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/sfx.van.bag_drop/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:03:46Z", "id": "amb.van.idle", "take": 1, "kind": "sfx", "seconds": 8.0, "credits_est": 88.4, "status": "pending"}
+{"t": "2026-11-19T00:03:46Z", "id": "sfx.police.helicopter", "take": 1, "kind": "sfx", "seconds": 10.0, "credits_est": 110.5, "status": "ok", "file": "assets/audio/_takes/sfx.police.helicopter/t01.ogg", "credits_actual": 110.0}
+{"t": "2026-11-19T00:03:46Z", "id": "sfx.van.door", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:03:46Z", "id": "sfx.van.honk_long", "take": 1, "kind": "sfx", "seconds": 2.5, "credits_est": 27.6, "status": "ok", "file": "assets/audio/_takes/sfx.van.honk_long/t01.ogg", "credits_actual": 28.0}
+{"t": "2026-11-19T00:03:46Z", "id": "sfx.van.drive_off", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.2, "status": "pending"}
+{"t": "2026-11-19T00:03:48Z", "id": "sfx.van.drive_off", "take": 1, "kind": "sfx", "seconds": 4.0, "credits_est": 44.2, "status": "ok", "file": "assets/audio/_takes/sfx.van.drive_off/t01.ogg", "credits_actual": 44.0}
+{"t": "2026-11-19T00:03:48Z", "id": "sfx.van.arrive", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "pending"}
+{"t": "2026-11-19T00:03:48Z", "id": "sfx.van.door", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/sfx.van.door/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:03:48Z", "id": "sfx.dot.snack", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "pending"}
+{"t": "2026-11-19T00:03:49Z", "id": "amb.van.idle", "take": 1, "kind": "sfx", "seconds": 8.0, "credits_est": 88.4, "status": "ok", "file": "assets/audio/_takes/amb.van.idle/t01.ogg", "credits_actual": 88.0}
+{"t": "2026-11-19T00:03:49Z", "id": "amb.van.ride", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.9, "status": "pending"}
+{"t": "2026-11-19T00:03:50Z", "id": "sfx.van.arrive", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "ok", "file": "assets/audio/_takes/sfx.van.arrive/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:50Z", "id": "ui.hover", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "pending"}
+{"t": "2026-11-19T00:03:50Z", "id": "sfx.dot.snack", "take": 1, "kind": "sfx", "seconds": 3.0, "credits_est": 33.1, "status": "ok", "file": "assets/audio/_takes/sfx.dot.snack/t01.ogg", "credits_actual": 33.0}
+{"t": "2026-11-19T00:03:50Z", "id": "ui.click", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "pending"}
+{"t": "2026-11-19T00:03:51Z", "id": "ui.hover", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "ok", "file": "assets/audio/_takes/ui.hover/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:03:51Z", "id": "ui.back", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "pending"}
+{"t": "2026-11-19T00:03:52Z", "id": "ui.click", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "ok", "file": "assets/audio/_takes/ui.click/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:03:52Z", "id": "ui.deny", "take": 1, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "pending"}
+{"t": "2026-11-19T00:03:53Z", "id": "ui.back", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "ok", "file": "assets/audio/_takes/ui.back/t01.ogg", "credits_actual": 6.0}
+{"t": "2026-11-19T00:03:53Z", "id": "ui.pause", "take": 1, "kind": "sfx", "seconds": 0.8, "credits_est": 8.8, "status": "pending"}
+{"t": "2026-11-19T00:03:53Z", "id": "ui.deny", "take": 1, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "ok", "file": "assets/audio/_takes/ui.deny/t01.ogg", "credits_actual": 7.0}
+{"t": "2026-11-19T00:03:53Z", "id": "ui.message.info", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "pending"}
+{"t": "2026-11-19T00:03:53Z", "id": "amb.van.ride", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.9, "status": "ok", "file": "assets/audio/_takes/amb.van.ride/t01.ogg", "credits_actual": 220.0}
+{"t": "2026-11-19T00:03:53Z", "id": "ui.message.warn", "take": 1, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "pending"}
+{"t": "2026-11-19T00:03:54Z", "id": "ui.pause", "take": 1, "kind": "sfx", "seconds": 0.8, "credits_est": 8.8, "status": "ok", "file": "assets/audio/_takes/ui.pause/t01.ogg", "credits_actual": 9.0}
+{"t": "2026-11-19T00:03:54Z", "id": "ui.message.danger", "take": 1, "kind": "sfx", "seconds": 0.8, "credits_est": 8.8, "status": "pending"}
+{"t": "2026-11-19T00:03:55Z", "id": "ui.message.warn", "take": 1, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "ok", "file": "assets/audio/_takes/ui.message.warn/t01.ogg", "credits_actual": 7.0}
+{"t": "2026-11-19T00:03:55Z", "id": "ui.interact.start", "take": 1, "kind": "sfx", "seconds": 0.4, "credits_est": 4.4, "status": "pending"}
+{"t": "2026-11-19T00:03:55Z", "id": "ui.message.info", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "ok", "file": "assets/audio/_takes/ui.message.info/t01.ogg", "credits_actual": 6.0}
+{"t": "2026-11-19T00:03:55Z", "id": "ui.interact.done", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "pending"}
+{"t": "2026-11-19T00:03:55Z", "id": "ui.interact.start", "take": 1, "kind": "sfx", "seconds": 0.4, "credits_est": 0, "status": "failed", "error": "ElevenLabs 400 on POST /v1/sound-generation: {\"detail\":{\"status\":\"invalid_generation_settings\",\"message\":\"Invalid setting for duration_seconds received, expected to be greater or equal to 0.5 and less or equal to 30, received 0.4.\"}}"}
+{"t": "2026-11-19T00:03:55Z", "id": "ui.interact.cancel", "take": 1, "kind": "sfx", "seconds": 0.4, "credits_est": 4.4, "status": "pending"}
+{"t": "2026-11-19T00:03:55Z", "id": "ui.interact.cancel", "take": 1, "kind": "sfx", "seconds": 0.4, "credits_est": 0, "status": "failed", "error": "ElevenLabs 400 on POST /v1/sound-generation: {\"detail\":{\"status\":\"invalid_generation_settings\",\"message\":\"Invalid setting for duration_seconds received, expected to be greater or equal to 0.5 and less or equal to 30, received 0.4.\"}}"}
+{"t": "2026-11-19T00:03:55Z", "id": "ui.ammo.low", "take": 1, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "pending"}
+{"t": "2026-11-19T00:03:56Z", "id": "ui.message.danger", "take": 1, "kind": "sfx", "seconds": 0.8, "credits_est": 8.8, "status": "ok", "file": "assets/audio/_takes/ui.message.danger/t01.ogg", "credits_actual": 9.0}
+{"t": "2026-11-19T00:03:56Z", "id": "ui.board.select", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "pending"}
+{"t": "2026-11-19T00:03:56Z", "id": "ui.interact.done", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "ok", "file": "assets/audio/_takes/ui.interact.done/t01.ogg", "credits_actual": 6.0}
+{"t": "2026-11-19T00:03:56Z", "id": "ui.board.locked", "take": 1, "kind": "sfx", "seconds": 0.8, "credits_est": 8.8, "status": "pending"}
+{"t": "2026-11-19T00:03:57Z", "id": "ui.ammo.low", "take": 1, "kind": "sfx", "seconds": 0.6, "credits_est": 6.6, "status": "ok", "file": "assets/audio/_takes/ui.ammo.low/t01.ogg", "credits_actual": 7.0}
+{"t": "2026-11-19T00:03:57Z", "id": "ui.shop.buy", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:03:58Z", "id": "ui.board.locked", "take": 1, "kind": "sfx", "seconds": 0.8, "credits_est": 8.8, "status": "ok", "file": "assets/audio/_takes/ui.board.locked/t01.ogg", "credits_actual": 9.0}
+{"t": "2026-11-19T00:03:58Z", "id": "ui.loadout.equip", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "pending"}
+{"t": "2026-11-19T00:03:58Z", "id": "ui.board.select", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "ok", "file": "assets/audio/_takes/ui.board.select/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:03:58Z", "id": "ui.mask.equip", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "pending"}
+{"t": "2026-11-19T00:03:58Z", "id": "ui.shop.buy", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/ui.shop.buy/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:03:58Z", "id": "ui.payout.type", "take": 1, "kind": "sfx", "seconds": 4.8, "credits_est": 53.0, "status": "pending"}
+{"t": "2026-11-19T00:03:59Z", "id": "ui.loadout.equip", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "ok", "file": "assets/audio/_takes/ui.loadout.equip/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:03:59Z", "id": "ui.payout.return", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "pending"}
+{"t": "2026-11-19T00:04:00Z", "id": "ui.mask.equip", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "ok", "file": "assets/audio/_takes/ui.mask.equip/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:04:00Z", "id": "ui.payout.add", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "pending"}
+{"t": "2026-11-19T00:04:00Z", "id": "ui.payout.type", "take": 1, "kind": "sfx", "seconds": 4.8, "credits_est": 53.0, "status": "ok", "file": "assets/audio/_takes/ui.payout.type/t01.ogg", "credits_actual": 53.0}
+{"t": "2026-11-19T00:04:00Z", "id": "ui.payout.deduct", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "pending"}
+{"t": "2026-11-19T00:04:02Z", "id": "ui.payout.add", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "ok", "file": "assets/audio/_takes/ui.payout.add/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:04:02Z", "id": "ui.payout.total", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:04:02Z", "id": "ui.payout.return", "take": 1, "kind": "sfx", "seconds": 1.5, "credits_est": 16.6, "status": "ok", "file": "assets/audio/_takes/ui.payout.return/t01.ogg", "credits_actual": 17.0}
+{"t": "2026-11-19T00:04:02Z", "id": "ui.payout.stamp", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "pending"}
+{"t": "2026-11-19T00:04:02Z", "id": "ui.payout.deduct", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.0, "status": "ok", "file": "assets/audio/_takes/ui.payout.deduct/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:04:02Z", "id": "ui.payout.unlock", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "pending"}
+{"t": "2026-11-19T00:04:04Z", "id": "ui.payout.total", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/ui.payout.total/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:04:04Z", "id": "amb.glint.showroom", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 221.0, "status": "pending"}
+{"t": "2026-11-19T00:04:04Z", "id": "ui.payout.unlock", "take": 1, "kind": "sfx", "seconds": 2.0, "credits_est": 22.1, "status": "ok", "file": "assets/audio/_takes/ui.payout.unlock/t01.ogg", "credits_actual": 22.0}
+{"t": "2026-11-19T00:04:04Z", "id": "amb.glint.back", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 221.0, "status": "pending"}
+{"t": "2026-11-19T00:04:04Z", "id": "ui.payout.stamp", "take": 1, "kind": "sfx", "seconds": 1.0, "credits_est": 11.1, "status": "ok", "file": "assets/audio/_takes/ui.payout.stamp/t01.ogg", "credits_actual": 11.0}
+{"t": "2026-11-19T00:04:04Z", "id": "amb.glint.alley", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 221.0, "status": "pending"}
+{"t": "2026-11-19T00:04:09Z", "id": "amb.glint.back", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 221.0, "status": "ok", "file": "assets/audio/_takes/amb.glint.back/t01.ogg", "credits_actual": 220.0}
+{"t": "2026-11-19T00:04:09Z", "id": "amb.bank.lobby", "take": 1, "kind": "sfx", "seconds": 25.0, "credits_est": 276.2, "status": "pending"}
+{"t": "2026-11-19T00:04:09Z", "id": "amb.glint.alley", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 221.0, "status": "ok", "file": "assets/audio/_takes/amb.glint.alley/t01.ogg", "credits_actual": 220.0}
+{"t": "2026-11-19T00:04:09Z", "id": "amb.bank.lobby_panic", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.9, "status": "pending"}
+{"t": "2026-11-19T00:04:09Z", "id": "amb.glint.showroom", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 221.0, "status": "ok", "file": "assets/audio/_takes/amb.glint.showroom/t01.ogg", "credits_actual": 220.0}
+{"t": "2026-11-19T00:04:09Z", "id": "amb.bank.office", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.9, "status": "pending"}
+{"t": "2026-11-19T00:04:13Z", "id": "amb.bank.lobby_panic", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.9, "status": "ok", "file": "assets/audio/_takes/amb.bank.lobby_panic/t01.ogg", "credits_actual": 220.0}
+{"t": "2026-11-19T00:04:13Z", "id": "amb.bank.server", "take": 1, "kind": "sfx", "seconds": 15.0, "credits_est": 165.6, "status": "pending"}
+{"t": "2026-11-19T00:04:14Z", "id": "amb.bank.lobby", "take": 1, "kind": "sfx", "seconds": 25.0, "credits_est": 276.2, "status": "ok", "file": "assets/audio/_takes/amb.bank.lobby/t01.ogg", "credits_actual": 275.0}
+{"t": "2026-11-19T00:04:14Z", "id": "amb.bank.vault", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.8, "status": "pending"}
+{"t": "2026-11-19T00:04:14Z", "id": "amb.bank.office", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.9, "status": "ok", "file": "assets/audio/_takes/amb.bank.office/t01.ogg", "credits_actual": 220.0}
+{"t": "2026-11-19T00:04:14Z", "id": "amb.bank.roof", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.8, "status": "pending"}
+{"t": "2026-11-19T00:04:17Z", "id": "amb.bank.server", "take": 1, "kind": "sfx", "seconds": 15.0, "credits_est": 165.6, "status": "ok", "file": "assets/audio/_takes/amb.bank.server/t01.ogg", "credits_actual": 165.0}
+{"t": "2026-11-19T00:04:17Z", "id": "amb.gallery.hall", "take": 1, "kind": "sfx", "seconds": 25.0, "credits_est": 276.0, "status": "pending"}
+{"t": "2026-11-19T00:04:19Z", "id": "amb.bank.vault", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.8, "status": "ok", "file": "assets/audio/_takes/amb.bank.vault/t01.ogg", "credits_actual": 220.0}
+{"t": "2026-11-19T00:04:19Z", "id": "amb.gallery.storage", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.8, "status": "pending"}
+{"t": "2026-11-19T00:04:19Z", "id": "amb.bank.roof", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.8, "status": "ok", "file": "assets/audio/_takes/amb.bank.roof/t01.ogg", "credits_actual": 220.0}
+{"t": "2026-11-19T00:04:19Z", "id": "amb.gallery.roof", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.7, "status": "pending"}
+{"t": "2026-11-19T00:04:22Z", "id": "amb.gallery.hall", "take": 1, "kind": "sfx", "seconds": 25.0, "credits_est": 276.0, "status": "ok", "file": "assets/audio/_takes/amb.gallery.hall/t01.ogg", "credits_actual": 275.0}
+{"t": "2026-11-19T00:04:22Z", "id": "amb.loud.street", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.7, "status": "pending"}
+{"t": "2026-11-19T00:04:23Z", "id": "amb.gallery.roof", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.7, "status": "ok", "file": "assets/audio/_takes/amb.gallery.roof/t01.ogg", "credits_actual": 220.0}
+{"t": "2026-11-19T00:04:23Z", "id": "amb.gallery.storage", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.8, "status": "ok", "file": "assets/audio/_takes/amb.gallery.storage/t01.ogg", "credits_actual": 220.0}
+{"t": "2026-11-19T00:04:28Z", "id": "amb.loud.street", "take": 1, "kind": "sfx", "seconds": 20.0, "credits_est": 220.7, "status": "ok", "file": "assets/audio/_takes/amb.loud.street/t01.ogg", "credits_actual": 220.0}
+{"t": "2026-11-19T00:04:46Z", "id": "ui.interact.cancel", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "pending"}
+{"t": "2026-11-19T00:04:46Z", "id": "ui.interact.start", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "pending"}
+{"t": "2026-11-19T00:04:48Z", "id": "ui.interact.cancel", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "ok", "file": "assets/audio/_takes/ui.interact.cancel/t01.ogg", "credits_actual": 6.0}
+{"t": "2026-11-19T00:04:48Z", "id": "ui.interact.start", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "ok", "file": "assets/audio/_takes/ui.interact.start/t01.ogg", "credits_actual": 6.0}

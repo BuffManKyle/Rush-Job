@@ -1,0 +1,18 @@
+{
+ "id": "sfx.breaker.off",
+ "take": 1,
+ "t": "2026-11-19T00:02:54Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A big electrical breaker lever thrown down with a heavy clack, then the building's electric hum and fluorescent lights power down and die out, silence",
+  "duration_seconds": 3.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "33"
+ },
+ "bytes": 48177
+}

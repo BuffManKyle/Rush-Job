@@ -377,7 +377,7 @@ def existing_review():
             continue
         if cur and re.match(r"^\s+>", line):
             keep[cur]["notes"].append(line.rstrip("\n"))
-        elif cur and line.strip() and not line.startswith("\t- ") and not line.startswith("    "):
+        elif cur and line.strip() and not line[0].isspace():   # indented lines belong to the take
             cur = None
     return keep
 

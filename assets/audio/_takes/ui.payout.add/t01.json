@@ -1,0 +1,18 @@
+{
+ "id": "ui.payout.add",
+ "take": 1,
+ "t": "2026-11-19T00:04:02Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "An old adding machine crank pulled once with a mechanical ka-chunk and a small bell, dry",
+  "duration_seconds": 1.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "11"
+ },
+ "bytes": 16276
+}

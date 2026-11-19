@@ -1,0 +1,18 @@
+{
+ "id": "sfx.camera.servo",
+ "take": 1,
+ "t": "2026-11-19T00:03:26Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A small security camera servo motor panning slowly, faint mechanical whir with a soft tick at each end, quiet, seamless loop",
+  "duration_seconds": 3.0,
+  "prompt_influence": 0.5,
+  "loop": true,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "33"
+ },
+ "bytes": 39516
+}

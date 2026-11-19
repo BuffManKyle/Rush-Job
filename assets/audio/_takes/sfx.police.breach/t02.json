@@ -1,0 +1,18 @@
+{
+ "id": "sfx.police.breach",
+ "take": 2,
+ "t": "2026-11-19T00:03:38Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A door rammed open by a police battering ram, a huge wooden crash and the door banging against a wall, close",
+  "duration_seconds": 2.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "22"
+ },
+ "bytes": 29039
+}

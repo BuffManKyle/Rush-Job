@@ -1,0 +1,18 @@
+{
+ "id": "sfx.player.armor_hit",
+ "take": 1,
+ "t": "2026-11-19T00:02:00Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Four separate bullet impacts on a kevlar vest with ceramic plate, hard thwack with a dry crack, no voice, silence between each, close mic",
+  "duration_seconds": 3.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "33"
+ },
+ "bytes": 40446
+}

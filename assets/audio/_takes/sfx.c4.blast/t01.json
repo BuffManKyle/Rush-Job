@@ -1,0 +1,18 @@
+{
+ "id": "sfx.c4.blast",
+ "take": 1,
+ "t": "2026-11-19T00:02:52Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A powerful indoor explosion blowing a steel vault door off its hinges: huge boom, metal tearing, concrete debris raining down, deep low end, big room echo",
+  "duration_seconds": 3.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "33"
+ },
+ "bytes": 44908
+}

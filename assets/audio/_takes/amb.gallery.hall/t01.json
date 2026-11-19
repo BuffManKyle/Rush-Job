@@ -1,0 +1,18 @@
+{
+ "id": "amb.gallery.hall",
+ "take": 1,
+ "t": "2026-11-19T00:04:22Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A huge empty art museum hall at night: deep hushed air, a faint ventilation drone, a distant clock, a long natural reverb, no voices, no music, seamless loop",
+  "duration_seconds": 25.0,
+  "prompt_influence": 0.5,
+  "loop": true,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "275"
+ },
+ "bytes": 433521
+}

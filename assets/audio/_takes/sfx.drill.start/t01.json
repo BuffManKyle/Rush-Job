@@ -1,0 +1,18 @@
+{
+ "id": "sfx.drill.start",
+ "take": 1,
+ "t": "2026-11-19T00:02:41Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A heavy thermal drill motor spinning up from silence to full speed, rising electric whine with a grinding bite into steel, loud",
+  "duration_seconds": 2.5,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "28"
+ },
+ "bytes": 35701
+}

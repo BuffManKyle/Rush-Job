@@ -1,0 +1,18 @@
+{
+ "id": "sfx.bag.stuff_gold",
+ "take": 1,
+ "t": "2026-11-19T00:02:37Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Heavy gold bars dropped one by one into a thick canvas bag, dense metallic clunks muffled by fabric, close mic, dry",
+  "duration_seconds": 2.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "22"
+ },
+ "bytes": 24693
+}

@@ -1,0 +1,18 @@
+{
+ "id": "sfx.safe.unlock",
+ "take": 1,
+ "t": "2026-11-19T00:02:16Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Electronic safe accepts its code: a bright two-tone confirmation chirp, then heavy internal bolts retract with a mechanical clunk",
+  "duration_seconds": 2.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "22"
+ },
+ "bytes": 38993
+}

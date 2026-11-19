@@ -1,0 +1,18 @@
+{
+ "id": "sfx.bag.stuff_cash",
+ "take": 2,
+ "t": "2026-11-19T00:02:35Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Bundles of banknotes tossed into a canvas duffel bag, papery thumps and flicks, fabric rustle, close mic, dry",
+  "duration_seconds": 1.5,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "17"
+ },
+ "bytes": 17315
+}

@@ -1,0 +1,18 @@
+{
+ "id": "ui.payout.total",
+ "take": 1,
+ "t": "2026-11-19T00:04:04Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A vintage cash register ringing up a big total: several keys, a crank, and a loud bright bell as the drawer slides open",
+  "duration_seconds": 2.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "22"
+ },
+ "bytes": 36897
+}

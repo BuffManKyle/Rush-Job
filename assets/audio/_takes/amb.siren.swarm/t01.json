@@ -1,0 +1,18 @@
+{
+ "id": "amb.siren.swarm",
+ "take": 1,
+ "t": "2026-11-19T00:03:36Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Many police sirens of different types surrounding a building, wailing and yelping over each other, with a police helicopter thumping overhead, seamless loop",
+  "duration_seconds": 10.0,
+  "prompt_influence": 0.5,
+  "loop": true,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "110"
+ },
+ "bytes": 153258
+}

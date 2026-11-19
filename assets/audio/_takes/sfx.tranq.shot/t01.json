@@ -1,0 +1,18 @@
+{
+ "id": "sfx.tranq.shot",
+ "take": 1,
+ "t": "2026-11-19T00:03:07Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Three separate shots from a compressed-air dart pistol, a soft sharp pneumatic thwip with a tiny hiss, silence between each, close, dry",
+  "duration_seconds": 2.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "22"
+ },
+ "bytes": 25116
+}

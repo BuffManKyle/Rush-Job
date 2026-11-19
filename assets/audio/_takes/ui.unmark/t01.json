@@ -1,0 +1,18 @@
+{
+ "id": "ui.unmark",
+ "take": 1,
+ "t": "2026-11-19T00:03:27Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A soft short falling UI tick, muted and clean, dry",
+  "duration_seconds": 0.5,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "6"
+ },
+ "bytes": 10522
+}

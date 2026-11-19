@@ -1,0 +1,18 @@
+{
+ "id": "sfx.step.carpet",
+ "take": 1,
+ "t": "2026-11-19T00:01:51Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Eight separate muffled footsteps on thick office carpet, soft fabric thuds, walking pace, silence between each step, close mic, very dry, no music",
+  "duration_seconds": 5.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "55"
+ },
+ "bytes": 75197
+}

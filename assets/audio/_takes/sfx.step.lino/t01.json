@@ -1,0 +1,18 @@
+{
+ "id": "sfx.step.lino",
+ "take": 1,
+ "t": "2026-11-19T00:01:54Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Eight separate footsteps of leather shoes on linoleum in a small office, light tap with a slight squeak on two steps, walking pace, silence between each step, close mic, dry",
+  "duration_seconds": 5.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "55"
+ },
+ "bytes": 64776
+}

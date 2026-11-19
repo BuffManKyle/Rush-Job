@@ -1,0 +1,18 @@
+{
+ "id": "cue.heat.up",
+ "take": 1,
+ "t": "2026-11-19T00:03:41Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A short tense warning stinger: a rising brass swell into a sharp stab with a siren-like whoop, dry, under two seconds",
+  "duration_seconds": 2.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "22"
+ },
+ "bytes": 34398
+}

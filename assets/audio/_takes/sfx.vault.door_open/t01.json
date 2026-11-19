@@ -1,0 +1,18 @@
+{
+ "id": "sfx.vault.door_open",
+ "take": 1,
+ "t": "2026-11-19T00:02:50Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A massive round bank vault door swinging open: a large wheel spun, deep bolts retract, then a slow heavy hinge groan, huge low metallic resonance, basement echo",
+  "duration_seconds": 6.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "66"
+ },
+ "bytes": 102704
+}

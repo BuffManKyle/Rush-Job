@@ -1,0 +1,18 @@
+{
+ "id": "sfx.crowbar.pry",
+ "take": 2,
+ "t": "2026-11-19T00:02:50Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A crowbar forcing a locked door: steel bar wedged in, wood splinters and cracks loudly, the lock bursts with a bang, close",
+  "duration_seconds": 2.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "22"
+ },
+ "bytes": 33222
+}

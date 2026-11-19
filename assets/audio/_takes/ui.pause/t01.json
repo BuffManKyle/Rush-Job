@@ -1,0 +1,18 @@
+{
+ "id": "ui.pause",
+ "take": 1,
+ "t": "2026-11-19T00:03:54Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A record scratch slowed into a soft vinyl stop, short, warm, dry",
+  "duration_seconds": 0.8,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "9"
+ },
+ "bytes": 13280
+}

@@ -63,7 +63,7 @@ def parse_sfx(path):
                 "id": sid, "kind": "sfx", "group": group,
                 "priority": prio[1] if prio else "P2",
                 "target": target[1] if target else None,
-                "seconds": float(gen[1]) if gen else SEARCH_DEFAULT_SECONDS["ui" if sid.startswith("ui.") else "sfx"],
+                "seconds": max(0.5, float(gen[1])) if gen else SEARCH_DEFAULT_SECONDS["ui" if sid.startswith("ui.") else "sfx"],
                 "loop": "· loop" in rest,
                 "takes": int(takes[1]) if takes else 1,
                 "slice": int(slice_n[1]) if slice_n else (0 if "slice" not in rest else -1),

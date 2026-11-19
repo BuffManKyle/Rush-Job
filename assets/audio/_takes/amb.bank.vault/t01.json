@@ -1,0 +1,18 @@
+{
+ "id": "amb.bank.vault",
+ "take": 1,
+ "t": "2026-11-19T00:04:19Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A sealed concrete basement vault: very low deep room tone, distant pipe knocks, faint ventilation, heavy silence, seamless loop",
+  "duration_seconds": 20.0,
+  "prompt_influence": 0.5,
+  "loop": true,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "220"
+ },
+ "bytes": 366263
+}

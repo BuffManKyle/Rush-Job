@@ -1,0 +1,18 @@
+{
+ "id": "sfx.ecm.loop",
+ "take": 1,
+ "t": "2026-11-19T00:02:59Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Low wobbling electronic interference hum with faint digital crackle, like radio jamming, quiet, seamless loop",
+  "duration_seconds": 5.0,
+  "prompt_influence": 0.5,
+  "loop": true,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "55"
+ },
+ "bytes": 70429
+}

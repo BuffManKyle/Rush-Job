@@ -1,0 +1,18 @@
+{
+ "id": "sfx.police.arrive",
+ "take": 2,
+ "t": "2026-11-19T00:03:37Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Police cars screeching to a stop outside, tires squeal, siren cuts off with a yelp, car doors fly open and slam",
+  "duration_seconds": 3.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "33"
+ },
+ "bytes": 44672
+}

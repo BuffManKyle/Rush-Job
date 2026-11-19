@@ -1,0 +1,18 @@
+{
+ "id": "amb.van.ride",
+ "take": 1,
+ "t": "2026-11-19T00:03:53Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Inside an old van driving through a city at night, low road rumble, engine hum, occasional rattle of tools in the back, muffled traffic outside, seamless loop",
+  "duration_seconds": 20.0,
+  "prompt_influence": 0.5,
+  "loop": true,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "220"
+ },
+ "bytes": 292697
+}

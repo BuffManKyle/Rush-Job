@@ -1,0 +1,18 @@
+{
+ "id": "sfx.player.crouch",
+ "take": 2,
+ "t": "2026-11-19T00:01:56Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Quick soft rustle of a wool suit jacket as someone crouches down, subtle fabric movement, close mic, dry, very short",
+  "duration_seconds": 1.0,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "11"
+ },
+ "bytes": 11391
+}

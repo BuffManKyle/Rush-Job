@@ -1,0 +1,18 @@
+{
+ "id": "sfx.bodybag.zip",
+ "take": 1,
+ "t": "2026-11-19T00:02:26Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Long heavy-duty zipper pulled the full length of a thick vinyl bag, then the bag settles with a rustle, close mic, dry",
+  "duration_seconds": 2.5,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "28"
+ },
+ "bytes": 30942
+}

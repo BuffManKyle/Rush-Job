@@ -1,0 +1,18 @@
+{
+ "id": "sfx.step.boots_gear",
+ "take": 1,
+ "t": "2026-11-19T00:01:57Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Security guard jogging, only the rattle of a belt with keys, handcuffs and a radio bouncing in rhythm, no footsteps, close mic, dry, seamless loop",
+  "duration_seconds": 4.0,
+  "prompt_influence": 0.5,
+  "loop": true,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "44"
+ },
+ "bytes": 63778
+}

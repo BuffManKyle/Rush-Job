@@ -1,0 +1,18 @@
+{
+ "id": "amb.glint.showroom",
+ "take": 1,
+ "t": "2026-11-19T00:04:09Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "Interior of a quiet upscale jewelry shop in the evening: soft air conditioning hush, a faint ticking wall clock, a glass case fridge hum, muffled city traffic through the front window, no voices, no music, seamless loop",
+  "duration_seconds": 20.0,
+  "prompt_influence": 0.5,
+  "loop": true,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "220"
+ },
+ "bytes": 287786
+}
