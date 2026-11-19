@@ -169,6 +169,7 @@ export const T = {
 
   bags: {
     carryBack: 0.38, // how far behind the player's centre a back-slung bag sits
+    carryBackArmor: { suit: 0, light_vest: 0.1, heavy_vest: 0.15 }, // extra push-back so bags clear a vest (measured in game)
     carryScale: 0.7, // bags in hand draw a bit smaller so two don't swallow the character
     maxCarried: 2, // one per hand; with two you can't shoot, aim or take anyone down
     twoBagSpeed: 0.85, // extra multiplier on top of the heaviest bag's speed when carrying two (and no sprint)
