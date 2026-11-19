@@ -8,7 +8,7 @@ import { INTERACTION_TOOL } from '../data/interactions';
 import { powerOut } from '../sim/security';
 import type { Sim } from '../sim/sim';
 import type { Kit } from './kit';
-import { holdInHand, wearMask, wearVest } from './outfit';
+import { holdInHand, setFist, wearMask, wearVest } from './outfit';
 import type { WorldView } from './renderer';
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -129,6 +129,7 @@ export class GearView {
         else this.view.playerRoot.add(m);
       }
     }
+    if (pc) setFist(pc, 'R', !!this.held); // fingers close around whatever's in the hand
     if (!this.held) return;
     if (!pc) {
       // graybox: in front of the body at hand height, pointing along the facing (+X in actor space)

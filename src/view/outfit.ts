@@ -82,6 +82,18 @@ export function wearVest(ch: CharInstance, armor: Loadout['armor']): THREE.Objec
 }
 
 /**
+ * Close a hand around what it holds: char_player has blend shapes `fist_R` / `fist_L` (no finger bones),
+ * and each skinned primitive carries its own dictionary, so set it on every mesh that has it.
+ */
+export function setFist(ch: CharInstance, side: 'R' | 'L', on: boolean): void {
+  const key = `fist_${side}`;
+  for (const m of ch.meshes) {
+    const i = m.morphTargetDictionary?.[key];
+    if (i !== undefined && m.morphTargetInfluences) m.morphTargetInfluences[i] = on ? 1 : 0;
+  }
+}
+
+/**
  * Hold an item in the right hand. char_player has a measured `hand_R_grip` node (palm origin, world scale 1,
  * ASSETS.md "Gear") and every held piece in gear.glb uses the same convention, so it goes on with an identity
  * transform. Rigs without the grip fall back to the hand bone plus a fitted rotation.
@@ -188,6 +200,7 @@ export function dress(ch: CharInstance, kit: Kit | null, l: Loadout): Outfit {
   const w = gearModel(kit, WEAPONS[l.weapon].model);
   holdInHand(ch, w);
   out.weapon = w.parent ? w : null;
+  setFist(ch, 'R', !!out.weapon);
 
   l.gadgets.forEach((id, i) => {
     if (!id) return;
