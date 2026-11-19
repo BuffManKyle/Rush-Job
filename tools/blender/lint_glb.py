@@ -59,11 +59,21 @@ def lint(path):
     # per top-level node: triangles and lowest point (translation-only transforms)
     acc = g.get("accessors", [])
 
+    mats = g.get("materials", [])
+
     def tris(mi):
-        t = 0
+        """Triangles that can be on screen at once: optional layers (RJ_Vest_*, only one worn at a
+        time) count as the largest of them, not their sum."""
+        t, optional = 0, {}
         for p in g["meshes"][mi]["primitives"]:
-            t += (acc[p["indices"]]["count"] if "indices" in p else acc[p["attributes"]["POSITION"]]["count"]) // 3
-        return t
+            n = (acc[p["indices"]]["count"] if "indices" in p else acc[p["attributes"]["POSITION"]]["count"]) // 3
+            mn = mats[p["material"]].get("name", "") if mats and "material" in p else ""
+            if mn.startswith("RJ_Vest_"):
+                k = mn.split("_")[2]                         # RJ_Vest_<light|heavy>[_part]: one layer each
+                optional[k] = optional.get(k, 0) + n
+            else:
+                t += n
+        return t + max(optional.values(), default=0)
 
     def walk(ni, oy, out):
         n = g["nodes"][ni]

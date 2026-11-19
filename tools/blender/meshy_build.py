@@ -15,12 +15,15 @@ clip). Each character KEEPS ITS OWN MESHY RIG (no retargeting). This script:
 import json, math, os, sys, glob
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import bpy
-from mathutils import Vector, Quaternion
+from mathutils import Vector, Quaternion, Matrix
+from mathutils.kdtree import KDTree
 import rj
 
 GEN = os.path.join(rj.ROOT, "assets", "gen", "meshy")
 FPS = 30
-ATTACH = {"hand_R": "RightHand", "hand_L": "LeftHand", "head": "Head", "spine": "Spine02", "hips": "Hips"}
+ATTACH = {"hand_R": "RightHand", "hand_L": "LeftHand", "head": "Head", "spine": "Spine02", "hips": "Hips",
+          "grip_R": "hand_R_grip", "grip_L": "hand_L_grip"}
+LOW_READY = 30          # degrees the held item's forward is tilted from "along the fingers" toward the front
 # game clip name -> source file suffix in assets/gen/meshy (pilot-<char>-<suffix>.glb)
 CHARS = {
     "player": {"idle": "idle_animation_glb_url", "walk": "rig_walking_armature_glb_url",
@@ -192,6 +195,89 @@ def split_mask(mesh, name):
     print(f"RJ_MASK {name}: {len(picks)} faces -> RJ_Mask, face patch RJ_Face behind it")
 
 
+def add_vests(mesh):
+    """Skin the fitted vests (assets/models/vests.glb) into this mesh as extra primitives with
+    materials RJ_Vest_light / RJ_Vest_heavy, weighted like the nearest body vertices, so they bend
+    with the torso. The game shows the one that is worn and hides the others by material name."""
+    path = os.path.join(rj.MODELS, "vests.glb")
+    if not os.path.exists(path):
+        print("RJ_WARN no vests.glb yet; build vests, then meshy"); return
+    objs, _ = import_glb(path)
+    vests = [o for o in objs if o.type == 'MESH' and o.data.materials]
+    for o in vests:                      # the importer may suffix names (.001); the game matches prefixes
+        for m in o.data.materials:
+            base = m.name.split(".")[0]
+            if m.name != base:
+                old = bpy.data.materials.get(base)
+                if old and old is not m:
+                    old.name = base + "_unused"
+                m.name = base
+    me, mw = mesh.data, mesh.matrix_world
+    body = {i for p in me.polygons if me.materials[p.material_index].name.startswith("RJ_Char_") for i in p.vertices}
+    kd = KDTree(len(body))
+    for i in body:
+        kd.insert(mw @ me.vertices[i].co, i)
+    kd.balance()
+    gname = {g.index: g.name for g in mesh.vertex_groups}
+    for vo in vests:
+        vo.vertex_groups.clear()
+        groups = {}
+        for v in vo.data.vertices:
+            acc = {}
+            for co, idx, d in kd.find_n(vo.matrix_world @ v.co, 4):
+                for g in me.vertices[idx].groups:
+                    acc[gname[g.group]] = acc.get(gname[g.group], 0) + g.weight
+            tot = sum(acc.values()) or 1
+            for n, w in acc.items():
+                if w / tot >= 0.05:
+                    if n not in groups:
+                        groups[n] = vo.vertex_groups.new(name=n)
+                    groups[n].add([v.index], w / tot, 'REPLACE')
+    for o in objs:
+        if o not in vests:
+            bpy.data.objects.remove(o, do_unlink=True)
+    bpy.ops.object.select_all(action='DESELECT')
+    for vo in vests:
+        vo.select_set(True)
+    mesh.select_set(True)
+    bpy.context.view_layer.objects.active = mesh
+    bpy.ops.object.join()
+    print(f"RJ_VESTS skinned into {mesh.name}: {[m.name for m in mesh.data.materials if m.name.startswith('RJ_Vest')]}")
+
+
+def add_grips(rig, mesh):
+    """Empty nodes hand_R_grip / hand_L_grip under the hand bones, measured from the hand mesh:
+    origin in the palm (centre of the vertices the hand bone carries), +Z (glTF) / -Y (Blender) =
+    the held item's forward, tilted LOW_READY degrees from along-the-fingers toward the front, +Y
+    (glTF) = the thumb side. World scale 1, so a gear.glb item added with an identity transform sits
+    in the hand at the right size."""
+    me, mw = mesh.data, mesh.matrix_world
+    gi = {g.name: g.index for g in mesh.vertex_groups}
+    out = []
+    for side, bone in (("R", "RightHand"), ("L", "LeftHand")):
+        pts = [mw @ v.co for v in me.vertices if any(g.group == gi[bone] and g.weight > 0.5 for g in v.groups)]
+        c = sum(pts, Vector()) / len(pts)
+        wrist = rig.matrix_world @ rig.data.bones[bone].head_local
+        f = (c - wrist).normalized()                         # along the fingers
+        fwd = Vector((0, -1, 0))
+        t = (fwd - f * f.dot(fwd)).normalized()              # thumb side
+        a = math.radians(LOW_READY)
+        fb, tb = (f * math.cos(a) + t * math.sin(a)).normalized(), (t * math.cos(a) - f * math.sin(a)).normalized()
+        y, z = -fb, tb                                       # gear forward is -Y in Blender
+        x = y.cross(z)
+        m = Matrix((x, y, z)).transposed().to_4x4()
+        m.translation = c
+        e = bpy.data.objects.new(f"hand_{side}_grip", None)
+        e.empty_display_size = 0.05
+        bpy.context.scene.collection.objects.link(e)
+        e.parent = rig; e.parent_type = 'BONE'; e.parent_bone = bone
+        bpy.context.view_layer.update()
+        e.matrix_world = m
+        out.append(e)
+    bpy.context.view_layer.update()
+    return out
+
+
 def build(name, clips):
     rj._reset_scene()
     for a in list(bpy.data.actions):
@@ -202,6 +288,9 @@ def build(name, clips):
     for a in list(bpy.data.actions):            # the rig file's own 0.3 s clip: not used
         bpy.data.actions.remove(a)
     rig.name, mesh.name = f"{name}_rig", name
+    for o in [o for o in objs if o.type == 'MESH' and o is not mesh]:   # importer's bone-shape icosphere
+        bpy.data.objects.remove(o, do_unlink=True)
+    objs = [rig, mesh]
     # convention: feet at 0 (the rig's root sits there already; check and correct the object)
     bpy.context.view_layer.update()
     lo, hi = rj._world_bounds([mesh])
@@ -217,6 +306,11 @@ def build(name, clips):
                 n.image.scale(1024, 1024)
     if name in MASKED:
         split_mask(mesh, name)
+    grips = []
+    if name in MASKED:                    # the player: vests skinned in, measured grip points
+        add_vests(mesh)
+        grips = add_grips(rig, mesh)
+        objs = [o for o in objs if o.name in bpy.data.objects] + grips
     # clips
     acts = {}
     for clip, suffix in clips.items():
@@ -246,7 +340,7 @@ def build(name, clips):
             st.action_slot = act.slots[0]
         tr.mute = True
         ad.action = None
-    rig["rj_attach"] = json.dumps(ATTACH)
+    rig["rj_attach"] = json.dumps({k: v for k, v in ATTACH.items() if grips or not k.startswith("grip")})
     rig["rj_source"] = "meshy"
     tris = sum(len(p.vertices) - 2 for p in mesh.data.polygons)
     bpy.ops.object.select_all(action='DESELECT')
@@ -262,6 +356,75 @@ def build(name, clips):
     return rig, mesh, sorted(acts), tris, path
 
 
+def show_mat(prefix, visible):
+    """Preview only: show or hide every material starting with prefix (the game does this by name)."""
+    for m in bpy.data.materials:
+        if m.name.startswith(prefix):
+            b = next(n for n in m.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
+            b.inputs['Alpha'].default_value = 1.0 if visible else 0.0
+            try: m.surface_render_method = 'DITHERED' if visible else 'BLENDED'
+            except Exception: pass
+
+
+def held_previews(rig, mesh, cam, outdir, manifest, tris):
+    """The player holding every held gear.glb item on hand_R_grip (identity transform), idle and aiming,
+    and wearing each vest."""
+    grip = bpy.data.objects.get("hand_R_grip")
+    gear_path = os.path.join(rj.MODELS, "gear.glb")
+    if not grip or not os.path.exists(gear_path):
+        return
+    objs, _ = import_glb(gear_path)
+    held = [o for o in objs if o.parent is None and o.get("rj_held")]
+    for o in objs:
+        o.hide_render = True
+    ad = rig.animation_data
+    show_mat("RJ_Vest", False)
+    shots = []
+    for item in [o for o in held if o.name in ("pistol_silenced", "tranq_pistol", "smg_compact", "shotgun_pump", "stun_baton", "glass_cutter")]:
+        item.parent = grip
+        item.matrix_parent_inverse = Matrix.Identity(4)
+        item.location, item.rotation_euler, item.scale = (0, 0, 0), (0, 0, 0), (1, 1, 1)
+        for o in [item] + list(item.children_recursive):
+            o.hide_render = False
+        for clip, t in (("idle", 0.3), ("aim_shoot", 0.5)):
+            act = bpy.data.actions[clip]
+            for tr in ad.nla_tracks: tr.mute = True
+            ad.action = act
+            if hasattr(ad, "action_slot") and len(getattr(act, "slots", [])):
+                ad.action_slot = act.slots[0]
+            f0, f1 = act.frame_range
+            bpy.context.scene.frame_set(int(f0 + (f1 - f0) * t))
+            bpy.context.view_layer.update()
+            rj.frame(cam, [mesh, item], elev=12, azim=-55 if clip == "idle" else -75, pad=1.08)
+            nm = f"held_{item.name}_{clip}"
+            rj.render(os.path.join(outdir, nm + ".png"))
+            shots.append(nm)
+        for o in [item] + list(item.children_recursive):
+            o.hide_render = True
+    ad.action = None
+    for vest in ("light", "heavy"):
+        show_mat("RJ_Vest", False); show_mat(f"RJ_Vest_{vest}", True)
+        for clip, az in (("idle", -30), ("idle", 150), ("crouch_walk", -30)):
+            act = bpy.data.actions[clip]
+            ad.action = act
+            if hasattr(ad, "action_slot") and len(getattr(act, "slots", [])):
+                ad.action_slot = act.slots[0]
+            f0, f1 = act.frame_range
+            bpy.context.scene.frame_set(int(f0))
+            bpy.context.view_layer.update()
+            rj.frame(cam, [mesh], elev=10, azim=az, pad=1.05)
+            nm = f"vest_{vest}_{clip}_{'back' if az > 90 else 'front'}"
+            rj.render(os.path.join(outdir, nm + ".png"))
+            shots.append(nm)
+    show_mat("RJ_Vest", False)
+    ad.action = None
+    for o in objs:
+        if o.name in bpy.data.objects:
+            bpy.data.objects.remove(o, do_unlink=True)
+    manifest["pieces"] += [{"name": n, "kind": "preview", "cells": [1, 1], "tris": tris, "children": [],
+                            "bounds": {}, "note": ""} for n in shots]
+
+
 manifest = {"lib": "meshy", "glbs": [], "pieces": [], "bytes": 0}
 preview = os.environ.get("RJ_PREVIEW", "1") == "1"
 outdir = os.path.join(rj.PREVIEWS, "meshy")
@@ -271,6 +434,7 @@ for name, clips in CHARS.items():
     manifest.setdefault("chars", {})[name] = {"clips": names, "tris": tris}
     if preview:
         cam = rj.setup_render((400, 400))
+        show_mat("RJ_Vest", False)
         ad = rig.animation_data
         for clip in names:
             act = bpy.data.actions[clip]
@@ -306,6 +470,7 @@ for name, clips in CHARS.items():
             bs.inputs['Alpha'].default_value = 1.0
             try: mm.surface_render_method = 'DITHERED'
             except Exception: pass
+            held_previews(rig, mesh, cam, outdir, manifest, tris)
 manifest["bytes"] = sum(os.path.getsize(os.path.join(rj.ROOT, g)) for g in manifest["glbs"])
 os.makedirs(outdir, exist_ok=True)
 json.dump(manifest, open(os.path.join(outdir, "manifest.json"), "w"), indent=1)

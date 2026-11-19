@@ -12,7 +12,7 @@
     1,
     1
    ],
-   "tris": 7549,
+   "tris": 8253,
    "children": [],
    "bounds": {},
    "note": ""
@@ -24,7 +24,7 @@
     1,
     1
    ],
-   "tris": 7549,
+   "tris": 8253,
    "children": [],
    "bounds": {},
    "note": ""
@@ -36,7 +36,7 @@
     1,
     1
    ],
-   "tris": 7549,
+   "tris": 8253,
    "children": [],
    "bounds": {},
    "note": ""
@@ -48,7 +48,7 @@
     1,
     1
    ],
-   "tris": 7549,
+   "tris": 8253,
    "children": [],
    "bounds": {},
    "note": ""
@@ -60,7 +60,7 @@
     1,
     1
    ],
-   "tris": 7549,
+   "tris": 8253,
    "children": [],
    "bounds": {},
    "note": ""
@@ -72,7 +72,7 @@
     1,
     1
    ],
-   "tris": 7549,
+   "tris": 8253,
    "children": [],
    "bounds": {},
    "note": ""
@@ -84,7 +84,7 @@
     1,
     1
    ],
-   "tris": 7549,
+   "tris": 8253,
    "children": [],
    "bounds": {},
    "note": ""
@@ -96,7 +96,7 @@
     1,
     1
    ],
-   "tris": 7549,
+   "tris": 8253,
    "children": [],
    "bounds": {},
    "note": ""
@@ -108,7 +108,7 @@
     1,
     1
    ],
-   "tris": 7549,
+   "tris": 8253,
    "children": [],
    "bounds": {},
    "note": ""
@@ -120,7 +120,7 @@
     1,
     1
    ],
-   "tris": 7549,
+   "tris": 8253,
    "children": [],
    "bounds": {},
    "note": ""
@@ -132,7 +132,223 @@
     1,
     1
    ],
-   "tris": 7549,
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_glass_cutter_idle",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_glass_cutter_aim_shoot",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_pistol_silenced_idle",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_pistol_silenced_aim_shoot",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_shotgun_pump_idle",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_shotgun_pump_aim_shoot",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_smg_compact_idle",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_smg_compact_aim_shoot",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_stun_baton_idle",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_stun_baton_aim_shoot",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_tranq_pistol_idle",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_tranq_pistol_aim_shoot",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "vest_light_idle_front",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "vest_light_idle_back",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "vest_light_crouch_walk_front",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "vest_heavy_idle_front",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "vest_heavy_idle_back",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "vest_heavy_crouch_walk_front",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
    "children": [],
    "bounds": {},
    "note": ""
@@ -210,7 +426,7 @@
    "note": ""
   }
  ],
- "bytes": 1585624,
+ "bytes": 1691844,
  "chars": {
   "player": {
    "clips": [
@@ -224,7 +440,7 @@
     "run",
     "walk"
    ],
-   "tris": 7549
+   "tris": 8253
   },
   "guard": {
    "clips": [

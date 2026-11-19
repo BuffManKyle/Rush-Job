@@ -29,7 +29,7 @@ SPINE = {"Spine", "Spine01", "Spine02"}
 TEX = 512
 
 
-NA, NZ = 20, 9          # angles around, rings up
+NA, NZ = 16, 9          # angles around, rings up
 
 
 def load_body():
@@ -154,7 +154,7 @@ def build():
     tree, char_meshes, bones = load_body()
     out = {}
     for key, fn in designs().items():
-        push = (lambda th, t: 0.015) if key == "light" else (lambda th, t: 0.05 if plate(th, t) else 0.03)
+        push = (lambda th, t: 0.012) if key == "light" else (lambda th, t: 0.04 if plate(th, t) else 0.025)
         rings, z0, z1 = torso_grid(tree, bones, push)
         bm = bmesh.new()
         uvl = bm.loops.layers.uv.new("UVMap")
@@ -176,28 +176,47 @@ def build():
         bpy.context.scene.collection.objects.link(ob)
         # shoulder straps (both vests), pouches/pads/collar (heavy): 3D extras
         g = rj.Part(f"vest_{key}_kit")
-        top = rings[-1]
-        ring_at = lambda th: min(top, key=lambda q: abs(q[1] - th))[0]
-        w = 0.03 if key == "light" else 0.045
-        sh = 0.012 if key == "light" else 0.03
-        for s in (-1, 1):
-            f_, b_ = ring_at(s * 0.85), ring_at(s * (math.pi - 0.85))
-            x = (f_.x + b_.x) / 2
-            hit = tree.ray_cast(Vector((x, (f_.y + b_.y) / 2, z1 + 0.14)), Vector((0, 0, -1)))
-            shoulder = hit[0].z if hit[0] and hit[0].z < z1 + 0.14 else z1 + 0.09   # not the hood
-            ztop = shoulder + sh
-            col = "Black" if key == "light" else "SteelDark"
-            g.box(x - w, f_.y - 0.01, z1 - 0.01, x + w, f_.y + 0.02, ztop, col, bottom=True)            # front rise
-            g.box(x - w, b_.y - 0.02, z1 - 0.01, x + w, b_.y + 0.01, ztop, col, bottom=True)            # back rise
-            g.box(x - w, f_.y - 0.01, ztop - 0.02, x + w, b_.y + 0.01, ztop, col, bottom=True)         # over the shoulder
+        ax = bones["Hips"].lerp(bones["neck"], 0.8)
+
+        def over_shoulder(x, off, phi0=0.0, phi1=math.pi, n=10):
+            """Points on the outermost body surface along an arc over the shoulder at this x:
+            phi 0 = straight forward, pi/2 = up, pi = straight back (rays from inside the body)."""
+            pts = []
+            o = Vector((x, ax.y, z1 - 0.06))
+            for k in range(n + 1):
+                ph = phi0 + (phi1 - phi0) * k / n
+                d = Vector((0, -math.cos(ph), math.sin(ph)))
+                r, q = None, o.copy()
+                for _ in range(8):
+                    hit = tree.ray_cast(q, d, 0.25)
+                    if not hit[0] or (hit[0] - o).length > 0.25:
+                        break
+                    r = (hit[0] - o).length
+                    q = hit[0] + d * 0.002
+                pts.append((o + d * ((r or 0.12) + off), d))
+            return pts
+
+        def strip(pts, w, mat):
+            for (a, da), (b, db) in zip(pts, pts[1:]):
+                quad = [a + Vector((-w, 0, 0)), a + Vector((w, 0, 0)), b + Vector((w, 0, 0)), b + Vector((-w, 0, 0))]
+                n = (quad[1] - quad[0]).cross(quad[2] - quad[1])
+                if n.dot(da) < 0:
+                    quad.reverse()
+                g.quad([tuple(q) for q in quad], mat)
+
+        w = 0.028 if key == "light" else 0.042
+        col = "Black" if key == "light" else "SteelDark"
+        for sgn in (-1, 1):
+            x = ax.x + sgn * 0.12
+            strip(over_shoulder(x, 0.012 if key == "light" else 0.022), w, col)          # strap, front to back
             if key == "heavy":
-                g.box(x - 0.055, f_.y + 0.03, ztop - 0.015, x + 0.055, b_.y - 0.03, ztop + 0.02, "SteelDark", bottom=True)  # pad
+                strip(over_shoulder(x, 0.035, math.pi * 0.3, math.pi * 0.7, 4), 0.06, "SteelDark")  # shoulder pad
         if key == "heavy":
             fr = lambda t: min(rings[min(NZ - 1, int(round(t * (NZ - 1))))], key=lambda q: abs(q[1]))[0]
             pz = fr(0.33)
             for x in (-0.1, 0.0, 0.1):                       # three mag pouches across the front plate
-                g.box(pz.x + x - 0.042, pz.y - 0.05, pz.z - 0.06, pz.x + x + 0.042, pz.y + 0.005, pz.z + 0.05, "Fabric", bottom=True)
-                g.box(pz.x + x - 0.044, pz.y - 0.055, pz.z + 0.03, pz.x + x + 0.044, pz.y + 0.005, pz.z + 0.055, "Black", bottom=True)
+                g.box(pz.x + x - 0.042, pz.y - 0.04, pz.z - 0.06, pz.x + x + 0.042, pz.y + 0.005, pz.z + 0.05, "Fabric", bottom=True)
+                g.box(pz.x + x - 0.044, pz.y - 0.045, pz.z + 0.03, pz.x + x + 0.044, pz.y + 0.005, pz.z + 0.055, "Black", bottom=True)
             rz = fr(0.72)
             g.box(rz.x - 0.13, rz.y - 0.04, rz.z - 0.04, rz.x - 0.07, rz.y + 0.005, rz.z + 0.04, "Black", bottom=True)  # radio
             g.cyl(rz.x - 0.09, rz.y - 0.02, rz.z + 0.04, rz.z + 0.11, 0.005, "Black", seg=4)
@@ -206,6 +225,12 @@ def build():
         ob.select_set(True); k.select_set(True)
         bpy.context.view_layer.objects.active = ob
         bpy.ops.object.join()
+        # every material on this vest starts with RJ_Vest_<key>, so the game can show/hide the whole
+        # vest (shell, straps, pouches) by material name when it is skinned into char_player
+        for i, m in enumerate(ob.data.materials):
+            if not m.name.startswith(f"RJ_Vest_{key}"):
+                c = m.copy(); c.name = f"RJ_Vest_{key}_{m.name[3:]}"
+                ob.data.materials[i] = c
         ob["rj_bone"] = BONE
         ob["rj_kind"] = "vest"
         ob["rj_armor"] = {"light": "light_vest", "heavy": "heavy_vest"}[key]

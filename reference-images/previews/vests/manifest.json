@@ -57,18 +57,18 @@
     1,
     1
    ],
-   "tris": 392,
+   "tris": 296,
    "children": [],
    "bounds": {
     "min": [
-     -0.311,
+     -0.308,
      0.95,
-     -0.232
+     -0.229
     ],
     "max": [
-     0.311,
-     1.392,
-     0.165
+     0.308,
+     1.397,
+     0.168
     ]
    },
    "note": "armor light_vest; wear on the Spine01 bone"
@@ -80,22 +80,22 @@
     1,
     1
    ],
-   "tris": 512,
+   "tris": 408,
    "children": [],
    "bounds": {
     "min": [
-     -0.326,
+     -0.321,
      0.95,
-     -0.267
+     -0.257
     ],
     "max": [
-     0.326,
-     1.371,
-     0.246
+     0.321,
+     1.416,
+     0.226
     ]
    },
    "note": "armor heavy_vest; wear on the Spine01 bone"
   }
  ],
- "bytes": 80488
+ "bytes": 66732
 }

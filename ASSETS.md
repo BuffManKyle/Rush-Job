@@ -60,7 +60,7 @@ Walls, windows and doors are whole cells, the same as the graybox and the collis
 ## Gear (weapons and gadgets): assets/models/gear.glb
 
 Scripted, not generated: held objects need exact shapes. Everything is about 1.25× real size so it reads from the 55° camera. Look up pieces by name like the kit.
-- **Held items** (`userData.rj_held`): `pistol_silenced`, `tranq_pistol`, `smg_compact`, `shotgun_pump`, `stun_baton`, `zip_ties`, `lockpick_kit`, `glass_cutter`, `body_bag_folded`, `keycard_cloner`, `mirror_kit`. **The origin is the right palm**, and the business end points **+Z** (forward). Add the piece to the `hand_R` attach bone and apply one fixed rotation per rig, so the gun's +Z lines up with the hand's forward.
+- **Held items** (`userData.rj_held`): `pistol_silenced`, `tranq_pistol`, `smg_compact`, `shotgun_pump`, `stun_baton`, `zip_ties`, `lockpick_kit`, `glass_cutter`, `body_bag_folded`, `keycard_cloner`, `mirror_kit`. **The origin is the right palm**, and the business end points **+Z** (forward). **To hold one, add it to the player's `hand_R_grip` node with an identity transform**: `player.getObjectByName('hand_R_grip').add(item)`, with no rotation and no scale fix. The grip node is measured from the Meshy hand: the origin is in the palm, the item points along the fingers tilted 30° forward (a relaxed low ready), the thumb side is up, and its world scale is 1. `hand_L_grip` mirrors it. Renders: `reference-images/previews/meshy/held_*.png`.
 - **Sockets** are empty child nodes: `<piece>_muzzle` (shots, tracers, flash; also the baton tip, the cutter cup and the mirror face) and `<piece>_grip2` (left hand on `smg_compact`, `shotgun_pump`). Placed items have `<piece>_grip`, for carrying them in the hand.
 - **Placed or thrown items** have their origin on the floor under their centre: `noisemaker`, `ecm_jammer`, `smoke_grenade`, `medkit`, `c4`, `keycard`, `body_bag` (2 × 1 cells, filled, lying down) and `thermal_drill` (1 × 2 cells, bit pointing +Z into the vault door).
 - **Children:** `thermal_drill_bit` spins about Z. `c4_timer` is `RJ_Danger` (armed; pulse it). `ecm_jammer_led` is `RJ_Ok` while jamming. `keycard_cloner_card` slides out when a copy is made.
@@ -74,16 +74,17 @@ The five masks in `src/data/loadout.ts`, each fitted to the Meshy player's face:
 - **Show one alone** (a shelf, a card): use it as is and centre the camera on its bounds.
 - The material names avoid the `RJ_Mask` prefix on purpose, so code that hides or tints `RJ_Mask*` leaves them alone.
 
-## Vests: assets/models/vests.glb
+## Vests: skinned into char_player.glb
 
-`vest_light` (`userData.rj_armor = "light_vest"`) is a slim navy vest with black side straps and a steel zip, 392 triangles. `vest_heavy` (`"heavy_vest"`) is a plate carrier: dark steel shell, raised navy front and back plates, three mag pouches, a radio, shoulder pads and a black cummerbund, 512 triangles. Both are fitted to the Meshy player's torso: rays from the spine find the outermost body surface (past the shirt and lapels) at 20 angles × 9 heights, from 0.95 m to 1.25 m, plus straps over the shoulders. Materials `RJ_Vest_light` / `RJ_Vest_heavy` each have one painted texture.
-- **Same contract as the masks:** the character's model space, `userData.rj_bone = "Spine01"`. To wear one: `vest.applyMatrix4(sk.boneInverses[sk.bones.indexOf(spine01)]); spine01.add(vest);`.
-- The vest is rigid on `Spine01`. Deep leans such as the crouch can make its hem graze the hips; tell me if that shows and I'll shorten it.
+The light and heavy vest are **part of `char_player.glb`**. They're extra skinned primitives that bend with the torso, weighted like the nearest body vertices. Every vest material starts with `RJ_Vest_light` or `RJ_Vest_heavy`; the heavy vest's straps and pouches are `RJ_Vest_heavy_Black` and so on.
+- **Show or hide by material prefix.** Hide every mesh whose `material.name` starts with `RJ_Vest_` at load, then show the worn one's prefix. Don't attach anything; the skin does it.
+- `vest_light` is a slim navy vest with straps over the shoulders and a zip (296 tris). `vest_heavy` is a plate carrier with plates, 3 mag pouches, a radio and shoulder pads (408 tris). The body plus one vest stays under the 8k character budget.
+- `assets/models/vests.glb` is still built from the same scripts (model space, rigid) for showing a vest on its own. The worn version is the skinned one.
 
 ## Characters
 
 Load `assets/models/char_<name>.glb`. It is the Meshy model when one exists (`char_player`, `char_guard` today), and otherwise a copy of the stand-in. Stand-ins are also kept as `standin_<name>.glb`. Either way:
-- **Attach points by role.** The rig node carries `userData.rj_attach`, e.g. `{"hand_R": "RightHand", "hand_L": "LeftHand", "head": "Head", "spine": "Spine02", "hips": "Hips"}` on Meshy rigs and `{"hand_R": "hand_R", ...}` on stand-ins. Do `obj.getObjectByName(attach.hand_R).add(gun)`.
+- **Attach points by role.** The rig node carries `userData.rj_attach`, e.g. `{"hand_R": "RightHand", "hand_L": "LeftHand", "head": "Head", "spine": "Spine02", "hips": "Hips", "grip_R": "hand_R_grip", "grip_L": "hand_L_grip"}` on the Meshy player and `{"hand_R": "hand_R", ...}` on stand-ins. Do `obj.getObjectByName(attach.hand_R).add(gun)`.
 - **Clips by name** through an `AnimationMixer`, from this set: `idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact`. Every character has at least `idle, walk, run, aim_shoot, hands_up`. A missing clip falls back to `idle`, never to the bind pose.
 - Clone with `SkeletonUtils.clone`. Metres, feet at y = 0, facing +Z, no net root travel (the lint checks this).
 - Meshy rigs are 24-joint Mixamo-style (`Hips`, `Spine`, `Spine01`, `Spine02`, `neck`, `Head`, `LeftArm`, `LeftForeArm`, `LeftHand`, …) with the bones stored in centimetres under a 0.01 scale. Use world positions, not raw bone `position` values.
@@ -216,9 +217,9 @@ Generated-file evidence (one row per file: tool, model version, job id, date, co
 | `mask_suit` | script `tools/blender/masks_build.py` | done | `assets/models/masks.glb` | 417 tris. The Suit; wear on the Head bone (see masks_build.py). |
 | `mask_objector` | script `tools/blender/masks_build.py` | done | `assets/models/masks.glb` | 305 tris. Conscientious Objector; wear on the Head bone (see masks_build.py). |
 | `mask_headline` | script `tools/blender/masks_build.py` | done | `assets/models/masks.glb` | 449 tris. The Headline; wear on the Head bone (see masks_build.py). |
-| `vest_light` | script `tools/blender/vests_build.py` | done | `assets/models/vests.glb` | 392 tris. armor light_vest; wear on the Spine01 bone. |
-| `vest_heavy` | script `tools/blender/vests_build.py` | done | `assets/models/vests.glb` | 512 tris. armor heavy_vest; wear on the Spine01 bone. |
-| `char_player` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_player.glb` | 7549 tris, own Meshy rig, clips: aim_shoot, carry_walk, crouch_idle, crouch_walk, hands_up, idle, interact, run, walk |
+| `vest_light` | script `tools/blender/vests_build.py` | done | `assets/models/vests.glb` | 296 tris. armor light_vest; wear on the Spine01 bone. |
+| `vest_heavy` | script `tools/blender/vests_build.py` | done | `assets/models/vests.glb` | 408 tris. armor heavy_vest; wear on the Spine01 bone. |
+| `char_player` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_player.glb` | 8253 tris, own Meshy rig, clips: aim_shoot, carry_walk, crouch_idle, crouch_walk, hands_up, idle, interact, run, walk |
 | `char_guard` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_guard.glb` | 7242 tris, own Meshy rig, clips: aim_shoot, hands_up, idle, run, walk, ziptied |
 | `standin_player` | script (stand-in) | placeholder | `assets/models/standin_player.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
 | `standin_guard` | script (stand-in) | placeholder | `assets/models/standin_guard.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
