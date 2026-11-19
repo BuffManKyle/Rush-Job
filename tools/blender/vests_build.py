@@ -58,22 +58,23 @@ def load_body():
 
 
 def torso_grid(tree, bones, push_fn):
-    """Rings of points on the torso surface (first hit outward from the spine axis), pushed out."""
+    """Rings around the torso from the belt line to under the collar. Radius = outermost body surface
+    (past the shirt and lapels), then smoothed outward so the vest drapes over the lapels instead of
+    following every fold, then pushed out by the vest's thickness."""
     hips, neck = bones["Hips"], bones["neck"]
-    z0, z1 = hips.z + 0.09, neck.z - 0.05
-    rings = []
+    z0, z1 = hips.z - 0.04, neck.z - 0.06
+    R, axes = [], []
     for j in range(NZ):
         t = j / (NZ - 1)
         z = z0 + t * (z1 - z0)
-        ax = hips.lerp(neck, (z - hips.z) / (neck.z - hips.z))
-        ring = []
-        last = 0.15
-        for i in range(NA + 1):                      # last column repeats the first (texture seam)
+        ax = hips.lerp(neck, max(0.0, (z - hips.z) / (neck.z - hips.z)))
+        o = Vector((ax.x, ax.y, z))
+        row, last = [], 0.15
+        for i in range(NA):
             th = -math.pi + 2 * math.pi * i / NA
             d = Vector((math.sin(th), -math.cos(th), 0))
-            o = Vector((ax.x, ax.y, z))
             r, q = None, o.copy()
-            for _ in range(8):                       # outermost torso surface within 0.3 m (past shirt, lapels)
+            for _ in range(8):
                 hit = tree.ray_cast(q, d, 0.3)
                 if not hit[0] or (hit[0] - o).length > 0.3:
                     break
@@ -81,7 +82,24 @@ def torso_grid(tree, bones, push_fn):
                 q = hit[0] + d * 0.002
             r = r if r is not None else last
             last = r
-            ring.append((o + d * (r + push_fn(th, t)), th, t))
+            row.append(r)
+        R.append(row); axes.append(o)
+    # smooth outward: a local max over neighbours (covers lapels), then two passes of averaging
+    M = [[max(R[jj][(i + di) % NA] for jj in range(max(0, j - 1), min(NZ, j + 2)) for di in (-1, 0, 1))
+          for i in range(NA)] for j in range(NZ)]
+    for _ in range(2):
+        M = [[max(R[j][i], (M[j][(i - 1) % NA] + 2 * M[j][i] + M[j][(i + 1) % NA]) / 4) for i in range(NA)]
+             for j in range(NZ)]
+        M = [[max(R[j][i], (M[max(0, j - 1)][i] + 2 * M[j][i] + M[min(NZ - 1, j + 1)][i]) / 4) for i in range(NA)]
+             for j in range(NZ)]
+    rings = []
+    for j in range(NZ):
+        t = j / (NZ - 1)
+        ring = []
+        for i in range(NA + 1):                      # last column repeats the first (texture seam)
+            th = -math.pi + 2 * math.pi * i / NA
+            d = Vector((math.sin(th), -math.cos(th), 0))
+            ring.append((axes[j] + d * (M[j][i % NA] + push_fn(th, t)), th, t))
         rings.append(ring)
     return rings, z0, z1
 
@@ -193,7 +211,11 @@ def build():
                         break
                     r = (hit[0] - o).length
                     q = hit[0] + d * 0.002
-                pts.append((o + d * ((r or 0.12) + off), d))
+                pt = o + d * ((r or 0.12) + off)
+                cap = bones["neck"].z + 0.02 + off      # the shoulder line: never ride up onto the hood
+                if pt.z > cap:
+                    pt = Vector((pt.x, pt.y, cap))
+                pts.append((pt, d))
             return pts
 
         def strip(pts, w, mat):
@@ -207,7 +229,7 @@ def build():
         w = 0.028 if key == "light" else 0.042
         col = "Black" if key == "light" else "SteelDark"
         for sgn in (-1, 1):
-            x = ax.x + sgn * 0.12
+            x = ax.x + sgn * 0.14
             strip(over_shoulder(x, 0.012 if key == "light" else 0.022), w, col)          # strap, front to back
             if key == "heavy":
                 strip(over_shoulder(x, 0.035, math.pi * 0.3, math.pi * 0.7, 4), 0.06, "SteelDark")  # shoulder pad

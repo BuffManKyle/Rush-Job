@@ -174,7 +174,55 @@
    "note": ""
   },
   {
+   "name": "held_pistol_silenced_idle_hand-60",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_pistol_silenced_idle_hand30",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
    "name": "held_pistol_silenced_aim_shoot",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_pistol_silenced_aim_shoot_hand-60",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 8253,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "held_pistol_silenced_aim_shoot_hand30",
    "kind": "preview",
    "cells": [
     1,
@@ -426,7 +474,7 @@
    "note": ""
   }
  ],
- "bytes": 1691856,
+ "bytes": 1898496,
  "chars": {
   "player": {
    "clips": [

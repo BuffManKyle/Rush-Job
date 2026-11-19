@@ -61,14 +61,14 @@
    "children": [],
    "bounds": {
     "min": [
-     -0.308,
-     0.95,
-     -0.229
+     -0.31,
+     0.82,
+     -0.272
     ],
     "max": [
-     0.308,
-     1.397,
-     0.168
+     0.309,
+     1.329,
+     0.197
     ]
    },
    "note": "armor light_vest; wear on the Spine01 bone"
@@ -84,18 +84,18 @@
    "children": [],
    "bounds": {
     "min": [
-     -0.321,
-     0.95,
-     -0.257
+     -0.323,
+     0.82,
+     -0.3
     ],
     "max": [
-     0.321,
-     1.416,
-     0.226
+     0.322,
+     1.352,
+     0.266
     ]
    },
    "note": "armor heavy_vest; wear on the Spine01 bone"
   }
  ],
- "bytes": 66732
+ "bytes": 66752
 }

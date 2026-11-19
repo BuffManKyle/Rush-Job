@@ -195,6 +195,9 @@ def split_mask(mesh, name):
     print(f"RJ_MASK {name}: {len(picks)} faces -> RJ_Mask, face patch RJ_Face behind it")
 
 
+VEST_BONES = {"Hips", "Spine", "Spine01", "Spine02", "neck", "LeftShoulder", "RightShoulder"}
+
+
 def add_vests(mesh):
     """Skin the fitted vests (assets/models/vests.glb) into this mesh as extra primitives with
     materials RJ_Vest_light / RJ_Vest_heavy, weighted like the nearest body vertices, so they bend
@@ -226,7 +229,11 @@ def add_vests(mesh):
             acc = {}
             for co, idx, d in kd.find_n(vo.matrix_world @ v.co, 4):
                 for g in me.vertices[idx].groups:
-                    acc[gname[g.group]] = acc.get(gname[g.group], 0) + g.weight
+                    n = gname[g.group]
+                    if n in VEST_BONES:          # torso and shoulders only: arms must not crush the vest
+                        acc[n] = acc.get(n, 0) + g.weight
+            if not acc:
+                acc = {"Spine01": 1.0}
             tot = sum(acc.values()) or 1
             for n, w in acc.items():
                 if w / tot >= 0.05:
@@ -245,32 +252,90 @@ def add_vests(mesh):
     print(f"RJ_VESTS skinned into {mesh.name}: {[m.name for m in mesh.data.materials if m.name.startswith('RJ_Vest')]}")
 
 
-def add_grips(rig, mesh):
-    """Empty nodes hand_R_grip / hand_L_grip under the hand bones, measured from the hand mesh:
-    origin in the palm (centre of the vertices the hand bone carries), +Z (glTF) / -Y (Blender) =
-    the held item's forward, tilted LOW_READY degrees from along-the-fingers toward the front, +Y
-    (glTF) = the thumb side. World scale 1, so a gear.glb item added with an identity transform sits
-    in the hand at the right size."""
+GRIP_R = 0.024          # radius of the curl = half a gun grip's thickness (gear is built ~1.25x)
+CURL_MAX = 3.6          # radians: fingertips end up back against the palm side of the grip
+
+
+def hand_frame(rig, mesh, side):
+    """Measure one hand in rest pose (world space): wrist W, along-fingers F, thumb side T (forward),
+    palm normal P (toward the body), the hand's vertex indices, its length and its centre across T."""
     me, mw = mesh.data, mesh.matrix_world
-    gi = {g.name: g.index for g in mesh.vertex_groups}
+    bone = "RightHand" if side == "R" else "LeftHand"
+    gi = mesh.vertex_groups[bone].index
+    idx = [v.index for v in me.vertices if any(g.group == gi and g.weight > 0.5 for g in v.groups)]
+    pts = [mw @ me.vertices[i].co for i in idx]
+    c = sum(pts, Vector()) / len(pts)
+    w = rig.matrix_world @ rig.data.bones[bone].head_local
+    f = (c - w).normalized()
+    fwd = Vector((0, -1, 0))
+    t = (fwd - f * f.dot(fwd)).normalized()
+    p = f.cross(t).normalized()
+    if p.x * (-c.x) < 0:                                     # palm faces the body
+        p = -p
+    length = max((q - w).dot(f) for q in pts)
+    mid_t = sum((q - w).dot(t) for q in pts) / len(pts)
+    return dict(W=w, F=f, T=t, P=p, idx=idx, L=length, mid_t=mid_t, bone=bone)
+
+
+def knuckle(h):
+    return h["W"] + h["F"] * (0.45 * h["L"])
+
+
+def add_fists(rig, mesh):
+    """Shape keys fist_R / fist_L (glTF morph targets): the fingers past the knuckles curl around a
+    GRIP_R cylinder on the palm side, so a held gun or bag handle sits in a closed hand. The Meshy
+    rig has no finger bones, so this is a blend shape the game sets to 1 while the hand holds something."""
+    me, mw = mesh.data, mesh.matrix_world
+    inv = mw.inverted()
+    if not me.shape_keys:
+        mesh.shape_key_add(name="Basis", from_mix=False)
+    for side in ("R", "L"):
+        h = hand_frame(rig, mesh, side)
+        k = knuckle(h)
+        sk = mesh.shape_key_add(name=f"fist_{side}", from_mix=False)
+        moved = 0
+        for i in h["idx"]:
+            v = mw @ me.vertices[i].co
+            a = (v - k).dot(h["F"])                              # along the fingers, past the knuckles
+            if a <= 0:
+                continue
+            b = (v - k).dot(h["P"])                              # toward the palm
+            c = (v - k).dot(h["T"])                              # across the hand
+            thumb = c - (h["mid_t"] - (k - h["W"]).dot(h["T"])) > 0.035   # thumb side: curls less
+            rc = GRIP_R
+            phi = min(a / rc, CURL_MAX * (0.45 if thumb else 1.0))
+            extra = max(0.0, a - phi * rc)                       # length past the full curl stays straight
+            centre = k + h["P"] * rc
+            radial = -h["P"] * (rc - b)
+            new = centre + radial * math.cos(phi) + h["F"] * (rc - b) * math.sin(phi) + h["T"] * c
+            if extra:
+                tang = h["F"] * math.cos(phi) + h["P"] * math.sin(phi)
+                new += tang * extra
+            sk.data[i].co = inv @ new
+            moved += 1
+        print(f"RJ_FIST {side}: curled {moved} of {len(h['idx'])} hand vertices")
+
+
+def add_grips(rig, mesh):
+    """Empty nodes hand_R_grip / hand_L_grip under the hand bones: origin on the axis the fist_*
+    fingers curl around (in the palm, mid-hand), +Z (glTF) / -Y (Blender) = the held item's forward,
+    tilted LOW_READY degrees from along-the-fingers toward the front, +Y (glTF) = the thumb side.
+    World scale 1, so a gear.glb item added with an identity transform sits in the closed hand."""
     out = []
-    for side, bone in (("R", "RightHand"), ("L", "LeftHand")):
-        pts = [mw @ v.co for v in me.vertices if any(g.group == gi[bone] and g.weight > 0.5 for g in v.groups)]
-        c = sum(pts, Vector()) / len(pts)
-        wrist = rig.matrix_world @ rig.data.bones[bone].head_local
-        f = (c - wrist).normalized()                         # along the fingers
-        fwd = Vector((0, -1, 0))
-        t = (fwd - f * f.dot(fwd)).normalized()              # thumb side
+    for side in ("R", "L"):
+        h = hand_frame(rig, mesh, side)
+        f, t = h["F"], h["T"]
         a = math.radians(LOW_READY)
         fb, tb = (f * math.cos(a) + t * math.sin(a)).normalized(), (t * math.cos(a) - f * math.sin(a)).normalized()
         y, z = -fb, tb                                       # gear forward is -Y in Blender
         x = y.cross(z)
         m = Matrix((x, y, z)).transposed().to_4x4()
-        m.translation = c
+        k = knuckle(h)
+        m.translation = k + h["P"] * GRIP_R + t * (h["mid_t"] - (k - h["W"]).dot(t))
         e = bpy.data.objects.new(f"hand_{side}_grip", None)
         e.empty_display_size = 0.05
         bpy.context.scene.collection.objects.link(e)
-        e.parent = rig; e.parent_type = 'BONE'; e.parent_bone = bone
+        e.parent = rig; e.parent_type = 'BONE'; e.parent_bone = h["bone"]
         bpy.context.view_layer.update()
         e.matrix_world = m
         out.append(e)
@@ -339,6 +404,7 @@ def build(name, clips):
     grips = []
     if name in MASKED:                    # the player: vests skinned in, measured grip points
         add_vests(mesh)
+        add_fists(rig, mesh)
         grips = add_grips(rig, mesh)
         objs = [o for o in objs if o.name in bpy.data.objects] + grips
     # clips
@@ -383,7 +449,8 @@ def build(name, clips):
     bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, export_yup=True,
                               export_apply=False, export_skins=True, export_animations=True,
                               export_animation_mode='ACTIONS', export_cameras=False, export_lights=False,
-                              export_extras=True, export_image_format='JPEG', export_jpeg_quality=85)
+                              export_extras=True, export_image_format='JPEG', export_jpeg_quality=85,
+                              export_try_sparse_sk=True)
     print(f"RJ_CHAR {name}: {tris} tris, h {hi.z - lo.z:.2f} m, clips {sorted(acts)}, {os.path.getsize(path)} bytes")
     return rig, mesh, sorted(acts), tris, path
 
@@ -411,6 +478,9 @@ def held_previews(rig, mesh, cam, outdir, manifest, tris):
         o.hide_render = True
     ad = rig.animation_data
     show_mat("RJ_Vest", False)
+    keys = mesh.data.shape_keys.key_blocks if mesh.data.shape_keys else {}
+    if "fist_R" in keys:
+        keys["fist_R"].value = 1.0
     shots = []
     for item in [o for o in held if o.name in ("pistol_silenced", "tranq_pistol", "smg_compact", "shotgun_pump", "stun_baton", "glass_cutter")]:
         item.parent = grip
@@ -431,9 +501,21 @@ def held_previews(rig, mesh, cam, outdir, manifest, tris):
             nm = f"held_{item.name}_{clip}"
             rj.render(os.path.join(outdir, nm + ".png"))
             shots.append(nm)
+            if item.name == "pistol_silenced":                  # close-up of the closed hand
+                gp = grip.matrix_world.translation
+                bx = rj.Part("RJ_HandFrame"); bx.box(gp.x - 0.13, gp.y - 0.13, gp.z - 0.13, gp.x + 0.13, gp.y + 0.13, gp.z + 0.13, "Glass")
+                fo = bx.build(); fo.hide_render = True
+                for az in (-60, 30):
+                    rj.frame(cam, [fo], elev=10, azim=az, pad=1.0)
+                    nm2 = f"held_{item.name}_{clip}_hand{az}"
+                    rj.render(os.path.join(outdir, nm2 + ".png"))
+                    shots.append(nm2)
+                bpy.data.objects.remove(fo, do_unlink=True)
         for o in [item] + list(item.children_recursive):
             o.hide_render = True
     ad.action = None
+    if "fist_R" in keys:
+        keys["fist_R"].value = 0.0
     for vest in ("light", "heavy"):
         show_mat("RJ_Vest", False); show_mat(f"RJ_Vest_{vest}", True)
         for clip, az in (("idle", -30), ("idle", 150), ("crouch_walk", -30)):
