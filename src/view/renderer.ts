@@ -90,6 +90,8 @@ export class WorldView {
   private key: THREE.DirectionalLight;
   private hemi: THREE.HemisphereLight;
   private tmpM = new THREE.Matrix4();
+  /** Set when another view (the loadout's GearView) shows a real mask model: animate() then leaves the built-in RJ_Mask mesh alone. */
+  customMask: boolean = false;
   private kitLevel: KitLevel | null = null;
   private chars = new Map<string, CharInstance>(); // 'player', observer ids, cop ids
   /** The player's animated character (for attaching held gear), if the kit loaded. */
@@ -426,7 +428,7 @@ export class WorldView {
     const p = sim.player;
     const pc = this.chars.get('player');
     if (pc) {
-      for (const m of pc.meshes) if ((m.material as THREE.Material).name === 'RJ_Mask') m.visible = p.masked;
+      if (!this.customMask) for (const m of pc.meshes) if ((m.material as THREE.Material).name === 'RJ_Mask') m.visible = p.masked;
       // legs from walk/run at the real pace; bag arms held down ("@L" one bag, "@LR" two)
       const speed = Math.hypot(p.vel.x, p.vel.y);
       const run = p.moving && speed > (T.player.walkSpeed + T.player.sprintSpeed) / 2;
