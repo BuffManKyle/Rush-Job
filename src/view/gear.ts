@@ -8,6 +8,7 @@ import { INTERACTION_TOOL } from '../data/interactions';
 import { powerOut } from '../sim/security';
 import type { Sim } from '../sim/sim';
 import type { Kit } from './kit';
+import { tintMask } from './outfit';
 import type { WorldView } from './renderer';
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -43,6 +44,7 @@ export class GearView {
     private kit: Kit | null,
   ) {
     view.scene.add(this.group);
+    if (view.playerChar) tintMask(view.playerChar, sim.loadout.mask);
     view.scene.traverse((o) => {
       const l = o as THREE.Light;
       if (l.isLight && !(l as THREE.PointLight).isPointLight) this.lights.push({ light: l, base: l.intensity });

@@ -152,13 +152,35 @@ export const ARMORS: Record<ArmorId, ArmorDef> = {
   heavy_vest: { id: 'heavy_vest', name: 'Heavy vest', unlock: 70000, blurb: `+${T.armor.heavy_vest.armor} armor, ${Math.round((1 - T.armor.heavy_vest.speed) * 100)}% slower, and it shows under the suit (no casing bonus).` },
 };
 
+export type MaskId = 'plain' | 'rumor' | 'suit' | 'objector' | 'headline';
+
+export interface MaskDef {
+  id: MaskId;
+  name: string;
+  /** Rating that unlocks it (DESIGN.md "Payout and ratings"); null = you start with it. */
+  unlock: string | null;
+  blurb: string;
+  tint: number; // multiplies the RJ_Mask texture
+  emissive: number;
+}
+
+/** Masks are cosmetic: they reward replaying a job a different way. Tints stand in until rj-assets makes real masks. */
+export const MASKS: Record<MaskId, MaskDef> = {
+  plain: { id: 'plain', name: 'The Regular', unlock: null, blurb: 'Off the rack. Says nothing, which is the point.', tint: 0xffffff, emissive: 0x000000 },
+  rumor: { id: 'rumor', name: 'The Rumor', unlock: 'Ghost', blurb: 'For the job nobody can prove happened.', tint: 0x9aa4b8, emissive: 0x0b1020 },
+  suit: { id: 'suit', name: 'The Suit', unlock: 'Professional', blurb: 'No alarm, no fuss, no tie out of place.', tint: 0x2fd0c0, emissive: 0x022a26 },
+  objector: { id: 'objector', name: 'Conscientious Objector', unlock: 'Pacifist', blurb: 'Loud, sure. Nobody died, though.', tint: 0xf5d547, emissive: 0x2a2200 },
+  headline: { id: 'headline', name: 'The Headline', unlock: 'Loud', blurb: 'Front page, above the fold.', tint: 0xf08a24, emissive: 0x2a1000 },
+};
+
 export interface Loadout {
   weapon: WeaponId;
   gadgets: [GadgetId | null, GadgetId | null];
   armor: ArmorId;
+  mask: MaskId;
 }
 
-export const DEFAULT_LOADOUT: Loadout = { weapon: 'pistol_silenced', gadgets: ['lockpick_kit', 'noisemaker'], armor: 'suit' };
+export const DEFAULT_LOADOUT: Loadout = { weapon: 'pistol_silenced', gadgets: ['lockpick_kit', 'noisemaker'], armor: 'suit', mask: 'plain' };
 
 /** Everything is unlocked while testing; the shop and job board come later. */
 export const UNLOCK_ALL = true;
@@ -175,5 +197,6 @@ export function cleanLoadout(raw: unknown): Loadout {
     weapon: typeof r.weapon === 'string' && r.weapon in WEAPONS && !WEAPONS[r.weapon as WeaponId].unavailable ? (r.weapon as WeaponId) : DEFAULT_LOADOUT.weapon,
     gadgets: [g0, g1 === g0 ? null : g1],
     armor: typeof r.armor === 'string' && r.armor in ARMORS ? (r.armor as ArmorId) : DEFAULT_LOADOUT.armor,
+    mask: typeof r.mask === 'string' && r.mask in MASKS ? (r.mask as MaskId) : DEFAULT_LOADOUT.mask,
   };
 }

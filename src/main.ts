@@ -14,6 +14,8 @@ import { Hud } from './view/hud';
 import { WorldView } from './view/renderer';
 import { loadKit, type Kit } from './view/kit';
 import { GearView } from './view/gear';
+import { computePayout } from './sim/payout';
+import { bankJob } from './wallet';
 import { GearHud } from './view/gearHud';
 import { pickLoadout, savedLoadout } from './view/loadoutPicker';
 import { cleanLoadout, type Loadout } from './data/loadout';
@@ -34,13 +36,14 @@ interface Game {
 }
 
 let loadout: Loadout = savedLoadout();
+let banked = false; // this job's payout has gone into the wallet
 let picking = false;
 
 /** Open the loadout picker (boot, or L on the pause/payout screen), then start with the pick. */
 function kitUp(seed: number): void {
   if (picking) return;
   picking = true;
-  pickLoadout(level.title).then((l) => {
+  pickLoadout(level.title, kit).then((l) => {
     picking = false;
     loadout = l;
     start(seed);
@@ -60,6 +63,7 @@ function start(seed: number): void {
     game.gearHud.dispose();
   }
   const sim = new Sim(level, seed, loadout);
+  banked = false;
   const view = new WorldView(app, sim, kit);
   const hud = new Hud(hudEl, sim);
   const debug = new DebugOverlay(hudEl.firstElementChild as HTMLElement, view.debugGroup, sim);
@@ -106,6 +110,11 @@ function frame(now: number): void {
   const { sim, debug, cam, hud } = game;
 
   if (sim.ended) {
+    if (!banked) {
+      banked = true;
+      const pay = computePayout(sim);
+      bankJob(pay.total, pay.rating); // cash for the locker screen (src/wallet.ts)
+    }
     hud.showPayout((fresh) => start(fresh ? (Math.random() * 1e9) >>> 0 : sim.seed));
     if (input.consume('KeyR')) return start(sim.seed);
     if (input.consume('KeyN')) return start((Math.random() * 1e9) >>> 0);
@@ -199,5 +208,5 @@ const params = new URLSearchParams(location.search);
     requestAnimationFrame(frame);
   };
   if (params.has('nopick')) go(loadout);
-  else pickLoadout(level.title).then(go);
+  else pickLoadout(level.title, kit).then(go);
 });

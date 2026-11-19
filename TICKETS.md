@@ -5,7 +5,7 @@ Status: [x] done · [~] partial · [ ] todo.
 
 ## How to play-test
 - `npm install`, then `npm run dev` → http://localhost:5173 (the browser pane uses `.claude/launch.json`).
-- A loadout picker opens before the job (Enter starts; your pick is remembered in this browser). `?nopick` skips it with the last loadout. On the pause or payout screen, L reopens it and restarts.
+- The loadout screen ("the locker") opens before the job: your masked character in front of a wall, wearing the loadout. Click a slot next to the body (mask, weapon, gadget 1/2 on the belt, armor) to pick; hovering an option previews it on the character; drag to turn. Cash banked from payouts shows top right (`src/wallet.ts`, localStorage `rj.progress`). Enter starts; your pick is remembered in this browser. `?nopick` skips it with the last loadout. On the pause or payout screen, L reopens it and restarts.
 - `?seed=123` replays a run exactly. The seed shows on the pause screen (Esc) and the payout receipt.
 - Controls: WASD (screen-relative; you face where you walk) · Shift sprint · C crouch · E hold to interact · G hold to mask up · Q mark (cursor) · F throw bag · 1/2 use gadget slot · V shout (intimidate) · right mouse aim · left click/Space shoot · R reload · wheel zoom · F1 debug · Esc pause.
 - F1 debug: nav grid, routes (active bright, inactive dim), guard paths, noise radii, and per-observer detection math (why the meter moves). It also shows the shuffle results (spoilers).
@@ -74,6 +74,8 @@ Status: [x] done · [~] partial · [ ] todo.
 - [x] Intimidate (V, masked): civilians within 8 m and in sight drop and cower; a shout is 5 m of noise. Untied, they get up after 30–38 s and run for a guard or the panic button. After the alarm they stay down.
 - [x] Panic button (`levels/glint.tmj` layer `security`, behind the counter): a civilian who sees you masked runs to the nearest guard OR panic button; 0.8 s at the button = alarm. Dead while the power is out.
 - [x] Breaker (same layer, back hall): hold E 2 s (no mask needed). Cameras blind, panic button dead, lights dimmed. The desk sends the nearest guard after 8 s; 3 s at the box and the power is back (about a 15–20 s window). `T.power`.
+- [x] Masks (cosmetic, `MASKS` in `src/data/loadout.ts`): The Regular (start), The Rumor (Ghost), The Suit (Professional), Conscientious Objector (Pacifist), The Headline (Loud). For now they're tints on the RJ_Mask material, in the locker and in game. Ratings and cash bank into `rj.progress` when a job ends; nothing is spent yet.
+- [ ] Locker follow-ups: real mask models and vest models from rj-assets (vests are primitive boxes now); the designed menu scene to replace the brick wall; enforce prices once the shop exists.
 - [ ] Gadget follow-ups: drag bodies (the closet option); throw arc preview for the noisemaker and smoke; keycard cloner when the Bank has keycards; mirror kit (Gallery); shop prices enforced once the cash shop exists; sounds for each gadget.
 - [~] Guards fight in the loud phase: they shoot and chase; no cover AI yet
 - [x] Blender kit swapped in (`src/view/kit.ts`, `src/view/kitLevel.ts`): instanced walls/windows/doorways/floors/trim with cutaway, door leaves, counter segments, display cases (intact → smashed → bagged; tall against walls), safe door + loot, van, desks, security cameras, sticky note, sign, bags. Stand-in characters with clips (idle/walk/run/crouch/carry/interact/hands_up/ziptied); cops reuse the guard rig, darkened. `?graybox` forces the old look; a failed load falls back to it too.
