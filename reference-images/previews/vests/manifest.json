@@ -1,0 +1,101 @@
+{
+ "lib": "vests",
+ "glb": "assets/models/vests.glb",
+ "pieces": [
+  {
+   "name": "vest_light_worn",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 0,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "vest_light_back",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 0,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "vest_heavy_worn",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 0,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "vest_heavy_back",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 0,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "vest_light",
+   "kind": "vest",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 392,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.311,
+     0.95,
+     -0.232
+    ],
+    "max": [
+     0.311,
+     1.392,
+     0.165
+    ]
+   },
+   "note": "armor light_vest; wear on the Spine01 bone"
+  },
+  {
+   "name": "vest_heavy",
+   "kind": "vest",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 512,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.326,
+     0.95,
+     -0.267
+    ],
+    "max": [
+     0.326,
+     1.371,
+     0.246
+    ]
+   },
+   "note": "armor heavy_vest; wear on the Spine01 bone"
+  }
+ ],
+ "bytes": 80488
+}

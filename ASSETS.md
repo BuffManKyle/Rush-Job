@@ -74,6 +74,12 @@ The five masks in `src/data/loadout.ts`, each fitted to the Meshy player's face:
 - **Show one alone** (a shelf, a card): use it as is and centre the camera on its bounds.
 - The material names avoid the `RJ_Mask` prefix on purpose, so code that hides or tints `RJ_Mask*` leaves them alone.
 
+## Vests: assets/models/vests.glb
+
+`vest_light` (`userData.rj_armor = "light_vest"`) is a slim navy vest with black side straps and a steel zip, 392 triangles. `vest_heavy` (`"heavy_vest"`) is a plate carrier: dark steel shell, raised navy front and back plates, three mag pouches, a radio, shoulder pads and a black cummerbund, 512 triangles. Both are fitted to the Meshy player's torso: rays from the spine find the outermost body surface (past the shirt and lapels) at 20 angles × 9 heights, from 0.95 m to 1.25 m, plus straps over the shoulders. Materials `RJ_Vest_light` / `RJ_Vest_heavy` each have one painted texture.
+- **Same contract as the masks:** the character's model space, `userData.rj_bone = "Spine01"`. To wear one: `vest.applyMatrix4(sk.boneInverses[sk.bones.indexOf(spine01)]); spine01.add(vest);`.
+- The vest is rigid on `Spine01`. Deep leans such as the crouch can make its hem graze the hips; tell me if that shows and I'll shorten it.
+
 ## Characters
 
 Load `assets/models/char_<name>.glb`. It is the Meshy model when one exists (`char_player`, `char_guard` today), and otherwise a copy of the stand-in. Stand-ins are also kept as `standin_<name>.glb`. Either way:
@@ -210,6 +216,8 @@ Generated-file evidence (one row per file: tool, model version, job id, date, co
 | `mask_suit` | script `tools/blender/masks_build.py` | done | `assets/models/masks.glb` | 417 tris. The Suit; wear on the Head bone (see masks_build.py). |
 | `mask_objector` | script `tools/blender/masks_build.py` | done | `assets/models/masks.glb` | 305 tris. Conscientious Objector; wear on the Head bone (see masks_build.py). |
 | `mask_headline` | script `tools/blender/masks_build.py` | done | `assets/models/masks.glb` | 449 tris. The Headline; wear on the Head bone (see masks_build.py). |
+| `vest_light` | script `tools/blender/vests_build.py` | done | `assets/models/vests.glb` | 392 tris. armor light_vest; wear on the Spine01 bone. |
+| `vest_heavy` | script `tools/blender/vests_build.py` | done | `assets/models/vests.glb` | 512 tris. armor heavy_vest; wear on the Spine01 bone. |
 | `char_player` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_player.glb` | 7549 tris, own Meshy rig, clips: aim_shoot, carry_walk, crouch_idle, crouch_walk, hands_up, idle, interact, run, walk |
 | `char_guard` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_guard.glb` | 7242 tris, own Meshy rig, clips: aim_shoot, hands_up, idle, run, walk, ziptied |
 | `standin_player` | script (stand-in) | placeholder | `assets/models/standin_player.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
