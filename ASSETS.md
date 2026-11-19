@@ -66,6 +66,14 @@ Scripted, not generated: held objects need exact shapes. Everything is about 1.2
 - **Children:** `thermal_drill_bit` spins about Z. `c4_timer` is `RJ_Danger` (armed; pulse it). `ecm_jammer_led` is `RJ_Ok` while jamming. `keycard_cloner_card` slides out when a copy is made.
 - Red appears only on the armed C4 timer. The medkit cross and the baton electrodes are teal.
 
+## Masks: assets/models/masks.glb
+
+The five masks in `src/data/loadout.ts`, each fitted to the Meshy player's face: `mask_regular`, `mask_rumor`, `mask_suit`, `mask_objector`, `mask_headline` (`userData.rj_mask` holds the loadout id). Each has one painted 512 px texture, material `RJ_Lacquer_<id>`. The Suit adds gold glasses and The Headline a raised fold. They are 305–449 triangles each.
+- **Space:** the character's model space (rest pose, feet at 0, facing +Z), so a mask sits exactly over the face. `userData.rj_bone = "Head"`.
+- **Wear one:** `mask.applyMatrix4(sk.boneInverses[sk.bones.indexOf(head)]); head.add(mask);` where `head = player.getObjectByName('Head')`. Then hide the `RJ_Mask` mesh, so the texture mask under it doesn't peek through; `RJ_Face` stays as it is. Drop the colour tint, since the masks carry their own colours.
+- **Show one alone** (a shelf, a card): use it as is and centre the camera on its bounds.
+- The material names avoid the `RJ_Mask` prefix on purpose, so code that hides or tints `RJ_Mask*` leaves them alone.
+
 ## Characters
 
 Load `assets/models/char_<name>.glb`. It is the Meshy model when one exists (`char_player`, `char_guard` today), and otherwise a copy of the stand-in. Stand-ins are also kept as `standin_<name>.glb`. Either way:
@@ -197,6 +205,11 @@ Generated-file evidence (one row per file: tool, model version, job id, date, co
 | `c4` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 100 tris. C4 charge: two putty blocks, taped detonator; child c4_timer is RJ_Danger (armed = danger). Origin on the floor. Children: `c4_grip`, `c4_timer`. |
 | `mirror_kit` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 136 tris. telescopic inspection mirror for bending laser beams (held); mirror face at the far end. Children: `mirror_kit_muzzle`. |
 | `thermal_drill` | script `tools/blender/gear_build.py` | done | `assets/models/gear.glb` | 326 tris. thermal drill on its stand, ~1.1 m long, bit points +Z (into the vault door); child thermal_drill_bit spins about Z; the status screen (RJ_Screen) faces the back. Children: `thermal_drill_bit`. |
+| `mask_regular` | script `tools/blender/masks_build.py` | done | `assets/models/masks.glb` | 305 tris. The Regular; wear on the Head bone (see masks_build.py). |
+| `mask_rumor` | script `tools/blender/masks_build.py` | done | `assets/models/masks.glb` | 305 tris. The Rumor; wear on the Head bone (see masks_build.py). |
+| `mask_suit` | script `tools/blender/masks_build.py` | done | `assets/models/masks.glb` | 417 tris. The Suit; wear on the Head bone (see masks_build.py). |
+| `mask_objector` | script `tools/blender/masks_build.py` | done | `assets/models/masks.glb` | 305 tris. Conscientious Objector; wear on the Head bone (see masks_build.py). |
+| `mask_headline` | script `tools/blender/masks_build.py` | done | `assets/models/masks.glb` | 449 tris. The Headline; wear on the Head bone (see masks_build.py). |
 | `char_player` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_player.glb` | 7549 tris, own Meshy rig, clips: aim_shoot, carry_walk, crouch_idle, crouch_walk, hands_up, idle, interact, run, walk |
 | `char_guard` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_guard.glb` | 7242 tris, own Meshy rig, clips: aim_shoot, hands_up, idle, run, walk, ziptied |
 | `standin_player` | script (stand-in) | placeholder | `assets/models/standin_player.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |

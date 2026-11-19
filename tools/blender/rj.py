@@ -39,7 +39,9 @@ PAL = {
     "steel": "#8a9199", "steel_dark": "#3a3f47", "black": "#16171b", "white": "#f2efe8",
     "glass": "#a8dede", "danger": "#e0262f", "amber": "#f2b230", "hatch": "#1b1b1f",
     "safe": "#3d4a45", "plant": "#3f7a55", "van": "#86cdb0", "rubber": "#202125",
-    "fabric": "#34373e", "bag": "#6f7788", "paper": "#f4e48a", "cash": "#6f9a55",
+    "fabric": "#34373e", "bag": "#6f7788",
+    "mask_white": "#f2efe8", "mask_slate": "#5d6577", "mask_cream": "#e8dcc4", "mask_yellow": "#f2c94c",
+    "mask_news": "#e9e4d6", "news_ink": "#8a857a", "headline_orange": "#f08a24", "paper": "#f4e48a", "cash": "#6f9a55",
     "skin": "#c99a78", "suit": "#2b2b30", "uniform": "#2f4470", "mask": "#f2efe8",
 }
 
@@ -83,6 +85,7 @@ MATS = {
     "Paper":     dict(c="paper", r=1.0),
     "Cash":      dict(c="cash", r=0.9),
     "Cream":     dict(c="plaster", r=0.8),
+    "Orange":     dict(c="headline_orange", r=0.6),
     # light / signal (emissive). Red is ONLY RJ_Danger.
     "Sodium":    dict(c="sodium", r=0.5, e=4.0),
     "Screen":    dict(c="teal_light", r=0.3, e=2.0),

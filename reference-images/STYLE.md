@@ -62,6 +62,12 @@ Values are sRGB hex. Swatches are the names used in `rj.py`.
 | | `bag` | `#6f7788` | Loot bags: slate canvas, lighter than the suits so a carried bag reads from above |
 | | `paper` | `#f4e48a` | Sticky notes (the safe code) |
 | | `cash` | `#6f9a55` | Cash stacks |
+| Masks | `mask_white` | `#f2efe8` | The Regular |
+| | `mask_slate` | `#5d6577` | The Rumor (black redaction bars) |
+| | `mask_cream` | `#e8dcc4` | The Suit (gold glasses, black hair and moustache) |
+| | `mask_yellow` | `#f2c94c` | Conscientious Objector (white dove, black outline, olive sprig) |
+| | `mask_news` / `news_ink` | `#e9e4d6` / `#8a857a` | The Headline (newsprint) |
+| | `headline_orange` | `#f08a24` | The Headline's price tag (orange, not red) |
 | Cast (stand-ins) | `skin` | `#c99a78` | |
 | | `suit` | `#2b2b30` | Player suit |
 | | `uniform` | `#2f4470` | Guard uniform |

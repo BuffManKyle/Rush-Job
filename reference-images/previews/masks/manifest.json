@@ -1,0 +1,182 @@
+{
+ "lib": "masks",
+ "glb": "assets/models/masks.glb",
+ "pieces": [
+  {
+   "name": "mask_regular_worn",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 305,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "mask_rumor_worn",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 305,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "mask_suit_worn",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 417,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "mask_objector_worn",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 305,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "mask_headline_worn",
+   "kind": "preview",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 449,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "mask_regular",
+   "kind": "mask",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 305,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.135,
+     1.322,
+     -0.025
+    ],
+    "max": [
+     0.132,
+     1.596,
+     0.23
+    ]
+   },
+   "note": "The Regular; wear on the Head bone (see masks_build.py)"
+  },
+  {
+   "name": "mask_rumor",
+   "kind": "mask",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 305,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.135,
+     1.322,
+     -0.025
+    ],
+    "max": [
+     0.132,
+     1.596,
+     0.23
+    ]
+   },
+   "note": "The Rumor; wear on the Head bone (see masks_build.py)"
+  },
+  {
+   "name": "mask_suit",
+   "kind": "mask",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 417,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.135,
+     1.322,
+     -0.025
+    ],
+    "max": [
+     0.132,
+     1.596,
+     0.23
+    ]
+   },
+   "note": "The Suit; wear on the Head bone (see masks_build.py)"
+  },
+  {
+   "name": "mask_objector",
+   "kind": "mask",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 305,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.135,
+     1.322,
+     -0.025
+    ],
+    "max": [
+     0.132,
+     1.596,
+     0.23
+    ]
+   },
+   "note": "Conscientious Objector; wear on the Head bone (see masks_build.py)"
+  },
+  {
+   "name": "mask_headline",
+   "kind": "mask",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 449,
+   "children": [],
+   "bounds": {
+    "min": [
+     -0.135,
+     1.322,
+     -0.025
+    ],
+    "max": [
+     0.132,
+     1.596,
+     0.234
+    ]
+   },
+   "note": "The Headline; wear on the Head bone (see masks_build.py)"
+  }
+ ],
+ "bytes": 208680
+}
