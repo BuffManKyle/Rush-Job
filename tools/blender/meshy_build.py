@@ -278,6 +278,36 @@ def add_grips(rig, mesh):
     return out
 
 
+def level_aim(rig, act, grip, bone="RightHand"):
+    """The library aim clip holds the hand ~35 degrees nose-up. On every frame, rotate the hand about
+    the wrist so the held item's forward (grip -Y in Blender) is level, keeping where it points."""
+    ad = rig.animation_data or rig.animation_data_create()
+    ad.action = act
+    if hasattr(ad, "action_slot") and len(getattr(act, "slots", [])):
+        ad.action_slot = act.slots[0]
+    pb = rig.pose.bones[bone]
+    pb.rotation_mode = 'QUATERNION'
+    f0, f1 = (int(round(x)) for x in act.frame_range)
+    worst = 0.0
+    for f in range(f0, f1 + 1):
+        bpy.context.scene.frame_set(f)
+        bpy.context.view_layer.update()
+        fw = (grip.matrix_world.to_3x3() @ Vector((0, -1, 0))).normalized()
+        flat = Vector((fw.x, fw.y, 0))
+        if flat.length < 1e-4:
+            continue
+        flat.normalize()
+        worst = max(worst, math.degrees(fw.angle(flat)))
+        q = fw.rotation_difference(flat)                         # world-space correction
+        bw = (rig.matrix_world @ pb.matrix).to_quaternion()     # the hand's current world rotation
+        q_local = bw.inverted() @ q @ bw                         # the correction in the hand's own frame
+        pb.rotation_quaternion = pb.rotation_quaternion @ q_local  # rotation only: location/scale untouched
+        bpy.context.view_layer.update()
+        pb.keyframe_insert("rotation_quaternion", frame=f)
+    ad.action = None
+    print(f"RJ_AIM levelled {act.name}: up to {worst:.0f} deg corrected over frames {f0}-{f1}")
+
+
 def build(name, clips):
     rj._reset_scene()
     for a in list(bpy.data.actions):
@@ -327,6 +357,8 @@ def build(name, clips):
     if "crouch_walk" in acts:
         acts["crouch_idle"] = hold_first_pose(acts["crouch_walk"], "crouch_idle")
     acts["hands_up"] = hands_up(rig, "hands_up")
+    if grips and "aim_shoot" in acts:
+        level_aim(rig, acts["aim_shoot"], bpy.data.objects["hand_R_grip"])
     # attach every clip to the rig as muted NLA tracks so the exporter writes them all
     ad = rig.animation_data or rig.animation_data_create()
     for clip, act in acts.items():
