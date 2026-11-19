@@ -53,21 +53,57 @@ function wearOnBone(ch: CharInstance, kit: Kit | null, pieceName: string, boneNa
   return piece;
 }
 
-const VEST_PIECE: Record<Loadout['armor'], string | null> = { suit: null, light_vest: 'vest_light', heavy_vest: 'vest_heavy' };
+const VEST_MATERIAL: Record<Loadout['armor'], string | null> = { suit: null, light_vest: 'RJ_Vest_light', heavy_vest: 'RJ_Vest_heavy' };
 
-/** Put the loadout's vest on: vests.glb on Spine01 (rj-assets), or a primitive box if the model is missing. */
-export function wearVest(ch: CharInstance, kit: Kit | null, armor: Loadout['armor']): THREE.Object3D | null {
+/**
+ * Put the loadout's vest on. The vests are skinned into char_player.glb (materials RJ_Vest_light*,
+ * RJ_Vest_heavy*, so they bend with the torso): hide every RJ_Vest_ mesh, then show the worn one.
+ * On an older rig without them, falls back to primitive boxes. Returns the visible parts (empty for the suit).
+ */
+export function wearVest(ch: CharInstance, armor: Loadout['armor']): THREE.Object3D[] {
   ch.root.getObjectByName('rj_worn_vest')?.removeFromParent();
-  const name = VEST_PIECE[armor];
-  if (!name) return null;
-  const real = wearOnBone(ch, kit, name, 'Spine01', 'rj_worn_vest');
-  if (real) return real;
+  const prefix = VEST_MATERIAL[armor];
+  const parts: THREE.Object3D[] = [];
+  let skinned = false;
+  for (const m of ch.meshes) {
+    const name = (m.material as THREE.Material).name;
+    if (!name.startsWith('RJ_Vest_')) continue;
+    skinned = true;
+    m.visible = !!prefix && name.startsWith(prefix);
+    if (m.visible) parts.push(m);
+  }
+  if (!prefix || skinned) return parts;
   const v = vest(armor);
-  if (!v) return null;
+  if (!v) return parts;
   v.name = 'rj_worn_vest';
   v.position.set(0, CHEST.y, -0.02);
   ch.root.add(v);
-  return v;
+  return [v];
+}
+
+/**
+ * Hold an item in the right hand. char_player has a measured `hand_R_grip` node (palm origin, world scale 1,
+ * ASSETS.md "Gear") and every held piece in gear.glb uses the same convention, so it goes on with an identity
+ * transform. Rigs without the grip fall back to the hand bone plus a fitted rotation.
+ */
+export function holdInHand(ch: CharInstance, item: THREE.Object3D): void {
+  const grip = ch.root.getObjectByName('hand_R_grip');
+  if (grip) {
+    grip.add(item);
+    item.position.set(0, 0, 0);
+    item.rotation.set(0, 0, 0);
+    item.scale.setScalar(1);
+    return;
+  }
+  const hand = ch.bones.hand_R;
+  if (!hand) return;
+  hand.add(item);
+  hand.updateWorldMatrix(true, false);
+  const ws = hand.getWorldScale(new THREE.Vector3()).x;
+  const rs = ch.root.getWorldScale(new THREE.Vector3()).x;
+  item.scale.setScalar(rs / Math.max(1e-6, ws));
+  item.rotation.copy(HAND.rot);
+  item.position.set(0, 0, 0);
 }
 
 /** Fallback when masks.glb is missing: tint the built-in RJ_Mask material. */
@@ -134,31 +170,24 @@ function gearModel(kit: Kit | null, name: string): THREE.Object3D {
 export interface Outfit {
   weapon: THREE.Object3D | null;
   belt: (THREE.Object3D | null)[];
-  vest: THREE.Object3D | null;
+  vest: THREE.Object3D[];
 }
 
 export function undress(o: Outfit | null): void {
   if (!o) return;
   o.weapon?.removeFromParent();
   o.belt.forEach((b) => b?.removeFromParent());
-  o.vest?.removeFromParent();
+  // skinned vest meshes belong to the character: wearVest just toggles them; only a fallback box gets removed
+  for (const v of o.vest) if (v.name === 'rj_worn_vest') v.removeFromParent();
 }
 
 export function dress(ch: CharInstance, kit: Kit | null, l: Loadout): Outfit {
   wearMask(ch, kit, l.mask);
-  const out: Outfit = { weapon: null, belt: [null, null], vest: null };
+  const out: Outfit = { weapon: null, belt: [null, null], vest: [] };
 
-  const hand = ch.bones.hand_R;
-  if (hand) {
-    const w = gearModel(kit, WEAPONS[l.weapon].model);
-    hand.add(w);
-    hand.updateWorldMatrix(true, false);
-    const ws = hand.getWorldScale(new THREE.Vector3()).x;
-    const rs = ch.root.getWorldScale(new THREE.Vector3()).x;
-    w.scale.setScalar(rs / Math.max(1e-6, ws));
-    w.rotation.copy(HAND.rot);
-    out.weapon = w;
-  }
+  const w = gearModel(kit, WEAPONS[l.weapon].model);
+  holdInHand(ch, w);
+  out.weapon = w.parent ? w : null;
 
   l.gadgets.forEach((id, i) => {
     if (!id) return;
@@ -175,6 +204,6 @@ export function dress(ch: CharInstance, kit: Kit | null, l: Loadout): Outfit {
     out.belt[i] = holder;
   });
 
-  out.vest = wearVest(ch, kit, l.armor);
+  out.vest = wearVest(ch, l.armor);
   return out;
 }

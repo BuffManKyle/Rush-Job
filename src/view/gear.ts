@@ -8,24 +8,23 @@ import { INTERACTION_TOOL } from '../data/interactions';
 import { powerOut } from '../sim/security';
 import type { Sim } from '../sim/sim';
 import type { Kit } from './kit';
-import { wearMask, wearVest } from './outfit';
+import { holdInHand, wearMask, wearVest } from './outfit';
 import type { WorldView } from './renderer';
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 /**
- * Held items: origin is the right palm, business end +Z (ASSETS.md). This is the one fixed rotation that
- * lines the item's +Z up with the rig's hand forward. Tunable live from the console: `rj.gear.handRot`.
+ * Fallback only, for rigs without a `hand_R_grip` node (see holdInHand in outfit.ts): the fixed rotation that
+ * lines a held item's +Z up with the bare hand bone's forward.
  */
 export const HAND = {
   // fitted to the player rig's aim_shoot pose (hand +Y runs down the arm): gun +Z along the facing, +Y up
   rot: new THREE.Euler(-1.622, -0.063, 2.654),
-  offset: new THREE.Vector3(0, 0.0, 0),
 };
 
 export class GearView {
   private group = new THREE.Group();
-  private vest: THREE.Object3D | null = null;
+  private vest: THREE.Object3D[] = [];
   private mask: THREE.Object3D | null = null; // the real mask from masks.glb, worn only once masked
   private held: THREE.Object3D | null = null;
   private heldName = '';
@@ -37,8 +36,6 @@ export class GearView {
   private breaker: THREE.Group | null = null;
   private lights: { light: THREE.Light; base: number }[] = [];
   private smokeMat = new THREE.MeshStandardMaterial({ color: 0xb8c0cc, transparent: true, opacity: 0.55, depthWrite: false, roughness: 1 });
-  readonly handRot = HAND.rot;
-  readonly handOffset = HAND.offset;
 
   constructor(
     private view: WorldView,
@@ -47,7 +44,7 @@ export class GearView {
   ) {
     view.scene.add(this.group);
     this.mask = view.playerChar ? wearMask(view.playerChar, kit, sim.loadout.mask) : null;
-    this.vest = view.playerChar ? wearVest(view.playerChar, kit, sim.loadout.armor) : null; // armor shows in game too
+    this.vest = view.playerChar ? wearVest(view.playerChar, sim.loadout.armor) : []; // armor shows in game too
     view.customMask = !!this.mask; // the renderer leaves RJ_Mask alone (wearMask hid it); we follow player.masked below
     view.scene.traverse((o) => {
       const l = o as THREE.Light;
@@ -111,7 +108,7 @@ export class GearView {
 
   private updateHeld(): void {
     const want = this.wantHeld();
-    const hand = this.view.playerChar?.bones.hand_R ?? null;
+    const pc = this.view.playerChar;
     if (want !== this.heldName) {
       if (this.held) this.held.removeFromParent();
       this.held = null;
@@ -128,19 +125,12 @@ export class GearView {
           this.heldCache.set(want, m);
         }
         this.held = m;
-        if (hand) hand.add(m);
+        if (pc) holdInHand(pc, m);
         else this.view.playerRoot.add(m);
       }
     }
     if (!this.held) return;
-    if (hand) {
-      // undo the bone's world scale (rigs exported at 0.01 etc.) so gear keeps its authored size
-      const ws = hand.getWorldScale(new THREE.Vector3());
-      const rs = this.view.playerRoot.getWorldScale(new THREE.Vector3());
-      this.held.scale.setScalar(rs.x / Math.max(1e-6, ws.x));
-      this.held.rotation.copy(HAND.rot);
-      this.held.position.copy(HAND.offset).multiplyScalar(this.held.scale.x);
-    } else {
+    if (!pc) {
       // graybox: in front of the body at hand height, pointing along the facing (+X in actor space)
       this.held.position.set(0.32, 0.95, 0.18);
       this.held.rotation.set(0, Math.PI / 2, 0);
@@ -155,7 +145,8 @@ export class GearView {
     // the real mask comes out with the mask-up, like the built-in one did
     if (this.mask) this.mask.visible = sim.player.masked;
     // a light vest hides under the suit jacket while casing (that's why it keeps the casing bonus); a heavy one doesn't
-    if (this.vest) this.vest.visible = sim.player.masked || sim.player.casingBonus === false;
+    const vestOn = sim.player.masked || sim.player.casingBonus === false;
+    for (const v of this.vest) v.visible = vestOn;
 
     // thrown: arc in flight, then lie where they land; smoke grows a cloud
     const seen = new Set<string>();
