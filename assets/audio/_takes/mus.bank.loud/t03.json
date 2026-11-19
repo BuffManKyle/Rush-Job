@@ -1,0 +1,15 @@
+{
+ "id": "mus.bank.loud",
+ "take": 3,
+ "t": "2026-11-19T00:12:00Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "Big, brassy jazz-funk chase music for a bank robbery where the alarm just went off. 90 BPM with a hard double-time breakbeat feel, G minor, 4/4, steady tempo throughout. Opens with one massive full-band brass and timpani hit on beat 1, then: heavy funky breakbeat drums, a fat electric bass line, a full brass section (trumpets, trombones, baritone sax) firing stabs and blasting a five-note minor blues motif, a screaming Hammond organ, and a choppy wah guitar. Swaggering, loud and urgent, like a heist crew fighting its way to the getaway van in a 1970s crime film. Structure: 1-bar hit, then 8-bar A, 8-bar variation of A, 8-bar B, a 4-bar drum break with horn stabs, then 8 bars of A again. No ending, no fade: it must loop seamlessly. Instrumental only, no vocals. No EDM, no synth bass, no four-on-the-floor kick, no risers.",
+  "music_length_ms": 104000,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 2488232
+}

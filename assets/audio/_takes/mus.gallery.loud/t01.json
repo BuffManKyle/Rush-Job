@@ -1,0 +1,15 @@
+{
+ "id": "mus.gallery.loud",
+ "take": 1,
+ "t": "2026-11-19T00:12:27Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "Fast, edgy jazz-funk chase music for an art heist gone loud at night. 80 BPM with a frantic double-time breakbeat feel, C minor, 4/4, steady tempo throughout. Opens with one huge brass and fuzz guitar hit on beat 1, then: tight breakbeat drums, a driving electric bass, a fuzz-toned funk guitar riff, a horn section with sharp stabs, a clavinet chopping chords, and the flute and trumpet together screaming a five-note minor blues motif. Sharp, stylish and dangerous. Structure: 1-bar hit, then 8-bar A, 8-bar B, 8-bar variation of A, 8-bar C, then back to A. No ending, no fade: it must loop seamlessly. Instrumental only, no vocals. No EDM, no synth bass, no four-on-the-floor kick, no risers.",
+  "music_length_ms": 105000,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 2674715
+}

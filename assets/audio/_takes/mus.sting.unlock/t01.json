@@ -1,0 +1,15 @@
+{
+ "id": "mus.sting.unlock",
+ "take": 1,
+ "t": "2026-11-19T00:13:28Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "A short sparkling reward sting: 120 BPM, E-flat major. A quick vibraphone run upward and a bright muted trumpet flourish landing on a shiny major chord with a triangle ting. Then silence. Instrumental only.",
+  "music_length_ms": 10000,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 294897
+}

@@ -1,0 +1,15 @@
+{
+ "id": "mus.bank.stealth",
+ "take": 2,
+ "t": "2026-11-19T00:11:28Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "Smooth, confident noir jazz-funk for robbing a grand old bank with marble floors and brass fittings. 90 BPM, G minor, 4/4, steady tempo throughout. Brushed drums with a laid-back swing, a deep upright bass groove, a baritone saxophone playing low sly phrases, a muted trumpet answering it with a five-note minor blues motif, warm Hammond organ chords underneath, and soft vibraphone accents. Cool and patient, a little smug. Structure: 8-bar A, 8-bar variation of A, 8-bar B where the trumpet takes over, a 4-bar quiet breakdown with just bass and brushes, then 8 bars of A again. No intro, no ending, no fade: it must loop seamlessly. Instrumental only, no vocals. No electronic beats, no synths, no four-on-the-floor kick.",
+  "music_length_ms": 101400,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 2737750
+}

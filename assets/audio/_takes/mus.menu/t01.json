@@ -1,0 +1,15 @@
+{
+ "id": "mus.menu",
+ "take": 1,
+ "t": "2026-11-19T00:12:50Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "Title theme for a stylish heist game: noir-pop jazz-funk, 100 BPM, F minor, 4/4, steady tempo. A tight funky drum groove with brushes on the snare, a round electric bass line, Rhodes chords, a muted trumpet stating a sly five-note minor blues motif as the main hook, and a baritone sax answering it. Cool, confident and a little playful, like the opening titles of a caper film. Structure: 4-bar groove, 8 bars with the trumpet hook, 8 bars where the sax and trumpet trade phrases, then back to the top. No intro, no ending, no fade: it must loop seamlessly. Instrumental only, no vocals. No electronic beats, no synths.",
+  "music_length_ms": 52800,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 1438363
+}

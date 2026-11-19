@@ -1,0 +1,15 @@
+{
+ "id": "mus.gallery.tension",
+ "take": 2,
+ "t": "2026-11-19T00:12:40Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "Tension layer for a stealth game, meant to play underneath other music. 80 BPM, C minor, 4/4, 8 bars, steady tempo. Only: a quiet, tight sixteenth-note closed hi-hat and high harmonics on tremolo violins holding a cold C minor cluster. No melody, no bass, no kick drum, no other instruments. Icy and watchful. No intro, no ending: it must loop seamlessly.",
+  "music_length_ms": 30000,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 919079
+}

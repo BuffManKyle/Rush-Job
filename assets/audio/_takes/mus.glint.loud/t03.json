@@ -1,0 +1,15 @@
+{
+ "id": "mus.glint.loud",
+ "take": 3,
+ "t": "2026-11-19T00:11:13Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "High-energy jazz-funk car-chase music for a jewelry robbery gone wrong. 96 BPM with a driving double-time breakbeat feel, D minor, 4/4, steady tempo throughout. Opens with one huge full-band brass hit on beat 1, then: tight funky breakbeat drums with crashing cymbals, a fat electric bass line, punchy horn-section stabs (trumpets, tenor sax, trombone), a wah-wah rhythm guitar, a vibraphone riff doubling the bass, and the trumpets blasting a sly five-note minor blues motif. Urgent and exciting but still stylish, like a getaway in a 1970s crime film. Structure: 1-bar brass hit, then an 8-bar A section, 8-bar variation of A, 8-bar B section, then back to A. No ending, no fade: it must loop seamlessly. Instrumental only, no vocals. No EDM, no synth bass, no four-on-the-floor kick, no risers.",
+  "music_length_ms": 67500,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 1689414
+}

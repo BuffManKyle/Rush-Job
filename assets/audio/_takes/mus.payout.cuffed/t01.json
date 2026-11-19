@@ -1,0 +1,15 @@
+{
+ "id": "mus.payout.cuffed",
+ "take": 1,
+ "t": "2026-11-19T00:13:10Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "Deflated, wry lounge jazz for a heist that ended in handcuffs. 80 BPM, D minor, 4/4, steady tempo. Slow brushed drums, a lazy upright bass, a muted trumpet sighing a short descending phrase, and a single Rhodes chord per bar. Dry and a little funny, like a shrug, not a tragedy. Leave space for a voice speaking over it. 8 bars. No intro, no ending: it must loop seamlessly. Instrumental only, no vocals. No electronic beats, no synths.",
+  "music_length_ms": 30000,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 819791
+}

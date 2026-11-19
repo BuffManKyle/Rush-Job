@@ -1,0 +1,15 @@
+{
+ "id": "mus.gallery.stealth",
+ "take": 1,
+ "t": "2026-11-19T00:12:13Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "Cool, mysterious late-night jazz for stealing paintings from an empty art museum. 80 BPM, C minor, 4/4, steady tempo throughout. Soft brushed drums with sparse rim clicks, a slow deep upright bass, a breathy alto flute playing a sly five-note minor blues motif, shimmering Rhodes arpeggios, and a vibraphone with long tails. Elegant and slightly eerie, moonlight on marble. Structure: 8-bar A, 8-bar B, 8-bar variation of A, 8-bar C with the flute higher and quieter, then back to the top. No intro, no ending, no fade: it must loop seamlessly. Instrumental only, no vocals. No electronic beats, no synth pads, no four-on-the-floor kick.",
+  "music_length_ms": 102000,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 2980954
+}

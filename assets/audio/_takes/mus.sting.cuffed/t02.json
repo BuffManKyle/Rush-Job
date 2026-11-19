@@ -1,0 +1,15 @@
+{
+ "id": "mus.sting.cuffed",
+ "take": 2,
+ "t": "2026-11-19T00:13:24Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "A short deflated jazz sting: 80 BPM, D minor. A muted trombone plays three slow descending notes, a soft cymbal choke, and a low upright bass note left hanging. Wry, not tragic. Then silence. Instrumental only.",
+  "music_length_ms": 10000,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 262741
+}

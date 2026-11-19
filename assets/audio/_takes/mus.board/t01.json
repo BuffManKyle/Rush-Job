@@ -1,0 +1,15 @@
+{
+ "id": "mus.board",
+ "take": 1,
+ "t": "2026-11-19T00:12:57Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "Relaxed lounge jazz-funk for planning a heist over coffee, meant to sit under reading. 90 BPM, B-flat major with some minor chords, 4/4, steady tempo. Soft brushed drums, a mellow upright bass, warm Rhodes chords, and a vibraphone playing a gentle, lazy melody with lots of space. Easygoing and smart. Low energy, nothing that grabs attention. Structure: 8 bars, then a variation of 8 bars, then back to the top. No intro, no ending, no fade: it must loop seamlessly. Instrumental only, no vocals. No electronic beats, no synths.",
+  "music_length_ms": 48000,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 1501833
+}

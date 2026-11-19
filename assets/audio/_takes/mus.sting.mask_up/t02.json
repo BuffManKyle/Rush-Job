@@ -1,0 +1,15 @@
+{
+ "id": "mus.sting.mask_up",
+ "take": 2,
+ "t": "2026-11-19T00:13:15Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "A short dramatic jazz sting for a character putting on a mask before a robbery: 96 BPM, D minor. A single upright bass slide down, a brushed snare roll, and one muted trumpet note bending upward into a held, cool, confident chord on Rhodes and vibraphone that rings out. Then silence for the rest. Instrumental only.",
+  "music_length_ms": 10000,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 258016
+}

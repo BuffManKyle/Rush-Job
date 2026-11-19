@@ -1,0 +1,15 @@
+{
+ "id": "mus.payout",
+ "take": 2,
+ "t": "2026-11-19T00:13:09Z",
+ "endpoint": "/v1/music",
+ "output_format": "opus_48000_192",
+ "request": {
+  "prompt": "Smug, satisfied victory groove for counting stolen money: jazz-funk, 120 BPM, E-flat major, 4/4, steady tempo. A crisp funky drum groove, a bouncing electric bass, clean funk guitar chops, and short bright horn-section punctuations only every few bars. Celebratory but cool, like a crew raising a glass after a perfect job. Leave the middle frequencies open for a voice speaking over it: no lead melody, no sax solo. Structure: 8 bars, then a variation of 8 bars, then back to the top. No intro, no ending, no fade: it must loop seamlessly. Instrumental only, no vocals. No electronic beats, no synths.",
+  "music_length_ms": 36000,
+  "model_id": "music_v1",
+  "force_instrumental": true
+ },
+ "response_headers": {},
+ "bytes": 977335
+}

@@ -453,3 +453,71 @@
 {"t": "2026-11-19T00:04:46Z", "id": "ui.interact.start", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "pending"}
 {"t": "2026-11-19T00:04:48Z", "id": "ui.interact.cancel", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "ok", "file": "assets/audio/_takes/ui.interact.cancel/t01.ogg", "credits_actual": 6.0}
 {"t": "2026-11-19T00:04:48Z", "id": "ui.interact.start", "take": 1, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "ok", "file": "assets/audio/_takes/ui.interact.start/t01.ogg", "credits_actual": 6.0}
+{"t": "2026-11-19T00:10:50Z", "id": "mus.glint.loud", "take": 1, "kind": "music", "seconds": 67.5, "credits_est": 1048.8, "status": "pending"}
+{"t": "2026-11-19T00:10:50Z", "id": "mus.glint.loud", "take": 2, "kind": "music", "seconds": 67.5, "credits_est": 1048.8, "status": "pending"}
+{"t": "2026-11-19T00:11:01Z", "id": "mus.glint.loud", "take": 2, "kind": "music", "seconds": 67.5, "credits_est": 1048.8, "status": "ok", "file": "assets/audio/_takes/mus.glint.loud/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:11:01Z", "id": "mus.glint.loud", "take": 3, "kind": "music", "seconds": 67.5, "credits_est": 1048.8, "status": "pending"}
+{"t": "2026-11-19T00:11:02Z", "id": "mus.glint.loud", "take": 1, "kind": "music", "seconds": 67.5, "credits_est": 1048.8, "status": "ok", "file": "assets/audio/_takes/mus.glint.loud/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:11:02Z", "id": "mus.glint.tension", "take": 1, "kind": "music", "seconds": 25.0, "credits_est": 388.5, "status": "pending"}
+{"t": "2026-11-19T00:11:08Z", "id": "mus.glint.tension", "take": 1, "kind": "music", "seconds": 25.0, "credits_est": 388.5, "status": "ok", "file": "assets/audio/_takes/mus.glint.tension/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:11:08Z", "id": "mus.glint.tension", "take": 2, "kind": "music", "seconds": 25.0, "credits_est": 388.5, "status": "pending"}
+{"t": "2026-11-19T00:11:13Z", "id": "mus.glint.tension", "take": 2, "kind": "music", "seconds": 25.0, "credits_est": 388.5, "status": "ok", "file": "assets/audio/_takes/mus.glint.tension/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:11:13Z", "id": "mus.bank.stealth", "take": 1, "kind": "music", "seconds": 101.4, "credits_est": 1575.6, "status": "pending"}
+{"t": "2026-11-19T00:11:13Z", "id": "mus.glint.loud", "take": 3, "kind": "music", "seconds": 67.5, "credits_est": 1048.8, "status": "ok", "file": "assets/audio/_takes/mus.glint.loud/t03.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:11:13Z", "id": "mus.bank.stealth", "take": 2, "kind": "music", "seconds": 101.4, "credits_est": 1575.6, "status": "pending"}
+{"t": "2026-11-19T00:11:28Z", "id": "mus.bank.stealth", "take": 1, "kind": "music", "seconds": 101.4, "credits_est": 1575.6, "status": "ok", "file": "assets/audio/_takes/mus.bank.stealth/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:11:28Z", "id": "mus.bank.loud", "take": 1, "kind": "music", "seconds": 104.0, "credits_est": 1616.0, "status": "pending"}
+{"t": "2026-11-19T00:11:28Z", "id": "mus.bank.stealth", "take": 2, "kind": "music", "seconds": 101.4, "credits_est": 1575.6, "status": "ok", "file": "assets/audio/_takes/mus.bank.stealth/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:11:28Z", "id": "mus.bank.loud", "take": 2, "kind": "music", "seconds": 104.0, "credits_est": 1616.0, "status": "pending"}
+{"t": "2026-11-19T00:11:48Z", "id": "mus.bank.loud", "take": 2, "kind": "music", "seconds": 104.0, "credits_est": 1616.0, "status": "ok", "file": "assets/audio/_takes/mus.bank.loud/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:11:48Z", "id": "mus.bank.loud", "take": 3, "kind": "music", "seconds": 104.0, "credits_est": 1616.0, "status": "pending"}
+{"t": "2026-11-19T00:11:49Z", "id": "mus.bank.loud", "take": 1, "kind": "music", "seconds": 104.0, "credits_est": 1616.0, "status": "ok", "file": "assets/audio/_takes/mus.bank.loud/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:11:49Z", "id": "mus.bank.tension", "take": 1, "kind": "music", "seconds": 26.7, "credits_est": 414.9, "status": "pending"}
+{"t": "2026-11-19T00:11:57Z", "id": "mus.bank.tension", "take": 1, "kind": "music", "seconds": 26.7, "credits_est": 414.9, "status": "ok", "file": "assets/audio/_takes/mus.bank.tension/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:11:57Z", "id": "mus.bank.tension", "take": 2, "kind": "music", "seconds": 26.7, "credits_est": 414.9, "status": "pending"}
+{"t": "2026-11-19T00:12:00Z", "id": "mus.bank.loud", "take": 3, "kind": "music", "seconds": 104.0, "credits_est": 1616.0, "status": "ok", "file": "assets/audio/_takes/mus.bank.loud/t03.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:12:00Z", "id": "mus.gallery.stealth", "take": 1, "kind": "music", "seconds": 102.0, "credits_est": 1584.9, "status": "pending"}
+{"t": "2026-11-19T00:12:03Z", "id": "mus.bank.tension", "take": 2, "kind": "music", "seconds": 26.7, "credits_est": 414.9, "status": "ok", "file": "assets/audio/_takes/mus.bank.tension/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:12:03Z", "id": "mus.gallery.stealth", "take": 2, "kind": "music", "seconds": 102.0, "credits_est": 1584.9, "status": "pending"}
+{"t": "2026-11-19T00:12:13Z", "id": "mus.gallery.stealth", "take": 1, "kind": "music", "seconds": 102.0, "credits_est": 1584.9, "status": "ok", "file": "assets/audio/_takes/mus.gallery.stealth/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:12:13Z", "id": "mus.gallery.loud", "take": 1, "kind": "music", "seconds": 105.0, "credits_est": 1631.5, "status": "pending"}
+{"t": "2026-11-19T00:12:15Z", "id": "mus.gallery.stealth", "take": 2, "kind": "music", "seconds": 102.0, "credits_est": 1584.9, "status": "ok", "file": "assets/audio/_takes/mus.gallery.stealth/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:12:15Z", "id": "mus.gallery.loud", "take": 2, "kind": "music", "seconds": 105.0, "credits_est": 1631.5, "status": "pending"}
+{"t": "2026-11-19T00:12:27Z", "id": "mus.gallery.loud", "take": 2, "kind": "music", "seconds": 105.0, "credits_est": 1631.5, "status": "ok", "file": "assets/audio/_takes/mus.gallery.loud/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:12:27Z", "id": "mus.gallery.loud", "take": 3, "kind": "music", "seconds": 105.0, "credits_est": 1631.5, "status": "pending"}
+{"t": "2026-11-19T00:12:27Z", "id": "mus.gallery.loud", "take": 1, "kind": "music", "seconds": 105.0, "credits_est": 1631.5, "status": "ok", "file": "assets/audio/_takes/mus.gallery.loud/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:12:27Z", "id": "mus.gallery.tension", "take": 1, "kind": "music", "seconds": 30.0, "credits_est": 466.2, "status": "pending"}
+{"t": "2026-11-19T00:12:32Z", "id": "mus.gallery.tension", "take": 1, "kind": "music", "seconds": 30.0, "credits_est": 466.2, "status": "ok", "file": "assets/audio/_takes/mus.gallery.tension/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:12:32Z", "id": "mus.gallery.tension", "take": 2, "kind": "music", "seconds": 30.0, "credits_est": 466.2, "status": "pending"}
+{"t": "2026-11-19T00:12:40Z", "id": "mus.gallery.tension", "take": 2, "kind": "music", "seconds": 30.0, "credits_est": 466.2, "status": "ok", "file": "assets/audio/_takes/mus.gallery.tension/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:12:40Z", "id": "mus.menu", "take": 1, "kind": "music", "seconds": 52.8, "credits_est": 820.4, "status": "pending"}
+{"t": "2026-11-19T00:12:41Z", "id": "mus.gallery.loud", "take": 3, "kind": "music", "seconds": 105.0, "credits_est": 1631.5, "status": "ok", "file": "assets/audio/_takes/mus.gallery.loud/t03.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:12:41Z", "id": "mus.menu", "take": 2, "kind": "music", "seconds": 52.8, "credits_est": 820.4, "status": "pending"}
+{"t": "2026-11-19T00:12:50Z", "id": "mus.menu", "take": 1, "kind": "music", "seconds": 52.8, "credits_est": 820.4, "status": "ok", "file": "assets/audio/_takes/mus.menu/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:12:50Z", "id": "mus.board", "take": 1, "kind": "music", "seconds": 48.0, "credits_est": 745.8, "status": "pending"}
+{"t": "2026-11-19T00:12:51Z", "id": "mus.menu", "take": 2, "kind": "music", "seconds": 52.8, "credits_est": 820.4, "status": "ok", "file": "assets/audio/_takes/mus.menu/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:12:51Z", "id": "mus.board", "take": 2, "kind": "music", "seconds": 48.0, "credits_est": 745.8, "status": "pending"}
+{"t": "2026-11-19T00:12:57Z", "id": "mus.board", "take": 1, "kind": "music", "seconds": 48.0, "credits_est": 745.8, "status": "ok", "file": "assets/audio/_takes/mus.board/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:12:57Z", "id": "mus.payout", "take": 1, "kind": "music", "seconds": 36.0, "credits_est": 559.4, "status": "pending"}
+{"t": "2026-11-19T00:13:01Z", "id": "mus.board", "take": 2, "kind": "music", "seconds": 48.0, "credits_est": 745.8, "status": "ok", "file": "assets/audio/_takes/mus.board/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:13:01Z", "id": "mus.payout", "take": 2, "kind": "music", "seconds": 36.0, "credits_est": 559.4, "status": "pending"}
+{"t": "2026-11-19T00:13:04Z", "id": "mus.payout", "take": 1, "kind": "music", "seconds": 36.0, "credits_est": 559.4, "status": "ok", "file": "assets/audio/_takes/mus.payout/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:13:04Z", "id": "mus.payout.cuffed", "take": 1, "kind": "music", "seconds": 30.0, "credits_est": 466.2, "status": "pending"}
+{"t": "2026-11-19T00:13:09Z", "id": "mus.payout", "take": 2, "kind": "music", "seconds": 36.0, "credits_est": 559.4, "status": "ok", "file": "assets/audio/_takes/mus.payout/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:13:09Z", "id": "mus.sting.mask_up", "take": 1, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "pending"}
+{"t": "2026-11-19T00:13:10Z", "id": "mus.payout.cuffed", "take": 1, "kind": "music", "seconds": 30.0, "credits_est": 466.2, "status": "ok", "file": "assets/audio/_takes/mus.payout.cuffed/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:13:10Z", "id": "mus.sting.mask_up", "take": 2, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "pending"}
+{"t": "2026-11-19T00:13:14Z", "id": "mus.sting.mask_up", "take": 1, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "ok", "file": "assets/audio/_takes/mus.sting.mask_up/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:13:14Z", "id": "mus.sting.escaped", "take": 1, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "pending"}
+{"t": "2026-11-19T00:13:15Z", "id": "mus.sting.mask_up", "take": 2, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "ok", "file": "assets/audio/_takes/mus.sting.mask_up/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:13:15Z", "id": "mus.sting.escaped", "take": 2, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "pending"}
+{"t": "2026-11-19T00:13:18Z", "id": "mus.sting.escaped", "take": 1, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "ok", "file": "assets/audio/_takes/mus.sting.escaped/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:13:18Z", "id": "mus.sting.cuffed", "take": 1, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "pending"}
+{"t": "2026-11-19T00:13:20Z", "id": "mus.sting.escaped", "take": 2, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "ok", "file": "assets/audio/_takes/mus.sting.escaped/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:13:20Z", "id": "mus.sting.cuffed", "take": 2, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "pending"}
+{"t": "2026-11-19T00:13:23Z", "id": "mus.sting.cuffed", "take": 1, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "ok", "file": "assets/audio/_takes/mus.sting.cuffed/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:13:23Z", "id": "mus.sting.unlock", "take": 1, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "pending"}
+{"t": "2026-11-19T00:13:24Z", "id": "mus.sting.cuffed", "take": 2, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "ok", "file": "assets/audio/_takes/mus.sting.cuffed/t02.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:13:24Z", "id": "mus.sting.unlock", "take": 2, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "pending"}
+{"t": "2026-11-19T00:13:28Z", "id": "mus.sting.unlock", "take": 1, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "ok", "file": "assets/audio/_takes/mus.sting.unlock/t01.ogg", "credits_actual": null}
+{"t": "2026-11-19T00:13:29Z", "id": "mus.sting.unlock", "take": 2, "kind": "music", "seconds": 10.0, "credits_est": 155.4, "status": "ok", "file": "assets/audio/_takes/mus.sting.unlock/t02.ogg", "credits_actual": null}
