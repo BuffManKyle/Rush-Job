@@ -14,7 +14,8 @@ import glob, hashlib, json, math, os, struct, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 CLIPS = {"idle", "walk", "run", "crouch_idle", "crouch_walk", "carry_walk", "aim_shoot", "hands_up", "ziptied", "interact"}
-CORE = {"idle", "walk", "run", "aim_shoot", "hands_up"}          # every character needs these
+CORE = {"idle", "walk", "run", "aim_shoot", "hands_up"}          # player, guards, police
+CORE_CIV = {"idle", "walk", "run", "hands_up"}                   # civilians and staff never shoot
 NONMETAL = {"RJ_Char_player", "RJ_Char_guard", "RJ_Skin", "RJ_Fabric", "RJ_Suit", "RJ_Uniform", "RJ_Plaster", "RJ_Brick", "RJ_Velvet"}
 
 
@@ -110,8 +111,9 @@ def lint(path):
             seen[h] = im.get("name")
     if is_char:
         have = {a["name"] for a in g.get("animations", [])}
-        if not CORE <= have:
-            errs.append(f"missing core clips {sorted(CORE - have)}")
+        core = CORE_CIV if ("civ" in name or "staff" in name) else CORE
+        if not core <= have:
+            errs.append(f"missing core clips {sorted(core - have)}")
         if have - CLIPS:
             errs.append(f"unknown clip names {sorted(have - CLIPS)}")
         if not g.get("skins"):
