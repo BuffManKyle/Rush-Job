@@ -68,6 +68,12 @@ Values are sRGB hex. Swatches are the names used in `rj.py`.
 | | `mask_yellow` | `#f2c94c` | Conscientious Objector (white dove, black outline, olive sprig) |
 | | `mask_news` / `news_ink` | `#e9e4d6` / `#8a857a` | The Headline (newsprint) |
 | | `headline_orange` | `#f08a24` | The Headline's price tag (orange, not red) |
+| Street block | `plum` / `sage` / `slate_blue` / `terracotta` | `#6b3f6f` / `#5e8b6c` / `#4f6d8f` / `#a8653f` | Neighbour awnings, signs and parked cars |
+| | `stucco` / `stucco_light` / `brick_dark` | `#9d8f7c` / `#c8bba3` / `#5b3e35` | Neighbour walls (tile texture) |
+| | `roof` | `#4a4d57` | Flat roofs (tile texture, 0.5 m) |
+| | `paint_white` / `paint_yellow` | `#e8e6df` / `#e9d27a` | Road paint; the centre line is pale yellow, never amber |
+| | `mustard` | `#c99a2e` | Fire hydrants (never red) |
+| | `window_lit` | `#ffcf8a` | **Emissive** 1.6: lit shop and flat windows |
 | Cast (stand-ins) | `skin` | `#c99a78` | |
 | | `suit` | `#2b2b30` | Player suit |
 | | `uniform` | `#2f4470` | Guard uniform |

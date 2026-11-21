@@ -97,6 +97,18 @@ Stand-in skeleton, for reference: `hips > spine > head`, `spine > upperarm_L/R >
 - **Attach points by role, not by bone name.** Code asks for `attach('hand_R')` through a per-model map. The stand-in maps to `hand_R`; Meshy's rig has 24 joints, no fingers, and torso bones numbered in the opposite direction to Mixamo, so its map is filled in at import.
 - **Same convention.** Metres, Y-up, facing +Z, origin at the feet, no root motion (the sim moves the root; clips only bob and sway).
 
+## Street block: assets/models/street.glb (owner: rj-street)
+
+The Glint & Sons street around the shop: `tools/blender/street_build.py` builds the pieces, `tools/level/glint_street.py` places them in the `decor` layer of `levels/glint.tmj` (edit its tables and re-run; don't hand-edit the layer), and `src/view/street.ts` draws them.
+- **Placement.** Decor objects have type `decor`, property `piece` (a street.glb or kit piece) and `rot` (degrees, three.js `rotation.y`, so 90 turns the front from south to east). A **rectangle** is solid (the sim reads it as a prop; `cover: true` on cars and dumpsters), a **point** isn't (litter, manholes), and a **polyline** repeats the piece every `step` m (road paint).
+- **Buildings** (`bldg_*`, `rj_kind` building) are solid boxes with a street facade on -Y: lit shop windows (`RJ_WindowLit`, emissive), a striped awning, a sign child `<name>_sign`, flats above, a cornice, a parapet with an ink cap and rooftop clutter. The far-side row is placed rotated 180 and kept to one storey; `street.ts` squashes it like the cutaway while the player is on that side of the road. `bldg_rear_*` are the backs of the next street's buildings, used as backdrop.
+- **Draw calls.** `street.ts` merges everything static per material, and every flat-coloured opaque material into one vertex-coloured material: ~45 draws (main and shadow pass) and ~67k triangles for ~120 objects plus the off-map street. Light pools under streetlights and lit windows are one instanced additive draw (no real lights).
+- **Palette.** New `PAL`/`MATS` entries (`plum`, `sage`, `slate_blue`, `terracotta`, `stucco`, `stucco_light`, `brick_dark`, `roof`, `paint_white`, `paint_yellow`, `mustard`, `window_lit`) are listed in `reference-images/STYLE.md`. No reds: hydrants are mustard, tail lights are navy, barricades are white and navy.
+
+### Meshy civilians: pre-spend estimate (waiting on Kyle's cap)
+
+From the pilots' actual charges: preview 5 + textured refine 10 + rig 5 (walk and run come free with the rig) + `idle` 3 + `ziptied` 3 = **26 credits per character**. `hands_up` and a `cower` pose are scripted on each figure's own rig for free, as for the pilots. Cast of 10 (clerk, manager, 4 customers, 4 street pedestrians; mixed ages, builds and outfits) = **260 credits**, bought previews first (50) so shapes are checked before anything is refined. Asked cap: `meshy_credits` 150 → 450 total (64 used), keeping the 100-credit reserve.
+
 ## Sponsor tools and evidence (OpenGame tracks: Meshy, fal, ElevenLabs)
 
 The entry form asks for evidence of what each sponsor tool produced, so every generated file gets a row here, plus a line in the spend ledger (`tools/gen/spend.jsonl`, written **before** each paid call). Generation runs on Kyle's machine with keys from the environment (`MESHY_API_KEY`, `FAL_KEY`). Keys never go in the repo or the game, and only finished files ship.
@@ -226,4 +238,50 @@ Generated-file evidence (one row per file: tool, model version, job id, date, co
 | `standin_guard` | script (stand-in) | placeholder | `assets/models/standin_guard.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
 | `standin_civilian` | script (stand-in) | placeholder | `assets/models/standin_civilian.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
 | `char_civilian` | script (stand-in) | placeholder | `assets/models/char_civilian.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
+| `bldg_diner` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 1596 tris. neighbour shop 'ROSA'S DINER', 9 x 20 cells, 6.8 m; not enterable. Children: `bldg_diner_sign`. |
+| `bldg_laundromat` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 1462 tris. neighbour shop 'KWIK WASH', 9 x 20 cells, 7.4 m; not enterable. Children: `bldg_laundromat_sign`. |
+| `bldg_books` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 1808 tris. neighbour shop 'PAGE TURNER', 7 x 20 cells, 6.6 m; not enterable. Children: `bldg_books_sign`. |
+| `bldg_deli` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 1554 tris. neighbour shop 'DELI', 7 x 20 cells, 7.2 m; not enterable. Children: `bldg_deli_sign`. |
+| `bldg_tailor` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 1166 tris. neighbour shop 'TAILOR', 7 x 20 cells, 6.2 m; not enterable. Children: `bldg_tailor_sign`. |
+| `bldg_cinema` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 1532 tris. across the street: one-storey cinema with a marquee; placed rotated 180. Children: `bldg_cinema_sign`. |
+| `bldg_pharmacy` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 1582 tris. across the street; placed rotated 180. Children: `bldg_pharmacy_sign`. |
+| `bldg_bar` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 1152 tris. across the street; placed rotated 180. Children: `bldg_bar_sign`. |
+| `bldg_pawn` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 1432 tris. across the street; placed rotated 180. Children: `bldg_pawn_sign`. |
+| `bldg_cafe` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 1650 tris. across the street; placed rotated 180. Children: `bldg_cafe_sign`. |
+| `bldg_hardware` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 1434 tris. across the street; placed rotated 180. Children: `bldg_hardware_sign`. |
+| `bldg_rear_a` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 484 tris. backdrop building, 18 x 12 cells, 9.0 m; rear face is -Y. |
+| `bldg_rear_b` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 376 tris. backdrop building, 16 x 12 cells, 7.5 m; rear face is -Y. |
+| `bldg_rear_c` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 390 tris. backdrop building, 21 x 12 cells, 6.0 m; rear face is -Y. |
+| `bldg_rear_d` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 418 tris. backdrop building, 12 x 12 cells, 8.0 m; rear face is -Y. |
+| `streetlight` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 78 tris. sodium streetlight, 4.8 m, arm reaches 1.6 m toward the road (-Y); the lamp (RJ_Sodium) is at (0, 4.55, +1.6) in glTF; the game adds a light pool under it. |
+| `hydrant` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 122 tris. fire hydrant (mustard, never red), 0.75 m. |
+| `mailbox` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 96 tris. street mailbox, slate blue, 1.15 m. |
+| `newspaper_box` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 48 tris. newspaper vending box, teal, 1.0 m. |
+| `trash_can` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 84 tris. street litter bin, 0.95 m. |
+| `parking_meter` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 50 tris. parking meter, 1.3 m; screen is RJ_Screen. |
+| `bench` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 104 tris. street bench, 1.8 m, seat faces -Y (the road). |
+| `planter` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 58 tris. concrete planter with a shrub, 0.9 m square. |
+| `planter_long` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 70 tris. long planter box with low hedge, 1.8 x 0.6 m. |
+| `street_tree` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 74 tris. sidewalk tree in an iron grate pit; low-poly canopy at 2.6-4.4 m. |
+| `dumpster` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 124 tris. alley dumpster, 1.9 x 1.0 m, sage with black lids; cover. Children: `dumpster_lid`. |
+| `bin_bags` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 48 tris. pile of black bin bags, ~0.6 m. |
+| `crates` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 34 tris. stack of wooden produce crates, 0.8 m. |
+| `pallet` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 12 tris. wooden pallet leaning on a wall, back at +Y. |
+| `bus_stop` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 102 tris. bus shelter, 3 x 2 cells: back glass panel at +Y, lit ad panel on the -X end, bench inside, roof at 2.4 m; front (open side) -Y toward the road. |
+| `bus_sign` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 288 tris. bus stop pole with a teal BUS plate, 2.6 m. |
+| `barricade` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 212 tris. road-work sawhorse barricade, 2 m, white/navy boards (not red, not amber); sodium blinker on top. Marks the ends of the playable street. |
+| `manhole` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 28 tris. manhole cover, flush with the road. |
+| `storm_drain` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 70 tris. curb storm drain grate; sits in the gutter on the road side of a curb (-Y edge). |
+| `paint_centre` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 4 tris. double centre line along X through the pivot (pale yellow). |
+| `paint_edge` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 2 tris. solid white edge line along X through the pivot. |
+| `paint_dash` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 2 tris. white lane dash, 1 m along X (place every 2 m). |
+| `paint_crosswalk` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 2 tris. one zebra bar of a crosswalk: 0.5 m (X) x 1 m (Y); place one per cell. |
+| `paint_stop` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 2 tris. stop line across a lane: 0.3 m (X) x 1 m (Y) per cell. |
+| `paint_tick` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 2 tris. parking bay tick: 0.1 m (X) x 0.6 m (Y), from the edge line toward the curb. |
+| `car_sedan_plum` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 228 tris. parked sedan, Plum; long axis X, nose +X; cover. |
+| `car_sedan_slate` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 228 tris. parked sedan, SlateBlue; long axis X, nose +X; cover. |
+| `car_hatch_sage` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 228 tris. parked hatch, Sage; long axis X, nose +X; cover. |
+| `car_hatch_cream` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 228 tris. parked hatch, Cream; long axis X, nose +X; cover. |
+| `car_wagon_steel` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 228 tris. parked wagon, Steel; long axis X, nose +X; cover. |
+| `car_wagon_navy` | script `tools/blender/street_build.py` | done | `assets/models/street.glb` | 228 tris. parked wagon, Navy; long axis X, nose +X; cover. |
 <!-- RJ-TABLE:END -->
