@@ -65,7 +65,7 @@ Status: [x] done · [~] partial · [ ] todo.
   - Noisemaker ×3 (1/2: throw at the cursor, 10 m max): 3 pulses of 8 m noise, 1 s apart. Guards investigate it.
   - Glass cutter (tool): quiet 4 s case cut.
   - Body bags ×2 (tool): hold E 3 s on a downed, tied or shot guard, or a shot civilian. Bagged bodies are skipped by the bodies check and never wake. Order on a downed guard: answer pager > zip-tie > bag (bag directly when out of ties). A bagged guard's pager still rings.
-  - ECM jammer ×1 (1/2: set down): 20 s of blind cameras (cones hidden, pending desk calls cancelled, a shot-out camera's 15 s report paused) and quiet pagers (pager delay and ring timers freeze).
+  - ECM jammer ×1 (1/2: set down): 20 s of blind cameras (cones hidden, no new desk alerts, nobody notices a camera going dark meanwhile; alerts the desk already has stand, since the operator's radio call is voice) and quiet pagers (pager delay and ring timers freeze).
   - Medkit ×1 (1/2): full HP and armor; refuses at full health.
   - Lockpick kit (tool): lockpick 3 s instead of 6.
   - Smoke ×2 (1/2: throw): 3 m cloud for 12 s. `Grid.canSee` treats it as solid, so detection, bodies, enemy fire and aim assist all respect it.
