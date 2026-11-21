@@ -101,7 +101,7 @@ for name in CAST:
     bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, export_yup=True,
                               export_apply=False, export_skins=True, export_animations=True,
                               export_animation_mode='ACTIONS', export_cameras=False, export_lights=False,
-                              export_extras=True, export_image_format='JPEG', export_jpeg_quality=80)
+                              export_extras=True, export_image_format='JPEG', export_jpeg_quality=80, **rj.COMPRESS)
     manifest["glbs"].append(os.path.relpath(path, rj.ROOT).replace("\\", "/"))
     manifest.setdefault("chars", {})[f"civ_{name}"] = {"clips": names, "tris": tris}
     if preview:
