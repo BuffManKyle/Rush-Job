@@ -211,9 +211,7 @@ function placeEcm(sim: Sim): boolean {
   g.placed.push({ id: `ecm_${++seq}`, kind: 'ecm', pos: at, yaw: p.yaw, until: g.ecmUntil, target: null, done: false });
   for (const c of sim.cameras) {
     if (c.dead) continue;
-    // the desk loses the feed before it can confirm what it saw
-    if (c.deskTimer > 0 && !sim.alarm.tripped) say(sim, `The desk lost the ${c.label.toLowerCase()} feed before it could call it in.`);
-    c.deskTimer = 0;
+    // blind from now on (cameras.ts skips jammed cameras); what the desk already queued is security.ts's business
     c.suspicion = 0;
     c.sees = false;
     c.locked = false;
