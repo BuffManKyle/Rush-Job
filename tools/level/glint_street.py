@@ -193,13 +193,18 @@ def main():
                 fl[i] = CONCRETE
 
     nid = d["nextobjectid"]
+    old_ids = {o["name"]: o["id"] for l in d["layers"] if l["type"] == "objectgroup" for o in l["objects"]}
 
     def obj(name, typ, x, y, w=0, h=0, props=(), **extra):
+        """A Tiled object; it keeps the id it had last run (by name), so re-runs don't churn the map."""
         nonlocal nid
-        o = {"id": nid, "name": name, "type": typ, "x": x * PX, "y": y * PX, "width": w * PX, "height": h * PX,
+        oid = old_ids.pop(name, None)
+        if oid is None:
+            oid = nid
+            nid += 1
+        o = {"id": oid, "name": name, "type": typ, "x": x * PX, "y": y * PX, "width": w * PX, "height": h * PX,
              "rotation": 0, "visible": True, "properties": [dict(p) for p in props]}
         o.update(extra)
-        nid += 1
         return o
 
     def prop(name, value):
