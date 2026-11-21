@@ -107,7 +107,11 @@ export class DebugOverlay {
     const rows = sim.observers
       .map((o) => {
         const i = o.info;
-        const state = o.kind === 'camera' ? (o.locked ? 'locked-on' : 'sweep') : o.state;
+        let state = o.kind === 'camera' ? (o.locked ? 'locked-on' : 'sweep') : o.state;
+        if (o.kind === 'guard') {
+          if (o.role === 'operator') state += ' (op)';
+          if (o.errand) state += ` → ${o.errand}`;
+        }
         const why = !i.inRange ? 'out of range' : !i.inCone ? 'out of cone' : !i.los ? 'no LOS' : i.fStatus === 0 ? 'sees you, not suspicious' : 'SEES YOU';
         return `<tr><td>${o.label}</td><td>${state}</td><td class="num">${o.suspicion.toFixed(1)}</td><td class="num">${i.rate >= 0 ? '+' : ''}${i.rate.toFixed(1)}/s</td><td class="num">${f(i.dist)} m</td><td>${why}</td><td class="num">${f(i.fDist)}×${f(i.fMove)}×${f(i.fStatus)}×${f(i.fBag)}</td></tr>`;
       })
@@ -115,6 +119,7 @@ export class DebugOverlay {
     this.panel.innerHTML = `
       <div><b>DEBUG</b> · fps ${this.fps.toFixed(0)} · tick ${sim.tick} · t ${sim.time.toFixed(1)} s ${paused ? '· PAUSED' : ''}</div>
       <div>seed ${sim.seed} · routes ${Object.entries(sim.shuffle.routes).map(([k, v]) => `${k}=${v}`).join(', ')} · locked ${sim.shuffle.lockedDoors.join(', ') || 'none'} · code ${sim.shuffle.safeCode} @ ${sim.shuffle.codeNote}</div>
+      <div>security · buzzer ${sim.security.buzzer ? 'ON' : 'off'} · wary ${sim.security.wary} · radio ${sim.security.radio.length} queued</div>
       <div>player (${f(p.pos.x)}, ${f(p.pos.y)}) · ${p.masked ? 'masked' : 'unmasked'} · ${p.inRestricted ? 'restricted' : 'public'} · ${p.crouch ? 'crouch' : p.sprinting ? 'sprint' : 'walk'} · escorts ${p.escorts}</div>
       <table><tr><th>observer</th><th>state</th><th>sus</th><th>rate</th><th>dist</th><th>why</th><th>dist×move×status×bag</th></tr>${rows}</table>
       <div class="dim">fill = 40/s × dist × move × status × bag · drain 15/s after 1.5 s · cells: red solid, orange cover, blue window, green door</div>`;
