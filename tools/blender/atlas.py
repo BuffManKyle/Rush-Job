@@ -9,6 +9,7 @@ at the final size, bakes the old texture onto the new layout (Cycles emit bake, 
 fills the gutters by extending each island's edge colour, so every island owns gutter_px / 2 px
 of its own colour on every side. That survives the mips down to about 2^log2(gutter_px) px blocks.
 """
+import math
 import bpy
 
 
@@ -21,7 +22,62 @@ def _images(mesh):
     return out
 
 
-def rebake(mesh, size=512, gutter_px=8, samples=16):
+def _thicken(me, layer, min_t):
+    """Widen every UV island thinner than min_t (UV units) across its thin axis, about its centre.
+    A sliver island (Meshy has many, one or two faces each) covers no texel centre, so the bake
+    writes nothing for it and the gutter fill paints it in a neighbouring island's colour (a white
+    streak down a black trouser leg). The bake reads the source through the OLD uvs by barycentric
+    position, so a fatter island in the new layout still samples exactly the source colours."""
+    import bmesh
+    from mathutils import Vector
+    bm = bmesh.new(); bm.from_mesh(me)
+    uvl = bm.loops.layers.uv[layer]
+    bm.faces.ensure_lookup_table()
+    parent = list(range(len(bm.faces)))
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]; i = parent[i]
+        return i
+    for e in bm.edges:
+        lf = e.link_faces
+        if len(lf) != 2:
+            continue
+        a, b = lf
+        ua = {l.vert.index: l[uvl].uv for l in a.loops if l.vert in e.verts}
+        ub = {l.vert.index: l[uvl].uv for l in b.loops if l.vert in e.verts}
+        if all((ua[k] - ub[k]).length < 1e-6 for k in ua):
+            parent[find(a.index)] = find(b.index)
+    islands = {}
+    for f in bm.faces:
+        islands.setdefault(find(f.index), []).append(f)
+    changed = 0
+    for faces in islands.values():
+        loops = [l for f in faces for l in f.loops]
+        pts = [l[uvl].uv.copy() for l in loops]
+        c = sum(pts, Vector((0, 0))) / len(pts)
+        sxx = sum((p.x - c.x) ** 2 for p in pts); syy = sum((p.y - c.y) ** 2 for p in pts)
+        sxy = sum((p.x - c.x) * (p.y - c.y) for p in pts)
+        ang = 0.5 * math.atan2(2 * sxy, sxx - syy)
+        major = Vector((math.cos(ang), math.sin(ang))); minor = Vector((-major.y, major.x))
+        offs = [(p - c).dot(minor) for p in pts]
+        t = max(offs) - min(offs)
+        if t >= min_t:
+            continue
+        k = min_t / t if t > 1e-9 else 0.0
+        for l, p, o in zip(loops, pts, offs):
+            extra = 0.0 if k else ((l.vert.index % 3) - 1) * min_t / 2   # collinear island: spread it
+            l[uvl].uv = p + minor * (o * (k - 1) + extra) if k else p + minor * extra
+        changed += 1
+    bm.to_mesh(me); bm.free()
+    print(f"RJ_ATLAS thickened {changed} of {len(islands)} islands to >= {min_t:.4f} uv")
+    return changed
+
+
+def rebake(mesh, size=512, gutter_px=8, samples=16, interp='Closest', min_px=0):
+    """interp: how the source is read. 'Closest' never blends across an old island edge but turns a
+    one-texel edge bleed into a solid streak on UV slivers; 'Linear' matches what the source showed.
+    min_px: widen islands thinner than this many final pixels before packing (see _thicken)."""
     srcs = _images(mesh)
     if len(srcs) != 1:
         raise SystemExit(f"rebake {mesh.name}: expected one texture, found {len(srcs)}")
@@ -40,9 +96,17 @@ def rebake(mesh, size=512, gutter_px=8, samples=16):
     bpy.ops.mesh.select_all(action='SELECT')
     bpy.context.scene.tool_settings.use_uv_select_sync = True
     bpy.ops.uv.select_all(action='SELECT')
-    bpy.ops.uv.pack_islands(rotate=True, rotate_method='ANY', scale=True, merge_overlap=False,
-                            margin_method='FRACTION', margin=gutter_px / size, shape_method='CONCAVE')
+    def pack():
+        bpy.ops.uv.pack_islands(rotate=True, rotate_method='ANY', scale=True, merge_overlap=False,
+                                margin_method='FRACTION', margin=gutter_px / size, shape_method='CONCAVE')
+    pack()
     bpy.ops.object.mode_set(mode='OBJECT')
+    if min_px and _thicken(me, "rj_rebake", min_px / size):
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.uv.select_all(action='SELECT')
+        pack()
+        bpy.ops.object.mode_set(mode='OBJECT')
 
     dst = bpy.data.images.new(f"{src.name}_rb", size, size, alpha=False)
     dst.colorspace_settings.name = src.colorspace_settings.name
@@ -57,13 +121,13 @@ def rebake(mesh, size=512, gutter_px=8, samples=16):
         uvn = nt.nodes.new('ShaderNodeUVMap'); uvn.uv_map = old_name
         old_vec = tex.inputs['Vector'].links[0].from_socket if tex.inputs['Vector'].links else None
         nt.links.new(uvn.outputs['UV'], tex.inputs['Vector'])
-        interp, tex.interpolation = tex.interpolation, 'Closest'   # never blend across an old island edge
+        old_interp, tex.interpolation = tex.interpolation, interp
         em = nt.nodes.new('ShaderNodeEmission')
         nt.links.new(tex.outputs['Color'], em.inputs['Color'])
         nt.links.new(em.outputs['Emission'], out.inputs['Surface'])
         tgt = nt.nodes.new('ShaderNodeTexImage'); tgt.image = dst
         nt.nodes.active = tgt
-        saved.append((nt, out, tex, surf, uvn, old_vec, em, tgt, interp))
+        saved.append((nt, out, tex, surf, uvn, old_vec, em, tgt, old_interp))
 
     sc = bpy.context.scene
     prev_engine = sc.render.engine
@@ -78,14 +142,14 @@ def rebake(mesh, size=512, gutter_px=8, samples=16):
     dst.pack()
 
     # restore the materials, now pointing at the re-baked image on the new layout
-    for nt, out, tex, surf, uvn, old_vec, em, tgt, interp in saved:
+    for nt, out, tex, surf, uvn, old_vec, em, tgt, old_interp in saved:
         nt.nodes.remove(uvn); nt.nodes.remove(em); nt.nodes.remove(tgt)
         if old_vec:
             nt.links.new(old_vec, tex.inputs['Vector'])
         if surf:
             nt.links.new(surf, out.inputs['Surface'])
         tex.image = dst
-        tex.interpolation = interp
+        tex.interpolation = old_interp
     me.uv_layers.remove(me.uv_layers[old_name])
     new = me.uv_layers["rj_rebake"]
     new.name = old_name

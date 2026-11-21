@@ -96,6 +96,7 @@ Stand-in skeleton, for reference: `hips > spine > head`, `spine > upperarm_L/R >
 - **Clip names.** Each Meshy GLB will expose the same 10 names, renamed from Meshy's library actions at import.
 - **Attach points by role, not by bone name.** Code asks for `attach('hand_R')` through a per-model map. The stand-in maps to `hand_R`; Meshy's rig has 24 joints, no fingers, and torso bones numbered in the opposite direction to Mixamo, so its map is filled in at import.
 - **Same convention.** Metres, Y-up, facing +Z, origin at the feet, no root motion (the sim moves the root; clips only bob and sway).
+- **Texture.** Meshy packs UV islands edge to edge, so a plain downsize bleeds the neighbouring island's colour over every seam (white lines on a black suit). The pilots are re-baked from the 2048 px source to 1024 px by `tools/blender/atlas.py` with 16 px gutters, linear sampling, and sliver islands widened to at least 3 px (`min_px`). A sliver covers no texel centre, so without widening it would get gutter colour. This happens before the mask split.
 
 ## Street block: assets/models/street.glb (owner: rj-street)
 
@@ -283,7 +284,7 @@ Generated-file evidence (one row per file: tool, model version, job id, date, co
 | `mask_headline` | script `tools/blender/masks_build.py` | done | `assets/models/masks.glb` | 449 tris. The Headline; wear on the Head bone (see masks_build.py). |
 | `vest_light` | script `tools/blender/vests_build.py` | done | `assets/models/vests.glb` | 296 tris. armor light_vest; wear on the Spine01 bone. |
 | `vest_heavy` | script `tools/blender/vests_build.py` | done | `assets/models/vests.glb` | 408 tris. armor heavy_vest; wear on the Spine01 bone. |
-| `char_player` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_player.glb` | 8253 tris, own Meshy rig, clips: aim_shoot, carry_walk, crouch_idle, crouch_walk, hands_up, idle, interact, run, walk |
+| `char_player` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_player.glb` | 8271 tris, own Meshy rig, clips: aim_shoot, carry_walk, crouch_idle, crouch_walk, hands_up, idle, interact, run, walk |
 | `char_guard` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `assets/models/char_guard.glb` | 7242 tris, own Meshy rig, clips: aim_shoot, hands_up, idle, run, walk, ziptied |
 | `standin_player` | script (stand-in) | placeholder | `assets/models/standin_player.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |
 | `standin_guard` | script (stand-in) | placeholder | `assets/models/standin_guard.glb` | shared stand-in rig, clips: idle, walk, run, crouch_idle, crouch_walk, carry_walk, aim_shoot, hands_up, ziptied, interact |

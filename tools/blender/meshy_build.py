@@ -4,7 +4,8 @@
 
 Input: the files tools/gen/meshy.py saved in assets/gen/meshy/ (rigged mesh + one GLB per library
 clip). Each character KEEPS ITS OWN MESHY RIG (no retargeting). This script:
-  * puts the feet on y = 0, facing +Z, 1.8 m tall, and downsizes the texture to 1024 px JPEG;
+  * puts the feet on y = 0, facing +Z, 1.8 m tall, and re-bakes the 2048 px texture to 1024 px with
+    gutters between UV islands (atlas.rebake; a plain downsize bleeds neighbours over every seam);
   * renames library clips to the game's clip names and strips their net travel (the sim moves
     the root; bob and sway stay);
   * scripts the clips the library doesn't have, on the same rig: hands_up (arms raised, a slight
@@ -18,6 +19,7 @@ import bpy
 from mathutils import Vector, Quaternion, Matrix
 from mathutils.kdtree import KDTree
 import rj
+import atlas
 
 GEN = os.path.join(rj.ROOT, "assets", "gen", "meshy")
 FPS = 30
@@ -373,7 +375,7 @@ def level_aim(rig, act, grip, bone="RightHand"):
     print(f"RJ_AIM levelled {act.name}: up to {worst:.0f} deg corrected over frames {f0}-{f1}")
 
 
-def build(name, clips, prefix="pilot", max_tex=1024):
+def build(name, clips, prefix="pilot", max_tex=1024, rebake=None):
     rj._reset_scene()
     for a in list(bpy.data.actions):
         bpy.data.actions.remove(a)
@@ -399,6 +401,8 @@ def build(name, clips, prefix="pilot", max_tex=1024):
         for n in m.node_tree.nodes:
             if n.type == 'TEX_IMAGE' and n.image and max_tex and max(n.image.size) > max_tex:
                 n.image.scale(max_tex, max_tex)       # max_tex=None keeps the source (civs re-bake from it)
+    if rebake:                            # before split_mask, which copies the material (rebake wants one image)
+        atlas.rebake(mesh, size=rebake, gutter_px=16, interp='Linear', min_px=3)
     if name in MASKED:
         split_mask(mesh, name)
     grips = []
@@ -545,7 +549,7 @@ def main():
     preview = os.environ.get("RJ_PREVIEW", "1") == "1"
     outdir = os.path.join(rj.PREVIEWS, "meshy")
     for name, clips in CHARS.items():
-        rig, mesh, names, tris, path = build(name, clips)
+        rig, mesh, names, tris, path = build(name, clips, max_tex=None, rebake=1024)
         manifest["glbs"].append(os.path.relpath(path, rj.ROOT).replace("\\", "/"))
         manifest.setdefault("chars", {})[name] = {"clips": names, "tris": tris}
         if preview:
