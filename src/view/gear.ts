@@ -73,6 +73,17 @@ export class GearView {
       this.group.add(g);
       this.breaker = g;
     }
+    // camera junction boxes (security.ts): hold E to cut the wire (rj-stealth). Grey box, conduit up the wall.
+    for (const j of sim.security.junctions) {
+      const g = new THREE.Group();
+      const box = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.55, 0.42), new THREE.MeshStandardMaterial({ color: 0x6d7480, metalness: 0.3, roughness: 0.7 }));
+      const conduit = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.4, 8), new THREE.MeshStandardMaterial({ color: 0x4a505a }));
+      conduit.position.y = 0.95;
+      g.add(box, conduit);
+      g.position.set(j.pos.x + 0.27, 1.3, j.pos.y);
+      g.traverse((o) => ((o as THREE.Mesh).castShadow = true));
+      this.group.add(g);
+    }
   }
 
   /** A clone of a gear.glb piece, or a primitive stand-in. */
