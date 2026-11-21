@@ -1,0 +1,10 @@
+{
+  "_note": "Civilian cast (customer): cust_coat, stage idle. Written by tools/gen/civ_batch.py.",
+  "kind": "animations",
+  "job": "civ-cust_coat-idle",
+  "stream": "civilians",
+  "request": {
+    "rig_task_id": "01a1ff1a-1050-70b5-a87c-0d3cc52d83b7",
+    "action_id": 0
+  }
+}

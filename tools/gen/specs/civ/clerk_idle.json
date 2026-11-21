@@ -1,0 +1,10 @@
+{
+  "_note": "Civilian cast (staff): clerk, stage idle. Written by tools/gen/civ_batch.py.",
+  "kind": "animations",
+  "job": "civ-clerk-idle",
+  "stream": "civilians",
+  "request": {
+    "rig_task_id": "01a1ff18-d084-721f-80e2-646426e7d01f",
+    "action_id": 0
+  }
+}

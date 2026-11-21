@@ -1,0 +1,10 @@
+{
+  "_note": "Civilian cast (pedestrian): ped_teen, stage idle. Written by tools/gen/civ_batch.py.",
+  "kind": "animations",
+  "job": "civ-ped_teen-idle",
+  "stream": "civilians",
+  "request": {
+    "rig_task_id": "01a1ff1a-a13c-72a5-ad8e-af24d9eaa2a9",
+    "action_id": 0
+  }
+}

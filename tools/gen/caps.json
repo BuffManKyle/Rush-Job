@@ -1,7 +1,8 @@
 {
   "_note": "Caps set by Kyle. null = not set, and the tools refuse to buy. Meshy is in credits.",
-  "meshy_credits": 150,
+  "meshy_credits": 450,
   "meshy_reserve": 100,
   "fal": null,
-  "elevenlabs": null
+  "elevenlabs": null,
+  "_note_civilians": "Nov 21: Kyle OK'd 450 total (was 150) for the 10 Meshy civilians (rj-street, ~260 credits)."
 }

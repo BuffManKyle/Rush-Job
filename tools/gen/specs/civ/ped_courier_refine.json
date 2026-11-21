@@ -1,0 +1,13 @@
+{
+  "_note": "Civilian cast (pedestrian): ped_courier, stage refine. Written by tools/gen/civ_batch.py.",
+  "kind": "text-to-3d",
+  "job": "civ-ped_courier-refine",
+  "stream": "civilians",
+  "request": {
+    "mode": "refine",
+    "preview_task_id": "01a1ff12-1509-739e-bd82-d8872831f0d8",
+    "ai_model": "meshy-6-lite",
+    "enable_pbr": false,
+    "texture_prompt": "flat stylized colors, teal jacket, silver reflective stripes, khaki cargo trousers, grey beanie, black boots, dark skin, no red, no logos, no text"
+  }
+}

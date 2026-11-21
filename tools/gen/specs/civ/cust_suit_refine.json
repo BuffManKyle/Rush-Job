@@ -1,0 +1,13 @@
+{
+  "_note": "Civilian cast (customer): cust_suit, stage refine. Written by tools/gen/civ_batch.py.",
+  "kind": "text-to-3d",
+  "job": "civ-cust_suit-refine",
+  "stream": "civilians",
+  "request": {
+    "mode": "refine",
+    "preview_task_id": "01a1ff11-09a1-710a-a009-c568b714dbb6",
+    "ai_model": "meshy-6-lite",
+    "enable_pbr": false,
+    "texture_prompt": "flat stylized colors, slate blue blazer, white shirt, charcoal trousers, brown shoes, black beard, olive skin, no red, no logos, no text"
+  }
+}

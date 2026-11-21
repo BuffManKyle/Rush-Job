@@ -1,6 +1,730 @@
 {
  "lib": "civs",
- "glbs": [],
- "pieces": [],
- "bytes": 0
+ "glbs": [
+  "assets/models/char_civ_clerk.glb",
+  "assets/models/char_civ_manager.glb",
+  "assets/models/char_civ_cust_elder.glb",
+  "assets/models/char_civ_cust_young.glb",
+  "assets/models/char_civ_cust_coat.glb",
+  "assets/models/char_civ_cust_suit.glb",
+  "assets/models/char_civ_ped_teen.glb",
+  "assets/models/char_civ_ped_courier.glb",
+  "assets/models/char_civ_ped_oldman.glb",
+  "assets/models/char_civ_ped_woman.glb"
+ ],
+ "pieces": [
+  {
+   "name": "civ_clerk_idle",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_clerk_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_clerk_cower",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_clerk_hands_up",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_clerk_ziptied",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_manager_idle",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6198,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_manager_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6198,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_manager_cower",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6198,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_manager_hands_up",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6198,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_manager_ziptied",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6198,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_elder_idle",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6262,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_elder_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6262,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_elder_cower",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6262,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_elder_hands_up",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6262,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_elder_ziptied",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6262,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_young_idle",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6248,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_young_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6248,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_young_cower",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6248,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_young_hands_up",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6248,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_young_ziptied",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6248,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_coat_idle",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6278,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_coat_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6278,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_coat_cower",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6278,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_coat_hands_up",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6278,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_coat_ziptied",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6278,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_suit_idle",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6230,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_suit_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6230,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_suit_cower",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6230,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_suit_hands_up",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6230,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_cust_suit_ziptied",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6230,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_teen_idle",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6280,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_teen_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6280,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_teen_cower",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6280,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_teen_hands_up",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6280,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_teen_ziptied",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6280,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_courier_idle",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_courier_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_courier_cower",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_courier_hands_up",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_courier_ziptied",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_oldman_idle",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_oldman_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_oldman_cower",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_oldman_hands_up",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_oldman_ziptied",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6264,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_woman_idle",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6200,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_woman_walk",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6200,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_woman_cower",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6200,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_woman_hands_up",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6200,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  },
+  {
+   "name": "civ_ped_woman_ziptied",
+   "kind": "char",
+   "cells": [
+    1,
+    1
+   ],
+   "tris": 6200,
+   "children": [],
+   "bounds": {},
+   "note": ""
+  }
+ ],
+ "bytes": 5516048,
+ "chars": {
+  "civ_clerk": {
+   "clips": [
+    "cower",
+    "hands_up",
+    "idle",
+    "run",
+    "walk",
+    "ziptied"
+   ],
+   "tris": 6264
+  },
+  "civ_manager": {
+   "clips": [
+    "cower",
+    "hands_up",
+    "idle",
+    "run",
+    "walk",
+    "ziptied"
+   ],
+   "tris": 6198
+  },
+  "civ_cust_elder": {
+   "clips": [
+    "cower",
+    "hands_up",
+    "idle",
+    "run",
+    "walk",
+    "ziptied"
+   ],
+   "tris": 6262
+  },
+  "civ_cust_young": {
+   "clips": [
+    "cower",
+    "hands_up",
+    "idle",
+    "run",
+    "walk",
+    "ziptied"
+   ],
+   "tris": 6248
+  },
+  "civ_cust_coat": {
+   "clips": [
+    "cower",
+    "hands_up",
+    "idle",
+    "run",
+    "walk",
+    "ziptied"
+   ],
+   "tris": 6278
+  },
+  "civ_cust_suit": {
+   "clips": [
+    "cower",
+    "hands_up",
+    "idle",
+    "run",
+    "walk",
+    "ziptied"
+   ],
+   "tris": 6230
+  },
+  "civ_ped_teen": {
+   "clips": [
+    "cower",
+    "hands_up",
+    "idle",
+    "run",
+    "walk",
+    "ziptied"
+   ],
+   "tris": 6280
+  },
+  "civ_ped_courier": {
+   "clips": [
+    "cower",
+    "hands_up",
+    "idle",
+    "run",
+    "walk",
+    "ziptied"
+   ],
+   "tris": 6264
+  },
+  "civ_ped_oldman": {
+   "clips": [
+    "cower",
+    "hands_up",
+    "idle",
+    "run",
+    "walk",
+    "ziptied"
+   ],
+   "tris": 6264
+  },
+  "civ_ped_woman": {
+   "clips": [
+    "cower",
+    "hands_up",
+    "idle",
+    "run",
+    "walk",
+    "ziptied"
+   ],
+   "tris": 6200
+  }
+ }
 }

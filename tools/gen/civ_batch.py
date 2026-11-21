@@ -103,8 +103,31 @@ def spec(name, stage, prev_tid):
     return path, job
 
 
+def evidence():
+    """Markdown rows for ASSETS.md 'Generated-file evidence', one per bought civilian job."""
+    charged = {}
+    for line in open(meshy.SPEND):
+        r = json.loads(line)
+        if r.get("kind") == "reconcile" and str(r.get("job", "")).startswith("civ-"):
+            charged[r["job"]] = r.get("charged")
+    what = {"preview": "untextured shape check (meshy-6-lite)", "refine": "textured mesh (meshy-6-lite, no PBR)",
+            "rig": "auto-rig, plus the free walk and run clips", "idle": "`idle` clip (library action 0)",
+            "ziptied": "`ziptied` clip (library action 363)"}
+    kinds = {"preview": "Meshy text-to-3d preview", "refine": "Meshy text-to-3d", "rig": "Meshy rigging",
+             "idle": "Meshy animations", "ziptied": "Meshy animations"}
+    for job, r in jobs().items():
+        if not job.startswith("civ-") or r.get("status") != "SUCCEEDED":
+            continue
+        _, name, stage = job.split("-", 2)
+        files = ", ".join(f"`{f}`".replace("\\", "/") for f in r.get("files", {}) if f.endswith(".glb"))
+        print(f"| {files} | {kinds[stage]} | `{r['task_id']}` | {r['t'][:10]} | {charged.get(job, '?')} credits | "
+              f"Civilian `{name}`: {what[stage]} |")
+
+
 def main():
     args = sys.argv[1:]
+    if args and args[0] == "evidence":
+        return evidence()
     if not args or args[0] not in STAGES:
         raise SystemExit(__doc__)
     stage, buy = args[0], "--buy" in args
@@ -118,6 +141,12 @@ def main():
         job = f"civ-{name}-{stage}"
         if done.get(job, {}).get("status") == "SUCCEEDED":
             print(f"skip {job}: already bought"); continue
+        if job in done and not done[job].get("status"):
+            # bought but the poll was interrupted: recover by polling, never by buying again
+            print(f"recover {job}: polling task {done[job]['task_id']}")
+            if buy:
+                meshy.poll(STAGES[stage][0], done[job]["task_id"], job)
+            continue
         prev = STAGES[stage][1]
         tid = None
         if prev:

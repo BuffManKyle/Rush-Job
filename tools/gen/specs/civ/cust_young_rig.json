@@ -1,0 +1,10 @@
+{
+  "_note": "Civilian cast (customer): cust_young, stage rig. Written by tools/gen/civ_batch.py.",
+  "kind": "rigging",
+  "job": "civ-cust_young-rig",
+  "stream": "civilians",
+  "request": {
+    "input_task_id": "01a1ff15-f581-76f4-be75-d65523abc6cf",
+    "height_meters": 1.75
+  }
+}

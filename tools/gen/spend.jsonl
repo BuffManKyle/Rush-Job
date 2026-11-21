@@ -32,3 +32,103 @@
 {"t": "2026-11-18T16:07:58Z", "provider": "meshy", "job": "pilot-guard-ziptied", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 1039, "charged": 3}
 {"t": "2026-11-18T16:08:07Z", "provider": "meshy", "stream": "chars", "job": "pilot-player-carry_walk", "kind": "animations", "credits_est": 3, "balance_before": 1039, "provider_total": 64, "cap": 150}
 {"t": "2026-11-18T16:08:18Z", "provider": "meshy", "job": "pilot-player-carry_walk", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 1036, "charged": 3}
+{"t": "2026-11-21T17:01:27Z", "provider": "meshy", "stream": "civilians", "job": "civ-clerk-preview", "kind": "text-to-3d", "credits_est": 10, "balance_before": 1036, "provider_total": 74, "cap": 450}
+{"t": "2026-11-21T17:02:11Z", "provider": "meshy", "job": "civ-clerk-preview", "kind": "reconcile", "credits_est": 0, "credits_actual": -5, "balance_after": 1031, "charged": 5}
+{"t": "2026-11-21T17:02:11Z", "provider": "meshy", "stream": "civilians", "job": "civ-manager-preview", "kind": "text-to-3d", "credits_est": 10, "balance_before": 1031, "provider_total": 79, "cap": 450}
+{"t": "2026-11-21T17:02:46Z", "provider": "meshy", "job": "civ-manager-preview", "kind": "reconcile", "credits_est": 0, "credits_actual": -5, "balance_after": 1026, "charged": 5}
+{"t": "2026-11-21T17:02:46Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_elder-preview", "kind": "text-to-3d", "credits_est": 10, "balance_before": 1026, "provider_total": 84, "cap": 450}
+{"t": "2026-11-21T17:03:19Z", "provider": "meshy", "job": "civ-cust_elder-preview", "kind": "reconcile", "credits_est": 0, "credits_actual": -5, "balance_after": 1021, "charged": 5}
+{"t": "2026-11-21T17:03:19Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_young-preview", "kind": "text-to-3d", "credits_est": 10, "balance_before": 1021, "provider_total": 89, "cap": 450}
+{"t": "2026-11-21T17:03:54Z", "provider": "meshy", "job": "civ-cust_young-preview", "kind": "reconcile", "credits_est": 0, "credits_actual": -5, "balance_after": 1016, "charged": 5}
+{"t": "2026-11-21T17:03:54Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_coat-preview", "kind": "text-to-3d", "credits_est": 10, "balance_before": 1016, "provider_total": 94, "cap": 450}
+{"t": "2026-11-21T17:04:28Z", "provider": "meshy", "job": "civ-cust_coat-preview", "kind": "reconcile", "credits_est": 0, "credits_actual": -5, "balance_after": 1011, "charged": 5}
+{"t": "2026-11-21T17:04:28Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_suit-preview", "kind": "text-to-3d", "credits_est": 10, "balance_before": 1011, "provider_total": 99, "cap": 450}
+{"t": "2026-11-21T17:05:02Z", "provider": "meshy", "job": "civ-cust_suit-preview", "kind": "reconcile", "credits_est": 0, "credits_actual": -5, "balance_after": 1006, "charged": 5}
+{"t": "2026-11-21T17:05:02Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_teen-preview", "kind": "text-to-3d", "credits_est": 10, "balance_before": 1006, "provider_total": 104, "cap": 450}
+{"t": "2026-11-21T17:05:36Z", "provider": "meshy", "job": "civ-ped_teen-preview", "kind": "reconcile", "credits_est": 0, "credits_actual": -5, "balance_after": 1001, "charged": 5}
+{"t": "2026-11-21T17:05:36Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_courier-preview", "kind": "text-to-3d", "credits_est": 10, "balance_before": 1001, "provider_total": 109, "cap": 450}
+{"t": "2026-11-21T17:06:10Z", "provider": "meshy", "job": "civ-ped_courier-preview", "kind": "reconcile", "credits_est": 0, "credits_actual": -5, "balance_after": 996, "charged": 5}
+{"t": "2026-11-21T17:06:10Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_oldman-preview", "kind": "text-to-3d", "credits_est": 10, "balance_before": 996, "provider_total": 114, "cap": 450}
+{"t": "2026-11-21T17:06:44Z", "provider": "meshy", "job": "civ-ped_oldman-preview", "kind": "reconcile", "credits_est": 0, "credits_actual": -5, "balance_after": 991, "charged": 5}
+{"t": "2026-11-21T17:06:45Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_woman-preview", "kind": "text-to-3d", "credits_est": 10, "balance_before": 991, "provider_total": 119, "cap": 450}
+{"t": "2026-11-21T17:07:29Z", "provider": "meshy", "job": "civ-ped_woman-preview", "kind": "reconcile", "credits_est": 0, "credits_actual": -5, "balance_after": 986, "charged": 5}
+{"t": "2026-11-21T17:08:08Z", "provider": "meshy", "stream": "civilians", "job": "civ-clerk-refine", "kind": "text-to-3d", "credits_est": 10, "balance_before": 986, "provider_total": 124, "cap": 450}
+{"t": "2026-11-21T17:08:31Z", "provider": "meshy", "job": "civ-clerk-refine", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 976, "charged": 10}
+{"t": "2026-11-21T17:08:32Z", "provider": "meshy", "stream": "civilians", "job": "civ-manager-refine", "kind": "text-to-3d", "credits_est": 10, "balance_before": 976, "provider_total": 134, "cap": 450}
+{"t": "2026-11-21T17:09:06Z", "provider": "meshy", "job": "civ-manager-refine", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 966, "charged": 10}
+{"t": "2026-11-21T17:09:06Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_elder-refine", "kind": "text-to-3d", "credits_est": 10, "balance_before": 966, "provider_total": 144, "cap": 450}
+{"t": "2026-11-21T17:09:50Z", "provider": "meshy", "job": "civ-cust_elder-refine", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 956, "charged": 10}
+{"t": "2026-11-21T17:09:50Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_young-refine", "kind": "text-to-3d", "credits_est": 10, "balance_before": 956, "provider_total": 154, "cap": 450}
+{"t": "2026-11-21T17:10:24Z", "provider": "meshy", "job": "civ-cust_young-refine", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 946, "charged": 10}
+{"t": "2026-11-21T17:10:24Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_coat-refine", "kind": "text-to-3d", "credits_est": 10, "balance_before": 946, "provider_total": 164, "cap": 450}
+{"t": "2026-11-21T17:10:48Z", "provider": "meshy", "job": "civ-cust_coat-refine", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 936, "charged": 10}
+{"t": "2026-11-21T17:10:48Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_suit-refine", "kind": "text-to-3d", "credits_est": 10, "balance_before": 936, "provider_total": 174, "cap": 450}
+{"t": "2026-11-21T17:11:12Z", "provider": "meshy", "job": "civ-cust_suit-refine", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 926, "charged": 10}
+{"t": "2026-11-21T17:11:12Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_teen-refine", "kind": "text-to-3d", "credits_est": 10, "balance_before": 926, "provider_total": 184, "cap": 450}
+{"t": "2026-11-21T17:11:35Z", "provider": "meshy", "job": "civ-ped_teen-refine", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 916, "charged": 10}
+{"t": "2026-11-21T17:11:35Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_courier-refine", "kind": "text-to-3d", "credits_est": 10, "balance_before": 916, "provider_total": 194, "cap": 450}
+{"t": "2026-11-21T17:12:09Z", "provider": "meshy", "job": "civ-ped_courier-refine", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 906, "charged": 10}
+{"t": "2026-11-21T17:12:09Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_oldman-refine", "kind": "text-to-3d", "credits_est": 10, "balance_before": 906, "provider_total": 204, "cap": 450}
+{"t": "2026-11-21T17:12:34Z", "provider": "meshy", "job": "civ-ped_oldman-refine", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 896, "charged": 10}
+{"t": "2026-11-21T17:12:34Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_woman-refine", "kind": "text-to-3d", "credits_est": 10, "balance_before": 896, "provider_total": 214, "cap": 450}
+{"t": "2026-11-21T17:12:57Z", "provider": "meshy", "job": "civ-ped_woman-refine", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 886, "charged": 10}
+{"t": "2026-11-21T17:12:58Z", "provider": "meshy", "stream": "civilians", "job": "civ-clerk-rig", "kind": "rigging", "credits_est": 5, "balance_before": 886, "provider_total": 219, "cap": 450}
+{"t": "2026-11-21T17:13:14Z", "provider": "meshy", "job": "civ-clerk-rig", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 881, "charged": 5}
+{"t": "2026-11-21T17:13:15Z", "provider": "meshy", "stream": "civilians", "job": "civ-manager-rig", "kind": "rigging", "credits_est": 5, "balance_before": 881, "provider_total": 224, "cap": 450}
+{"t": "2026-11-21T17:13:35Z", "provider": "meshy", "job": "civ-manager-rig", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 876, "charged": 5}
+{"t": "2026-11-21T17:13:35Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_elder-rig", "kind": "rigging", "credits_est": 5, "balance_before": 876, "provider_total": 229, "cap": 450}
+{"t": "2026-11-21T17:14:03Z", "provider": "meshy", "job": "civ-cust_elder-rig", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 871, "charged": 5}
+{"t": "2026-11-21T17:14:04Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_young-rig", "kind": "rigging", "credits_est": 5, "balance_before": 871, "provider_total": 234, "cap": 450}
+{"t": "2026-11-21T17:14:19Z", "provider": "meshy", "job": "civ-cust_young-rig", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 866, "charged": 5}
+{"t": "2026-11-21T17:14:19Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_coat-rig", "kind": "rigging", "credits_est": 5, "balance_before": 866, "provider_total": 239, "cap": 450}
+{"t": "2026-11-21T17:14:34Z", "provider": "meshy", "job": "civ-cust_coat-rig", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 861, "charged": 5}
+{"t": "2026-11-21T17:14:35Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_suit-rig", "kind": "rigging", "credits_est": 5, "balance_before": 861, "provider_total": 244, "cap": 450}
+{"t": "2026-11-21T17:14:56Z", "provider": "meshy", "job": "civ-cust_suit-rig", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 856, "charged": 5}
+{"t": "2026-11-21T17:14:57Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_teen-rig", "kind": "rigging", "credits_est": 5, "balance_before": 856, "provider_total": 249, "cap": 450}
+{"t": "2026-11-21T17:15:12Z", "provider": "meshy", "job": "civ-ped_teen-rig", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 851, "charged": 5}
+{"t": "2026-11-21T17:15:12Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_courier-rig", "kind": "rigging", "credits_est": 5, "balance_before": 851, "provider_total": 254, "cap": 450}
+{"t": "2026-11-21T17:15:28Z", "provider": "meshy", "job": "civ-ped_courier-rig", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 846, "charged": 5}
+{"t": "2026-11-21T17:15:28Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_oldman-rig", "kind": "rigging", "credits_est": 5, "balance_before": 846, "provider_total": 259, "cap": 450}
+{"t": "2026-11-21T17:15:43Z", "provider": "meshy", "job": "civ-ped_oldman-rig", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 841, "charged": 5}
+{"t": "2026-11-21T17:15:44Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_woman-rig", "kind": "rigging", "credits_est": 5, "balance_before": 841, "provider_total": 264, "cap": 450}
+{"t": "2026-11-21T17:15:58Z", "provider": "meshy", "job": "civ-ped_woman-rig", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 836, "charged": 5}
+{"t": "2026-11-21T17:15:59Z", "provider": "meshy", "stream": "civilians", "job": "civ-clerk-idle", "kind": "animations", "credits_est": 3, "balance_before": 836, "provider_total": 267, "cap": 450}
+{"t": "2026-11-21T17:16:10Z", "provider": "meshy", "job": "civ-clerk-idle", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 833, "charged": 3}
+{"t": "2026-11-21T17:16:10Z", "provider": "meshy", "stream": "civilians", "job": "civ-manager-idle", "kind": "animations", "credits_est": 3, "balance_before": 833, "provider_total": 270, "cap": 450}
+{"t": "2026-11-21T17:16:21Z", "provider": "meshy", "job": "civ-manager-idle", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 830, "charged": 3}
+{"t": "2026-11-21T17:16:22Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_elder-idle", "kind": "animations", "credits_est": 3, "balance_before": 830, "provider_total": 273, "cap": 450}
+{"t": "2026-11-21T17:16:33Z", "provider": "meshy", "job": "civ-cust_elder-idle", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 827, "charged": 3}
+{"t": "2026-11-21T17:16:33Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_young-idle", "kind": "animations", "credits_est": 3, "balance_before": 827, "provider_total": 276, "cap": 450}
+{"t": "2026-11-21T17:16:44Z", "provider": "meshy", "job": "civ-cust_young-idle", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 824, "charged": 3}
+{"t": "2026-11-21T17:16:44Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_coat-idle", "kind": "animations", "credits_est": 3, "balance_before": 824, "provider_total": 279, "cap": 450}
+{"t": "2026-11-21T17:16:56Z", "provider": "meshy", "job": "civ-cust_coat-idle", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 821, "charged": 3}
+{"t": "2026-11-21T17:16:56Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_suit-idle", "kind": "animations", "credits_est": 3, "balance_before": 821, "provider_total": 282, "cap": 450}
+{"t": "2026-11-21T17:17:07Z", "provider": "meshy", "job": "civ-cust_suit-idle", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 818, "charged": 3}
+{"t": "2026-11-21T17:17:07Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_teen-idle", "kind": "animations", "credits_est": 3, "balance_before": 818, "provider_total": 285, "cap": 450}
+{"t": "2026-11-21T17:17:18Z", "provider": "meshy", "job": "civ-ped_teen-idle", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 815, "charged": 3}
+{"t": "2026-11-21T17:17:18Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_courier-idle", "kind": "animations", "credits_est": 3, "balance_before": 815, "provider_total": 288, "cap": 450}
+{"t": "2026-11-21T17:17:29Z", "provider": "meshy", "job": "civ-ped_courier-idle", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 812, "charged": 3}
+{"t": "2026-11-21T17:17:30Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_oldman-idle", "kind": "animations", "credits_est": 3, "balance_before": 812, "provider_total": 291, "cap": 450}
+{"t": "2026-11-21T17:17:41Z", "provider": "meshy", "job": "civ-ped_oldman-idle", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 809, "charged": 3}
+{"t": "2026-11-21T17:17:41Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_woman-idle", "kind": "animations", "credits_est": 3, "balance_before": 809, "provider_total": 294, "cap": 450}
+{"t": "2026-11-21T17:17:52Z", "provider": "meshy", "job": "civ-ped_woman-idle", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 806, "charged": 3}
+{"t": "2026-11-21T17:17:53Z", "provider": "meshy", "stream": "civilians", "job": "civ-clerk-ziptied", "kind": "animations", "credits_est": 3, "balance_before": 806, "provider_total": 297, "cap": 450}
+{"t": "2026-11-21T17:18:04Z", "provider": "meshy", "job": "civ-clerk-ziptied", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 803, "charged": 3}
+{"t": "2026-11-21T17:18:04Z", "provider": "meshy", "stream": "civilians", "job": "civ-manager-ziptied", "kind": "animations", "credits_est": 3, "balance_before": 803, "provider_total": 300, "cap": 450}
+{"t": "2026-11-21T17:18:16Z", "provider": "meshy", "job": "civ-manager-ziptied", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 800, "charged": 3}
+{"t": "2026-11-21T17:18:16Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_elder-ziptied", "kind": "animations", "credits_est": 3, "balance_before": 800, "provider_total": 303, "cap": 450}
+{"t": "2026-11-21T17:18:27Z", "provider": "meshy", "job": "civ-cust_elder-ziptied", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 797, "charged": 3}
+{"t": "2026-11-21T17:18:27Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_young-ziptied", "kind": "animations", "credits_est": 3, "balance_before": 797, "provider_total": 306, "cap": 450}
+{"t": "2026-11-21T17:18:38Z", "provider": "meshy", "job": "civ-cust_young-ziptied", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 794, "charged": 3}
+{"t": "2026-11-21T17:18:39Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_coat-ziptied", "kind": "animations", "credits_est": 3, "balance_before": 794, "provider_total": 309, "cap": 450}
+{"t": "2026-11-21T17:18:50Z", "provider": "meshy", "job": "civ-cust_coat-ziptied", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 791, "charged": 3}
+{"t": "2026-11-21T17:18:50Z", "provider": "meshy", "stream": "civilians", "job": "civ-cust_suit-ziptied", "kind": "animations", "credits_est": 3, "balance_before": 791, "provider_total": 312, "cap": 450}
+{"t": "2026-11-21T17:19:02Z", "provider": "meshy", "job": "civ-cust_suit-ziptied", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 788, "charged": 3}
+{"t": "2026-11-21T17:19:02Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_teen-ziptied", "kind": "animations", "credits_est": 3, "balance_before": 788, "provider_total": 315, "cap": 450}
+{"t": "2026-11-21T17:19:13Z", "provider": "meshy", "job": "civ-ped_teen-ziptied", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 785, "charged": 3}
+{"t": "2026-11-21T17:19:14Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_courier-ziptied", "kind": "animations", "credits_est": 3, "balance_before": 785, "provider_total": 318, "cap": 450}
+{"t": "2026-11-21T17:19:25Z", "provider": "meshy", "job": "civ-ped_courier-ziptied", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 782, "charged": 3}
+{"t": "2026-11-21T17:19:25Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_oldman-ziptied", "kind": "animations", "credits_est": 3, "balance_before": 782, "provider_total": 321, "cap": 450}
+{"t": "2026-11-21T17:19:36Z", "provider": "meshy", "job": "civ-ped_oldman-ziptied", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 779, "charged": 3}
+{"t": "2026-11-21T17:19:36Z", "provider": "meshy", "stream": "civilians", "job": "civ-ped_woman-ziptied", "kind": "animations", "credits_est": 3, "balance_before": 779, "provider_total": 324, "cap": 450}
+{"t": "2026-11-21T17:19:48Z", "provider": "meshy", "job": "civ-ped_woman-ziptied", "kind": "reconcile", "credits_est": 0, "credits_actual": 0, "balance_after": 776, "charged": 3}

@@ -1,0 +1,13 @@
+{
+  "_note": "Civilian cast (staff): clerk, stage refine. Written by tools/gen/civ_batch.py.",
+  "kind": "text-to-3d",
+  "job": "civ-clerk-refine",
+  "stream": "civilians",
+  "request": {
+    "mode": "refine",
+    "preview_task_id": "01a1ff0e-45b2-7179-b636-4faa94d6c1f6",
+    "ai_model": "meshy-6-lite",
+    "enable_pbr": false,
+    "texture_prompt": "flat stylized colors, teal blouse, gold badge, black trousers and shoes, dark hair, light brown skin, no red, no logos, no text"
+  }
+}

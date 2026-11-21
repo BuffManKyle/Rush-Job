@@ -1,0 +1,10 @@
+{
+  "_note": "Civilian cast (customer): cust_coat, stage rig. Written by tools/gen/civ_batch.py.",
+  "kind": "rigging",
+  "job": "civ-cust_coat-rig",
+  "stream": "civilians",
+  "request": {
+    "input_task_id": "01a1ff16-7925-74cc-9246-8e2f14187347",
+    "height_meters": 1.75
+  }
+}

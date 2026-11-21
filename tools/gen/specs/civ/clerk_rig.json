@@ -1,0 +1,10 @@
+{
+  "_note": "Civilian cast (staff): clerk, stage rig. Written by tools/gen/civ_batch.py.",
+  "kind": "rigging",
+  "job": "civ-clerk-rig",
+  "stream": "civilians",
+  "request": {
+    "input_task_id": "01a1ff14-645a-7699-a0bc-97518d3b567b",
+    "height_meters": 1.75
+  }
+}

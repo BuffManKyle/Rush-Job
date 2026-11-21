@@ -1,0 +1,13 @@
+{
+  "_note": "Civilian cast (pedestrian): ped_teen, stage refine. Written by tools/gen/civ_batch.py.",
+  "kind": "text-to-3d",
+  "job": "civ-ped_teen-refine",
+  "stream": "civilians",
+  "request": {
+    "mode": "refine",
+    "preview_task_id": "01a1ff11-907c-7784-9215-c2af09e339dc",
+    "ai_model": "meshy-6-lite",
+    "enable_pbr": false,
+    "texture_prompt": "flat stylized colors, navy hoodie, grey cap, black headphones, light blue jeans, white sneakers, no red, no logos, no text"
+  }
+}

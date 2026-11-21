@@ -1,0 +1,10 @@
+{
+  "_note": "Civilian cast (staff): manager, stage rig. Written by tools/gen/civ_batch.py.",
+  "kind": "rigging",
+  "job": "civ-manager-rig",
+  "stream": "civilians",
+  "request": {
+    "input_task_id": "01a1ff14-c11e-7614-b202-c5615b381959",
+    "height_meters": 1.75
+  }
+}

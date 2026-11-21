@@ -1,0 +1,10 @@
+{
+  "_note": "Civilian cast (pedestrian): ped_oldman, stage rig. Written by tools/gen/civ_batch.py.",
+  "kind": "rigging",
+  "job": "civ-ped_oldman-rig",
+  "stream": "civilians",
+  "request": {
+    "input_task_id": "01a1ff18-16d0-7132-96f3-d8b5eb9b4fc3",
+    "height_meters": 1.75
+  }
+}

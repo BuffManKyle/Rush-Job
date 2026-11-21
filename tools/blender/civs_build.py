@@ -86,6 +86,10 @@ for name in CAST:
         continue
     rig, mesh, names, tris, path = mb.build(name, CLIPS, prefix="civ")
     add_clip(rig, cower(rig), "cower")
+    for m in mesh.data.materials:              # 512 px is plenty for a civilian seen from 13-26 m up
+        for nd in m.node_tree.nodes:
+            if nd.type == 'TEX_IMAGE' and nd.image and max(nd.image.size) > 512:
+                nd.image.scale(512, 512)
     names = sorted(names + ["cower"])
     # re-export with the extra clip, under the civ name
     bpy.ops.object.select_all(action='DESELECT')
@@ -97,7 +101,7 @@ for name in CAST:
     bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, export_yup=True,
                               export_apply=False, export_skins=True, export_animations=True,
                               export_animation_mode='ACTIONS', export_cameras=False, export_lights=False,
-                              export_extras=True, export_image_format='JPEG', export_jpeg_quality=85)
+                              export_extras=True, export_image_format='JPEG', export_jpeg_quality=80)
     manifest["glbs"].append(os.path.relpath(path, rj.ROOT).replace("\\", "/"))
     manifest.setdefault("chars", {})[f"civ_{name}"] = {"clips": names, "tris": tris}
     if preview:

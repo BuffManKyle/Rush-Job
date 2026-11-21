@@ -1,0 +1,10 @@
+{
+  "_note": "Civilian cast (pedestrian): ped_woman, stage ziptied. Written by tools/gen/civ_batch.py.",
+  "kind": "animations",
+  "job": "civ-ped_woman-ziptied",
+  "stream": "civilians",
+  "request": {
+    "rig_task_id": "01a1ff1b-5909-76f6-9ab3-43ed702d2496",
+    "action_id": 363
+  }
+}

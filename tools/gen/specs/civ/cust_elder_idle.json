@@ -1,0 +1,10 @@
+{
+  "_note": "Civilian cast (customer): cust_elder, stage idle. Written by tools/gen/civ_batch.py.",
+  "kind": "animations",
+  "job": "civ-cust_elder-idle",
+  "stream": "civilians",
+  "request": {
+    "rig_task_id": "01a1ff19-6284-762f-ab52-0e383171b2f9",
+    "action_id": 0
+  }
+}

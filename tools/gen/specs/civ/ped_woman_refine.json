@@ -1,0 +1,13 @@
+{
+  "_note": "Civilian cast (pedestrian): ped_woman, stage refine. Written by tools/gen/civ_batch.py.",
+  "kind": "text-to-3d",
+  "job": "civ-ped_woman-refine",
+  "stream": "civilians",
+  "request": {
+    "mode": "refine",
+    "preview_task_id": "01a1ff13-1f7d-7114-a878-34ce04106828",
+    "ai_model": "meshy-6-lite",
+    "enable_pbr": false,
+    "texture_prompt": "flat stylized colors, plum turtleneck, cream jacket, black leggings and boots, black hair, no red, no logos, no text"
+  }
+}

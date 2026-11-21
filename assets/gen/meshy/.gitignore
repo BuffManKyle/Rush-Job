@@ -1,0 +1,3 @@
+# rj-street: the civilian cast raw downloads (~150 MB) stay on disk only. Job ids and sha256 prefixes are in
+# tools/gen/jobs.jsonl; the built game models are assets/models/char_civ_*.glb.
+civ-*

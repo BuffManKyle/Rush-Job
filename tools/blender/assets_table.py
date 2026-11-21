@@ -34,6 +34,13 @@ def rows():
                 out.append(f"| `{name}` | Meshy (pilot), imported by `tools/blender/meshy_build.py` | done (pilot, pending Kyle's review) | `{g}` | "
                            f"{c['tris']} tris, own Meshy rig, clips: {', '.join(c['clips'])} |")
             continue
+        if lib == "civs":                  # Meshy civilian cast (rj-street)
+            for g in m["glbs"]:
+                name = os.path.basename(g)[:-4]
+                c = m["chars"][name[5:]]
+                out.append(f"| `{name}` | Meshy, imported by `tools/blender/civs_build.py` | done | `{g}` | "
+                           f"{c['tris']} tris, own Meshy rig, clips: {', '.join(c['clips'])} |")
+            continue
         for p in m["pieces"]:
             if p.get("kind") == "preview":
                 continue

@@ -1,0 +1,13 @@
+{
+  "_note": "Civilian cast (staff): manager, stage refine. Written by tools/gen/civ_batch.py.",
+  "kind": "text-to-3d",
+  "job": "civ-manager-refine",
+  "stream": "civilians",
+  "request": {
+    "mode": "refine",
+    "preview_task_id": "01a1ff0e-f73d-711c-a747-87466947c4fc",
+    "ai_model": "meshy-6-lite",
+    "enable_pbr": false,
+    "texture_prompt": "flat stylized colors, cream shirt, navy waistcoat, gold tie, grey trousers, brown shoes, grey hair, pale skin, no red, no logos, no text"
+  }
+}

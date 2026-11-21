@@ -1,0 +1,10 @@
+{
+  "_note": "Civilian cast (staff): manager, stage idle. Written by tools/gen/civ_batch.py.",
+  "kind": "animations",
+  "job": "civ-manager-idle",
+  "stream": "civilians",
+  "request": {
+    "rig_task_id": "01a1ff19-1299-73dd-b4b0-77513714613e",
+    "action_id": 0
+  }
+}
