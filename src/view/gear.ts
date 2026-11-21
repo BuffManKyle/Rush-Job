@@ -34,6 +34,7 @@ export class GearView {
   private bodyBags = new Map<string, THREE.Object3D>();
   private panic = new Map<string, THREE.Mesh>();
   private breaker: THREE.Group | null = null;
+  private junctions: { cams: string[]; wire: THREE.Object3D | null; led: THREE.Mesh | null }[] = [];
   private lights: { light: THREE.Light; base: number }[] = [];
   private smokeMat = new THREE.MeshStandardMaterial({ color: 0xb8c0cc, transparent: true, opacity: 0.55, depthWrite: false, roughness: 1 });
 
@@ -73,16 +74,29 @@ export class GearView {
       this.group.add(g);
       this.breaker = g;
     }
-    // camera junction boxes (security.ts): hold E to cut the wire (rj-stealth). Grey box, conduit up the wall.
+    // camera junction boxes (security.ts): hold E to cut the wire (rj-stealth). props.glb `junction_box` (rj-assets):
+    // origin on the floor at the wall face, facing +Z; children junction_box_wire (hidden once cut) and junction_box_led.
     for (const j of sim.security.junctions) {
-      const g = new THREE.Group();
-      const box = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.55, 0.42), new THREE.MeshStandardMaterial({ color: 0x6d7480, metalness: 0.3, roughness: 0.7 }));
-      const conduit = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.4, 8), new THREE.MeshStandardMaterial({ color: 0x4a505a }));
-      conduit.position.y = 0.95;
-      g.add(box, conduit);
-      g.position.set(j.pos.x + 0.27, 1.3, j.pos.y);
-      g.traverse((o) => ((o as THREE.Mesh).castShadow = true));
-      this.group.add(g);
+      const wallX = Math.floor(j.pos.x) + 1; // the box hangs on the east face of the wall cell it's in
+      const k = kit?.clone('junction_box');
+      let root: THREE.Object3D;
+      if (k) {
+        root = k;
+        root.position.set(wallX, 0, j.pos.y);
+        root.rotation.y = Math.PI / 2; // +Z faces +X (into the alley)
+        const led = root.getObjectByName('junction_box_led') as THREE.Mesh | undefined;
+        if (led?.isMesh) led.material = (led.material as THREE.Material).clone(); // own copy: it turns red on cut
+      } else {
+        root = new THREE.Group();
+        const box = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.55, 0.42), new THREE.MeshStandardMaterial({ color: 0x6d7480, metalness: 0.3, roughness: 0.7 }));
+        const conduit = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.4, 8), new THREE.MeshStandardMaterial({ color: 0x4a505a }));
+        conduit.position.y = 0.95;
+        root.add(box, conduit);
+        root.position.set(wallX + 0.07, 1.3, j.pos.y);
+        root.traverse((o) => ((o as THREE.Mesh).castShadow = true));
+      }
+      this.group.add(root);
+      this.junctions.push({ cams: j.cameras, wire: root.getObjectByName('junction_box_wire') ?? null, led: (root.getObjectByName('junction_box_led') as THREE.Mesh | undefined) ?? null });
     }
   }
 
@@ -245,6 +259,17 @@ export class GearView {
         m.rotation.y = -w.yaw;
         this.group.add(m);
         this.bodyBags.set(w.id, m);
+      }
+    }
+
+    // junction boxes: wire gone and LED red once their cameras are cut
+    for (const j of this.junctions) {
+      const cut = sim.cameras.some((c) => c.cutWire && j.cams.includes(c.id));
+      if (j.wire) j.wire.visible = !cut;
+      const lm = j.led?.material as THREE.MeshStandardMaterial | undefined;
+      if (lm?.color) {
+        lm.color.setHex(cut ? 0xe0413a : 0x2fd0c0);
+        lm.emissive?.setHex(cut ? 0x5a0a08 : 0x0a3a36);
       }
     }
 
