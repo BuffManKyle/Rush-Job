@@ -373,7 +373,7 @@ def level_aim(rig, act, grip, bone="RightHand"):
     print(f"RJ_AIM levelled {act.name}: up to {worst:.0f} deg corrected over frames {f0}-{f1}")
 
 
-def build(name, clips, prefix="pilot"):
+def build(name, clips, prefix="pilot", max_tex=1024):
     rj._reset_scene()
     for a in list(bpy.data.actions):
         bpy.data.actions.remove(a)
@@ -397,8 +397,8 @@ def build(name, clips, prefix="pilot"):
     for i, m in enumerate(mesh.data.materials):
         m.name = f"RJ_Char_{name}" + (f"_{i}" if i else "")
         for n in m.node_tree.nodes:
-            if n.type == 'TEX_IMAGE' and n.image and max(n.image.size) > 1024:
-                n.image.scale(1024, 1024)
+            if n.type == 'TEX_IMAGE' and n.image and max_tex and max(n.image.size) > max_tex:
+                n.image.scale(max_tex, max_tex)       # max_tex=None keeps the source (civs re-bake from it)
     if name in MASKED:
         split_mask(mesh, name)
     grips = []

@@ -3,8 +3,9 @@
     py tools/blender/build.py civs
 
 Input: what tools/gen/civ_batch.py bought into assets/gen/meshy/ (civ-<name>-*.glb). Uses the pilot
-importer in meshy_build.py (same conventions: own Meshy rig, feet at 0, facing +Z, 1024 px texture,
-renamed clips with root travel stripped, scripted hands_up), then adds a scripted `cower` clip
+importer in meshy_build.py (same conventions: own Meshy rig, feet at 0, facing +Z,
+renamed clips with root travel stripped, scripted hands_up), re-bakes the texture at 512 px with
+gutters between UV islands (atlas.py: no seam bleed), then adds a scripted `cower` clip
 (hunched, forearms over the head, trembling) on the same rig. Characters whose files aren't there
 yet are skipped, so this library builds (empty) before anything is bought.
 """
@@ -14,6 +15,7 @@ import bpy
 from mathutils import Quaternion, Vector
 import rj
 import meshy_build as mb
+import atlas
 
 CAST = ["clerk", "manager", "cust_elder", "cust_young", "cust_coat", "cust_suit",
         "ped_teen", "ped_courier", "ped_oldman", "ped_woman"]
@@ -84,12 +86,11 @@ for name in CAST:
     if not all(os.path.exists(os.path.join(mb.GEN, f)) for f in need):
         print(f"RJ_SKIP civ {name}: not bought yet")
         continue
-    rig, mesh, names, tris, path = mb.build(name, CLIPS, prefix="civ")
+    rig, mesh, names, tris, path = mb.build(name, CLIPS, prefix="civ", max_tex=None)
     add_clip(rig, cower(rig), "cower")
-    for m in mesh.data.materials:              # 512 px is plenty for a civilian seen from 13-26 m up
-        for nd in m.node_tree.nodes:
-            if nd.type == 'TEX_IMAGE' and nd.image and max(nd.image.size) > 512:
-                nd.image.scale(512, 512)
+    # 512 px is plenty for a civilian seen from 13-26 m up, but Meshy's islands touch, so a plain
+    # downsize bleeds neighbours over every seam: re-bake from the full source with 8 px gutters
+    atlas.rebake(mesh, size=512, gutter_px=8)
     names = sorted(names + ["cower"])
     # re-export with the extra clip, under the civ name
     bpy.ops.object.select_all(action='DESELECT')
