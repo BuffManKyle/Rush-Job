@@ -258,6 +258,9 @@ export const T = {
     cutRadius: 6.5, // half-width of the cutaway region
     cutDepth: 9, // how far toward the camera walls get cut
     coneRays: 48,
+    shadowHalfSize: 22, // m: the key light's shadow area is ±this around the player
+    shadowMapSize: 2048,
+    keyLightOffset: [-7, 22, 13] as [number, number, number], // key light position relative to the player
     walkAnimSpeed: 1.6, // m/s the walk clip looks right at; playback scales with real speed
     runAnimSpeed: 4.6,
   },

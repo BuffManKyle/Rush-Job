@@ -119,16 +119,25 @@ export class WorldView {
     this.hemi = new THREE.HemisphereLight(0x9ab8d0, 0x141b33, 1.4);
     this.scene.add(this.hemi);
     this.key = new THREE.DirectionalLight(0xffd6a8, 2.2);
-    this.key.position.set(L.w * 0.3, 22, L.h * 0.9);
-    this.key.target.position.set(L.w / 2, 0, L.h / 2);
+    // The key light follows the player with a fixed shadow area (see updateKeyLight), so shadow detail
+    // doesn't drop as maps grow.
     this.key.castShadow = true;
-    this.key.shadow.mapSize.set(2048, 2048);
-    const s = Math.max(L.w, L.h) * 0.75;
+    this.key.shadow.mapSize.set(T.view.shadowMapSize, T.view.shadowMapSize);
+    const s = T.view.shadowHalfSize;
     Object.assign(this.key.shadow.camera, { left: -s, right: s, top: s, bottom: -s, near: 1, far: 80 });
+    this.updateKeyLight(new THREE.Vector3(sim.level.spawns.player_start.x, 0, sim.level.spawns.player_start.y));
     this.key.shadow.bias = -0.0005;
     this.scene.add(this.key, this.key.target);
     this.alarmLight = new THREE.PointLight(0xff2020, 0, 40, 1.2);
-    this.alarmLight.position.set(L.w / 2, 6, L.h / 2);
+    // over the shop: the middle of its staff and public areas (falls back to the map centre)
+    const shop = L.zones.filter((z) => z.type === 'restricted' || z.type === 'lobby');
+    if (shop.length) {
+      const x0 = Math.min(...shop.map((z) => z.x));
+      const x1 = Math.max(...shop.map((z) => z.x + z.w));
+      const z0 = Math.min(...shop.map((z) => z.y));
+      const z1 = Math.max(...shop.map((z) => z.y + z.h));
+      this.alarmLight.position.set((x0 + x1) / 2, 6, (z0 + z1) / 2);
+    } else this.alarmLight.position.set(L.w / 2, 6, L.h / 2);
     this.scene.add(this.alarmLight);
 
     if (kit && KitLevel.covers(kit)) this.kitLevel = new KitLevel(this.scene, sim, kit);
@@ -474,6 +483,26 @@ export class WorldView {
     }
   }
 
+  /**
+   * Keep the shadow-casting key light centred on `focus` at a fixed offset. The target is snapped to the
+   * shadow map's texel grid (in light space) so shadows don't shimmer as the player moves.
+   */
+  private updateKeyLight(focus: THREE.Vector3): void {
+    const texel = (T.view.shadowHalfSize * 2) / T.view.shadowMapSize;
+    const off = new THREE.Vector3(...T.view.keyLightOffset);
+    const dir = off.clone().normalize();
+    // light-space basis: snap along the two axes perpendicular to the light direction
+    const right = new THREE.Vector3(0, 1, 0).cross(dir).normalize();
+    const up = dir.clone().cross(right).normalize();
+    const r = Math.round(focus.dot(right) / texel) * texel;
+    const u = Math.round(focus.dot(up) / texel) * texel;
+    const d = focus.dot(dir);
+    const snapped = right.multiplyScalar(r).add(up.multiplyScalar(u)).add(dir.clone().multiplyScalar(d));
+    this.key.target.position.copy(snapped);
+    this.key.position.copy(snapped).add(off);
+    this.key.target.updateMatrixWorld();
+  }
+
   /** Interpolated world position of a sim entity (alpha = fraction into the next tick). */
   static lerpPos(e: { pos: { x: number; y: number }; prev: { x: number; y: number } }, alpha: number, y = 0): THREE.Vector3 {
     return new THREE.Vector3(lerp(e.prev.x, e.pos.x, alpha), y, lerp(e.prev.y, e.pos.y, alpha));
@@ -548,6 +577,7 @@ export class WorldView {
     if (cam.wantsCutaway && !this.kitLevel) this.updateCutaway(pp, dt);
 
     const alarm = sim.alarm.tripped;
+    this.updateKeyLight(pp);
     this.alarmLight.intensity = alarm ? 30 + 30 * Math.sin(performance.now() / 120) : 0;
     this.hemi.intensity = alarm ? 0.9 : 1.4;
   }
