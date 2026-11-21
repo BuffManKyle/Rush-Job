@@ -62,6 +62,39 @@ for name, note in (("keypad", "number pad"), ("card_reader", "keycard slot (bank
     L.box(0.04, y - 0.045, 1.335 if name == "card_reader" else 1.155, 0.065, y - 0.035, 1.355 if name == "card_reader" else 1.168, "Ok", bottom=True)
 
 
+# ---- camera junction box (rj-stealth: hold E to cut the camera wire) -----------------------
+JB_W, JB_H, JB_D, JB_Z = 0.4, 0.5, 0.14, 1.05          # width, height, depth, bottom edge
+p = P("junction_box", note="wall-mounted camera junction box. Origin on the floor at the WALL SURFACE under the "
+      "box; the box sits against the wall on +Y (Blender) and faces -Y = glTF +Z, so rotate it to face away "
+      "from the wall. Children: junction_box_door (hinged on its left edge, rotate about Y to open), "
+      "junction_box_wire (the teal camera cable: hide it once cut), junction_box_led (RJ_Ok; set RJ_Danger "
+      "when tampered). Conduit runs up the wall to the ceiling", elev=15, azim=-35)
+x0, x1, y0, y1 = -JB_W / 2, JB_W / 2, -JB_D, 0.0
+p.box(x0, y0 + 0.012, JB_Z, x1, y1, JB_Z + JB_H, "SteelDark", bottom=True)                    # body
+p.box(x0 + 0.03, y0 + 0.011, JB_Z + 0.03, x1 - 0.03, y0 + 0.012, JB_Z + JB_H - 0.03, "Black",
+      bottom=True, skip=('+y',))                                                             # dark interior
+for z in (JB_Z + 0.12, JB_Z + 0.25, JB_Z + 0.38):                                             # terminal blocks
+    p.box(x0 + 0.06, y0 + 0.03, z, x1 - 0.06, y0 + 0.06, z + 0.05, "Steel", bottom=True)
+p.box(-0.03, y1 - 0.06, JB_Z + JB_H, 0.03, y1, JB_Z + JB_H + 0.04, "SteelDark", bottom=True)  # conduit fitting
+p.cyl(0, y1 - 0.03, JB_Z + JB_H + 0.04, 3.0, 0.022, "SteelDark", seg=8)                        # conduit up the wall
+for z in (1.9, 2.5):
+    p.box(-0.035, y1 - 0.05, z, 0.035, y1, z + 0.03, "Steel", bottom=True)                    # conduit clips
+d = p.child("junction_box_door", pivot=(x0, y0 + 0.012, 0))
+d.box(0, -0.018, JB_Z + 0.005, JB_W, 0, JB_Z + JB_H - 0.005, "SteelDark", bottom=True)
+d.box(JB_W - 0.06, -0.03, JB_Z + 0.22, JB_W - 0.035, -0.018, JB_Z + 0.3, "Steel", bottom=True)  # latch
+d.box(0.05, -0.0185, JB_Z + JB_H - 0.12, 0.17, -0.018, JB_Z + JB_H - 0.06, "Amber", bottom=True, skip=('+y',))  # warning label
+for k in range(3):                                                                            # label hatching
+    xk = 0.06 + 0.04 * k
+    d.box(xk, -0.0187, JB_Z + JB_H - 0.11, xk + 0.015, -0.0185, JB_Z + JB_H - 0.07, "Hatch", bottom=True, skip=('+y',))
+w = p.child("junction_box_wire")
+w.box(x1 - 0.005, y0 + 0.04, JB_Z + 0.35, x1 + 0.03, y0 + 0.08, JB_Z + 0.39, "Black", bottom=True)  # gland
+w.cyl(x1 + 0.03, y0 + 0.06, JB_Z + 0.37, 2.95, 0.012, "Teal", seg=6)                          # the camera cable
+for z in (1.7, 2.3):
+    w.box(x1 + 0.015, y0 + 0.045, z, x1 + 0.045, y0 + 0.075, z + 0.02, "Black", bottom=True)  # cable ties
+led = p.child("junction_box_led")
+led.box(x0 + 0.05, y0 - 0.008, JB_Z + 0.06, x0 + 0.075, y0 + 0.012, JB_Z + 0.08, "Ok", bottom=True)
+
+
 # ---- safe --------------------------------------------------------------------------------
 SW, SD, SH = 0.9, 0.8, 1.25
 p = P("safe", note="back-room safe, door faces south; child 'safe_door' hinges at the front-left "
