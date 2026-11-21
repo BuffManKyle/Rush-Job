@@ -258,6 +258,8 @@ def main():
         else:
             if e.get("cover"):
                 props.append(prop("cover", True))
+            if e["piece"].startswith("bldg_"):
+                props.append(prop("opaque", True))   # buildings should block sight (needs grid support)
             o = obj(name, "decor", e["x"], e["y"], e["w"], e["h"], props=props)
         dec["objects"].append(o)
     d["nextobjectid"] = nid

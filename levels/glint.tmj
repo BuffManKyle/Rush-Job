@@ -5961,6 +5961,11 @@
        "name": "rot",
        "type": "float",
        "value": 0.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -5984,6 +5989,11 @@
        "name": "rot",
        "type": "float",
        "value": 0.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6007,6 +6017,11 @@
        "name": "rot",
        "type": "float",
        "value": 0.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6030,6 +6045,11 @@
        "name": "rot",
        "type": "float",
        "value": 0.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6053,6 +6073,11 @@
        "name": "rot",
        "type": "float",
        "value": 0.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6076,6 +6101,11 @@
        "name": "rot",
        "type": "float",
        "value": 180.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6099,6 +6129,11 @@
        "name": "rot",
        "type": "float",
        "value": 180.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6122,6 +6157,11 @@
        "name": "rot",
        "type": "float",
        "value": 180.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6145,6 +6185,11 @@
        "name": "rot",
        "type": "float",
        "value": 180.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6168,6 +6213,11 @@
        "name": "rot",
        "type": "float",
        "value": 180.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6191,6 +6241,11 @@
        "name": "rot",
        "type": "float",
        "value": 180.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6214,6 +6269,11 @@
        "name": "rot",
        "type": "float",
        "value": 0.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6237,6 +6297,11 @@
        "name": "rot",
        "type": "float",
        "value": 0.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6260,6 +6325,11 @@
        "name": "rot",
        "type": "float",
        "value": 0.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6283,6 +6353,11 @@
        "name": "rot",
        "type": "float",
        "value": 0.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6306,6 +6381,11 @@
        "name": "rot",
        "type": "float",
        "value": 0.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6329,6 +6409,11 @@
        "name": "rot",
        "type": "float",
        "value": 0.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6352,6 +6437,11 @@
        "name": "rot",
        "type": "float",
        "value": 180.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6375,6 +6465,11 @@
        "name": "rot",
        "type": "float",
        "value": 180.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6398,6 +6493,11 @@
        "name": "rot",
        "type": "float",
        "value": 0.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -6421,6 +6521,11 @@
        "name": "rot",
        "type": "float",
        "value": 0.0
+      },
+      {
+       "name": "opaque",
+       "type": "bool",
+       "value": true
       }
      ]
     },
