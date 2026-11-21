@@ -1,0 +1,17 @@
+{
+ "cue.c4.beep": {"takes": ["t07"], "why": "made in code (synth_beep.py); every ElevenLabs beep rang like a bell"},
+ "sfx.case.smash": {"takes": ["t06", "t05"], "why": "round 2 glass takes; t04 was best of round 1 but stutters"},
+ "mus.glint.stealth": {"takes": ["t01"], "why": "Kyle liked it"},
+ "mus.glint.loud": {"takes": ["t01"], "why": "measured 96.0 bpm, matches the stealth stem"},
+ "mus.glint.tension": {"takes": ["t01"], "why": "steady 96 bpm, strongest pulse"},
+ "mus.bank.stealth": {"takes": ["t01"], "why": "steady 90 bpm"},
+ "mus.bank.loud": {"takes": ["t03"], "why": "steady 90 bpm and the requested length (t01/t02 ran long)"},
+ "mus.bank.tension": {"takes": ["t02"], "why": "steady 90 bpm, strongest pulse"},
+ "mus.gallery.stealth": {"takes": ["t02"], "why": "steady 80 bpm"},
+ "mus.gallery.loud": {"takes": ["t03"], "why": "the only take at 80 bpm (t01/t02 came out near 76)"},
+ "mus.gallery.tension": {"takes": ["t02"], "why": "steady 80 bpm, strongest pulse"},
+ "mus.menu": {"takes": ["t02"], "why": "steady 100 bpm"},
+ "mus.board": {"takes": ["t01"], "why": "steady 90 bpm"},
+ "mus.payout": {"takes": ["t01"], "why": "steady 120 bpm"},
+ "mus.payout.cuffed": {"takes": ["t01"], "why": "only take"}
+}

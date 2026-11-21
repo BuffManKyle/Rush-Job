@@ -19,11 +19,14 @@ import { bankJob } from './wallet';
 import { GearHud } from './view/gearHud';
 import { pickLoadout, savedLoadout } from './view/loadoutPicker';
 import { cleanLoadout, type Loadout } from './data/loadout';
+import { AudioEngine } from './audio/engine';
+import { AudioDirector } from './audio/director';
 
 const app = document.getElementById('app')!;
 const hudEl = document.getElementById('hud')!;
 const level = loadTiled(glintTmj);
 const input = new Input(app);
+const audio = new AudioDirector(new AudioEngine()); // reads the sim; never writes it (src/audio/)
 
 interface Game {
   sim: Sim;
@@ -43,6 +46,7 @@ let picking = false;
 function kitUp(seed: number): void {
   if (picking) return;
   picking = true;
+  audio.board();
   pickLoadout(level.title, kit).then((l) => {
     picking = false;
     loadout = l;
@@ -63,6 +67,7 @@ function start(seed: number): void {
     game.gearHud.dispose();
   }
   const sim = new Sim(level, seed, loadout);
+  audio.attach(sim);
   banked = false;
   const view = new WorldView(app, sim, kit);
   const hud = new Hud(hudEl, sim);
@@ -79,11 +84,12 @@ function start(seed: number): void {
   resize();
   setPaused(false);
   // expose for console debugging / automated play-tests (read-only by convention)
-  (window as unknown as { rj: unknown }).rj = { sim, cam, view, gear, loadout, THREE, start, test, kitUp };
+  (window as unknown as { rj: unknown }).rj = { sim, cam, view, gear, loadout, THREE, start, test, kitUp, audio };
 }
 
 function setPaused(p: boolean): void {
   paused = p;
+  audio.setPaused(p);
   game.hud.showPause(
     p,
     game.sim.seed,
@@ -120,6 +126,7 @@ function frame(now: number): void {
     if (input.consume('KeyN')) return start((Math.random() * 1e9) >>> 0);
     if (input.consume('KeyL')) return kitUp(sim.seed);
   } else if (input.consume('Escape')) setPaused(!paused);
+  if (input.consume('KeyM')) audio.toggleMute();
   if (input.consume('F1')) {
     debugOn = !debugOn;
     debug.toggle();
@@ -151,6 +158,7 @@ function frame(now: number): void {
   } else {
     sim.events.flush();
   }
+  if (!paused && !test.manual) audio.update(dt);
   input.clearPressed();
   draw(paused || test.manual ? 1 : acc / sim.dt, dt);
 }
@@ -208,5 +216,8 @@ const params = new URLSearchParams(location.search);
     requestAnimationFrame(frame);
   };
   if (params.has('nopick')) go(loadout);
-  else pickLoadout(level.title, kit).then(go);
+  else {
+    audio.board();
+    pickLoadout(level.title, kit).then(go);
+  }
 });

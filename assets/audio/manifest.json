@@ -1,0 +1,2275 @@
+{
+ "amb.bank.lobby": {
+  "files": [
+   "amb/bank_lobby_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.bank.lobby_panic": {
+  "files": [
+   "amb/bank_lobby_panic_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.bank.office": {
+  "files": [
+   "amb/bank_office_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.bank.roof": {
+  "files": [
+   "amb/bank_roof_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.bank.server": {
+  "files": [
+   "amb/bank_server_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.bank.vault": {
+  "files": [
+   "amb/bank_vault_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.gallery.hall": {
+  "files": [
+   "amb/gallery_hall_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.gallery.roof": {
+  "files": [
+   "amb/gallery_roof_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.gallery.storage": {
+  "files": [
+   "amb/gallery_storage_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.glint.alley": {
+  "files": [
+   "amb/glint_alley_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.glint.back": {
+  "files": [
+   "amb/glint_back_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.glint.showroom": {
+  "files": [
+   "amb/glint_showroom_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.loud.street": {
+  "files": [
+   "amb/loud_street_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.police.radio": {
+  "files": [
+   "amb/police_radio_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.siren.far": {
+  "files": [
+   "amb/siren_far_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.siren.near": {
+  "files": [
+   "amb/siren_near_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.siren.swarm": {
+  "files": [
+   "amb/siren_swarm_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.van.idle": {
+  "files": [
+   "amb/van_idle_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "amb.van.ride": {
+  "files": [
+   "amb/van_ride_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.body.found": {
+  "files": [
+   "cue/body_found.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.bullet.whiz": {
+  "files": [
+   "cue/whiz_01.ogg",
+   "cue/whiz_02.ogg",
+   "cue/whiz_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.c4.beep": {
+  "files": [
+   "cue/c4_beep.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t07"
+  ],
+  "why": "made in code (synth_beep.py); every ElevenLabs beep rang like a bell"
+ },
+ "cue.camera.lock": {
+  "files": [
+   "cue/camera_lock.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.detect.investigate": {
+  "files": [
+   "cue/detect_investigate_01.ogg",
+   "cue/detect_investigate_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.detect.look": {
+  "files": [
+   "cue/detect_look_01.ogg",
+   "cue/detect_look_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.detect.lost": {
+  "files": [
+   "cue/detect_lost.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.detect.meter": {
+  "files": [
+   "cue/detect_meter_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.detect.reporting": {
+  "files": [
+   "cue/detect_reporting.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.detect.spotted": {
+  "files": [
+   "cue/detect_spotted_01.ogg",
+   "cue/detect_spotted_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.drill.jam": {
+  "files": [
+   "cue/drill_jam_01.ogg",
+   "cue/drill_jam_02.ogg",
+   "cue/drill_jam_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t03",
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.ecm.ending": {
+  "files": [
+   "cue/ecm_ending.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.escorted": {
+  "files": [
+   "cue/escorted.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.hack.trace": {
+  "files": [
+   "cue/hack_trace.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.heat.up": {
+  "files": [
+   "cue/heat_up_1..4_01.ogg",
+   "cue/heat_up_1..4_02.ogg",
+   "cue/heat_up_1..4_03.ogg",
+   "cue/heat_up_1..4_04.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t04",
+   "t03",
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.laser.trip": {
+  "files": [
+   "cue/laser_trip.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t03"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.pager.ring": {
+  "files": [
+   "cue/pager_ring.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t03"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.pager.ring_urgent": {
+  "files": [
+   "cue/pager_ring_urgent.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "cue.player.low_hp": {
+  "files": [
+   "cue/player_low_hp.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "mus.bank.loud": {
+  "files": [
+   "music/bank_loud.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t03"
+  ],
+  "why": "steady 90 bpm and the requested length (t01/t02 ran long)",
+  "alignedMs": 0,
+  "bpm": 90,
+  "bars": 36,
+  "loopSeconds": 96.0,
+  "cutAt": 2.731
+ },
+ "mus.bank.stealth": {
+  "files": [
+   "music/bank_stealth.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "steady 90 bpm",
+  "bpm": 90,
+  "bars": 36,
+  "loopSeconds": 96.0,
+  "cutAt": 4.138
+ },
+ "mus.bank.tension": {
+  "files": [
+   "music/bank_tension.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t02"
+  ],
+  "why": "steady 90 bpm, strongest pulse",
+  "bpm": 90,
+  "bars": 8,
+  "loopSeconds": 21.3333,
+  "cutAt": 3.968
+ },
+ "mus.board": {
+  "files": [
+   "music/board.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "steady 90 bpm",
+  "bpm": 90,
+  "bars": 16,
+  "loopSeconds": 42.6667,
+  "cutAt": 4.065
+ },
+ "mus.gallery.loud": {
+  "files": [
+   "music/gallery_loud.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t03"
+  ],
+  "why": "the only take at 80 bpm (t01/t02 came out near 76)",
+  "alignedMs": 0,
+  "bpm": 80,
+  "bars": 32,
+  "loopSeconds": 96.0,
+  "cutAt": 5.229
+ },
+ "mus.gallery.stealth": {
+  "files": [
+   "music/gallery_stealth.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t02"
+  ],
+  "why": "steady 80 bpm",
+  "bpm": 80,
+  "bars": 32,
+  "loopSeconds": 96.0,
+  "cutAt": 4.482
+ },
+ "mus.gallery.tension": {
+  "files": [
+   "music/gallery_tension.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t02"
+  ],
+  "why": "steady 80 bpm, strongest pulse",
+  "bpm": 80,
+  "bars": 8,
+  "loopSeconds": 24.0,
+  "cutAt": 4.28
+ },
+ "mus.glint.loud": {
+  "files": [
+   "music/glint_loud.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "measured 96.0 bpm, matches the stealth stem",
+  "alignedMs": 0,
+  "bpm": 96,
+  "bars": 24,
+  "loopSeconds": 60.0,
+  "cutAt": 2.511
+ },
+ "mus.glint.stealth": {
+  "files": [
+   "music/glint_stealth.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "approved in review",
+  "bpm": 96,
+  "bars": 24,
+  "loopSeconds": 60.0,
+  "cutAt": 2.5
+ },
+ "mus.glint.tension": {
+  "files": [
+   "music/glint_tension.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "steady 96 bpm, strongest pulse",
+  "bpm": 96,
+  "bars": 8,
+  "loopSeconds": 20.0,
+  "cutAt": 3.735
+ },
+ "mus.menu": {
+  "files": [
+   "music/menu.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t02"
+  ],
+  "why": "steady 100 bpm",
+  "bpm": 100,
+  "bars": 20,
+  "loopSeconds": 48.0,
+  "cutAt": 2.965
+ },
+ "mus.payout": {
+  "files": [
+   "music/payout.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "steady 120 bpm",
+  "bpm": 120,
+  "bars": 16,
+  "loopSeconds": 32.0,
+  "cutAt": 2.945
+ },
+ "mus.payout.cuffed": {
+  "files": [
+   "music/payout_cuffed.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "only take",
+  "bpm": 80,
+  "bars": 8,
+  "loopSeconds": 24.0,
+  "cutAt": 4.5
+ },
+ "mus.sting.alarm_bank": {
+  "files": [
+   "music/sting_alarm_bank.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t03"
+  ],
+  "why": "bar 0 of mus.bank.loud"
+ },
+ "mus.sting.alarm_gallery": {
+  "files": [
+   "music/sting_alarm_gallery.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t03"
+  ],
+  "why": "bar 0 of mus.gallery.loud"
+ },
+ "mus.sting.alarm_glint": {
+  "files": [
+   "music/sting_alarm_glint.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "bar 0 of mus.glint.loud"
+ },
+ "mus.sting.cuffed": {
+  "files": [
+   "music/sting_cuffed.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "mus.sting.escaped": {
+  "files": [
+   "music/sting_escaped.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "mus.sting.mask_up": {
+  "files": [
+   "music/sting_mask_up.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "mus.sting.unlock": {
+  "files": [
+   "music/sting_unlock.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.alarm.bell": {
+  "files": [
+   "amb/alarm_bell_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.alarm.gallery": {
+  "files": [
+   "amb/alarm_gallery_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.alarm.klaxon": {
+  "files": [
+   "amb/alarm_klaxon_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.alarm.shutters": {
+  "files": [
+   "sfx/alarm_shutters.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.bag.land_heavy": {
+  "files": [
+   "sfx/bag_land_heavy_01.ogg",
+   "sfx/bag_land_heavy_02.ogg",
+   "sfx/bag_land_heavy_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.bag.land_light": {
+  "files": [
+   "sfx/bag_land_light_01.ogg",
+   "sfx/bag_land_light_02.ogg",
+   "sfx/bag_land_light_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.bag.painting": {
+  "files": [
+   "sfx/bag_painting.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.bag.pickup": {
+  "files": [
+   "sfx/bag_pickup_01.ogg",
+   "sfx/bag_pickup_02.ogg",
+   "sfx/bag_pickup_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.bag.stuff_cash": {
+  "files": [
+   "sfx/bag_cash_01.ogg",
+   "sfx/bag_cash_02.ogg",
+   "sfx/bag_cash_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t03",
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.bag.stuff_gold": {
+  "files": [
+   "sfx/bag_gold_01.ogg",
+   "sfx/bag_gold_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t04",
+   "t03"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.bag.stuff_jewelry": {
+  "files": [
+   "sfx/bag_jewelry_01.ogg",
+   "sfx/bag_jewelry_02.ogg",
+   "sfx/bag_jewelry_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t03",
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.bag.throw": {
+  "files": [
+   "sfx/bag_throw_01.ogg",
+   "sfx/bag_throw_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t03",
+   "t02"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.baton.zap": {
+  "files": [
+   "sfx/baton_zap_01.ogg",
+   "sfx/baton_zap_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.body.drag": {
+  "files": [
+   "sfx/body_drag_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.bodybag.zip": {
+  "files": [
+   "sfx/bodybag_zip.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.breaker.off": {
+  "files": [
+   "sfx/breaker_off.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.breaker.on": {
+  "files": [
+   "sfx/breaker_on.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.bullhorn.open": {
+  "files": [
+   "sfx/bullhorn_open_01.ogg",
+   "sfx/bullhorn_open_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t04",
+   "t03"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.c4.blast": {
+  "files": [
+   "sfx/c4_blast_01.ogg",
+   "sfx/c4_blast_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.c4.place": {
+  "files": [
+   "sfx/c4_place.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.camera.loop_feed": {
+  "files": [
+   "sfx/camera_loop_feed.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.camera.servo": {
+  "files": [
+   "sfx/camera_servo_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.case.smash": {
+  "files": [
+   "sfx/case_smash_01.ogg",
+   "sfx/case_smash_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t06",
+   "t05"
+  ],
+  "why": "round 2 glass takes; t04 was best of round 1 but stutters"
+ },
+ "sfx.cloner.done": {
+  "files": [
+   "sfx/cloner_done.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.cloner.loop": {
+  "files": [
+   "sfx/cloner_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.cop.shot": {
+  "files": [
+   "sfx/cop_shot_01.ogg",
+   "sfx/cop_shot_02.ogg",
+   "sfx/cop_shot_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.crowbar.pry": {
+  "files": [
+   "sfx/crowbar_01.ogg",
+   "sfx/crowbar_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t04",
+   "t03"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.door.glass_close": {
+  "files": [
+   "sfx/door_glass_close.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.door.glass_open": {
+  "files": [
+   "sfx/door_glass_open.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.door.locked_rattle": {
+  "files": [
+   "sfx/door_locked_01.ogg",
+   "sfx/door_locked_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.door.metal_close": {
+  "files": [
+   "sfx/door_metal_close_01.ogg",
+   "sfx/door_metal_close_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.door.metal_open": {
+  "files": [
+   "sfx/door_metal_open_01.ogg",
+   "sfx/door_metal_open_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.door.wood_close": {
+  "files": [
+   "sfx/door_wood_close_01.ogg",
+   "sfx/door_wood_close_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.door.wood_open": {
+  "files": [
+   "sfx/door_wood_open_01.ogg",
+   "sfx/door_wood_open_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.dot.snack": {
+  "files": [
+   "sfx/dot_snack_01.ogg",
+   "sfx/dot_snack_02.ogg",
+   "sfx/dot_snack_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.drill.done": {
+  "files": [
+   "sfx/drill_done.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.drill.fix": {
+  "files": [
+   "sfx/drill_fix_01.ogg",
+   "sfx/drill_fix_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.drill.loop": {
+  "files": [
+   "sfx/drill_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.drill.place": {
+  "files": [
+   "sfx/drill_place.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.drill.start": {
+  "files": [
+   "sfx/drill_start.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.earpiece.click": {
+  "files": [
+   "sfx/earpiece_01.ogg",
+   "sfx/earpiece_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.ecm.loop": {
+  "files": [
+   "sfx/ecm_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.ecm.on": {
+  "files": [
+   "sfx/ecm_on.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.glasscutter.loop": {
+  "files": [
+   "sfx/glasscutter_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.glasscutter.pop": {
+  "files": [
+   "sfx/glasscutter_pop.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.guard.shot": {
+  "files": [
+   "sfx/guard_shot_01.ogg",
+   "sfx/guard_shot_02.ogg",
+   "sfx/guard_shot_03.ogg",
+   "sfx/guard_shot_04.ogg",
+   "sfx/guard_shot_05.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.gun.casing": {
+  "files": [
+   "sfx/casing_01.ogg",
+   "sfx/casing_02.ogg",
+   "sfx/casing_03.ogg",
+   "sfx/casing_04.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t03"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.gun.dryfire": {
+  "files": [
+   "sfx/gun_dryfire.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.hack.stage": {
+  "files": [
+   "sfx/hack_stage.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.hack.typing": {
+  "files": [
+   "sfx/hack_typing_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.impact.body": {
+  "files": [
+   "sfx/impact_body_01.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.impact.camera": {
+  "files": [
+   "sfx/camera_shot_out.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.impact.glass": {
+  "files": [
+   "sfx/impact_glass_01.ogg",
+   "sfx/impact_glass_02.ogg",
+   "sfx/impact_glass_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.impact.shield": {
+  "files": [
+   "sfx/impact_shield_01.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.impact.wall": {
+  "files": [
+   "sfx/impact_wall_01.ogg",
+   "sfx/impact_wall_02.ogg",
+   "sfx/impact_wall_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.junction.cut": {
+  "files": [
+   "sfx/junction_cut.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.keycard.deny": {
+  "files": [
+   "sfx/keycard_deny.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.keycard.ok": {
+  "files": [
+   "sfx/keycard_ok_01.ogg",
+   "sfx/keycard_ok_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.keypad.beep": {
+  "files": [
+   "sfx/keypad_beep_01.ogg",
+   "sfx/keypad_beep_02.ogg",
+   "sfx/keypad_beep_03.ogg",
+   "sfx/keypad_beep_04.ogg",
+   "sfx/keypad_beep_05.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.laser.hum": {
+  "files": [
+   "sfx/laser_hum_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t03"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.lockpick.loop": {
+  "files": [
+   "sfx/lockpick_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.lockpick.open": {
+  "files": [
+   "sfx/lockpick_open.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.lockpick.pin": {
+  "files": [
+   "sfx/lockpick_pin_01.ogg",
+   "sfx/lockpick_pin_02.ogg",
+   "sfx/lockpick_pin_03.ogg",
+   "sfx/lockpick_pin_04.ogg",
+   "sfx/lockpick_pin_05.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.mirror.place": {
+  "files": [
+   "sfx/mirror_place.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.noisemaker.loop": {
+  "files": [
+   "sfx/noisemaker.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.noisemaker.throw": {
+  "files": [
+   "sfx/noisemaker_throw.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.note.peel": {
+  "files": [
+   "sfx/note_peel.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.pager.hangup": {
+  "files": [
+   "sfx/pager_hangup.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.pager.pickup": {
+  "files": [
+   "sfx/pager_pickup.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.pistol.reload": {
+  "files": [
+   "sfx/pistol_reload.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.pistol.shot": {
+  "files": [
+   "sfx/pistol_shot_01.ogg",
+   "sfx/pistol_shot_02.ogg",
+   "sfx/pistol_shot_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.player.armor_hit": {
+  "files": [
+   "sfx/player_armor_hit_01.ogg",
+   "sfx/player_armor_hit_02.ogg",
+   "sfx/player_armor_hit_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.player.armor_regen": {
+  "files": [
+   "sfx/player_armor_regen.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t03"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.player.crouch": {
+  "files": [
+   "sfx/player_crouch_01.ogg",
+   "sfx/player_crouch_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.player.cuffed": {
+  "files": [
+   "sfx/cuffed.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.player.hit": {
+  "files": [
+   "sfx/player_hit_01.ogg",
+   "sfx/player_hit_02.ogg",
+   "sfx/player_hit_03.ogg",
+   "sfx/player_hit_04.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.player.intimidate": {
+  "files": [
+   "sfx/intimidate_01.ogg",
+   "sfx/intimidate_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.player.mask_pull": {
+  "files": [
+   "sfx/player_mask_pull.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.player.mask_snap": {
+  "files": [
+   "sfx/player_mask_snap_01.ogg",
+   "sfx/player_mask_snap_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.player.medkit": {
+  "files": [
+   "sfx/player_medkit.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.police.arrive": {
+  "files": [
+   "sfx/police_arrive_01.ogg",
+   "sfx/police_arrive_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.police.breach": {
+  "files": [
+   "sfx/police_breach_01.ogg",
+   "sfx/police_breach_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.police.helicopter": {
+  "files": [
+   "amb/helicopter_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.police.shield_move": {
+  "files": [
+   "sfx/shield_move_loop.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.radio.squelch_in": {
+  "files": [
+   "sfx/radio_in_01.ogg",
+   "sfx/radio_in_02.ogg",
+   "sfx/radio_in_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.radio.squelch_out": {
+  "files": [
+   "sfx/radio_out_01.ogg",
+   "sfx/radio_out_02.ogg",
+   "sfx/radio_out_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.safe.code_wrong": {
+  "files": [
+   "sfx/safe_code_wrong.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.safe.door_open": {
+  "files": [
+   "sfx/safe_door_open.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.safe.unlock": {
+  "files": [
+   "sfx/safe_unlock.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.shotgun.pump": {
+  "files": [
+   "sfx/shotgun_pump.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.shotgun.reload": {
+  "files": [
+   "sfx/shotgun_shell_01.ogg",
+   "sfx/shotgun_shell_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.shotgun.shot": {
+  "files": [
+   "sfx/shotgun_shot_01.ogg",
+   "sfx/shotgun_shot_02.ogg",
+   "sfx/shotgun_shot_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.smg.reload": {
+  "files": [
+   "sfx/smg_reload.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.smg.shot": {
+  "files": [
+   "sfx/smg_shot_01.ogg",
+   "sfx/smg_shot_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.smoke.hiss": {
+  "files": [
+   "sfx/smoke_hiss.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.smoke.throw": {
+  "files": [
+   "sfx/smoke_throw.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.step.asphalt": {
+  "files": [
+   "sfx/step_asphalt_01.ogg",
+   "sfx/step_asphalt_02.ogg",
+   "sfx/step_asphalt_03.ogg",
+   "sfx/step_asphalt_04.ogg",
+   "sfx/step_asphalt_05.ogg",
+   "sfx/step_asphalt_06.ogg",
+   "sfx/step_asphalt_07.ogg",
+   "sfx/step_asphalt_08.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.step.boots_gear": {
+  "files": [
+   "sfx/step_gear_rattle.ogg"
+  ],
+  "loop": true,
+  "takes": [
+   "t03"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.step.carpet": {
+  "files": [
+   "sfx/step_carpet_01.ogg",
+   "sfx/step_carpet_02.ogg",
+   "sfx/step_carpet_03.ogg",
+   "sfx/step_carpet_04.ogg",
+   "sfx/step_carpet_05.ogg",
+   "sfx/step_carpet_06.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.step.concrete": {
+  "files": [
+   "sfx/step_concrete_01.ogg",
+   "sfx/step_concrete_02.ogg",
+   "sfx/step_concrete_03.ogg",
+   "sfx/step_concrete_04.ogg",
+   "sfx/step_concrete_05.ogg",
+   "sfx/step_concrete_06.ogg",
+   "sfx/step_concrete_07.ogg",
+   "sfx/step_concrete_08.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.step.lino": {
+  "files": [
+   "sfx/step_lino_01.ogg",
+   "sfx/step_lino_02.ogg",
+   "sfx/step_lino_03.ogg",
+   "sfx/step_lino_04.ogg",
+   "sfx/step_lino_05.ogg",
+   "sfx/step_lino_06.ogg",
+   "sfx/step_lino_07.ogg",
+   "sfx/step_lino_08.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.step.marble": {
+  "files": [
+   "sfx/step_marble_01.ogg",
+   "sfx/step_marble_02.ogg",
+   "sfx/step_marble_03.ogg",
+   "sfx/step_marble_04.ogg",
+   "sfx/step_marble_05.ogg",
+   "sfx/step_marble_06.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.step.showroom": {
+  "files": [
+   "sfx/step_showroom_01.ogg",
+   "sfx/step_showroom_02.ogg",
+   "sfx/step_showroom_03.ogg",
+   "sfx/step_showroom_04.ogg",
+   "sfx/step_showroom_05.ogg",
+   "sfx/step_showroom_06.ogg",
+   "sfx/step_showroom_07.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.step.sidewalk": {
+  "files": [
+   "sfx/step_sidewalk_01.ogg",
+   "sfx/step_sidewalk_02.ogg",
+   "sfx/step_sidewalk_03.ogg",
+   "sfx/step_sidewalk_04.ogg",
+   "sfx/step_sidewalk_05.ogg",
+   "sfx/step_sidewalk_06.ogg",
+   "sfx/step_sidewalk_07.ogg",
+   "sfx/step_sidewalk_08.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.step.wood": {
+  "files": [
+   "sfx/step_wood_01.ogg",
+   "sfx/step_wood_02.ogg",
+   "sfx/step_wood_03.ogg",
+   "sfx/step_wood_04.ogg",
+   "sfx/step_wood_05.ogg",
+   "sfx/step_wood_06.ogg",
+   "sfx/step_wood_07.ogg",
+   "sfx/step_wood_08.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.tactical.shot": {
+  "files": [
+   "sfx/tactical_shot_01.ogg",
+   "sfx/tactical_shot_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.takedown.grab": {
+  "files": [
+   "sfx/takedown_01.ogg",
+   "sfx/takedown_02.ogg",
+   "sfx/takedown_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.timelock.open": {
+  "files": [
+   "sfx/timelock_open.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.tranq.hit": {
+  "files": [
+   "sfx/tranq_hit.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.tranq.shot": {
+  "files": [
+   "sfx/tranq_shot_01.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.van.arrive": {
+  "files": [
+   "sfx/van_arrive.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.van.bag_drop": {
+  "files": [
+   "sfx/van_bag_drop_01.ogg",
+   "sfx/van_bag_drop_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.van.door": {
+  "files": [
+   "sfx/van_door.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.van.drive_off": {
+  "files": [
+   "sfx/van_drive_off.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.van.honk": {
+  "files": [
+   "sfx/van_honk_01.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t02"
+  ],
+  "why": "approved in review"
+ },
+ "sfx.van.honk_long": {
+  "files": [
+   "sfx/van_honk_long.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.vault.door_open": {
+  "files": [
+   "sfx/vault_door_open.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.window.open": {
+  "files": [
+   "sfx/window_open.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.window.smash": {
+  "files": [
+   "sfx/window_smash_01.ogg",
+   "sfx/window_smash_02.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t04",
+   "t03"
+  ],
+  "why": "unflagged takes"
+ },
+ "sfx.ziptie.zip": {
+  "files": [
+   "sfx/ziptie_01.ogg",
+   "sfx/ziptie_02.ogg",
+   "sfx/ziptie_03.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t03",
+   "t02",
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.ammo.low": {
+  "files": [
+   "ui/ammo_low.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.back": {
+  "files": [
+   "ui/back.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.board.locked": {
+  "files": [
+   "ui/board_locked.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.board.select": {
+  "files": [
+   "ui/board_select.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.click": {
+  "files": [
+   "ui/click.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.deny": {
+  "files": [
+   "ui/deny.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.hover": {
+  "files": [
+   "ui/hover.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.interact.cancel": {
+  "files": [
+   "ui/interact_cancel.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.interact.done": {
+  "files": [
+   "ui/interact_done.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.interact.start": {
+  "files": [
+   "ui/interact_start.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.loadout.equip": {
+  "files": [
+   "ui/equip_01.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.mark": {
+  "files": [
+   "ui/mark.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t03"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.mask.equip": {
+  "files": [
+   "ui/mask_equip.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t03"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.message.danger": {
+  "files": [
+   "ui/msg_danger.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.message.info": {
+  "files": [
+   "ui/msg_info.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.message.warn": {
+  "files": [
+   "ui/msg_warn.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.pause": {
+  "files": [
+   "ui/pause.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.payout.add": {
+  "files": [
+   "ui/payout_add.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t03"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.payout.deduct": {
+  "files": [
+   "ui/payout_deduct.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.payout.return": {
+  "files": [
+   "ui/type_return.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.payout.stamp": {
+  "files": [
+   "ui/payout_stamp.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.payout.total": {
+  "files": [
+   "ui/payout_total.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.payout.type": {
+  "files": [
+   "ui/type_01.ogg",
+   "ui/type_02.ogg",
+   "ui/type_03.ogg",
+   "ui/type_04.ogg",
+   "ui/type_05.ogg",
+   "ui/type_06.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.payout.unlock": {
+  "files": [
+   "ui/payout_unlock.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.shop.buy": {
+  "files": [
+   "ui/shop_buy.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ },
+ "ui.unmark": {
+  "files": [
+   "ui/unmark.ogg"
+  ],
+  "loop": false,
+  "takes": [
+   "t01"
+  ],
+  "why": "unflagged takes"
+ }
+}
