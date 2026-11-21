@@ -13,7 +13,7 @@ import glob, hashlib, json, math, os, struct, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
-CLIPS = {"idle", "walk", "run", "crouch_idle", "crouch_walk", "carry_walk", "aim_shoot", "hands_up", "ziptied", "interact"}
+CLIPS = {"idle", "walk", "run", "crouch_idle", "crouch_walk", "carry_walk", "aim_shoot", "hands_up", "ziptied", "interact", "cower"}
 CORE = {"idle", "walk", "run", "aim_shoot", "hands_up"}          # player, guards, police
 CORE_CIV = {"idle", "walk", "run", "hands_up"}                   # civilians and staff never shoot
 NONMETAL = {"RJ_Char_player", "RJ_Char_guard", "RJ_Skin", "RJ_Fabric", "RJ_Suit", "RJ_Uniform", "RJ_Plaster", "RJ_Brick", "RJ_Velvet"}

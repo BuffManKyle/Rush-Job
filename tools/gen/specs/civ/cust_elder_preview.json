@@ -1,0 +1,17 @@
+{
+  "_note": "Civilian cast (customer): cust_elder, stage preview. Written by tools/gen/civ_batch.py.",
+  "kind": "text-to-3d",
+  "job": "civ-cust_elder-preview",
+  "stream": "civilians",
+  "request": {
+    "mode": "preview",
+    "ai_model": "meshy-6-lite",
+    "prompt": "short stout elderly woman, curly white hair, plum cardigan over a cream blouse, pearl necklace, grey skirt to the knee, sensible black shoes, pale skin, stylized low-poly, A-pose with arms held well out from the body, chunky readable silhouette, slightly oversized head and hands, close-fitting clothes, flat colors, game character, full body, front facing, no red, no logos, no text",
+    "art_style": "realistic",
+    "topology": "triangle",
+    "target_polycount": 6000,
+    "should_remesh": true,
+    "symmetry_mode": "on",
+    "pose_mode": "a-pose"
+  }
+}

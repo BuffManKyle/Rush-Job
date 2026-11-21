@@ -373,11 +373,11 @@ def level_aim(rig, act, grip, bone="RightHand"):
     print(f"RJ_AIM levelled {act.name}: up to {worst:.0f} deg corrected over frames {f0}-{f1}")
 
 
-def build(name, clips):
+def build(name, clips, prefix="pilot"):
     rj._reset_scene()
     for a in list(bpy.data.actions):
         bpy.data.actions.remove(a)
-    objs, _ = import_glb(os.path.join(GEN, f"pilot-{name}-rig_rigged_character_glb_url.glb"))
+    objs, _ = import_glb(os.path.join(GEN, f"{prefix}-{name}-rig_rigged_character_glb_url.glb"))
     rig = next(o for o in objs if o.type == 'ARMATURE')
     mesh = next(o for o in objs if o.type == 'MESH')
     for a in list(bpy.data.actions):            # the rig file's own 0.3 s clip: not used
@@ -410,12 +410,12 @@ def build(name, clips):
     # clips
     acts = {}
     for clip, suffix in clips.items():
-        o2, a2 = import_glb(os.path.join(GEN, f"pilot-{name}-{suffix}.glb"))
+        o2, a2 = import_glb(os.path.join(GEN, f"{prefix}-{name}-{suffix}.glb"))
         act = a2[0] if a2 else None
         for o in o2:
             bpy.data.objects.remove(o, do_unlink=True)
         if act is None:
-            raise SystemExit(f"no action in pilot-{name}-{suffix}.glb")
+            raise SystemExit(f"no action in {prefix}-{name}-{suffix}.glb")
         act.name = clip; act.use_fake_user = True
         if clip in LOCOMOTION:
             detrend_root(act)
@@ -539,53 +539,59 @@ def held_previews(rig, mesh, cam, outdir, manifest, tris):
                             "bounds": {}, "note": ""} for n in shots]
 
 
-manifest = {"lib": "meshy", "glbs": [], "pieces": [], "bytes": 0}
-preview = os.environ.get("RJ_PREVIEW", "1") == "1"
-outdir = os.path.join(rj.PREVIEWS, "meshy")
-for name, clips in CHARS.items():
-    rig, mesh, names, tris, path = build(name, clips)
-    manifest["glbs"].append(os.path.relpath(path, rj.ROOT).replace("\\", "/"))
-    manifest.setdefault("chars", {})[name] = {"clips": names, "tris": tris}
-    if preview:
-        cam = rj.setup_render((400, 400))
-        show_mat("RJ_Vest", False)
-        ad = rig.animation_data
-        for clip in names:
-            act = bpy.data.actions[clip]
-            for t in ad.nla_tracks: t.mute = True
-            ad.action = act
-            if hasattr(ad, "action_slot") and len(getattr(act, "slots", [])):
-                ad.action_slot = act.slots[0]
-            f0, f1 = act.frame_range
-            bpy.context.scene.frame_set(int(f0 + (f1 - f0) * 0.3))
-            bpy.context.view_layer.update()
-            rj.frame(cam, [mesh], elev=30, azim=-35, pad=1.3)
-            rj.render(os.path.join(outdir, f"{name}_{clip}.png"))
-            manifest["pieces"].append({"name": f"{name}_{clip}", "kind": "char", "cells": [1, 1], "tris": tris,
-                                       "children": [], "bounds": {}, "note": ""})
-        ad.action = None
-        if name in MASKED:                     # masked vs unmasked head close-ups (preview only)
-            bpy.context.scene.frame_set(1)
-            mm = bpy.data.materials["RJ_Mask"]
-            bs = next(n for n in mm.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
-            head = rj._world_bounds([mesh]); top = head[1].z
-            for label, alpha in (("masked", 1.0), ("unmasked", 0.0)):
-                bs.inputs['Alpha'].default_value = alpha
-                try: mm.surface_render_method = 'BLENDED' if alpha < 1 else 'DITHERED'
-                except Exception: pass
-                post = rj.Part("RJ_HeadFrame")
-                post.box(-0.25, -0.25, top - 0.45, 0.25, 0.25, top, "Glass")
-                pf = post.build(); pf.hide_render = True
-                rj.frame(cam, [pf], elev=10, azim=-20, pad=1.0)
-                bpy.data.objects.remove(pf, do_unlink=True)
-                rj.render(os.path.join(outdir, f"{name}_{label}.png"))
-                manifest["pieces"].append({"name": f"{name}_{label}", "kind": "char", "cells": [1, 1], "tris": tris,
+def main():
+    """Build the pilot characters (guarded so civs_build.py can import this module's helpers)."""
+    manifest = {"lib": "meshy", "glbs": [], "pieces": [], "bytes": 0}
+    preview = os.environ.get("RJ_PREVIEW", "1") == "1"
+    outdir = os.path.join(rj.PREVIEWS, "meshy")
+    for name, clips in CHARS.items():
+        rig, mesh, names, tris, path = build(name, clips)
+        manifest["glbs"].append(os.path.relpath(path, rj.ROOT).replace("\\", "/"))
+        manifest.setdefault("chars", {})[name] = {"clips": names, "tris": tris}
+        if preview:
+            cam = rj.setup_render((400, 400))
+            show_mat("RJ_Vest", False)
+            ad = rig.animation_data
+            for clip in names:
+                act = bpy.data.actions[clip]
+                for t in ad.nla_tracks: t.mute = True
+                ad.action = act
+                if hasattr(ad, "action_slot") and len(getattr(act, "slots", [])):
+                    ad.action_slot = act.slots[0]
+                f0, f1 = act.frame_range
+                bpy.context.scene.frame_set(int(f0 + (f1 - f0) * 0.3))
+                bpy.context.view_layer.update()
+                rj.frame(cam, [mesh], elev=30, azim=-35, pad=1.3)
+                rj.render(os.path.join(outdir, f"{name}_{clip}.png"))
+                manifest["pieces"].append({"name": f"{name}_{clip}", "kind": "char", "cells": [1, 1], "tris": tris,
                                            "children": [], "bounds": {}, "note": ""})
-            bs.inputs['Alpha'].default_value = 1.0
-            try: mm.surface_render_method = 'DITHERED'
-            except Exception: pass
-            held_previews(rig, mesh, cam, outdir, manifest, tris)
-manifest["bytes"] = sum(os.path.getsize(os.path.join(rj.ROOT, g)) for g in manifest["glbs"])
-os.makedirs(outdir, exist_ok=True)
-json.dump(manifest, open(os.path.join(outdir, "manifest.json"), "w"), indent=1)
-print(f"RJ_DONE meshy: {len(CHARS)} characters, {manifest['bytes']} bytes")
+            ad.action = None
+            if name in MASKED:                     # masked vs unmasked head close-ups (preview only)
+                bpy.context.scene.frame_set(1)
+                mm = bpy.data.materials["RJ_Mask"]
+                bs = next(n for n in mm.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
+                head = rj._world_bounds([mesh]); top = head[1].z
+                for label, alpha in (("masked", 1.0), ("unmasked", 0.0)):
+                    bs.inputs['Alpha'].default_value = alpha
+                    try: mm.surface_render_method = 'BLENDED' if alpha < 1 else 'DITHERED'
+                    except Exception: pass
+                    post = rj.Part("RJ_HeadFrame")
+                    post.box(-0.25, -0.25, top - 0.45, 0.25, 0.25, top, "Glass")
+                    pf = post.build(); pf.hide_render = True
+                    rj.frame(cam, [pf], elev=10, azim=-20, pad=1.0)
+                    bpy.data.objects.remove(pf, do_unlink=True)
+                    rj.render(os.path.join(outdir, f"{name}_{label}.png"))
+                    manifest["pieces"].append({"name": f"{name}_{label}", "kind": "char", "cells": [1, 1], "tris": tris,
+                                               "children": [], "bounds": {}, "note": ""})
+                bs.inputs['Alpha'].default_value = 1.0
+                try: mm.surface_render_method = 'DITHERED'
+                except Exception: pass
+                held_previews(rig, mesh, cam, outdir, manifest, tris)
+    manifest["bytes"] = sum(os.path.getsize(os.path.join(rj.ROOT, g)) for g in manifest["glbs"])
+    os.makedirs(outdir, exist_ok=True)
+    json.dump(manifest, open(os.path.join(outdir, "manifest.json"), "w"), indent=1)
+    print(f"RJ_DONE meshy: {len(CHARS)} characters, {manifest['bytes']} bytes")
+
+
+if __name__ == "__main__":
+    main()

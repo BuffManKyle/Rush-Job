@@ -1,0 +1,17 @@
+{
+  "_note": "Civilian cast (customer): cust_coat, stage preview. Written by tools/gen/civ_batch.py.",
+  "kind": "text-to-3d",
+  "job": "civ-cust_coat-preview",
+  "stream": "civilians",
+  "request": {
+    "mode": "preview",
+    "ai_model": "meshy-6-lite",
+    "prompt": "middle-aged athletic woman, auburn hair in a ponytail, short sage green jacket, dark grey trousers, ankle boots, tan skin, stylized low-poly, A-pose with arms held well out from the body, chunky readable silhouette, slightly oversized head and hands, close-fitting clothes, flat colors, game character, full body, front facing, no red, no logos, no text",
+    "art_style": "realistic",
+    "topology": "triangle",
+    "target_polycount": 6000,
+    "should_remesh": true,
+    "symmetry_mode": "on",
+    "pose_mode": "a-pose"
+  }
+}
