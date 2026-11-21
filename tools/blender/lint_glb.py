@@ -34,6 +34,8 @@ def vec3s(g, binc, a):
     if a.get("type") != "VEC3" or a.get("componentType") != 5126 or "bufferView" not in a:
         return []
     bv = g["bufferViews"][a["bufferView"]]
+    if "extensions" in bv:          # meshopt-compressed: the raw bytes aren't plain floats (check skipped)
+        return []
     off = bv.get("byteOffset", 0) + a.get("byteOffset", 0)
     stride = bv.get("byteStride", 12)
     return [struct.unpack_from("<3f", binc, off + i * stride) for i in range(a["count"])]

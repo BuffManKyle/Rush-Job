@@ -450,7 +450,7 @@ def build(name, clips, prefix="pilot"):
                               export_apply=False, export_skins=True, export_animations=True,
                               export_animation_mode='ACTIONS', export_cameras=False, export_lights=False,
                               export_extras=True, export_image_format='JPEG', export_jpeg_quality=85,
-                              export_try_sparse_sk=True)
+                              export_try_sparse_sk=True, **rj.COMPRESS)
     print(f"RJ_CHAR {name}: {tris} tris, h {hi.z - lo.z:.2f} m, clips {sorted(acts)}, {os.path.getsize(path)} bytes")
     return rig, mesh, sorted(acts), tris, path
 

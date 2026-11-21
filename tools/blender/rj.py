@@ -25,6 +25,9 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 MODELS = os.path.join(ROOT, "assets", "models")
 TILE_TEX = os.path.join(ROOT, "assets", "textures", "rj_tile.png")
 PREVIEWS = os.path.join(ROOT, "reference-images", "previews")
+# Meshopt geometry compression on every exported GLB (Blender 5.2's exporter does it natively; the game's
+# GLTFLoader already has three's MeshoptDecoder). RJ_MESHOPT=0 turns it off, e.g. to inspect raw buffers.
+COMPRESS = dict(export_meshopt_compression_enable=True, export_meshopt_extension='EXT_meshopt_compression')     if os.environ.get("RJ_MESHOPT", "1") != "0" else {}
 
 # ---- palette (sRGB hex). Source of truth is reference-images/STYLE.md; keep in sync. ----
 PAL = {
@@ -501,7 +504,7 @@ def finish(lib, pieces, previews=None, extra_scene=None):
     bpy.ops.export_scene.gltf(
         filepath=path, export_format='GLB', use_selection=True, export_apply=True,
         export_yup=True, export_extras=True, export_cameras=False, export_lights=False,
-        export_animations=False, export_image_format='AUTO')
+        export_animations=False, export_image_format='AUTO', **COMPRESS)
     manifest["bytes"] = os.path.getsize(path)
     os.makedirs(outdir, exist_ok=True)
     with open(os.path.join(outdir, "manifest.json"), "w") as f:

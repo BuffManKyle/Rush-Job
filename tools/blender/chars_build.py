@@ -276,7 +276,7 @@ for outfit in OUTFITS:
     bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, export_yup=True,
                               export_apply=False, export_skins=True, export_animations=True,
                               export_animation_mode='ACTIONS', export_cameras=False, export_lights=False,
-                              export_extras=True)
+                              export_extras=True, **rj.COMPRESS)
     manifest["glbs"].append(f"assets/models/standin_{name}.glb")
     if not has_meshy:
         import shutil

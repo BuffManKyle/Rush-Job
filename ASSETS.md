@@ -30,7 +30,7 @@ Each `tools/blender/<lib>_build.py` writes `assets/models/<lib>.glb`, a contact 
 
 **Materials.** Only shared `RJ_*` materials ship (list in `STYLE.md`). `RJ_Glass` is alpha-blended. `RJ_Sodium`, `RJ_Screen`, `RJ_Danger` and `RJ_Ok` are emissive. Metalness stays ≤ 0.35 because the game has no environment map.
 
-**Compression.** Pending. The GLBs are plain (no meshopt yet): about 0.8 MB for everything so far. `build.py` meshopt-compresses automatically once `gltfpack` is on PATH. Keep GLTFLoader's `MeshoptDecoder` ready; it does no harm on uncompressed files.
+**Compression.** Every GLB is meshopt-compressed (`EXT_meshopt_compression`) by Blender's own exporter through `rj.COMPRESS`; set `RJ_MESHOPT=0` to export raw. The game's GLTFLoader already has three's `MeshoptDecoder` (`src/view/kit.ts`). Any loader that reads these files needs it too. Compression is geometry-only (no quantization), so expect about 1.3× on characters and 2–2.5× on the kit and props.
 
 ## Tiled → kit mapping (levels/glint.tmj)
 

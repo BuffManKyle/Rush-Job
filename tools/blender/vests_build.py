@@ -299,7 +299,7 @@ for ob in vests.values():
 bpy.context.view_layer.objects.active = next(iter(vests.values()))
 path = os.path.join(rj.MODELS, "vests.glb")
 bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, export_apply=True, export_yup=True,
-                          export_extras=True, export_cameras=False, export_lights=False, export_animations=False)
+                          export_extras=True, export_cameras=False, export_lights=False, export_animations=False, **rj.COMPRESS)
 manifest["bytes"] = os.path.getsize(path)
 json.dump(manifest, open(os.path.join(outdir, "manifest.json"), "w"), indent=1)
 print(f"RJ_DONE vests: {len(vests)} vests, {manifest['bytes']} bytes")

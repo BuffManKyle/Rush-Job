@@ -54,9 +54,9 @@ rj.finish("crates", [p])                              # file must be named crate
 - Materials are names from `rj.MATS` (shared `RJ_*` list). Add new colours to `PAL` and `MATS` and to `reference-images/STYLE.md`, never inline.
 - The texture is `assets/textures/rj_tile.png` (`textures/make_tile.py`). A material with `tex=(su, sv)` gets world-scaled box UVs.
 
-## Compression (pending)
+## Compression
 
-`build.py` meshopt-compresses each GLB in place with `gltfpack -cc -kn -km -ke` when `gltfpack` is on PATH. It isn't installed yet. Two ways to add it: the `gltfpack` npm package (a dev dependency in `package.json`, which the systems session owns), or the standalone binary from the meshoptimizer releases. Until then the GLBs ship uncompressed. That's fine for now: everything totals under 1 MB.
+Every export passes `**rj.COMPRESS`, which tells Blender 5.2's glTF exporter to write `EXT_meshopt_compression` (no external tool needed). The game decodes it with three's `MeshoptDecoder`. Set `RJ_MESHOPT=0` to export uncompressed, for example to read raw buffers. A new script with its own `export_scene.gltf` call must add `**rj.COMPRESS` too; `rj.finish` already does. The lint skips its root-motion check on compressed buffers, and `meshy_build.py` removes root travel at build time anyway.
 
 ## Paid generation (Meshy, fal)
 

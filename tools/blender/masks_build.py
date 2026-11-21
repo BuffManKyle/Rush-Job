@@ -338,7 +338,7 @@ for ob in masks.values():
 bpy.context.view_layer.objects.active = next(iter(masks.values()))
 path = os.path.join(rj.MODELS, "masks.glb")
 bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, export_apply=True, export_yup=True,
-                          export_extras=True, export_cameras=False, export_lights=False, export_animations=False)
+                          export_extras=True, export_cameras=False, export_lights=False, export_animations=False, **rj.COMPRESS)
 manifest["bytes"] = os.path.getsize(path)
 os.makedirs(outdir, exist_ok=True)
 json.dump(manifest, open(os.path.join(outdir, "manifest.json"), "w"), indent=1)
