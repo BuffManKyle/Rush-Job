@@ -43,6 +43,10 @@ PAL = {
     "mask_white": "#f2efe8", "mask_slate": "#5d6577", "mask_cream": "#e8dcc4", "mask_yellow": "#f2c94c",
     "mask_news": "#e9e4d6", "news_ink": "#8a857a", "headline_orange": "#f08a24", "paper": "#f4e48a", "cash": "#6f9a55",
     "skin": "#c99a78", "suit": "#2b2b30", "uniform": "#2f4470", "mask": "#f2efe8",
+    # street block (rj-street): neighbour facades, awnings, cars, street paint. No reds.
+    "plum": "#6b3f6f", "sage": "#5e8b6c", "slate_blue": "#4f6d8f", "terracotta": "#a8653f",
+    "stucco": "#9d8f7c", "stucco_light": "#c8bba3", "brick_dark": "#5b3e35", "roof": "#4a4d57",
+    "paint_white": "#e8e6df", "paint_yellow": "#e9d27a", "mustard": "#c99a2e", "window_lit": "#ffcf8a",
 }
 
 # Shared material list. tex=(su, sv) means "rj_tile.png x colour" at that UV scale per metre.
@@ -86,6 +90,19 @@ MATS = {
     "Cash":      dict(c="cash", r=0.9),
     "Cream":     dict(c="plaster", r=0.8),
     "Orange":     dict(c="headline_orange", r=0.6),
+    # street block (rj-street)
+    "Plum":      dict(c="plum", r=0.55),
+    "Sage":      dict(c="sage", r=0.55),
+    "SlateBlue": dict(c="slate_blue", r=0.55),
+    "Terracotta": dict(c="terracotta", r=0.7),
+    "Stucco":    dict(c="stucco", r=0.95, tex=(1.0, 1.0)),
+    "StuccoLight": dict(c="stucco_light", r=0.95, tex=(1.0, 1.0)),
+    "BrickDark": dict(c="brick_dark", r=0.95, tex=(2.0, 4.0)),
+    "Roof":      dict(c="roof", r=1.0, tex=(0.5, 0.5)),
+    "Paint":     dict(c="paint_white", r=0.8),       # lane lines, crosswalk
+    "PaintYellow": dict(c="paint_yellow", r=0.8),    # centre line (pale, never amber hatch)
+    "Mustard":   dict(c="mustard", r=0.6),           # hydrants
+    "WindowLit": dict(c="window_lit", r=0.5, e=1.6), # lit shop and flat windows (emissive)
     # light / signal (emissive). Red is ONLY RJ_Danger.
     "Sodium":    dict(c="sodium", r=0.5, e=4.0),
     "Screen":    dict(c="teal_light", r=0.3, e=2.0),

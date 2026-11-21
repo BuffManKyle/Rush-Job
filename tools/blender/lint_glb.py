@@ -98,7 +98,7 @@ def lint(path):
         held = (g["nodes"][ri].get("extras") or {}).get("rj_held")
         if out["miny"] < -0.01 and not held:
             errs.append(f"{rn}: lowest point y={out['miny']:.3f} is below the floor (origin must be at the base)")
-        if out["maxy"] > 6.0 and kind != "char":
+        if out["maxy"] > (16.0 if kind == "building" else 6.0) and kind != "char":   # street buildings (rj-street)
             errs.append(f"{rn}: {out['maxy']:.2f} m tall; wrong units?")
     # duplicate embedded images
     seen = {}

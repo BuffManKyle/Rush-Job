@@ -10,6 +10,7 @@ import glintUrl from '../../assets/models/glint.glb?url';
 import gearUrl from '../../assets/models/gear.glb?url';
 import masksUrl from '../../assets/models/masks.glb?url';
 import vestsUrl from '../../assets/models/vests.glb?url';
+import streetUrl from '../../assets/models/street.glb?url';
 import playerUrl from '../../assets/models/char_player.glb?url';
 import guardUrl from '../../assets/models/char_guard.glb?url';
 import civilianUrl from '../../assets/models/char_civilian.glb?url';
@@ -181,7 +182,7 @@ export async function loadKit(onProgress?: (done: number, total: number) => void
   const loader = new GLTFLoader();
   loader.setMeshoptDecoder(MeshoptDecoder);
   const kit = new Kit();
-  const libs = [kitUrl, propsUrl, glintUrl, gearUrl, masksUrl, vestsUrl];
+  const libs = [kitUrl, propsUrl, glintUrl, gearUrl, masksUrl, vestsUrl, streetUrl];
   const chars: [CharKind, string][] = [
     ['player', playerUrl],
     ['guard', guardUrl],

@@ -5,6 +5,7 @@ import { T } from '../tuning';
 import { F_COVER, F_PROP, F_WALL, F_WINDOW } from '../sim/grid';
 import type { Sim } from '../sim/sim';
 import type { Kit } from './kit';
+import { StreetView } from './street';
 
 const HALF_PI = Math.PI / 2;
 
@@ -39,6 +40,7 @@ export class KitLevel {
   private v = new THREE.Vector3();
   private s = new THREE.Vector3();
   private up = new THREE.Vector3(0, 1, 0);
+  private street: StreetView;
 
   constructor(
     private scene: THREE.Scene,
@@ -48,6 +50,7 @@ export class KitLevel {
     this.buildGrid();
     this.buildDoors();
     this.buildProps();
+    this.street = new StreetView(scene, sim, kit); // neighbours, street furniture, cars (rj-street)
   }
 
   /** Graybox stays for anything the kit doesn't cover. */
@@ -272,6 +275,7 @@ export class KitLevel {
 
   update(pp: THREE.Vector3, dt: number, cutaway: boolean): void {
     const sim = this.sim;
+    this.street.update(pp, dt, cutaway);
     // cutaway: same region rule as the graybox
     const k = 1 - Math.exp(-10 * dt);
     const isCut = (x: number, z: number) => {
