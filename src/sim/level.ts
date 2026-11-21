@@ -28,6 +28,7 @@ export interface PropDef extends Rect {
   id: string;
   type: string;
   cover: boolean;
+  opaque: boolean; // blocks sight like a wall (neighbour buildings drawn as decor rects)
   value: number;
 }
 export interface ZoneDef extends Rect {
@@ -237,7 +238,7 @@ export function loadTiled(json: string): Level {
           break;
         default:
           if (o.point) level.markers.push({ id, type, group: str(p.group, ''), x: r.x, y: r.y });
-          else level.props.push({ id, type, cover: bool(p.cover, false), value: num(p.value, 0), ...r });
+          else level.props.push({ id, type, cover: bool(p.cover, false), opaque: bool(p.opaque, false), value: num(p.value, 0), ...r });
       }
     }
   }

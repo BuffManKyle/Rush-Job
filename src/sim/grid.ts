@@ -6,6 +6,7 @@ export const F_WINDOW = 2; // blocks movement, not sight
 export const F_PROP = 4; // solid furniture: blocks movement
 export const F_COVER = 8; // low furniture: hides a crouched player
 export const F_DOOR = 16;
+export const F_OPAQUE = 32; // solid prop that also blocks sight (a whole building)
 
 export interface DoorState {
   id: string;
@@ -42,7 +43,7 @@ export class Grid {
           if (!this.inside(cx, cy)) continue;
           // cell center must be inside the prop rect
           if (cx + 0.5 < p.x || cx + 0.5 > p.x + p.w || cy + 0.5 < p.y || cy + 0.5 > p.y + p.h) continue;
-          this.flags[cy * this.w + cx] |= F_PROP | (p.cover ? F_COVER : 0);
+          this.flags[cy * this.w + cx] |= F_PROP | (p.cover ? F_COVER : 0) | (p.opaque ? F_OPAQUE : 0);
         }
     }
   }
@@ -81,7 +82,7 @@ export class Grid {
   blocksSight(cx: number, cy: number): boolean {
     if (!this.inside(cx, cy)) return true;
     const f = this.flags[this.idx(cx, cy)];
-    if (f & F_WALL) return true;
+    if (f & (F_WALL | F_OPAQUE)) return true;
     if (f & F_DOOR) return !this.doors[this.doorAt[this.idx(cx, cy)]].open;
     return false;
   }
