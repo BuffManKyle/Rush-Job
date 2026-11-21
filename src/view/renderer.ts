@@ -8,8 +8,7 @@ import type { Observer } from '../sim/types';
 import type { GameCamera } from './camera/types';
 import { play, type CharInstance, type Kit } from './kit';
 import { KitLevel } from './kitLevel';
-import { jammed } from '../sim/gadgets';
-import { powerOut } from '../sim/security';
+import { camerasBlind } from '../sim/cameras';
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const lerpAngle = (a: number, b: number, t: number) => {
@@ -501,7 +500,7 @@ export class WorldView {
       const lying =
         (o.kind === 'guard' && (o.state === 'down' || (!animated && o.state === 'tied'))) ||
         (o.kind === 'civilian' && (o.state === 'dead' || (!animated && o.state === 'tied')));
-      if (o.kind === 'camera' && o.dead) v.root.rotation.z = -0.5; // drooping, shot out
+      if (o.kind === 'camera' && o.dead && !o.cutWire) v.root.rotation.z = -0.5; // drooping, shot out (a cut wire just goes dark)
       const sitting = !animated && o.kind === 'civilian' && o.state === 'cower';
       if (lying) {
         v.root.rotateZ(-Math.PI / 2);
@@ -520,8 +519,8 @@ export class WorldView {
       // marked cones draw on top of walls ("seen through walls")
       v.coneMat.depthTest = !marked;
       v.cone.renderOrder = marked ? 15 : 2;
-      // jammed (ECM) or unpowered cameras are blind: no cone
-      const blind = o.kind === 'camera' && (jammed(sim) || powerOut(sim));
+      // jammed (ECM), unpowered or looped cameras are blind: no cone
+      const blind = o.kind === 'camera' && camerasBlind(sim);
       this.updateCone(o, v, pos, yaw, showCones && !lying && !blind && !(o.kind === 'camera' && o.dead));
     }
 

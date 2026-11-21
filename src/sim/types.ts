@@ -100,7 +100,8 @@ export interface Guard extends ObserverBase {
   pathGoal: Vec2 | null;
   repathTimer: number;
   waitTimer: number;
-  target: Vec2 | null; // investigation point
+  target: Vec2 | null; // investigation point (always on the property)
+  lookAt: Vec2 | null; // what he's really looking for (may be off the property, past the edge)
   searchYaw: number;
   reportTimer: number;
   barkTimer: number;
@@ -117,6 +118,14 @@ export interface Guard extends ObserverBase {
   dead: boolean;
   fireCd: number;
   bagged: boolean; // in a body bag: bodies checks skip him and he never wakes
+  /** 'operator' sits at the security desk watching the monitors and takes breaks (security.ts). */
+  role: 'patrol' | 'operator';
+  /** Why he's walking somewhere besides his route: 'desk' = go check the security monitors. */
+  errand: 'desk' | null;
+  /** Per-waypoint waits [min, max] (operator: desk shift, then break); null = `routeWait` everywhere. */
+  routeWaits: [number, number][] | null;
+  /** Face this way while waiting at waypoint 0 (operator: the monitors). */
+  seatYaw: number | null;
 }
 
 export interface SecurityCamera extends ObserverBase {
@@ -126,10 +135,16 @@ export interface SecurityCamera extends ObserverBase {
   period: number;
   phase: number;
   locked: boolean;
-  deskTimer: number; // >0 while the desk is about to raise the alarm
+  deskTimer: number; // unused since the Nov 21 rework (cameras never raise the alarm themselves); kept 0
   deskReason: string;
   dead: boolean;
   dispatched: boolean;
+  /** Wire cut at the junction box: dark, but not visibly broken. */
+  cutWire: boolean;
+  /** Someone at the desk (or walking past) has noticed this camera is dark. */
+  deadNoticed: boolean;
+  /** Seconds since this camera last sent an alert to the desk (rate-limits repeats). */
+  sinceAlert: number;
 }
 
 export type CivilianState = 'wander' | 'look' | 'flee' | 'cower' | 'tied' | 'dead';
@@ -147,6 +162,8 @@ export interface Civilian extends ObserverBase {
   moving: boolean;
   cowerTime: number; // seconds left cowering after a shout before they get up (Infinity = for good)
   bagged: boolean;
+  /** >0: a passer-by off the property is on the phone to the police; the alarm trips when it runs out. */
+  phoning: number;
 }
 
 export type Observer = Guard | SecurityCamera | Civilian;

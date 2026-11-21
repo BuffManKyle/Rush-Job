@@ -60,9 +60,33 @@ export const T = {
   camera: {
     cone: 60,
     range: 15,
-    deskAlarmTime: 3, // security desk raises the alarm this long after a camera hits 100
     trackSpeed: 60, // deg/s when locked on
-    deadReportTime: 15, // shot-out camera: the desk notices this long after
+    realertTime: 6, // a camera that keeps seeing you re-sends its alert this often (retargets the guard sent)
+  },
+
+  // The security room (security.ts, cameras.ts). Cameras never call the police: they alert the desk, and a
+  // guard has to confirm (see you masked, find a body) before anyone radios it in.
+  security: {
+    operatorShift: [40, 60] as [number, number], // seconds at the desk between breaks
+    operatorBreak: [20, 28] as [number, number], // seconds at the break spot
+    radioDelay: 1.5, // the seated operator takes this long to radio a guard to a camera alert
+    noticeDarkTime: 2, // a seated operator notices a camera going dark this long after
+    deskRadius: 1.3, // a guard this close to the seat is "at the monitors"
+    deskCheckTime: 2.5, // a guard sent to the desk reads the board this long
+    buzzerHearRadius: 8, // an unanswered desk alarm is heard by guards this close to the desk
+    buzzerAutoDispatch: 18, // nobody came: the system pages the nearest guard to the desk after this long
+    routineCheck: [55, 85] as [number, number], // while the desk is empty, a patrol guard drops by this often
+    passNoticeRange: 7, // a guard who walks past a dead camera this close (in his cone) notices it
+    waryRange: 0.15, // each "something's off" (dead camera found, cut wire) adds this much guard sight range...
+    warySearch: 2, // ...and this many seconds of searching; max 2 levels
+    loopTime: 4, // hold E at the desk to loop the feed
+    loopDuration: 90, // cameras show the loop (see nothing) this long
+    wireCutTime: 3, // hold E at a camera junction box
+    propertyInset: 0.6, // noise off the property: guards walk to this far inside the edge and look
+  },
+
+  pedestrian: {
+    callDelay: 4.5, // a passer-by who sees you masked (or a body) is on the phone this long, then the alarm trips
   },
 
   civilian: {

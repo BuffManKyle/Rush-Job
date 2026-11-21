@@ -10,6 +10,17 @@ import { WorldView } from './renderer';
 import { computePayout } from '../sim/payout';
 import { HEAT_NAMES } from '../sim/police';
 import { WEAPONS } from '../data/loadout';
+import { guardStep } from '../sim/guard';
+import { looped } from '../sim/security';
+
+/** Badge under a guard's meter for each rung of the escalation ladder. */
+const STEP_TEXT: Record<string, string> = {
+  suspicious: 'HUH?',
+  investigating: 'CHECKING',
+  checking_desk: 'TO MONITORS',
+  searching: 'SEARCHING',
+  radioing: 'RADIO',
+};
 
 const SPEAKERS: Record<string, string> = { accountant: 'The Accountant', desk: 'Security desk', dispatcher: 'The Dispatcher', player: 'You', dot: 'Dot' };
 const RING_R = 22;
@@ -36,7 +47,8 @@ export class Hud {
   private ring: HTMLDivElement;
   private ringArc: SVGCircleElement;
   private ringLabel: HTMLDivElement;
-  private meters = new Map<string, { el: HTMLDivElement; fill: HTMLDivElement; icon: HTMLDivElement }>();
+  private meters = new Map<string, { el: HTMLDivElement; fill: HTMLDivElement; icon: HTMLDivElement; step: HTMLDivElement }>();
+  private deskBadge: HTMLDivElement | null = null;
   private bubbles: Bubble[] = [];
   private subtitle: HTMLDivElement;
   private subtitleTtl = 0;
@@ -163,22 +175,54 @@ export class Hud {
         const icon = el('div', 'icon', wrap);
         const bar = el('div', 'bar', wrap);
         const fill = el('div', 'fill', bar);
-        m = { el: wrap, fill, icon };
+        const step = el('div', 'step', wrap);
+        m = { el: wrap, fill, icon, step };
         this.meters.set(o.id, m);
       }
-      const show = o.suspicion > 0.5 && !sim.alarm.tripped;
+      // the escalation ladder (guard.ts guardStep): what this guard is doing about you, readable at a glance
+      const gs = o.kind === 'guard' ? guardStep(o) : 'calm';
+      const stepText = STEP_TEXT[gs] ?? '';
+      const show = (o.suspicion > 0.5 || stepText !== '') && !sim.alarm.tripped;
       m.el.style.display = show ? 'flex' : 'none';
       if (!show) continue;
+      m.step.textContent = stepText;
       const head = WorldView.lerpPos(o, alpha, o.kind === 'camera' ? 3.0 : 2.15);
       const s = cam.worldToScreen(head);
       m.el.style.transform = `translate(${s.x - 24}px, ${s.y - 30}px)`;
       const v = o.suspicion;
       m.fill.style.width = `${v}%`;
-      const lvl = v >= 100 ? 'report' : v >= 60 ? 'investigate' : v >= 30 ? 'look' : 'low';
+      const lvlV = v >= 100 ? 'report' : v >= 60 ? 'investigate' : v >= 30 ? 'look' : 'low';
+      const lvlS = gs === 'radioing' ? 'report' : gs === 'investigating' || gs === 'searching' || gs === 'checking_desk' ? 'investigate' : gs === 'suspicious' ? 'look' : 'low';
+      const rank = ['low', 'look', 'investigate', 'report'];
+      const lvl = rank.indexOf(lvlS) > rank.indexOf(lvlV) ? lvlS : lvlV;
       m.el.dataset.level = lvl;
       m.el.dataset.rising = o.sees ? '1' : '0';
       const rep = this.countdown(o.id);
       m.icon.textContent = v >= 100 ? (rep !== null ? `! ${rep.toFixed(1)}` : '!') : v >= 30 ? '?' : '';
+    }
+
+    // the security room: desk alarm buzzing / feed looped / operator away
+    const seat = sim.security.seat;
+    if (seat) {
+      if (!this.deskBadge) this.deskBadge = el('div', 'hud-desk', this.root);
+      const s = sim.security;
+      const op = sim.guards.find((g) => g.role === 'operator');
+      const opAway = !op || op.state === 'down' || op.state === 'tied' || Math.hypot(op.pos.x - seat.x, op.pos.y - seat.y) > T.security.deskRadius;
+      let text = '';
+      let tone = 'info';
+      if (sim.alarm.tripped) text = '';
+      else if (s.buzzer) {
+        text = `DESK ALARM · ${(sim.time - s.buzzer.since).toFixed(0)} s`;
+        tone = 'danger';
+      } else if (looped(sim)) text = `FEED LOOPED · ${(s.loopUntil - sim.time).toFixed(0)} s`;
+      else if (opAway) text = 'MONITORS UNWATCHED';
+      this.deskBadge.style.display = text ? 'block' : 'none';
+      if (text) {
+        const sp = cam.worldToScreen(new THREE.Vector3(seat.x, 2.6, seat.y));
+        this.deskBadge.style.transform = `translate(${sp.x}px, ${sp.y}px) translateX(-50%)`;
+        this.deskBadge.textContent = text;
+        this.deskBadge.dataset.tone = tone;
+      }
     }
 
     // speech bubbles track their guard
@@ -210,7 +254,11 @@ export class Hud {
     } else {
       const o = sim.observers.find((q) => this.countdown(q.id) !== null);
       const pager = sim.guards.find((g) => g.pagerRinging > 0);
-      if (pager) {
+      const caller = sim.civilians.find((c) => c.phoning > 0);
+      if (caller) {
+        this.banner.className = 'hud-banner warn';
+        this.banner.innerHTML = `<div>${caller.label} is calling the police. Shout (<kbd>V</kbd>) to stop them: alarm in <b>${caller.phoning.toFixed(1)} s</b></div>`;
+      } else if (pager) {
         this.banner.className = 'hud-banner warn';
         this.banner.innerHTML = `<div>${pager.label}'s pager is ringing. Hold <kbd>E</kbd> on him to answer: alarm in <b>${Math.max(0, T.pager.timeout - pager.pagerRinging).toFixed(1)} s</b></div>`;
       } else if (o) {
@@ -239,7 +287,7 @@ export class Hud {
     document.body.classList.toggle('aiming', p.aiming && !sim.ended);
   }
 
-  /** Seconds until this observer raises the alarm, or null if it isn't trying to. */
+  /** Seconds until this observer raises the alarm, or null if it isn't trying to. Cameras never do (cameras.ts). */
   private countdown(id: string): number | null {
     const g = this.sim.guards.find((q) => q.id === id);
     if (g) return g.state === 'report' ? Math.max(0, g.reportTimer) : null;

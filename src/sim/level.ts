@@ -204,6 +204,7 @@ export function loadTiled(json: string): Level {
         case 'van_drop':
         case 'lobby':
         case 'wander':
+        case 'property': // the store's grounds: guards never leave them (src/sim/property.ts)
           level.zones.push({ id, type, ...r });
           break;
         case 'player_start':

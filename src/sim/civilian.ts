@@ -7,6 +7,7 @@ import { inRect, type Vec2 } from './level';
 import type { Civilian, CivilianState, Guard } from './types';
 import type { Sim } from './sim';
 import { nearestPanic, pressPanic } from './security';
+import { onProperty } from './property';
 
 const DEG = Math.PI / 180;
 
@@ -56,6 +57,23 @@ export function updateCivilian(sim: Sim, c: Civilian, dt: number): void {
   if (c.state === 'tied' || c.state === 'dead') return;
   if (sim.alarm.tripped && c.state !== 'cower') go(c, 'cower');
   if (sim.alarm.tripped) c.cowerTime = Infinity; // after the alarm they stay down for good
+
+  // a passer-by on the phone to the police (shout them down before they finish the call)
+  if (c.phoning > 0 && !sim.alarm.tripped) {
+    if (c.state === 'cower') c.phoning = 0;
+    else {
+      const p = sim.player.pos;
+      turnToward(c, Math.atan2(p.y - c.pos.y, p.x - c.pos.x), dt);
+      c.phoning -= dt;
+      if (c.phoning <= 0) {
+        c.phoning = 0;
+        go(c, 'cower');
+        c.cowerTime = Infinity;
+        sim.tripAlarm('A passer-by on the street saw you and called the police');
+      }
+      return;
+    }
+  }
 
   switch (c.state) {
     case 'wander': {
@@ -154,7 +172,15 @@ function tell(sim: Sim, c: Civilian, g: Guard): void {
 
 /** Meter hit 100. */
 export function civilianSpotted(sim: Sim, c: Civilian): void {
-  if (c.state === 'flee' || c.state === 'cower') return;
+  if (c.state === 'flee' || c.state === 'cower' || c.phoning > 0) return;
+  // off the store's property, people don't run to a guard: they call the police (a few seconds to stop them)
+  if (sim.player.masked && !onProperty(sim, c.pos)) {
+    c.phoning = T.pedestrian.callDelay;
+    go(c, 'look');
+    sim.events.emit({ type: 'bark', who: c.id, line: sim.rng.pick(sim.lineIds('civ.scream')) });
+    sim.events.emit({ type: 'message', text: `${c.label} saw you and is calling the police. Shout (V) to stop them.`, tone: 'danger' });
+    return;
+  }
   let best: Guard | null = null;
   for (const g of sim.guards) if (g.state !== 'down' && g.state !== 'tied' && (!best || Math.hypot(g.pos.x - c.pos.x, g.pos.y - c.pos.y) < Math.hypot(best.pos.x - c.pos.x, best.pos.y - c.pos.y))) best = g;
   sim.events.emit({ type: 'bark', who: c.id, line: sim.rng.pick(sim.lineIds(sim.player.masked ? 'civ.scream' : 'civ.staffonly')) });

@@ -37,6 +37,9 @@ export const INTERACTIONS: Record<string, InteractionDef> = {
   case_cut: { id: 'case_cut', label: 'Cut the glass (quiet)', time: T.gadgets.glassCutter.time, noise: 0, interrupt: ['release', 'move'], requiresMask: true },
   body_bag: { id: 'body_bag', label: 'Body-bag him', time: T.gadgets.bodyBag.time, noise: 0, interrupt: ['release', 'move'], requiresMask: true },
   breaker: { id: 'breaker', label: 'Kill the power', time: T.power.breakerTime, noise: 0, interrupt: ['release', 'move'] },
+  // security room (src/sim/security.ts)
+  loop_feed: { id: 'loop_feed', label: 'Loop the camera feed', time: T.security.loopTime, noise: 0, interrupt: ['release', 'move', 'seen'] },
+  cut_wire: { id: 'cut_wire', label: 'Cut the camera wire', time: T.security.wireCutTime, noise: 0, interrupt: ['release', 'move', 'seen'] },
 };
 
 /** Which gadget an interaction needs in a slot (the HUD shows its model in hand while you hold E). */

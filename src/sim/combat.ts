@@ -2,8 +2,10 @@
 // limited ammo, HP + regenerating armor, cuffed at 0 HP. Shooting buys space, not victory.
 import { T } from '../tuning';
 import { angleDiff } from './detection';
+import { look, emptyInfo } from './detection';
 import { civilianSpotted } from './civilian';
-import { setState } from './guard';
+import { setState, startReport } from './guard';
+import { cameraWentDark } from './cameras';
 import { isDown } from './takedown';
 import type { Vec2 } from './level';
 import type { Cop } from './police';
@@ -121,26 +123,34 @@ export function updatePlayerWeapon(sim: Sim, fire: boolean, reload: boolean, dt:
   if (hit) damage(sim, hit, W.damage, dir);
 }
 
-/** "Shoot: triggers the alarm if anyone hears it." */
+const seen = emptyInfo();
+
+/**
+ * A shot (Nov 21 rework): anyone who SEES you fire it confirms it (guards radio it in, civilians panic).
+ * Anyone who only HEARS it comes to look: the guard climbs the ladder (investigate → search) instead of radioing.
+ */
 function heardShot(sim: Sim, at: Vec2, r: number): void {
-  sim.emitNoise(at.x, at.y, r, 'shot');
+  sim.emitNoise(at.x, at.y, r, 'shot'); // hearing guards investigate (guard.ts hearNoise)
   if (sim.alarm.tripped) return;
+  const p = sim.player;
   for (const g of sim.guards) {
     if (isDown(g) || g.state === 'report' || g.state === 'alert') continue;
-    if (Math.hypot(g.pos.x - at.x, g.pos.y - at.y) > r) continue;
-    setState(g, 'report');
-    g.suspicion = 100;
-    g.lastKnown = { ...at };
-    g.reportTimer = T.guard.reportTime;
-    g.reportReason = `${g.label} heard a gunshot and called it in`;
-    sim.events.emit({ type: 'bark', who: g.id, line: 'guard.spotted.01' });
+    if (!look(sim.grid, g, p, seen)) continue;
+    g.lastKnown = { ...p.pos };
+    startReport(sim, g, `${g.label} saw you fire a shot and called it in`);
   }
   for (const c of sim.civilians) {
     if (c.state !== 'wander' && c.state !== 'look') continue;
-    if (Math.hypot(c.pos.x - at.x, c.pos.y - at.y) > r) continue;
-    c.lastKnown = { ...at };
-    c.suspicion = 100;
-    civilianSpotted(sim, c);
+    const d = Math.hypot(c.pos.x - at.x, c.pos.y - at.y);
+    if (look(sim.grid, c, p, seen)) {
+      c.lastKnown = { ...at };
+      c.suspicion = 100;
+      civilianSpotted(sim, c);
+    } else if (d <= r) {
+      // heard something: turn and look
+      c.lastKnown = { ...at };
+      c.suspicion = Math.max(c.suspicion, T.detection.look + 5);
+    }
   }
 }
 
@@ -157,10 +167,8 @@ function damage(sim: Sim, t: Target, dmg: number, dir: Vec2): void {
         sim.events.emit({ type: 'message', text: `${g.label} is down.`, tone: 'warn' });
       } else if (g.state !== 'alert' && g.state !== 'report' && !isDown(g)) {
         // shot and still standing: he calls it in
-        setState(g, 'report');
-        g.reportTimer = T.guard.reportTime;
-        g.reportReason = `${g.label} was shot and called it in`;
         g.lastKnown = { ...sim.player.pos };
+        startReport(sim, g, `${g.label} was shot and called it in`);
       }
       break;
     }
@@ -188,15 +196,8 @@ function damage(sim: Sim, t: Target, dmg: number, dir: Vec2): void {
       break;
     }
     case 'camera': {
-      const c = t.o;
-      c.dead = true;
-      c.suspicion = 0;
-      c.sees = false;
-      if (!sim.alarm.tripped) {
-        c.deskTimer = T.camera.deadReportTime;
-        c.deskReason = `The security desk noticed the ${c.label.toLowerCase()} went dark`;
-      }
-      sim.events.emit({ type: 'message', text: `${c.label} shot out. The desk will notice in ${T.camera.deadReportTime} s.`, tone: 'warn' });
+      // shooting a camera trips nothing by itself: only someone watching the monitors (or walking past) notices
+      cameraWentDark(sim, t.o, 'shot');
       break;
     }
   }

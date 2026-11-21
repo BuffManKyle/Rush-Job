@@ -5,7 +5,8 @@ import { LINES } from '../data/dialogue';
 import { describe, emptyInfo, updateSuspicion, angleDiff } from './detection';
 import { EventBus } from './events';
 import { Grid, type DoorState } from './grid';
-import { guardSpotted, investigate, setState, updateGuard } from './guard';
+import { guardSpotted, hearNoise, makeGuard, setState, updateGuard } from './guard';
+import { cameraSpotted, camerasBlind, updateCamera } from './cameras';
 import { civilianSpotted, updateCivilian } from './civilian';
 import { bagLoot, canBag, noteInteractable, pickUp, safeInteractable, throwBag, updateBags, vanInteractable, type Bag, type SafeState } from './loot';
 import { updateEnemyFire, updatePlayerWeapon, updateShots } from './combat';
@@ -14,8 +15,8 @@ import { answeredPager, bodyBag, checkBodies, civilianInteractable, guardInterac
 import { inRect, type Level, type Vec2 } from './level';
 import { Rng } from './rng';
 import { DEFAULT_LOADOUT, type Loadout } from '../data/loadout';
-import { createGear, hasGadget, jammed, lockpickTime, spend, updateGadgets, type GearState } from './gadgets';
-import { breakerInteractable, createSecurity, cutPower, powerOut, updateSecurity, type SecurityState } from './security';
+import { createGear, hasGadget, lockpickTime, spend, updateGadgets, type GearState } from './gadgets';
+import { breakerInteractable, createOperator, createSecurity, cutPower, cutWire, deskInteractable, junctionInteractables, loopFeed, updateSecurity, type SecurityState } from './security';
 import type {
   ActiveInteraction,
   AlarmState,
@@ -104,52 +105,7 @@ export class Sim {
     for (const [name, opts] of [...byGuard.entries()].sort(([a], [b]) => a.localeCompare(b))) {
       const r = shuf.pick(opts);
       routes[name] = r.id;
-      const start = r.points[0];
-      const second = r.points[1] ?? start;
-      const yaw = Math.atan2(second.y - start.y, second.x - start.x);
-      this.guards.push({
-        kind: 'guard',
-        id: `guard_${name}`,
-        label: `Guard ${name}`,
-        pos: { ...start },
-        prev: { ...start },
-        yaw,
-        prevYaw: yaw,
-        cone: T.guard.cone * DEG,
-        range: T.guard.range,
-        suspicion: 0,
-        peak: 0,
-        sinceSeen: 99,
-        sees: false,
-        lastKnown: null,
-        info: emptyInfo(),
-        routeId: r.id,
-        route: r.points,
-        routeIdx: 1 % r.points.length,
-        routeWait: r.wait,
-        state: 'patrol',
-        stateTime: 0,
-        path: [],
-        pathGoal: null,
-        repathTimer: 0,
-        waitTimer: 0,
-        target: null,
-        searchYaw: 0,
-        reportTimer: 0,
-        barkTimer: 0,
-        idleBarkTimer: shuf.range(6, 20),
-        lookHold: 0,
-        moving: false,
-        reportReason: '',
-        pagerDelay: 0,
-        pagerRinging: 0,
-        pagerDone: false,
-        downTime: 0,
-        hp: T.guard.hp,
-        dead: false,
-        fireCd: 1,
-        bagged: false,
-      });
+      this.guards.push(makeGuard(`guard_${name}`, `Guard ${name}`, r.points, r.id, r.wait, shuf.range(6, 20)));
     }
 
     for (const c of level.cameras) {
@@ -179,6 +135,9 @@ export class Sim {
         deskReason: '',
         dead: false,
         dispatched: false,
+        cutWire: false,
+        deadNoticed: false,
+        sinceAlert: 99,
       });
     }
 
@@ -212,6 +171,7 @@ export class Sim {
         moving: false,
         cowerTime: Infinity,
         bagged: false,
+        phoning: 0,
       });
     }
 
@@ -254,8 +214,12 @@ export class Sim {
     };
 
     this.security = createSecurity(this);
+    createOperator(this); // the security-room operator joins this.guards
     const breaker = breakerInteractable(this);
     if (breaker) this.interactables.push(breaker);
+    const desk = deskInteractable(this);
+    if (desk) this.interactables.push(desk);
+    this.interactables.push(...junctionInteractables(this));
     for (const d of this.grid.doors) this.interactables.push(this.doorInteractable(d));
     for (const g of this.guards) this.interactables.push(guardInteractable(this, g));
     for (const p of level.props.filter((q) => q.type === 'safe')) {
@@ -321,9 +285,7 @@ export class Sim {
   emitNoise(x: number, y: number, r: number, source: string): void {
     this.noises.push({ x, y, r, age: 0, source });
     this.events.emit({ type: 'noise', x, y, r, source });
-    for (const g of this.guards) {
-      if (Math.hypot(g.pos.x - x, g.pos.y - y) <= r * T.guard.hearingMultiplier) investigate(this, g, { x, y }, 'noise');
-    }
+    hearNoise(this, x, y, r, source); // guards come and look, but never off the property (guard.ts)
   }
 
   endJob(how: 'escaped' | 'cuffed', note: string): void {
@@ -389,7 +351,7 @@ export class Sim {
 
     // Detection first, then AI reacts to the new meter values.
     for (const o of this.observers) {
-      if (this.alarm.tripped || p.frozen > 0 || (o.kind === 'guard' && isDown(o)) || (o.kind === 'civilian' && (o.state === 'tied' || o.state === 'dead')) || (o.kind === 'camera' && (o.dead || jammed(this) || powerOut(this)))) {
+      if (this.alarm.tripped || p.frozen > 0 || (o.kind === 'guard' && isDown(o)) || (o.kind === 'civilian' && (o.state === 'tied' || o.state === 'dead')) || (o.kind === 'camera' && (o.dead || camerasBlind(this)))) {
         o.sees = false;
         if ((o.kind !== 'camera' || !o.dead) && o.suspicion < 100) o.suspicion = 0;
         continue;
@@ -404,11 +366,11 @@ export class Sim {
         this.stats.spotted = true;
         if (o.kind === 'guard') guardSpotted(this, o, describe(o, p));
         else if (o.kind === 'civilian') civilianSpotted(this, o);
-        else this.cameraSpotted(o);
+        else cameraSpotted(this, o);
       }
     }
     for (const g of this.guards) updateGuard(this, g, dt);
-    for (const c of this.cameras) this.updateCamera(c, dt);
+    for (const c of this.cameras) updateCamera(this, c, dt);
     for (const c of this.civilians) updateCivilian(this, c, dt);
     updateDowned(this, dt);
     updateHeat(this, dt);
@@ -624,6 +586,12 @@ export class Sim {
       case 'breaker':
         cutPower(this);
         break;
+      case 'loop_feed':
+        loopFeed(this);
+        break;
+      case 'cut_wire':
+        cutWire(this, targetId);
+        break;
       case 'takedown': {
         const g = this.guards.find((q) => q.id === targetId);
         if (g) {
@@ -705,66 +673,6 @@ export class Sim {
         }
       }
       d.swing += Math.max(-dt * 4, Math.min(dt * 4, (d.open ? 1 : 0) - d.swing));
-    }
-  }
-
-  private updateCamera(c: SecurityCamera, dt: number): void {
-    // jammed or no power: blind and still; nothing gets reported (a shot-out camera's pending report waits too)
-    if (jammed(this) || powerOut(this)) return;
-    if (c.dead) {
-      if (c.deskTimer > 0) {
-        c.deskTimer -= dt;
-        if (c.deskTimer <= 0) this.tripAlarm(c.deskReason);
-      }
-      return;
-    }
-    c.phase += ((Math.PI * 2) / c.period) * dt;
-    const max = T.camera.trackSpeed * DEG * dt;
-    if (c.sees && c.suspicion > 0) {
-      c.locked = true;
-      const want = Math.atan2(this.player.pos.y - c.pos.y, this.player.pos.x - c.pos.x);
-      // stay within the mount's arc
-      const off = Math.max(-c.sweep / 2 - 0.2, Math.min(c.sweep / 2 + 0.2, angleDiff(c.baseYaw, want)));
-      c.yaw += Math.max(-max, Math.min(max, angleDiff(c.yaw, c.baseYaw + off)));
-    } else {
-      if (c.suspicion <= 0) c.locked = false;
-      if (!c.locked) {
-        const want = c.baseYaw + (Math.sin(c.phase) * c.sweep) / 2;
-        c.yaw += Math.max(-max, Math.min(max, angleDiff(c.yaw, want)));
-      }
-    }
-    if (c.suspicion < T.detection.look) c.dispatched = false;
-    if (c.deskTimer > 0) {
-      c.deskTimer -= dt;
-      this.events.emit({ type: 'reporting', who: c.id, time: Math.max(0, c.deskTimer) });
-      if (c.deskTimer <= 0) {
-        this.events.emit({ type: 'bark', who: 'desk', line: 'desk.alarm.01' });
-        this.tripAlarm(c.deskReason || `${c.label} saw you masked, and the security desk raised the alarm`);
-      }
-    }
-  }
-
-  private cameraSpotted(c: SecurityCamera): void {
-    const p = this.player;
-    if (p.masked) {
-      if (c.deskTimer <= 0) {
-        c.deskTimer = T.camera.deskAlarmTime;
-        this.events.emit({ type: 'bark', who: 'desk', line: 'desk.camera.01' });
-        this.events.emit({ type: 'suspicion', who: c.id, level: 'report' });
-      }
-      return;
-    }
-    // Unmasked trespasser on camera: the desk sends the nearest guard to check.
-    if (c.dispatched) return;
-    c.dispatched = true;
-    c.suspicion = T.detection.investigate;
-    const at = c.lastKnown ?? p.pos;
-    let best: Guard | null = null;
-    for (const g of this.guards) if (!isDown(g) && (!best || Math.hypot(g.pos.x - at.x, g.pos.y - at.y) < Math.hypot(best.pos.x - at.x, best.pos.y - at.y))) best = g;
-    if (best) {
-      investigate(this, best, at, 'dispatch');
-      this.events.emit({ type: 'bark', who: 'desk', line: 'desk.camera.01' });
-      this.events.emit({ type: 'message', text: `${c.label} spotted you in a staff area. The desk sent ${best.label} to check.`, tone: 'warn' });
     }
   }
 

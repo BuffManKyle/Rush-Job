@@ -3,9 +3,13 @@
 // - Panic button: a civilian who sees you masked runs to the nearest guard OR panic button. Pressed = alarm.
 // - Breaker: kill the power (hold E). Cameras go dark and the panic button dies; the desk sends a guard
 //   to flip it back, so it's a window, not a fix.
+// - The security room (Nov 21 rework): an operator sits at the monitors and takes smoke breaks. Take the room and
+//   loop the feed (hold E at the desk), or cut a camera's wire at its junction box. Camera logic: cameras.ts.
 import { T } from '../tuning';
-import { investigate } from './guard';
+import { investigate, makeGuard } from './guard';
 import { isDown } from './takedown';
+import { cameraWentDark, updateDesk, watcherAtDesk, type DeskAlert, type RadioCall } from './cameras';
+import { onProperty } from './property';
 import type { Vec2 } from './level';
 import type { Civilian, Interactable, InputFrame } from './types';
 import type { Sim } from './sim';
@@ -27,6 +31,25 @@ export interface SecurityState {
   shoutCd: number;
   /** Civilian id -> seconds spent pressing a panic button. */
   pressing: Map<string, number>;
+  /** The operator's chair at the security desk (yaw = facing the monitors). */
+  seat: (Vec2 & { yaw: number }) | null;
+  /** Where the desk is, for the loop-the-feed interaction. */
+  desk: Vec2 | null;
+  /** Camera alert waiting for someone to read the board (nobody at the monitors). */
+  buzzer: DeskAlert | null;
+  /** The operator's pending radio calls. */
+  radio: RadioCall[];
+  /** Cameras that went dark while the operator was watching: he notices when the timer runs out. */
+  darkNotice: { camId: string; t: number }[];
+  /** Camera id -> the guard the operator sent; re-alerts retarget him instead of sending another. */
+  guided: Map<string, string>;
+  /** 0..2: guards have found something off (a dead camera) and see further, search longer. */
+  wary: number;
+  /** Seconds until a patrol guard drops by an empty security room. */
+  routineIn: number;
+  /** The camera feed is looped until this sim time. */
+  loopUntil: number;
+  junctions: { id: string; pos: Vec2; cameras: string[] }[];
 }
 
 export function createSecurity(sim: Sim): SecurityState {
@@ -42,7 +65,96 @@ export function createSecurity(sim: Sim): SecurityState {
     resetting: 0,
     shoutCd: 0,
     pressing: new Map(),
+    seat: null,
+    desk: null,
+    buzzer: null,
+    radio: [],
+    darkNotice: [],
+    guided: new Map(),
+    wary: 0,
+    routineIn: sim.rng.range(T.security.routineCheck[0], T.security.routineCheck[1]),
+    loopUntil: -1,
+    junctions: m
+      .filter((q) => q.type === 'junction_box')
+      .map((q) => ({ id: q.id, pos: { x: q.x, y: q.y }, cameras: (q.group || sim.cameras.map((c) => c.id).join(',')).split(',').map((t) => t.trim()).filter(Boolean) })),
   };
+}
+
+/**
+ * The security-room operator: sits facing the monitors (marker `operator_seat`, else in front of the
+ * `security_desk` prop), takes breaks at `break_spot` (else the office). Pushed onto sim.guards.
+ */
+export function createOperator(sim: Sim): void {
+  const s = sim.security;
+  const m = sim.level.markers;
+  const desk = sim.level.props.find((p) => p.type === 'security_desk');
+  const deskC = desk ? { x: desk.x + desk.w / 2, y: desk.y + desk.h / 2 } : null;
+  const seatM = m.find((q) => q.type === 'operator_seat');
+  const seat = seatM ? { x: seatM.x, y: seatM.y } : deskC ? { x: deskC.x, y: deskC.y + desk!.h / 2 + 0.7 } : null;
+  if (!seat) return;
+  const yaw = deskC ? Math.atan2(deskC.y - seat.y, deskC.x - seat.x) : -Math.PI / 2;
+  s.seat = { ...seat, yaw };
+  s.desk = deskC ?? seat;
+  const brk = m.find((q) => q.type === 'break_spot');
+  const breakSpot = brk && onProperty(sim, brk) ? { x: brk.x, y: brk.y } : { x: 4.5, y: 5.5 };
+  const g = makeGuard('guard_op', 'The operator', [{ ...seat }, breakSpot], 'operator', 1, sim.rng.range(10, 25));
+  g.role = 'operator';
+  g.routeWaits = [T.security.operatorShift, T.security.operatorBreak];
+  g.seatYaw = yaw;
+  g.routeIdx = 0;
+  g.yaw = g.prevYaw = yaw;
+  g.waitTimer = sim.rng.range(15, T.security.operatorShift[1]); // first break comes at a shuffled time
+  sim.guards.push(g);
+}
+
+/** The feed is looped: cameras show old footage, so nobody sees anything on them. */
+export function looped(sim: Sim): boolean {
+  return sim.time < sim.security.loopUntil;
+}
+
+/** Hold E at the security desk while nobody's watching: loop the feed. */
+export function deskInteractable(sim: Sim): Interactable | null {
+  const d = sim.security.desk;
+  if (!d) return null;
+  return {
+    id: 'security_desk',
+    x: d.x,
+    y: d.y,
+    offer: () => {
+      if (sim.alarm.tripped) return null;
+      if (watcherAtDesk(sim)) return null;
+      const left = sim.security.loopUntil - sim.time;
+      if (left > 10) return `!Feed looped (${left.toFixed(0)} s left)`;
+      return 'loop_feed';
+    },
+  };
+}
+
+export function loopFeed(sim: Sim): void {
+  const s = sim.security;
+  s.loopUntil = sim.time + T.security.loopDuration;
+  for (const c of sim.cameras) {
+    c.sees = false;
+    if (c.suspicion < 100 || !c.dead) c.suspicion = 0;
+    c.locked = false;
+  }
+  sim.events.emit({ type: 'message', text: `Feed looped: the monitors show an empty store for ${T.security.loopDuration} s. Cameras can't see you.`, tone: 'info' });
+}
+
+/** Camera junction boxes: hold E to cut a camera's wire. Quiet; the camera just goes dark. */
+export function junctionInteractables(sim: Sim): Interactable[] {
+  return sim.security.junctions.map((j) => ({
+    id: j.id,
+    x: j.pos.x,
+    y: j.pos.y,
+    offer: () => (sim.alarm.tripped || !sim.cameras.some((c) => j.cameras.includes(c.id) && !c.dead) ? null : 'cut_wire'),
+  }));
+}
+
+export function cutWire(sim: Sim, id: string): void {
+  const j = sim.security.junctions.find((q) => q.id === id);
+  if (!j) return;
+  for (const c of sim.cameras) if (j.cameras.includes(c.id) && !c.dead) cameraWentDark(sim, c, 'cut');
 }
 
 export function breakerInteractable(sim: Sim): Interactable | null {
@@ -94,6 +206,12 @@ export function updateSecurity(sim: Sim, input: InputFrame, dt: number): void {
   const s = sim.security;
   s.shoutCd = Math.max(0, s.shoutCd - dt);
   if (input.shout) shout(sim);
+  const wasLooped = s.loopUntil > 0 && sim.time - dt < s.loopUntil;
+  if (wasLooped && !looped(sim) && !sim.alarm.tripped) {
+    s.loopUntil = -1;
+    sim.events.emit({ type: 'message', text: 'The feed loop ran out: cameras are live again.', tone: 'warn' });
+  }
+  updateDesk(sim, dt);
 
   if (!s.powerOn && s.dispatchIn !== Infinity) {
     s.dispatchIn -= dt;
@@ -144,6 +262,7 @@ export function cower(sim: Sim, c: Civilian, time: number): void {
   c.suspicion = 0;
   c.sees = false;
   c.cowerTime = time;
+  c.phoning = 0; // a passer-by on the phone drops it
   sim.security.pressing.delete(c.id);
 }
 

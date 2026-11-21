@@ -1,12 +1,12 @@
 // Takedowns, zip ties, pagers and bodies (DESIGN.md "Pagers", approach matrix "Guard").
 import { T } from '../tuning';
 import { angleDiff, look } from './detection';
-import { setState } from './guard';
+import { setState, startReport } from './guard';
+import { camerasBlind, deskAlert } from './cameras';
 import { civilianSpotted } from './civilian';
 import type { Civilian, Guard, Interactable, Observer } from './types';
 import type { Sim } from './sim';
 import { hasGadget, jammed } from './gadgets';
-import { powerOut } from './security';
 
 const DEG = Math.PI / 180;
 
@@ -148,7 +148,7 @@ export function checkBodies(sim: Sim): void {
     for (const b of bodies) {
       if (b.id === o.id) continue;
       if (!look(sim.grid, o, { pos: b.pos, crouch: false } as never, scratch)) continue;
-      foundBody(sim, o, b.label);
+      foundBody(sim, o, b.label, b.id, b.pos);
       break;
     }
   }
@@ -160,21 +160,23 @@ const scratch = { inRange: false, inCone: false, los: false, dist: 0, fDist: 0, 
 function canObserve(sim: Sim, o: Observer): boolean {
   if (o.kind === 'guard') return !isDown(o) && o.state !== 'report' && o.state !== 'alert';
   if (o.kind === 'civilian') return o.state === 'wander' || o.state === 'look';
-  return !o.dead && o.deskTimer <= 0 && !jammed(sim) && !powerOut(sim);
+  return !o.dead && !camerasBlind(sim);
 }
 
-function foundBody(sim: Sim, o: Observer, what: string): void {
+/** Bodies a camera has already shown the desk (each one is reported once). */
+const onCamera = new WeakMap<Sim, Set<string>>();
+
+function foundBody(sim: Sim, o: Observer, what: string, id: string, pos: { x: number; y: number }): void {
   if (o.kind === 'guard') {
-    sim.events.emit({ type: 'bark', who: o.id, line: sim.rng.pick(sim.lineIds('guard.body')) });
-    setState(o, 'report');
-    o.suspicion = 100;
-    o.reportTimer = T.guard.reportTime;
-    o.reportReason = `${o.label} found ${what} and called it in`;
+    o.lastKnown = { ...pos };
+    startReport(sim, o, `${o.label} found ${what} and called it in`, 'guard.body');
   } else if (o.kind === 'camera') {
-    o.deskTimer = T.camera.deskAlarmTime;
-    o.deskReason = `${o.label} showed the security desk ${what}`;
-    o.suspicion = 100;
-    sim.events.emit({ type: 'bark', who: 'desk', line: 'desk.camera.01' });
+    // a camera can't confirm anything: it shows the desk, and a guard is sent to look
+    let seen = onCamera.get(sim);
+    if (!seen) onCamera.set(sim, (seen = new Set()));
+    if (seen.has(id)) return;
+    seen.add(id);
+    deskAlert(sim, o, pos, 'body');
   } else {
     o.lastKnown = { ...sim.player.pos };
     o.suspicion = 100;
