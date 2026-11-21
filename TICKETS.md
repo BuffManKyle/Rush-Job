@@ -105,6 +105,7 @@ The safe ($15k in gold; the code is on a sticky note in the office, the security
 **Ghost (never spotted, no takedowns).** Script cleared seeds 1, 2 and 6 (126 s on seed 1). Kit: lockpick kit + noisemaker.
 1. Case unmasked and find where the code is (F1 shows the shuffle if you want to cheat).
 2. Code in the security room (seed 1): wait on the showroom's east side until the operator leaves for his smoke break (toast: "left the monitors"). Slip round the east end of the counter while the clerk and Guard A look away, through the staff door. Wait for the hall camera to swing off the corridor, step into the security-room doorway (a blind spot) and read the note.
+   Code in the office (seeds 3, 7): in by the back door, cross the hall on a camera gap and wait in the office doorway until the manager (he wanders just south of the office desk) turns his back. Then read the note. Script did this unseen on both seeds.
 3. On the next camera gap, go back out and east to the safe-room door, crouch and pick it (3 s with the kit). Guard B's loop crosses the hall, so pick between his passes.
 4. Nobody can see into the safe room: mask up, enter the code, bag the gold.
 5. Carry it to the back door. Wait in the doorway for the alley camera to swing toward the street, step out, throw the bag (F) into the van zone, walk to the van and hold E. The operator smokes right by the back door, so go while he's back at his desk.
