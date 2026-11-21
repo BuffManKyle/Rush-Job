@@ -40,6 +40,7 @@ Status: [x] done · [~] partial · [ ] todo.
 ## Week 2 — Jewelry Store (Nov 25–Dec 1), in DESIGN.md order
 
 > **Ownership (Nov 18):** loadout and gadget slots, the gadgets (noisemaker, glass cutter, ECM, body bags, medkit, lockpick kit, keycard cloner), the pre-job loadout picker, intimidate, and the panic button and breaker belong to the **rj-gadgets** session. This session (game code) leaves them alone. Shared files (`sim.ts`, `hud.ts`, `interactions.ts`, `tuning.ts`, `input.ts`, `main.ts`): re-read right before editing, keep commits small.
+> **Ownership (Nov 21):** **rj-stealth** owns `src/sim/detection.ts`, `guard.ts`, `security.ts` and camera behavior (security-room alerts, the operator, feed looping, the junction box). **rj-street** owns `levels/glint.tmj` (street expansion, property bounds) and the Meshy civilians. Both message before touching `sim.ts` or `combat.ts`.
 - [x] Casing rules + marking
 - [~] Mask up: done; needs the camera push-in and the sound sting
 - [x] Takedowns (masked, from behind, or any side while he's radioing) + zip ties (4)
