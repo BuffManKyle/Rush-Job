@@ -257,7 +257,7 @@ export class Hud {
       const caller = sim.civilians.find((c) => c.phoning > 0);
       if (caller) {
         this.banner.className = 'hud-banner warn';
-        this.banner.innerHTML = `<div>${caller.label} is calling the police. Shout (<kbd>V</kbd>) to stop them: alarm in <b>${caller.phoning.toFixed(1)} s</b></div>`;
+        this.banner.innerHTML = `<div>A passer-by is calling the police. Shout (<kbd>V</kbd>) to stop them: alarm in <b>${caller.phoning.toFixed(1)} s</b></div>`;
       } else if (pager) {
         this.banner.className = 'hud-banner warn';
         this.banner.innerHTML = `<div>${pager.label}'s pager is ringing. Hold <kbd>E</kbd> on him to answer: alarm in <b>${Math.max(0, T.pager.timeout - pager.pagerRinging).toFixed(1)} s</b></div>`;

@@ -178,7 +178,7 @@ export function civilianSpotted(sim: Sim, c: Civilian): void {
     c.phoning = T.pedestrian.callDelay;
     go(c, 'look');
     sim.events.emit({ type: 'bark', who: c.id, line: sim.rng.pick(sim.lineIds('civ.scream')) });
-    sim.events.emit({ type: 'message', text: `${c.label} saw you and is calling the police. Shout (V) to stop them.`, tone: 'danger' });
+    sim.events.emit({ type: 'message', text: `A passer-by saw you and is calling the police. Shout (V) to stop them.`, tone: 'danger' });
     return;
   }
   let best: Guard | null = null;

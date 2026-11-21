@@ -96,7 +96,9 @@ export function createOperator(sim: Sim): void {
   s.seat = { ...seat, yaw };
   s.desk = deskC ?? seat;
   const brk = m.find((q) => q.type === 'break_spot');
-  const breakSpot = brk && onProperty(sim, brk) ? { x: brk.x, y: brk.y } : { x: 4.5, y: 5.5 };
+  // fallback: the breaker in the back hall, else stay in the chair
+  const br = m.find((q) => q.type === 'breaker');
+  const breakSpot = brk && onProperty(sim, brk) ? { x: brk.x, y: brk.y } : br ? { x: br.x, y: br.y + 0.4 } : { ...seat };
   const g = makeGuard('guard_op', 'The operator', [{ ...seat }, breakSpot], 'operator', 1, sim.rng.range(10, 25));
   g.role = 'operator';
   g.routeWaits = [T.security.operatorShift, T.security.operatorBreak];
