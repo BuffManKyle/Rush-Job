@@ -156,7 +156,7 @@ def storefront(name, w, d, h, wall, awn, sign_text, sign_board, sign_ink, seed, 
     p.box(door_x + 0.22, yf - 0.2, 1.0, door_x + 0.3, yf - 0.12, 1.12, "Steel", skip=('+y',), bottom=True)
     # awning and sign
     zt = 3.15
-    awning(p, -w / 2 + 0.2, w / 2 - 0.2, yf - 0.02, zt, 1.25, 0.28, awn, max(4, w))
+    awning(p, -w / 2 + 0.2, w / 2 - 0.2, yf - 0.02, zt, 0.75, 0.22, awn, max(4, w))
     sb = p.child(f"{name}_sign")
     sw = min(w - 0.8, max(3.0, 0.36 * len(sign_text) + 1.2))
     sb.box(-sw / 2, yf - 0.12, zt + 0.12, sw / 2, yf, zt + 0.85, sign_board, skip=('+y',), bottom=True)
