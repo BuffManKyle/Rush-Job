@@ -15,7 +15,28 @@ import playerUrl from '../../assets/models/char_player.glb?url';
 import guardUrl from '../../assets/models/char_guard.glb?url';
 import civilianUrl from '../../assets/models/char_civilian.glb?url';
 
-export type CharKind = 'player' | 'guard' | 'civilian';
+export type CharKind = 'player' | 'guard' | 'civilian' | `civ_${string}`;
+
+/** Meshy civilians (rj-street): assets/models/char_civ_<name>.glb, whichever exist. */
+const civUrls = import.meta.glob('../../assets/models/char_civ_*.glb', { query: '?url', import: 'default', eager: true }) as Record<string, string>;
+const CIV_CHARS: [CharKind, string][] = Object.entries(civUrls).map(([path, url]) => [path.replace(/^.*char_(civ_[^/]+)\.glb$/, '$1') as CharKind, url]);
+
+/**
+ * Which Meshy civilian plays which level civilian (by Tiled name). Anyone not listed, or whose model
+ * isn't built, gets a free model from their group, then the stand-in.
+ */
+const CAST: Record<string, string> = {
+  clerk: 'civ_clerk',
+  manager: 'civ_manager',
+  customer_1: 'civ_cust_elder',
+  customer_2: 'civ_cust_young',
+  customer_3: 'civ_cust_coat',
+  customer_4: 'civ_cust_suit',
+  ped_1: 'civ_ped_teen',
+  ped_2: 'civ_ped_courier',
+  ped_3: 'civ_ped_oldman',
+  ped_4: 'civ_ped_woman',
+};
 
 export interface CharInstance {
   root: THREE.Object3D;
@@ -152,6 +173,15 @@ export class Kit {
     return out;
   }
 
+  /** The Meshy model cast for a level civilian (see CAST), or the stand-in. */
+  civilian(id: string): CharInstance | null {
+    const want = CAST[id];
+    if (want && this.chars.has(want as CharKind)) return this.character(want as CharKind);
+    const civs = [...this.chars.keys()].filter((k) => k.startsWith('civ_') && !Object.values(CAST).includes(k));
+    if (civs.length) return this.character(civs[[...id].reduce((a, c) => a + c.charCodeAt(0), 0) % civs.length]);
+    return this.character('civilian');
+  }
+
   /** A character with its own skeleton, mixer and named clips. Faces +Z (glTF front). */
   character(kind: CharKind): CharInstance | null {
     const g = this.chars.get(kind);
@@ -187,6 +217,7 @@ export async function loadKit(onProgress?: (done: number, total: number) => void
     ['player', playerUrl],
     ['guard', guardUrl],
     ['civilian', civilianUrl],
+    ...CIV_CHARS,
   ];
   const total = libs.length + chars.length;
   let done = 0;

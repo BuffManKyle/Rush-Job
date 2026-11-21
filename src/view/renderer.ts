@@ -412,7 +412,7 @@ export class WorldView {
         }
         continue;
       }
-      const ch = kit.character(o.kind);
+      const ch = o.kind === 'civilian' ? kit.civilian(o.id) : kit.character(o.kind);
       if (!ch) continue;
       if (o.kind === 'civilian' && o.role === 'customer') {
         // vary customers: retint the shirt
@@ -470,7 +470,7 @@ export class WorldView {
         ch.mixer.update(0);
         continue;
       }
-      const clip = c.state === 'tied' ? 'ziptied' : c.state === 'cower' ? 'hands_up' : c.moving ? (c.state === 'flee' ? 'run' : 'walk') : 'idle';
+      const clip = c.state === 'tied' ? 'ziptied' : c.state === 'cower' ? (ch.actions.has('cower') ? 'cower' : 'hands_up') : c.moving ? (c.state === 'flee' ? 'run' : 'walk') : 'idle';
       play(ch, clip);
       ch.mixer.update(dt);
     }

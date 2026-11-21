@@ -124,6 +124,9 @@ DECOR += [point("manhole", 20.5, 28.0), point("manhole", 51.5, 30.0), point("man
           point("storm_drain", 18.5, 25.0), point("storm_drain", 58.5, 25.0),
           point("storm_drain", 10.5, 33.0, 180), point("storm_drain", 45.5, 33.0, 180)]
 
+# extra cast in the shop (DESIGN: 4-6 customers and staff): the manager in the back office, a 4th customer
+STAFF_EXTRA = [("manager", 22.5, 7.0, "wander_office", "staff"), ("customer_4", 38.5, 17.8, "wander_showroom", "customer")]
+
 PEDESTRIANS = [("ped_1", 8.5, 23.5, "wander_sidewalk_n"), ("ped_2", 58.5, 23.5, "wander_sidewalk_n"),
                ("ped_3", 20.5, 34.5, "wander_sidewalk_s"), ("ped_4", 62.5, 34.5, "wander_sidewalk_s")]
 
@@ -205,7 +208,8 @@ def main():
 
     # zones: property bounds and the sidewalk wander zones (replace ours, keep everyone else's)
     zones = layers["zones"]["objects"]
-    zones[:] = [o for o in zones if o["name"] not in ("property_bounds", "wander_sidewalk_n", "wander_sidewalk_s")]
+    zones[:] = [o for o in zones if o["name"] not in ("property_bounds", "wander_sidewalk_n", "wander_sidewalk_s", "wander_office")]
+    zones.append(obj("wander_office", "wander", 19.5, 6.2, 6, 2))
     zones.append(obj("property_bounds", "property", OX, OY, 32, 20))
     zones.append(obj("wander_sidewalk_n", "wander", 1, 22, 70, 3))
     zones.append(obj("wander_sidewalk_s", "wander", 1, 33, 70, 3))
@@ -220,7 +224,9 @@ def main():
 
     # pedestrians
     civ = layers["civilians"]["objects"]
-    civ[:] = [o for o in civ if not o["name"].startswith("ped_")]
+    civ[:] = [o for o in civ if not o["name"].startswith("ped_") and o["name"] not in [e[0] for e in STAFF_EXTRA]]
+    for name, x, y, zone, role in STAFF_EXTRA:
+        civ.append(obj(name, "civilian", x, y, point=True, props=[prop("role", role), prop("wander", zone)]))
     for name, x, y, zone in PEDESTRIANS:
         civ.append(obj(name, "civilian", x, y, point=True,
                        props=[prop("role", "customer"), prop("wander", zone), prop("pedestrian", True)]))
