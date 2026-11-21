@@ -90,7 +90,7 @@ for name in CAST:
     add_clip(rig, cower(rig), "cower")
     # 512 px is plenty for a civilian seen from 13-26 m up, but Meshy's islands touch, so a plain
     # downsize bleeds neighbours over every seam: re-bake from the full source with 8 px gutters
-    atlas.rebake(mesh, size=512, gutter_px=8)
+    atlas.rebake(mesh, size=512, gutter_px=8, min_px=3, interp="Linear")
     names = sorted(names + ["cower"])
     # re-export with the extra clip, under the civ name
     bpy.ops.object.select_all(action='DESELECT')
