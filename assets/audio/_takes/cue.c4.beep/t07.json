@@ -1,0 +1,9 @@
+{
+ "id": "cue.c4.beep",
+ "take": 7,
+ "source": "code (tools/audio/synth_beep.py)",
+ "what": "single beep",
+ "freq_hz": 2400,
+ "tone_s": 0.09,
+ "credits": 0
+}

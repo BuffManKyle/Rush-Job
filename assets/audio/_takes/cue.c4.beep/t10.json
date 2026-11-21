@@ -1,0 +1,18 @@
+{
+ "id": "cue.c4.beep",
+ "take": 10,
+ "t": "2026-11-21T16:19:31Z",
+ "endpoint": "/v1/sound-generation",
+ "output_format": "opus_48000_128",
+ "request": {
+  "text": "A single electronic beep like a microwave oven or a digital alarm clock: one flat, steady, synthetic tone, not a bell, not metallic, not chiming, no jingle, no ring-out, then silence",
+  "duration_seconds": 0.5,
+  "prompt_influence": 0.5,
+  "loop": false,
+  "model_id": "eleven_text_to_sound_v2"
+ },
+ "response_headers": {
+  "character-cost": "6"
+ },
+ "bytes": 10922
+}

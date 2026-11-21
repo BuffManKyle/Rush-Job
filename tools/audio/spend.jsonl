@@ -587,3 +587,7 @@
 {"t": "2026-11-21T16:14:51Z", "id": "cue.c4.beep", "take": 5, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "ok", "file": "assets/audio/_takes/cue.c4.beep/t05.ogg", "credits_actual": 6.0}
 {"t": "2026-11-21T16:14:51Z", "id": "cue.c4.beep", "take": 6, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "pending"}
 {"t": "2026-11-21T16:14:53Z", "id": "cue.c4.beep", "take": 6, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "ok", "file": "assets/audio/_takes/cue.c4.beep/t06.ogg", "credits_actual": 6.0}
+{"t": "2026-11-21T16:19:24Z", "id": "cue.c4.beep", "take": 9, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "pending"}
+{"t": "2026-11-21T16:19:25Z", "id": "cue.c4.beep", "take": 9, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "ok", "file": "assets/audio/_takes/cue.c4.beep/t09.ogg", "credits_actual": 6.0}
+{"t": "2026-11-21T16:19:25Z", "id": "cue.c4.beep", "take": 10, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "pending"}
+{"t": "2026-11-21T16:19:31Z", "id": "cue.c4.beep", "take": 10, "kind": "sfx", "seconds": 0.5, "credits_est": 5.5, "status": "ok", "file": "assets/audio/_takes/cue.c4.beep/t10.ogg", "credits_actual": 6.0}

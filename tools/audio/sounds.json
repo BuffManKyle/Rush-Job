@@ -1181,7 +1181,7 @@
    "slice": 0,
    "source": "generate",
    "search_terms": null,
-   "prompt": "One single short beep from a small digital timer: a quick clean electronic blip lasting a tenth of a second, then silence",
+   "prompt": "A single electronic beep like a microwave oven or a digital alarm clock: one flat, steady, synthetic tone, not a bell, not metallic, not chiming, no jingle, no ring-out, then silence",
    "when": "the fuse after placing C4. The game plays this one beep on a timer, closer and closer together as it counts down. (The model can't count: asked for several beeps, it made one long continuous tone, so each take is a single beep.)",
    "model_id": "eleven_text_to_sound_v2"
   },
